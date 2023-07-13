@@ -1,12 +1,12 @@
 import React from "react";
 import BlurWhiteBox from "../components/Home/BlurWhiteBox";
 import HomeItemBox from "../components/Home/HomeItemBox";
-import { Button, Flex, Heading, Image } from "@chakra-ui/react";
+import { Flex, Heading} from "@chakra-ui/react";
 import bookgirl from "../assets/bookgirl.png";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
-import { AiTwotoneHeart } from "react-icons/ai";
+
 
 function Home() {
   const itemBoxDetails = {
