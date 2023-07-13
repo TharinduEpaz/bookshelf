@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, Container, useColorModeValue, Image } from "@chakra-ui/react";
+import Navbar from "./components/Navbar";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import g from "./assets/g.png";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    
+    <Box
+      
+      h={"200vh"}
+     
+      // objectFit={"cover"}
+      
+      // backgroundImage={''}
+      // backgroundAttachment={"fixed"}
+      // backgroundSize={"90% auto"}
+      // backgroundRepeat={"no-repeat"}
+      // backgroundPosition={"right"}
+      // backgroundOpacity={"30%"}
+    >
+   
+    {/* backGround 3D */}
+      {/* <Image
+        boxSize={"100vh"}
+        objectFit={"cover"}
+        src={g}
+    
+        position="absolute"
+        top={"-140px"}
+        left={"40vw"}
+        right={0}
+        bottom={0}
+        opacity={"90%"}
+
+
+      /> */}
+
+      <Navbar />
+    
+      
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+        </Routes>
+      </Router>
+    </Box>
+  );
 }
 
-export default App
+export default App;
