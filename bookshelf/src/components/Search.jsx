@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   IconButton,
   Input,
   InputGroup,
@@ -11,8 +12,8 @@ import {FaSearch} from 'react-icons/fa'
 
 function Search() {
   return (
-    <Stack spacing={4}>
-      <InputGroup mt={{base:0,sm:10}}>
+    <>
+      <InputGroup>
         <Input
           type="text"
           placeholder="Search thousands of books"
@@ -20,13 +21,16 @@ function Search() {
           borderColor={'white'}
           focusBorderColor="white.100"
           ml={5}    
+          w={300}
+          borderRadius={100}
           
         />
+        <IconButton icon={<FaSearch />} color="blue.300" ml={2} borderRadius={100} variant={'ghost'} />
 
-        <InputRightAddon children={<IconButton icon={<FaSearch w='100%'/>}/>}/>
+        
 
       </InputGroup>
-    </Stack>
+    </>
   );
 }
 

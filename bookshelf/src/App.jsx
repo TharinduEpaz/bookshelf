@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import g from "./assets/g.png";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -36,13 +38,13 @@ function App() {
 
 
       /> */}
-
-      <Navbar />
     
-      
       <Router>
+      <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/register" element={<Register />}></Route>
         </Routes>
       </Router>
     </Box>

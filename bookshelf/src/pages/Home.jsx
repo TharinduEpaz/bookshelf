@@ -1,11 +1,12 @@
 import React from "react";
 import BlurWhiteBox from "../components/Home/BlurWhiteBox";
 import HomeItemBox from "../components/Home/HomeItemBox";
-import { Flex, Heading} from "@chakra-ui/react";
+import { Center, Divider, Flex, Heading} from "@chakra-ui/react";
 import bookgirl from "../assets/bookgirl.png";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
+
 
 
 function Home() {
@@ -42,16 +43,22 @@ function Home() {
         title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
         image={bookgirl}
       />
+      <Center>
       <Heading
-        fontFamily={"Montserrat"}
+        alignSelf={"center"}
+        
+        fontWeight={'light'}
         size={"sm"}
-        position={"relative"}
-        top={10}
-        left={{ base: 100, sm: 40 }}
-        w={"200px"}
+        mt={20}
+        letterSpacing={5}
+        
       >
-        Featured Categories
+      
+        FEATURED CATEGORIES
       </Heading>
+      
+      </Center>
+
       <Flex
         gap={10}
         alignItems={"center"}
@@ -62,12 +69,26 @@ function Home() {
       >
         {Object.keys(itemBoxDetails).map((item) => (
           <HomeItemBox
+            key={item}
             header={itemBoxDetails[item].header}
             bgColor={itemBoxDetails[item].bgColor}
             icon={itemBoxDetails[item].icon}
           />
         ))}
       </Flex>
+      <Center>
+      <Heading
+        alignSelf={"center"}
+        
+        fontWeight={'light'}
+        size={"sm"}
+        mt={20}
+        letterSpacing={5}
+        
+      >
+        NEW ARRIVALS
+      </Heading>
+      </Center>
     </>
   );
 }

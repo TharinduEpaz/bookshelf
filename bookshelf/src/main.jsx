@@ -13,7 +13,8 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))"
+        bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))",
+        paddingTop: "70px",
       },
     },
   },
@@ -21,10 +22,13 @@ const theme = extendTheme({
 
 import { ChakraProvider } from "@chakra-ui/react";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
+ 
       <App />
+    
     </ChakraProvider>
   </React.StrictMode>
 );
