@@ -6,6 +6,7 @@ import {
   Image,
   Grid,
   GridItem,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import Search from "../Search";
@@ -18,8 +19,8 @@ function BlurWhiteBox({ title, image }) {
       w="80%"
       h="40vh"
       borderRadius="2xl"
-      boxShadow="md"
-      bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.1))"
+      boxShadow="sm"
+      bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
       // filter="blur(8px)"
       backdropFilter="blur(8px)"
       p={4}
@@ -55,9 +56,12 @@ function BlurWhiteBox({ title, image }) {
             
           />
         </GridItem>
-        <GridItem rowSpan={2} colSpan={3}>
-          <Search />
+        <GridItem rowSpan={2} colSpan={3}  alignItems={'top'} display={'flex'}>
+           <Button ml={5} colorScheme="purple" w={100} borderRadius={100}>Shop</Button> 
+           <Search />
+           
         </GridItem>
+        
       </Grid>
     </Box>
   );

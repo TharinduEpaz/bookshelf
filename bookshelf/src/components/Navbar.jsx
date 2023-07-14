@@ -1,19 +1,3 @@
-// import {
-//   Box,
-//   Button,
-//   Container,
-//   Image,
-//   Spacer,
-//   Link,
-//   HStack,
-//   Flex,
-//   Heading,
-//   Avatar,
-//   AvatarBadge,
-//   Text,
-//   Center,
-// } from "@chakra-ui/react";
-
 import "@fontsource/montserrat";
 import "@fontsource/playfair-display";
 
@@ -38,6 +22,8 @@ import {
   LinkBox,
 } from "@chakra-ui/react";
 
+import { Link as RouterLink } from "react-router-dom";
+
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -54,10 +40,24 @@ const navLinks = [
 function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box px={4} bg={useColorModeValue("", "gray.800")} pl={20} pr={20} >
-      <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto" >
-        <Heading size={"md"}>BookShelf</Heading>
-
+    <Box
+      as="nav"
+      position={"fixed"}
+      zIndex={999}
+      px={4}
+      bg={useColorModeValue("", "gray.800")}
+      pl={20}
+      pr={20}
+      w={"100%"}
+      bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.1))"
+      // filter="blur(8px)"
+      backdropFilter="blur(8px)"
+      top={0}
+    >
+      <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
+        <RouterLink to="/">
+          <Heading size={"md"}>BookShelf</Heading>
+        </RouterLink>
         <HStack
           spacing={8}
           alignItems="center"
@@ -81,22 +81,27 @@ function Navbar() {
           </HStack>
         </HStack>
         <ButtonGroup>
-          <Button
-            colorScheme="blue"
-            size="sm"
-            display={{ base: "none", md: "block" }}
-            borderRadius={10}
-          >
-            Sign in
-          </Button>
-          <Button
-            colorScheme="blue"
-            variant={"ghost"}
-            size="sm"
-            display={{ base: "none", md: "block" }}
-          >
-            Sign Up
-          </Button>
+        
+          <RouterLink to="/login">
+            <Button
+              colorScheme="blue"
+              size="sm"
+              variant={"ghost"}
+              display={{ base: "none", md: "block" }}
+            >
+              Sign in
+            </Button>
+          </RouterLink>
+
+          <RouterLink to="/register">
+            <Button
+              colorScheme="facebook"
+              size="sm"
+              display={{ base: "none", md: "block" }}
+            >
+              Sign Up
+            </Button>
+          </RouterLink>
         </ButtonGroup>
 
         <IconButton
@@ -116,7 +121,6 @@ function Navbar() {
               <NavLink key={index} {...link} onClose={onClose} />
             ))}
           </Stack>
-          <Link></Link>
         </Box>
       ) : null}
     </Box>
