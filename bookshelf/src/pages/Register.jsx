@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+//import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Fa500Px } from 'react-icons/fa';
 
 export default function SignupCard() {
