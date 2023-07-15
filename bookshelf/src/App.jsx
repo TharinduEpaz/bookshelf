@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import g from "./assets/g.png";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Subscription from "./pages/Subscription";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
+          <Route exact path="/subscription" element={<Subscription />}></Route>
         </Routes>
       </Router>
     </Box>
