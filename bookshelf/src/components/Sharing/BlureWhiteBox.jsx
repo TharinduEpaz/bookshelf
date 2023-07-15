@@ -52,7 +52,7 @@ function BlurWhiteBox({ title, image }) {
                         objectFit={"cover"}
                         src={image}
                         position={"relative"}
-                        top={-5}
+                        top={-75}
 
                     />
                 </GridItem>

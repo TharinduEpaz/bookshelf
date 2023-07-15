@@ -1,8 +1,8 @@
 import React from "react";
-import BlurWhiteBox from "../components/Subscription/BlureWhiteBox";
-import HomeItemBox from "../components/Home/HomeItemBox";
+import BlurWhiteBox from "../../components/Sharing/BlureWhiteBox";
+import HomeItemBox from "../../components/Home/HomeItemBox";
 import { Center, Divider, Flex, Heading } from "@chakra-ui/react";
-import bookgirl from "../assets/bookgirl.png";
+import books from "../../assets/g.png";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
@@ -10,7 +10,7 @@ import { ImBooks } from "react-icons/im";
 
 
 
-function Subscription() {
+function SharingHome() {
     const itemBoxDetails = {
         bestSellers: {
             header: "Best Sellers",
@@ -42,7 +42,7 @@ function Subscription() {
         <>
             <BlurWhiteBox
                 title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
-                image={bookgirl}
+                image={books}
             />
             <Center>
                 <Heading
@@ -94,4 +94,4 @@ function Subscription() {
     );
 }
 
-export default Subscription;
+export default SharingHome;
