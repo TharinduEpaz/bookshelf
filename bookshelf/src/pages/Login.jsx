@@ -15,12 +15,17 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import bookgirl from "../assets/bookgirl.png";
+import { useState } from 'react';
+
 import { RiReactjsLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEyeInvisible } from 'react-icons/ai';
 
 
 
 export default function SimpleCard() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <Flex
       minH={'100vh'}
@@ -58,16 +63,21 @@ export default function SimpleCard() {
               </InputGroup>
             </FormControl>
 
-            <FormControl id="password">
+            <FormControl id="password" isRequired>
               <InputGroup>
-                <Input type="password"
-                  placeholder='Password'
+                <Input type={showPassword ? 'text' : 'password'}
+                  placeholder='Create Password'
                   bg={useColorModeValue('white')} />
-
-                <InputRightElement>
-                  <AiOutlineEye />
+                <InputRightElement h={'full'}>
+                  <Button
+                    variant={''}
+                    size={"xlarge"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }>
+                    {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+                  </Button>
                 </InputRightElement>
-
               </InputGroup>
             </FormControl>
 
