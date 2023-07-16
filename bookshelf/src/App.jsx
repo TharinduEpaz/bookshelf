@@ -6,6 +6,7 @@ import g from "./assets/g.png";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Sharing from "./pages/Sharing/SharingHome";
+import SharingPost from "./pages/Sharing/SharingPost";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/sharing" element={<Sharing />}></Route>
+          <Route exact path="/sharingPost" element={<SharingPost />}></Route>
         </Routes>
       </Router>
     </Box>

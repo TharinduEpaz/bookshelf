@@ -8,6 +8,8 @@ import {
     GridItem,
     Button,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+
 import React from "react";
 import Search from "../Search";
 
@@ -57,7 +59,9 @@ function BlurWhiteBox({ title, image }) {
                     />
                 </GridItem>
                 <GridItem rowSpan={2} colSpan={3} alignItems={'top'} display={'flex'}>
-                    <Button ml={5} colorScheme="purple" w={130} borderRadius={100}>Post Request</Button>
+                 <RouterLink  to="/sharingPost">
+                        <Button ml={5} colorScheme="purple" w={130} borderRadius={100}>Post Request</Button>
+                </RouterLink>   
                     <Search />
 
                 </GridItem>
