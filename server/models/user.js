@@ -23,7 +23,7 @@ const User = sequelize.define('User', {
   id : {
     type: DataTypes.UUID,
     primaryKey: true,
-    defaultValue: sequelize.UUIDV4
+    defaultValue: DataTypes.UUIDV4
     },
     firstName: {
         type: DataTypes.STRING,
@@ -35,7 +35,7 @@ const User = sequelize.define('User', {
     },
     email : {
         type: DataTypes.STRING,
-        defaultValue: false,
+        allowNull:false
     },
     password : {
         type: DataTypes.STRING,
@@ -43,13 +43,15 @@ const User = sequelize.define('User', {
     },
     emailVerified : {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue:false
     }, 
  
 }, {
   // Other model options go here
     
 })
+
 // User.sync({  alter: true });
 
 module.exports = User;
