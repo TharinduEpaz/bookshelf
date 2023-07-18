@@ -11,10 +11,13 @@ import {
     useColorModeValue,
     WrapItem,
     Avatar,
+    Grid,
+    GridItem,
 } from '@chakra-ui/react';
 import { MdAddBox, MdDelete } from 'react-icons/md';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 import { Link as RouterLink } from "react-router-dom";
+
 
 
 function Form({ title, image }) {
@@ -41,9 +44,9 @@ function Form({ title, image }) {
     };
 
     return (
-        <Box m="auto" mt={10} w={1800} h={800} boxShadow="sm" backgroundColor="white" p={4}>
-            <Box display="grid" gridTemplateColumns="20% 80%" gridGap={5}>
-                <Box border={'1px'} borderRadius={'10'} borderColor={'rgb(32,73,116)'}>
+        <Box m="auto" mt={10} w={1800} h={800} boxShadow="sm" backgroundColor="white" p={4} display={'flex'} alignItems={'center'} justifyContent={'left'}>
+            <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(6,1fr)'} gap={'10px'}>
+                <GridItem rowSpan={1} colSpan={2} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
                     <WrapItem>
                         <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' size={'xl'}  marginTop={'8'} marginLeft={'120'}/>
                     </WrapItem>
@@ -64,8 +67,8 @@ function Form({ title, image }) {
                         <Text fontSize={'2xl'} lineHeight={'10'}>Chat</Text>
                     </RouterLink>
 
-                </Box>
-                <Box width={'80%'} border={'1px'} borderRadius={'10'} borderColor={'rgb(32,73,116)'} marginLeft={100} padding={'10'}>
+                </GridItem>
+                <GridItem rowSpan={1} colSpan={4}  border={'1px'} borderRadius={'10'} borderColor={'rgb(32,73,116)'} padding={'10'}>
                     {/* Add your content for the second column */}
 
                     <Box m="auto" mt={5} h={100} boxShadow="sm" bg={useColorModeValue('blue.100', 'gray.800')} p={4} display='grid' gridTemplateColumns="5% 95%" >
@@ -127,8 +130,8 @@ function Form({ title, image }) {
                         <Button colorScheme="purple">Post Request</Button>
                         <Button colorScheme="purple" marginLeft={+500}>cancel</Button>
                     </Box>
-                </Box>
-            </Box>
+                </GridItem>
+            </Grid>
         </Box>
     );
 }
