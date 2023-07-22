@@ -1,0 +1,27 @@
+ GET http://localhost:3000
+
+###
+
+GET http://localhost:3000/api/v1/user/
+
+###
+
+POST http://localhost:3000/api/v1/user/
+Content-Type: application/json
+
+{
+    "firstName": "dayarathna",
+    "lastName": "Epasingha",
+    "email": "dayarathna@gmail.com",
+    "password": "123456"
+}
+
+###
+
+GET http://localhost:3000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "email": "epasingha@gmail.com",
+    "password": "123456"
+}

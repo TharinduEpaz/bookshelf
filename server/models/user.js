@@ -1,22 +1,8 @@
-// const { Sequelize, DataTypes } = require('sequelize');
 
-// const { sequelize } = require('sequelize');
-
-//   async function main() {
-
-//   try {
-//     await db.sequelize.authenticate();
-//     console.log('Connection has been established successfully.');
-//   } catch (error) {
-//     console.error('Unable to connect to the database:', error);
-//   }
-
-// }
-
-// main();
 
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
+const validator = require('validator');
 
 const User = sequelize.define('User', {
   // Model attributes are defined here 
@@ -35,7 +21,15 @@ const User = sequelize.define('User', {
     },
     email : {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: true,
+        validate : {
+            isEmail : {
+                msg : 'Please enter a valid email',
+                validator : validator.isEmail
+            }
+        }
+        
     },
     password : {
         type: DataTypes.STRING,
@@ -45,6 +39,11 @@ const User = sequelize.define('User', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
+    },
+    role : {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:'buyer'
     }, 
  
 }, {
@@ -52,7 +51,10 @@ const User = sequelize.define('User', {
     
 })
 
+
 // User.sync({  alter: true });
+
+
 
 module.exports = User;
 
