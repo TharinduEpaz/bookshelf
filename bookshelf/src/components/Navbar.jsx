@@ -32,7 +32,7 @@ import React from "react";
 const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
-  { name: "Donations", path: "#" },
+  { name: "Donations", path: "/donation" },
   { name: "Subscriptions", path: "#" },
   { name: "Share a Book", path: "#" },
 ];
@@ -76,7 +76,9 @@ function Navbar() {
             alignItems="center"
           >
             {navLinks.map((link, index) => (
+              <RouterLink to={link.path}>
               <NavLink key={index} {...link} onClose={onClose} />
+              </RouterLink>
             ))}
           </HStack>
         </HStack>

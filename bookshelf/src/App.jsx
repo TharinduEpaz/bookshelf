@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
+import Donation from "./pages/Donation"
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-
+          <Route exact path="/donation" element={<Donation />}></Route>
         </Routes>
         <Footer />
       </Router>
