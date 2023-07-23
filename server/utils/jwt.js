@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+//load environment variables
+require('dotenv').config();
 
 
 const createJWT = ({payload}) => {

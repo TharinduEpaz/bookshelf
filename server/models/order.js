@@ -27,5 +27,5 @@ const order = sequelize.define('order', {
         allowNull: false
     },
 }, {
-    // Other model options go here
+    // Other model options go here  
 })
