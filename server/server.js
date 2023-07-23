@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 
@@ -20,12 +21,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/auth", (req, res) => {
-  console.log(req.cookies );
-  res.send("Hello World!");
-});
-
-app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/', authRoutes);
+app.use('/api/v1/users/', userRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

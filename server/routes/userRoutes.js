@@ -4,10 +4,12 @@ const router = Router();
 
 const controller = require('../controllers/userController')
 
-router.get("/", controller.getUsers);
-router.get("/login", controller.login);
-router.post("/register", controller.register);
-router.get("/logout", controller.logout);
-router.put("/", controller.updateUser);
+router.get('/', controller.getAllUsers);
+router.get('/showMe', controller.getCurrentUser);
+router.get('/:id', controller.getSingeUser);
+router.patch('/updatePassword', controller.updateUserPassword);
+router.patch('/:id', controller.updateUser);
+
+
 
 module.exports = router;
