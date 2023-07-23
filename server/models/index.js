@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize('neondb', '2020cs050', 'WZiRGvC9PT5l', {
-  host: 'ep-long-grass-811666.us-east-2.aws.neon.tech',
+const sequelize = new Sequelize('', '', '', {
+  host: '',
   dialect:  'postgres',
   port: 5432,
   dialectOptions: {
@@ -21,5 +21,3 @@ const testDbConnection = async () => {
   };
 
   module.exports = { sequelize, testDbConnection };
-
-  //postgres://2020cs050:WZiRGvC9PT5l@ep-long-grass-811666.us-east-2.aws.neon.tech/neondb
