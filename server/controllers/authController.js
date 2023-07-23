@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse } = require("../utils/jwt");
-require("dotenv").config();
+
 
 
 const login = async (req, res, next) => {
