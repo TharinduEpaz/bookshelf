@@ -96,7 +96,7 @@ function Form({ title, image }) {
                 ))}
 
                 <Button colorScheme="purple">Post Request</Button>
-                <Button colorScheme="purple" marginLeft={+500}>cancel</Button>
+                <Button colorScheme="red" marginLeft={200} variant={'outline'}  >cancel</Button>
             </Box>
         </div>
     );
