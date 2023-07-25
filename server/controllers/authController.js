@@ -4,8 +4,6 @@ const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse } = require("../utils/jwt");
 
-
-
 const login = async (req, res, next) => {
   try {
     //destructuring email and password 
@@ -15,8 +13,8 @@ const login = async (req, res, next) => {
     if (!email || !password)
       throw new CustomError.BadRequestError(
         "Please provide email and password"
-      );
-
+    );
+    
     //check if user exists in the database
     const user = await userModel.findOne({
       where: {
