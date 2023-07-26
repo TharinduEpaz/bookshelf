@@ -1,5 +1,6 @@
 import { Box, Container, useColorModeValue, Image } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import g from "./assets/g.png";
@@ -10,6 +11,8 @@ import SharingPost from "./pages/Sharing/SharingPost";
 import Subscription from "./pages/Subscription/SubscriptionHome";
 import SelectSubscription from "./pages/Subscription/SelectSubscription";
 import SelectBookLover from "./pages/Subscription/SelectBookLover";
+import Shop from "./pages/Shop";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
@@ -19,13 +22,13 @@ function App() {
       // h={'auto'}
      
       // objectFit={"cover"}
-      
       // backgroundImage={''}
       // backgroundAttachment={"fixed"}
       // backgroundSize={"90% auto"}
       // backgroundRepeat={"no-repeat"}
       // backgroundPosition={"right"}
       // backgroundOpacity={"30%"}
+      
     >
    
     {/* backGround 3D
@@ -56,7 +59,11 @@ function App() {
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
           <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
 
+          <Route exact path="/shop" element={<Shop />}></Route>
+          <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+
         </Routes>
+        <Footer />
       </Router>
     </Box>
   );
