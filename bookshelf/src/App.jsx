@@ -9,13 +9,14 @@ import Sharing from "./pages/Sharing/SharingHome";
 import SharingPost from "./pages/Sharing/SharingPost";
 import Subscription from "./pages/Subscription/SubscriptionHome";
 import SelectSubscription from "./pages/Subscription/SelectSubscription";
+import SelectBookLover from "./pages/Subscription/SelectBookLover";
 
 function App() {
   return (
     
     <Box
       
-      h={"200vh"}
+      // h={'auto'}
      
       // objectFit={"cover"}
       
@@ -27,8 +28,8 @@ function App() {
       // backgroundOpacity={"30%"}
     >
    
-    {/* backGround 3D */}
-      {/* <Image
+    {/* backGround 3D
+      { <Image
         boxSize={"100vh"}
         objectFit={"cover"}
         src={g}
@@ -41,7 +42,7 @@ function App() {
         opacity={"90%"}
 
 
-      /> */}
+      /> } */}
     
       <Router>
       <Navbar />
@@ -53,6 +54,7 @@ function App() {
           <Route exact path="/sharingPost" element={<SharingPost />}></Route>
           <Route exact path="/subscriptions" element={<Subscription />}></Route>
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
+          <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
 
         </Routes>
       </Router>

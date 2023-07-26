@@ -15,6 +15,7 @@ import {
 
 import { FaCheckCircle } from "react-icons/fa";
 import { PiHandHeartFill } from "react-icons/pi"; 
+import { Link as RouterLink } from "react-router-dom";
 interface Props {
 	children: React.ReactNode;
 }
@@ -111,14 +112,16 @@ function BookReder() {
 							</ListItem>
 						</List>
 						<Box w="80%" pt={7}>
-							<Button
-								ml={5}
-								colorScheme="purple"
-								w={130}
-								borderRadius={100}
-							>
-								Select
-							</Button>
+							<RouterLink to="/selectBookLover">
+								<Button
+									ml={5}
+									colorScheme="purple"
+									w={130}
+									borderRadius={100}
+								>
+									Select
+								</Button>
+							</RouterLink>
 						</Box>
 					</VStack>
 				</Box>
