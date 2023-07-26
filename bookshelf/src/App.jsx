@@ -47,7 +47,6 @@ function App() {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-
         </Routes>
         <Footer />
       </Router>
