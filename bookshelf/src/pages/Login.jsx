@@ -13,6 +13,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
+import { Link as RouterLink } from "react-router-dom";
+
+
 export default function SimpleCard() {
   return (
     <Flex
@@ -49,6 +52,8 @@ export default function SimpleCard() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack>
+
+              <RouterLink to="/admindashboard">
               <Button
                 bg={'blue.400'}
                 color={'white'}
@@ -57,6 +62,8 @@ export default function SimpleCard() {
                 }}>
                 Sign in
               </Button>
+              </RouterLink>
+
             </Stack>
           </Stack>
         </Box>
