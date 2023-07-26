@@ -8,6 +8,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminNotifications from "./pages/AdminNotifications";
+import AdminUserMgt from "./pages/AdminUserMgt";
+import AdminShop from "./pages/AdminShop";
+import AdminInventory from "./pages/AdminInventory";
+import AdminDonations from "./pages/AdminDonations";
+import AdminSubscriptions from "./pages/AdminSubscriptions";
+import AdminSettings from "./pages/AdminSettings";
 
 function App() {
   return (
@@ -47,6 +55,14 @@ function App() {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+          <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
+          <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>
+          <Route exact path="/adminusermgt" element={<AdminUserMgt />}></Route>
+          <Route exact path="/adminshop" element={<AdminShop />}></Route>
+          <Route exact path="/admininventory" element={<AdminInventory />}></Route>
+          <Route exact path="/admindonations" element={<AdminDonations />}></Route>
+          <Route exact path="/adminsubscriptions" element={<AdminSubscriptions />}></Route>
+          <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
 
         </Routes>
         <Footer />
