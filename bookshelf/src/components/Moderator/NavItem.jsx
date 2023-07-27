@@ -6,9 +6,13 @@ export default function NavItem({ title, icon, link, active }) {
   return (
     <Flex flexDir={"column"} w={"100%"} mt={1}>
       <Menu placement="right">
-        <NavLink to={link} onClick={active}>
+        <NavLink to={link} style={({ isActive }) => ({
+          backgroundColor: isActive ? "#D7EEFF" : "#FFFFFF",
+          borderRadius: 8,
+          fontWeight: isActive ? "bold" : "normal",
+        })}
+        >
           <MenuButton
-            backgroundColor={active && "#D7EEFF"}
             pt={2}
             pb={2}
             pl={4}
@@ -21,7 +25,6 @@ export default function NavItem({ title, icon, link, active }) {
               <Text
                 ml={4}
                 color={"#6B7280"}
-                fontWeight={active ? "bold" : "normal"}
               >
                 {title}
               </Text>
