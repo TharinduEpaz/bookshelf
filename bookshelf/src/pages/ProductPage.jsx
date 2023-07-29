@@ -31,6 +31,7 @@ import RadioCard from "../components/Shop/RadioSet";
 import { BsCart, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import Summaries from "../components/Shop/Summaries";
 import SimpleReview from "../components/Shop/SimpleReview";
+import AboutAuthor from "../components/Shop/AboutAuthor";
 
 function ProductPage() {
   const productDetails = {
@@ -181,21 +182,21 @@ function ProductPage() {
 
         <Tabs isLazy>
   <TabList>
-    <Tab>Summaries</Tab>
+    {/* <Tab>Summaries</Tab> */}
     <Tab>Reviews</Tab>
     <Tab>About the author</Tab>
   </TabList>
   <TabPanels>
     {/* initially mounted */}
-    <TabPanel>
+    {/* <TabPanel>
       <Summaries />
-    </TabPanel>
+    </TabPanel> */}
     {/* initially not mounted */}
     <TabPanel>
       <SimpleReview />
     </TabPanel>
     <TabPanel>
-      <SimpleReview />
+      <AboutAuthor />
     </TabPanel>
   </TabPanels>
 </Tabs>

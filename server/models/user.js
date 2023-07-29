@@ -53,7 +53,7 @@ const User = sequelize.define('User', {
 })
 
 
-User.sync({  alter: true });
+// User.sync({  alter: true });
 
 
 
