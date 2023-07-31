@@ -1,5 +1,6 @@
 import React from 'react'
 import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminUserMgtTabs from '../components/Admin/AdminUserMgtTabs';
 
 import {
     Box, 
@@ -46,9 +47,9 @@ export default function AdminUserMgt() {
       flexWrap={"wrap"}
     >  
 
-  
-
  </Flex>
+
+    <AdminUserMgtTabs/>
 
  </Box>
  </div>
