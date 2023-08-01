@@ -23,8 +23,6 @@ import {
     numReviews: 34,
   };
   
-
-  
   function Rating({ rating, numReviews }) {
     return (
       <Box display="flex" alignItems="center" justifyContent={'center'}>

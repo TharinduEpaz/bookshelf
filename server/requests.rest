@@ -2,43 +2,19 @@
 
 ###
 
-GET http://localhost:3000/api/v1/user/
+GET http://localhost:3000/api/v1/books/
 
 ###
-
-POST http://localhost:3000/api/v1/register
-Content-Type: application/json
-
-{
-    "firstName": "dayarathna",
-    "lastName": "epasingha",
-    "email": "dayarathna@gmail.com",
-    "password": "123456"
-}
+GET http://localhost:3000/api/v1/books/1
 
 ###
-
-GET http://localhost:3000/api/v1/login
-Content-Type: application/json
-
-{
-    "email": "epazingha@gmail.com",
-    "password": "123456"
-}
+POST http://localhost:3000/api/v1/books/addBook
 
 ###
+PATCH http://localhost:3000/api/v1/books/1
 
-GET http://localhost:3000/api/v1/users
-
-###
-
-GET http://localhost:3000/api/v1/users/5019b2ed-8e63-48e4-8f01-a08060ff7b4f
+### 
+DELETE http://localhost:3000/api/v1/books/1
 
 ###
-PATCH http://localhost:3000/api/v1/users/5019b2ed-8e63-48e4-8f01-a08060ff7b4f
-
-###
-GET http://localhost:3000/api/v1/users/showMe
-
-###
-PATCH http://localhost:3000/api/v1/users/updatePassword
+POST http://localhost:3000/api/v1/books/uploadImage
