@@ -1,5 +1,4 @@
 
-
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 const validator = require('validator');

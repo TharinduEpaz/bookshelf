@@ -93,7 +93,7 @@ const deleteBook = async (req, res, next) => {
 };
 
 const uploadImage = async (req, res, next) => {
-  console.log(req.files);
+//   console.log(req.files);
   try {
     const { id } = req.params;
 
