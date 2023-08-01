@@ -57,7 +57,7 @@ import {
       <Flex  alignItems="center" justifyContent="center">
         <Box
           bg={useColorModeValue('white', 'gray.800')}
-         maxW={'180px'}
+         maxW={'200px'}
          maxH={'380px'}
           borderWidth="1px"
           rounded="lg"

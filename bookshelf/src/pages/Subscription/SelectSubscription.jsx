@@ -11,14 +11,22 @@ function SelectSubscription() {
 	return (
 		<div>
 			<Box
-				m="auto"
+				// m="auto"
+				// mt={10}
+				// w={1400}
+				// h={800}
+				// boxShadow="sm"
+				// backgroundColor="white"
+				// borderRadius={10}
+				// p={4} 
+				m={"auto"}
 				mt={10}
-				w={1400}
-				h={800}
+				w="80%"
+				borderRadius="md"
 				boxShadow="sm"
-				backgroundColor="white"
-				borderRadius={10}
-				p={4} >
+				bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+				backdropFilter="blur(8px)"
+				p={4}>
 
 				<VStack spacing={2} textAlign="center">
 					<Text as="h1" fontSize="4xl">

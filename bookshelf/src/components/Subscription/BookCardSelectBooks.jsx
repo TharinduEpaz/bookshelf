@@ -6,6 +6,7 @@ import {
     useColorModeValue,
     Heading,
     Button,
+    Text
 } from '@chakra-ui/react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 import { Link as RouterLink } from "react-router-dom";
@@ -55,8 +56,8 @@ function BookCard({ name, author, price, imageURL, rating, }) {
         <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
             <Box
                 bg={useColorModeValue('white', 'gray.800')}
-                maxW={'200px'}
-                maxH={'380px'}
+                maxW={'240px'}
+                maxH={'400px'}
                 borderWidth="1px"
                 rounded="lg"
 
@@ -75,7 +76,7 @@ function BookCard({ name, author, price, imageURL, rating, }) {
                     src={imageURL}
                     alt={`Picture of ${name}`}
                     roundedTop="lg"
-                    boxSize={'200px'}
+                    boxSize={'240px'}
                     objectFit='cover'
 
                 />
@@ -86,31 +87,34 @@ function BookCard({ name, author, price, imageURL, rating, }) {
                         <Box
                             fontSize="sm"
                             fontWeight="light"
-
                             lineHeight="tight"
                         >
-                            <Heading size={'sm'}>{name}</Heading>
-                            by {author}
+                            <Heading fontSize={20}>{name}</Heading>
                         </Box>
-
                     </Flex>
 
                     <Flex alignContent="center" direction={'column'} mt={2}>
-                        <Rating rating={rating} />
                         <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                             <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'}>
-                                Rs. {price}
-                            </Box>
+                                <Text  as={'del'} fontWeight={'bold'} color={'#0A3BBA'}>
+                                    Rs. {price}
+                                </Text>
+                                <Text as={'b'} color={'#0A3BBA'} marginLeft={3}>
+                                    Rs. {price-1650}.00
+                                </Text>
 
+                            </Box>
+                            <Box justifyContent={'center'} display={'flex'} marginTop={2}>
+                                <RouterLink to="#">
+                                    <Button color="white" colorScheme='blue' borderRadius={15}>
+                                        Checkout
+                                    </Button>
+                                </RouterLink>
+                            </Box>
                         </Box>
                     </Flex>
                 </Box>
             </Box>
-            <RouterLink to="#">
-                <Button marginTop={8} colorScheme="red" variant={'outline'} borderRadius={15}>
-                    Remove
-                </Button>
-            </RouterLink>
         </Flex>
     );
 }

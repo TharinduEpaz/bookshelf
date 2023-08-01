@@ -52,10 +52,10 @@ function Shop() {
                 }
 
                 <Box marginTop={160}>
-                    <Box marginLeft={45}>
-                        <BsFillPlusCircleFill size={25} />
-                    </Box>
-                    <RouterLink to="/shop">
+                    <RouterLink to="/selectBook">
+                        <Box marginLeft={45}>
+                            <BsFillPlusCircleFill size={25} />
+                        </Box>
                         <Button marginTop={2} colorScheme="black" variant={'outline'} borderRadius={15}>
                             Select Book
                         </Button>

@@ -76,54 +76,54 @@ function Shop() {
       price: "14.99",
       rating: 4.9,
     },
-  
+
   };
   return (
     <>
-    <Box
-    height={'100%'}
-    m={"auto"}
-    mt={10}
-    w="80%"
-    borderRadius="md"
-    boxShadow="sm"
-    bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
-    // filter="blur(8px)"
-    backdropFilter="blur(8px)"
-    p={10}
-  >
-    <Grid
-      
-      templateRows="50px 50px repeat(8, 1fr)"
-      templateColumns="repeat(5, 1fr)"
-      gap={2}
-      h={'100%'}
+      <Box
+        height={'100%'}
+        m={"auto"}
+        mt={10}
+        w="80%"
+        borderRadius="md"
+        boxShadow="sm"
+        bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(8px)"
+        p={10}
       >
-      <GridItem rowSpan={1} colSpan={5} >
-        <Search/>
-      </GridItem>
-      <GridItem rowSpan={1} colSpan={5} p={2}>
-        <Filter />
-      </GridItem>
-      <GridItem rowSpan={8} colSpan={1} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
-        <CategoryFilter />
-      </GridItem>
-      <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
-      <Flex flexWrap={'wrap'} gap={10} p={10}>
-      {Object.keys(bookDetails).map((item) => (
-            <BookCard
-              key={item}
-              name={bookDetails[item].title}
-              author={bookDetails[item].author}
-              price={bookDetails[item].price}
-              imageURL={bookDetails[item].image}
-              rating={bookDetails[item].rating}
-            />
-          ))}
-          </Flex>
-      </GridItem>
-      </Grid>
-    </Box>
+        <Grid
+
+          templateRows="50px 50px repeat(8, 1fr)"
+          templateColumns="repeat(5, 1fr)"
+          gap={2}
+          h={'100%'}
+        >
+          <GridItem rowSpan={1} colSpan={5} >
+            <Search />
+          </GridItem>
+          <GridItem rowSpan={1} colSpan={5} p={2}>
+            <Filter />
+          </GridItem>
+          <GridItem rowSpan={8} colSpan={1} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
+            <CategoryFilter />
+          </GridItem>
+          <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
+            <Flex flexWrap={'wrap'} gap={10} p={10}>
+              {Object.keys(bookDetails).map((item) => (
+                <BookCard
+                  key={item}
+                  name={bookDetails[item].title}
+                  author={bookDetails[item].author}
+                  price={bookDetails[item].price}
+                  imageURL={bookDetails[item].image}
+                  rating={bookDetails[item].rating}
+                />
+              ))}
+            </Flex>
+          </GridItem>
+        </Grid>
+      </Box>
     </>
   )
 }

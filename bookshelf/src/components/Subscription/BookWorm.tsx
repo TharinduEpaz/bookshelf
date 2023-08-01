@@ -28,7 +28,8 @@ function PriceWrapper(props: Props) {
 			shadow="base"
 			borderWidth="1px"
 			alignSelf={{ base: "center", lg: "flex-start" }}
-			borderColor={useColorModeValue("gray.200", "gray.500")}
+			// borderColor={useColorModeValue("gray.200", "gray.500")}
+			borderColor={"blue.200"}
 			borderRadius={"xl"}
 		>
 			{children}

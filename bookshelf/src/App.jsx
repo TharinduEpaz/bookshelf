@@ -13,40 +13,12 @@ import SelectSubscription from "./pages/Subscription/SelectSubscription";
 import SelectBookLover from "./pages/Subscription/SelectBookLover";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
+import SelectBook from "./pages/Subscription/SelectBook";
 
 function App() {
   return (
     
-    <Box
-      
-      // h={'auto'}
-     
-      // objectFit={"cover"}
-      // backgroundImage={''}
-      // backgroundAttachment={"fixed"}
-      // backgroundSize={"90% auto"}
-      // backgroundRepeat={"no-repeat"}
-      // backgroundPosition={"right"}
-      // backgroundOpacity={"30%"}
-      
-    >
-   
-    {/* backGround 3D
-      { <Image
-        boxSize={"100vh"}
-        objectFit={"cover"}
-        src={g}
-    
-        position="absolute"
-        top={"-140px"}
-        left={"40vw"}
-        right={0}
-        bottom={0}
-        opacity={"90%"}
-
-
-      /> } */}
-    
+    <Box>
       <Router>
       <Navbar />
         <Routes>
@@ -58,6 +30,7 @@ function App() {
           <Route exact path="/subscriptions" element={<Subscription />}></Route>
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
           <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
+          <Route exact path="/selectBook" element={<SelectBook/>}></Route>
 
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
