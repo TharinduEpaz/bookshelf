@@ -14,6 +14,7 @@ import SelectBookLover from "./pages/Subscription/SelectBookLover";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
 import SelectBook from "./pages/Subscription/SelectBook";
+import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
 import Cart from "./pages/Cart"
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
           <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
           <Route exact path="/selectBook" element={<SelectBook/>}></Route>
-
+          <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
           <Route exact path="/cart/:userId" element={<Cart />}></Route>

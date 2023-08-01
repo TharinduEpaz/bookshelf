@@ -5,9 +5,6 @@ import {
     Image,
     Badge,
     useColorModeValue,
-    Icon,
-    chakra,
-    Tooltip,
     Heading,
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';

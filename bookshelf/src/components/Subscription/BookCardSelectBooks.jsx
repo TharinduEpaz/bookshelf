@@ -9,8 +9,7 @@ import {
     Text
 } from '@chakra-ui/react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-import { Link as RouterLink } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const data = {
     isNew: true,
@@ -51,7 +50,7 @@ function Rating({ rating, numReviews }) {
     );
 }
 
-function BookCard({ name, author, price, imageURL, rating, }) {
+function BookCard({ name,  price, imageURL, id }) {
     return (
         <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
             <Box
@@ -105,11 +104,11 @@ function BookCard({ name, author, price, imageURL, rating, }) {
 
                             </Box>
                             <Box justifyContent={'center'} display={'flex'} marginTop={2}>
-                                <RouterLink to="#">
+                                <Link to={`/selectBook/${id}`} >
                                     <Button color="white" colorScheme='blue' borderRadius={15}>
                                         Checkout
                                     </Button>
-                                </RouterLink>
+                                </Link>
                             </Box>
                         </Box>
                     </Flex>
