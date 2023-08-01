@@ -1,4 +1,5 @@
 import React from 'react'
+import BookDetails from "../../components/Subscription/BookDetails";
 
 import {
     Box,
@@ -37,8 +38,8 @@ function SelectLover() {
                 </Text>
             </Box>
 
-            
-
+            <BookDetails/>
+        
         </Box>
 
     )
