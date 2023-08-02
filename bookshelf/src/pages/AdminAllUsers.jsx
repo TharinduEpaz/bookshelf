@@ -16,6 +16,19 @@ export default function AdminAllUsers() {
   return (
     
     <Box
+        m={"auto"}
+        mt={10}
+        w="100%"
+        h="100%"
+        borderColor={'rgba(0, 0, 0, 0.20)'}
+        borderWidth={'0.5px'}
+        borderRadius="6px"
+        bg='rgba(255, 255, 255, 0.90)'
+        boxShadow="sm"
+        bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(14.5px)"
+        p={8}
         alignItems={"Center"}
         justifyContent={"Center"}
     >
