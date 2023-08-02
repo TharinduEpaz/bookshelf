@@ -6,11 +6,12 @@ import {
   StatArrow,
   Box,
 } from "@chakra-ui/react";
+import { color } from "framer-motion";
 import React from "react";
 
-export default function StatCard({ lable, value, type, percentage }) {
+export default function StatCard({ lable, value, type, percentage, color }) {
   return (
-    <Box>
+    <Box color={color}>
       <Stat>
         <StatLabel>{lable}</StatLabel>
         <StatNumber>{value}</StatNumber>

@@ -46,7 +46,7 @@ export default function Inventry() {
   const columns = [
     "Book ID",
     "Book Name",
-    "Category",
+    "Genre",
     "Unit Price",
     "In-Stock",
     "Action",
@@ -231,22 +231,15 @@ export default function Inventry() {
                         </Text>
                         <Stack>
                           <FormControl>
-                            <FormLabel>Order type</FormLabel>
+                            <FormLabel>Status</FormLabel>
                             <HStack pl={5}>
-                              <Checkbox>Home Delevery</Checkbox>
+                              <Checkbox>Published</Checkbox>
                               <Spacer />
-                              <Checkbox>Pickup</Checkbox>
+                              <Checkbox>Unpublished</Checkbox>
                             </HStack>
                           </FormControl>
                           <FormControl>
-                            <FormLabel>Status</FormLabel>
-                            <Select pl={5}>
-                              <option value="option1">Option 1</option>
-                              <option value="option2">Option 2</option>
-                            </Select>
-                          </FormControl>
-                          <FormControl>
-                            <FormLabel>Customer</FormLabel>
+                            <FormLabel>Genre</FormLabel>
                             <Select pl={5}>
                               <option value="option1">Option 1</option>
                               <option value="option2">Option 2</option>
