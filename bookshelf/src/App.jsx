@@ -11,6 +11,8 @@ import SharingPost from "./pages/Sharing/SharingPost";
 import Subscription from "./pages/Subscription/SubscriptionHome";
 import SelectSubscription from "./pages/Subscription/SelectSubscription";
 import SelectBookLover from "./pages/Subscription/SelectBookLover";
+import SelectBookReader from "./pages/Subscription/SelectBookReader";
+import SelectBookWorm from "./pages/Subscription/SelectBookWorm";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
 import SelectBook from "./pages/Subscription/SelectBook";
@@ -32,6 +34,8 @@ function App() {
           <Route exact path="/subscriptions" element={<Subscription />}></Route>
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
           <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
+          <Route exact path="/selectBookReader" element={<SelectBookReader/>}></Route>
+          <Route exact path="/selectBookWorm" element={<SelectBookWorm/>}></Route>
           <Route exact path="/selectBook" element={<SelectBook/>}></Route>
           <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>

@@ -16,6 +16,7 @@ import {
 
 import { FaCheckCircle } from "react-icons/fa";
 import { FaBookReader } from "react-icons/fa"; 
+import { Link as RouterLink } from "react-router-dom";
 interface Props {
     children: React.ReactNode;
 }
@@ -40,74 +41,67 @@ function PriceWrapper(props: Props) {
 
 function BookReder() {
   return (
-    <div>
-          <PriceWrapper>
-              <Box py={7} px={12}>
-                  <Grid templateColumns="auto 1fr" gap={4}>
-                      {/* First column with icon */}
-                      <GridItem marginTop={6}>
-                          {/* Add your desired icon from the react-icons library */}
-                          <FaBookReader size={40} />
-                      </GridItem>
+		<div>
+			<PriceWrapper>
+				<Box py={7} px={12}>
+					<Grid templateColumns="auto 1fr" gap={4}>
+						{/* First column with icon */}
+						<GridItem marginTop={6}>
+							{/* Add your desired icon from the react-icons library */}
+							<FaBookReader size={40} color='darkblue'/>
+						</GridItem>
 
-                      {/* Second column (spanning two rows) */}
-                      <GridItem textAlign={"start"}>
-                          {/* First row in the second column */}
-                          <Text fontWeight="500" fontSize="3xl">
-                              BOOK
-                          </Text>
+						{/* Second column (spanning two rows) */}
+						<GridItem textAlign={"start"}>
+							{/* First row in the second column */}
+							<Text fontWeight="500" fontSize="3xl">
+								BOOK
+							</Text>
 
-                          {/* Second row in the second column */}
-                          <Text fontSize="4xl" fontWeight="900">
-                              READER
-                          </Text>
-                      </GridItem>
-                  </Grid>
-              </Box>
+							{/* Second row in the second column */}
+							<Text fontSize="4xl" fontWeight="900">
+								READER
+							</Text>
+						</GridItem>
+					</Grid>
+				</Box>
 
-              <VStack
-                  bg={useColorModeValue("gray.50", "gray.700")}
-                  py={4}
-                  borderBottomRadius={"xl"}
-              >
-                  <List spacing={3} textAlign="start" px={12}>
-                      <ListItem fontSize={18}>
-                          <ListIcon
-                              as={FaCheckCircle}
-                              color="green.500"
-                          />
-                          <strong>1 book every for 2 months. </strong>
-                      </ListItem>
-                      <ListItem>
-                          <ListIcon
-                              as={FaCheckCircle}
-                              color="green.500"
-                          />
-                          Time extensions.
-                      </ListItem>
-                      <ListItem>
-                          <ListIcon
-                              as={FaCheckCircle}
-                              color="green.500"
-                          />
-                          Money Back Gurantee.
-                      </ListItem>
-                  </List>
-                  <Box w="80%" pt={7}>
-                      <Button
-                          variant="outline"
-                          ml={5}
-                          colorScheme="purple"
-                          w={130}
-                          borderRadius={100}
-                      >
-                          Select
-                      </Button>
-                  </Box>
-              </VStack>
-          </PriceWrapper>
-    </div>
-  )
+				<VStack
+					bg={useColorModeValue("gray.50", "gray.700")}
+					py={4}
+					borderBottomRadius={"xl"}
+				>
+					<List spacing={3} textAlign="start" px={12}>
+						<ListItem fontSize={18}>
+							<ListIcon as={FaCheckCircle} color="green.500" />
+							<strong>1 book every for 2 months. </strong>
+						</ListItem>
+						<ListItem>
+							<ListIcon as={FaCheckCircle} color="green.500" />
+							Time extensions.
+						</ListItem>
+						<ListItem>
+							<ListIcon as={FaCheckCircle} color="green.500" />
+							Money Back Gurantee.
+						</ListItem>
+					</List>
+					<Box w="80%" pt={7}>
+						<RouterLink to="/selectBookReader">
+							<Button
+								ml={5}
+                                variant={'outline'}
+								colorScheme="purple"
+								w={130}
+								borderRadius={100}
+							>
+								Select
+							</Button>
+						</RouterLink>
+					</Box>
+				</VStack>
+			</PriceWrapper>
+		</div>
+  );
 }
 
 export default BookReder

@@ -1,15 +1,15 @@
 import React from 'react'
 
 import {
-    Box, Grid, GridItem, Heading,Text
+    Box, Grid, GridItem, Heading, Text
 } from "@chakra-ui/react";
 
 import SideNavDetails from '../../components/Subscription/SideNavDetails';
-import SelectLoverIcon from '../../components/Subscription/SelectLoverIcon';
-import SelectLover from '../../components/Subscription/SelectLover';
-function SelectBookLover() {
+import SelectReaderIcon from '../../components/Subscription/SelectReaderIcon';
+import SelectReader from '../../components/Subscription/SelectReader';
+function SelectBookReader() {
     return (
-        <Box 
+        <Box
             height={'100%'}
             m={"auto"}
             mt={10}
@@ -31,11 +31,11 @@ function SelectBookLover() {
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectLoverIcon/>
+                    <SelectReaderIcon />
                 </GridItem>
 
                 <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectLover/>
+                    <SelectReader />
                 </GridItem>
             </Grid>
 
@@ -43,4 +43,4 @@ function SelectBookLover() {
     )
 }
 
-export default SelectBookLover
+export default SelectBookReader

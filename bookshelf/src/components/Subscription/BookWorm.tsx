@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 
 import { FaCheckCircle } from "react-icons/fa";
-import { GiEarthWorm } from "react-icons/gi"; 
+import { GiSandSnake } from "react-icons/gi"; 
+import { Link as RouterLink } from "react-router-dom";
 interface Props {
 	children: React.ReactNode;
 }
@@ -46,7 +47,7 @@ function BookReder() {
 						{/* First column with icon */}
 						<GridItem marginTop={6}>
 							{/* Add your desired icon from the react-icons library */}
-							<GiEarthWorm size={50} />
+							<GiSandSnake size={50} color="darkgreen" />
 						</GridItem>
 
 						{/* Second column (spanning two rows) */}
@@ -83,15 +84,17 @@ function BookReder() {
 						</ListItem>
 					</List>
 					<Box w="80%" pt={7}>
-						<Button
-							variant="outline"
-							ml={5}
-							colorScheme="purple"
-							w={130}
-							borderRadius={100}
-						>
-							Select
-						</Button>
+						<RouterLink to="/selectBookWorm">
+							<Button
+								ml={5}
+								variant={"outline"}
+								colorScheme="purple"
+								w={130}
+								borderRadius={100}
+							>
+								Select
+							</Button>
+						</RouterLink>
 					</Box>
 				</VStack>
 			</PriceWrapper>

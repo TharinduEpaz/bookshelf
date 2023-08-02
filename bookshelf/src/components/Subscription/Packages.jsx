@@ -17,7 +17,7 @@ function Packages() {
 				textAlign="center"
 				justify="center"
 				spacing={{ base: 4, lg: 10 }}
-				py={40}
+				py={16}
 			>
 				<BookReader/>
 

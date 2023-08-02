@@ -6,13 +6,12 @@ import {
     Button,
     Grid,
     GridItem,
-    Text,
-
+    Text
 } from "@chakra-ui/react";
 
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 
-function SelectLover() {
+function SelectReader() {
     return (
         <Box py={7} px={12}>
             <Text fontSize={'21'} color={'#204974'} as={'b'}>
@@ -24,7 +23,7 @@ function SelectLover() {
 
             <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(10,1fr)'} marginTop={10} >
                 <GridItem marginTop={'3px'}>
-                    <BsFillCalendar2DateFill size={'25px'}  />
+                    <BsFillCalendar2DateFill size={'25px'} />
                 </GridItem>
                 <GridItem colSpan={3}>
                     <Text as={'b'} fontSize={'22'}>
@@ -38,11 +37,11 @@ function SelectLover() {
                 </Text>
             </Box>
 
-            <BookDetails/>
-        
+            <BookDetails />
+
         </Box>
 
     )
 }
 
-export default SelectLover
+export default SelectReader

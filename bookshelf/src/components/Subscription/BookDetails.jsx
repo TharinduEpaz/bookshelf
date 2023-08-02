@@ -66,16 +66,16 @@ function Shop() {
                 NOTE : Books will be delivered in selected order. You should pay the selected amount each month to receive the order
             </Text>
 
-            <Grid templateRows={'repeat(2,1fr)'} templateColumns={'repeat(6,1fr)'} gap={'15px'} marginTop={10} marginLeft={18}>
-                <GridItem rowSpan={1} colSpan={5} textColor={'#204974'} fontSize={20} as={'b'}>
+            <Grid templateRows={'repeat(2,1fr)'} templateColumns={'repeat(7,1fr)'} gap={'15px'} marginTop={10} marginLeft={18}>
+                <GridItem rowSpan={1} colSpan={6} textColor={'#204974'} fontSize={20} as={'b'}>
                     {bookDetails[firstBookName].title}(subscription)
                 </GridItem>
 
-                <GridItem rowSpan={1} colSpan={1} textColor={'#204974'} fontSize={20} as={'b'}>
+                <GridItem justifyContent={'center'} rowSpan={1} colSpan={1} textColor={'#204974'} fontSize={20} as={'b'} >
                     Rs {firstBookPrice}
                 </GridItem>
 
-                <GridItem rowSpan={1} colSpan={5} textColor={'#204974'} fontSize={25}>
+                <GridItem rowSpan={1} colSpan={6} textColor={'#204974'} fontSize={25}>
                     <Checkbox>
                         I agree the terms and conditions
                     </Checkbox>
@@ -83,10 +83,10 @@ function Shop() {
                 <GridItem rowSpan={1} colSpan={1} >
                     <RouterLink to="#">
                         <Button
-                            ml={5}
                             colorScheme="purple"
                             w={130}
                             borderRadius={15}
+
                         >
                             Go to Checkout
                         </Button>

@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import { FaCheckCircle } from "react-icons/fa";
-import { PiHandHeartFill } from "react-icons/pi"; 
+import { PiHandHeartDuotone } from "react-icons/pi"; 
 import { Link as RouterLink } from "react-router-dom";
 interface Props {
 	children: React.ReactNode;
@@ -68,7 +68,7 @@ function BookReder() {
 							{/* First column with icon */}
 							<GridItem marginTop={6}>
 								{/* Add your desired icon from the react-icons library */}
-								<PiHandHeartFill size={50} />
+								<PiHandHeartDuotone size={50} color="red"/>
 							</GridItem>
 
 							{/* Second column (spanning two rows) */}

@@ -4,9 +4,9 @@ import {
     Box, Grid, GridItem, Text
 } from "@chakra-ui/react";
 
-import { PiHandHeartDuotone } from "react-icons/pi";
+import { FaBookReader } from "react-icons/fa";
 
-function SelectLoverIcon() {
+function SelectReaderIcon() {
     return (
         <Box py={7} px={12} marginTop={2}>
 
@@ -16,9 +16,9 @@ function SelectLoverIcon() {
 
             <Grid templateColumns="auto 1fr" gap={4} paddingTop={3}>
                 {/* First column with icon */}
-                <GridItem marginTop={4}>
+                <GridItem marginTop={3}>
                     {/* Add your desired icon from the react-icons library */}
-                    <PiHandHeartDuotone size={50} color='red' />
+                    <FaBookReader size={50} color='darkblue' />
                 </GridItem>
 
                 {/* Second column (spanning two rows) */}
@@ -30,7 +30,7 @@ function SelectLoverIcon() {
 
                     {/* Second row in the second column */}
                     <Text fontSize="3xl" fontWeight="900">
-                        Lover
+                        Reader
                     </Text>
                 </GridItem>
             </Grid>
@@ -38,4 +38,4 @@ function SelectLoverIcon() {
     )
 }
 
-export default SelectLoverIcon
+export default SelectReaderIcon
