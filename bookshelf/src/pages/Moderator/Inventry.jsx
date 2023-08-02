@@ -11,23 +11,6 @@ import {
   Spacer,
   Text,
   StatGroup,
-  InputGroup,
-  Input,
-  InputRightElement,
-  HStack,
-  Select,
-  Checkbox,
-  Menu,
-  MenuButton,
-  MenuList,
-  Stack,
-  FormControl,
-  FormLabel,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import {
   BiBookOpen,
@@ -41,6 +24,7 @@ import StatCard from "../../components/Moderator/StatCard";
 import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
 import DateFilter from "../../components/Moderator/DateFilter";
+import SearchPanel from "../../components/Moderator/SearchPanel";
 
 export default function Inventry() {
   const columns = [
@@ -196,91 +180,7 @@ export default function Inventry() {
               <Spacer mt={10} />
 
               <Box>
-                <Flex>
-                  <Text fontSize="lg" fontWeight={"bold"}>
-                    Inventry Items
-                  </Text>
-
-                  <Spacer />
-
-                  <Flex gap={2}>
-                    <InputGroup w={"100%"}>
-                      <Input size={"sm"} placeholder="Search" />
-                      <InputRightElement pointerEvents={"none"}>
-                        <Icon as={BiSearchAlt} color={"gray.300"} />
-                      </InputRightElement>
-                    </InputGroup>
-
-                    {/* ****************General Filter************************************ */}
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        leftIcon={<BiFilterAlt />}
-                        color={"gray.500"}
-                        borderColor={"gray.300"}
-                        variant="outline"
-                        pl={5}
-                        pr={5}
-                        size={"sm"}
-                      >
-                        Filter
-                      </MenuButton>
-                      <MenuList p={5} w={"350px"}>
-                        <Text fontSize={"lg"} fontWeight={"semibold"} pb={5}>
-                          Filter
-                        </Text>
-                        <Stack>
-                          <FormControl>
-                            <FormLabel>Status</FormLabel>
-                            <HStack pl={5}>
-                              <Checkbox>Published</Checkbox>
-                              <Spacer />
-                              <Checkbox>Unpublished</Checkbox>
-                            </HStack>
-                          </FormControl>
-                          <FormControl>
-                            <FormLabel>Genre</FormLabel>
-                            <Select pl={5}>
-                              <option value="option1">Option 1</option>
-                              <option value="option2">Option 2</option>
-                            </Select>
-                          </FormControl>
-                          <FormControl>
-                            <FormLabel>Amount</FormLabel>
-                            <HStack pl={5}>
-                              <Stack>
-                                <FormLabel>From</FormLabel>
-                                <NumberInput>
-                                  <NumberInputField placeholder="0.00" />
-                                  <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                  </NumberInputStepper>
-                                </NumberInput>
-                              </Stack>
-                              <Stack>
-                                <FormLabel>To</FormLabel>
-                                <NumberInput>
-                                  <NumberInputField placeholder="0.00" />
-                                  <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                  </NumberInputStepper>
-                                </NumberInput>
-                              </Stack>
-                            </HStack>
-                          </FormControl>
-                          <Button colorScheme="blue" borderRadius={10}>
-                            Filter
-                          </Button>
-                        </Stack>
-                      </MenuList>
-                    </Menu>
-
-                    <DateFilter />{/* Date Filter */}
-                    
-                  </Flex>
-                </Flex>
+                <SearchPanel name="Inventory Items" filter="inventory" />
 
                 <Spacer mt={5} />
 
