@@ -8,28 +8,23 @@ import { PiHandHeartDuotone } from "react-icons/pi";
 
 function SelectLoverIcon() {
     return (
-        <Box py={7} px={12} marginTop={2}>
-
-            <Text fontSize={'21'} color={'#204974'} as={'b'} >
-                Current Subscription
-            </Text>
-
+        <Box py={3} px={10} >
             <Grid templateColumns="auto 1fr" gap={4} paddingTop={3}>
                 {/* First column with icon */}
                 <GridItem marginTop={4}>
                     {/* Add your desired icon from the react-icons library */}
-                    <PiHandHeartDuotone size={50} color='red' />
+                    <PiHandHeartDuotone size={70} color='red' />
                 </GridItem>
 
                 {/* Second column (spanning two rows) */}
                 <GridItem textAlign={"start"}>
                     {/* First row in the second column */}
-                    <Text fontWeight="500" fontSize="20">
+                    <Text fontWeight="500" fontSize="24">
                         BOOK
                     </Text>
 
                     {/* Second row in the second column */}
-                    <Text fontSize="3xl" fontWeight="900">
+                    <Text fontSize="36" fontWeight="900">
                         Lover
                     </Text>
                 </GridItem>

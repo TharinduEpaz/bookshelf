@@ -31,7 +31,13 @@ function SelectBookWorm() {
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectWormIcon />
+                    <Box padding={10}>
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Current Subscription
+                        </Text>
+                        <SelectWormIcon />
+                    </Box>
+
                 </GridItem>
 
                 <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>

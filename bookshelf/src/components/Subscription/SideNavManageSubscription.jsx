@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from "react-router-dom";
 
-function SideNavSelectBooks() {
+function SideNavManageSubscription() {
 
     return (
         <div>
@@ -23,13 +23,13 @@ function SideNavSelectBooks() {
 
             <div style={{ marginLeft: '18px', marginTop: '20px' }}>
                 <RouterLink to="#">
-                    <Text  fontSize={'19'} lineHeight={'10'}> Details</Text>
+                    <Text fontSize={'19'} lineHeight={'10'}> Details</Text>
                 </RouterLink>
                 <RouterLink to="#">
-                    <Text as='b'fontSize={'19'} lineHeight={'10'} >Select Books</Text>
+                    <Text  fontSize={'19'} lineHeight={'10'} >Select Books</Text>
                 </RouterLink>
                 <RouterLink to="/manageSubscription">
-                    <Text fontSize={'19'} lineHeight={'10'}>Manage Subscription</Text>
+                    <Text as={'b'} fontSize={'19'} lineHeight={'10'}>Manage Subscription</Text>
                 </RouterLink>
                 <RouterLink to="#">
                     <Text fontSize={'19'} lineHeight={'10'}>Chat</Text>
@@ -39,4 +39,4 @@ function SideNavSelectBooks() {
     )
 }
 
-export default SideNavSelectBooks;
+export default SideNavManageSubscription;

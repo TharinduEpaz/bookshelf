@@ -28,7 +28,7 @@ function SideNavDetails() {
                 <RouterLink to="#">
                     <Text fontSize={'19'} lineHeight={'10'} >Select Books</Text>
                 </RouterLink>
-                <RouterLink to="#">
+                <RouterLink to="/manageSubscription">
                     <Text fontSize={'19'} lineHeight={'10'}>Manage Subscription</Text>
                 </RouterLink>
                 <RouterLink to="#">

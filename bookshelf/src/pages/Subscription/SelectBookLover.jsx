@@ -27,11 +27,23 @@ function SelectBookLover() {
 
             <Grid templateRows={'repeat(5,1fr)'} templateColumns={'repeat(5,1fr)'} gap={'15px'} paddingTop={5}>
                 <GridItem rowSpan={3} colSpan={1} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SideNavDetails />
+                    <Box padding={10}>
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Current Subscription
+                        </Text>
+                        <SideNavDetails />
+                    </Box>
                 </GridItem>
+                    
+                
 
                 <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectLoverIcon/>
+                    <Box padding={10}>
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Current Subscription
+                        </Text>
+                        <SelectLoverIcon />
+                    </Box>
                 </GridItem>
 
                 <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>

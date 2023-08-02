@@ -31,7 +31,13 @@ function SelectBookReader() {
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectReaderIcon />
+                    <Box padding={10}>
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Current Subscription
+                        </Text>
+                        <SelectReaderIcon />
+                    </Box>
+                    
                 </GridItem>
 
                 <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
