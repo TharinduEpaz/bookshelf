@@ -1,16 +1,98 @@
-import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import React from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  Spacer,
+  Text,
+  StatGroup,
+} from "@chakra-ui/react";
 
 import {
-    Box, 
-    Flex
-} from '@chakra-ui/react'
+  BiBookOpen,
+  BiErrorCircle,
+  BiFilterAlt,
+  BiPlus,
+  BiSearchAlt,
+} from "react-icons/bi";
+
+import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminStatCard from "../components/Admin/AdminStatCard";
+import AdminInventoryDT from "../components/Admin/AdminInventoryDT";
+import { Link } from "react-router-dom";
+
+//import SearchPanel from "../../components/Moderator/SearchPanel";
+
 
 
 export default function AdminInventory() {
+
+  const columns = [
+    "Book ID",
+    "Book Name",
+    "Genre",
+    "Unit Price",
+    "In-Stock",
+    "Action",
+    "Status",
+  ];
+
+  const list = [
+    {
+      id: "n0001",
+      name: "Lorem ipsum",
+      category: "consectetur adipiscing elit",
+      price: "Rs.2990.00",
+      stock: "10",
+      action: "Published",
+      status: "Published",
+    },
+    {
+      id: "n0002",
+      name: "Lorem ipsum",
+      category: "consectetur adipiscing elit",
+      price: "Rs.2990.00",
+      stock: "10",
+      action: "Published",
+      status: "Published",
+    },
+    {
+      id: "n0003",
+      name: "Lorem ipsum",
+      category: "consectetur adipiscing elit",
+      price: "Rs.2990.00",
+      stock: "10",
+      action: "Published",
+      status: "Published",
+    },
+    {
+      id: "n0004",
+      name: "Lorem ipsum",
+      category: "consectetur adipiscing elit",
+      price: "Rs.2990.00",
+      stock: "10",
+      action: "Published",
+      status: "Published",
+    },
+    {
+      id: "n0005",
+      name: "Lorem ipsum",
+      category: "consectetur adipiscing elit",
+      price: "Rs.2990.00",
+      stock: "10",
+      action: "Published",
+      status: "Published",
+    },
+  ];
+
   return (
     
-    <Box
+       <Box
     m={"auto"}
     mt={10}
     w="80%"
@@ -47,14 +129,89 @@ export default function AdminInventory() {
       flexWrap={"wrap"}
     >  
 
-  
-
  </Flex>
 
+          <Box p={10}>
+              <Flex>
+                <Text fontSize="lg" fontWeight={"bold"}>
+                  Inventry Summory
+                </Text>
+                <Spacer />
+                <Link to="adminaddnewbook">
+                  <Button colorScheme="blue" size={"sm"}>
+                    <Icon as={BiPlus} />
+                    <Text ml={2}>Add a New Book</Text>
+                  </Button>
+                </Link>
+              </Flex>
+
+              <Flex gap={20}>
+                <Card
+                  mt={5}
+                  p={5}
+                  pl={10}
+                  pr={10}
+                  boxShadow="sm"
+                  borderRadius="md"
+                  bgColor={"#EDF2F7"}
+                  w={"fit-content"}
+                >
+                  <CardBody>
+                    <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
+                    <StatGroup gap={200}>
+                      <AdminStatCard
+                        lable="All Books"
+                        value="500"
+                      />
+                      <AdminStatCard
+                        lable="Active"
+                        value="480"
+                        type="increase"
+                        percentage="80"
+                      />
+                    </StatGroup>
+                  </CardBody>
+                </Card>
+                <Card
+                  mt={5}
+                  p={5}
+                  pl={10}
+                  pr={10}
+                  boxShadow="sm"
+                  borderRadius="md"
+                  bgColor={"#EDF2F7"}
+                  w={"fit-content"}
+                >
+                  <CardBody>
+                    <Icon as={BiErrorCircle} boxSize={8} color={"#E53E3E"} />
+                    <AdminStatCard
+                      lable="Low Stock Alert"
+                      value="10"
+                      type="decrease"
+                      percentage="5.05"
+                    />
+                  </CardBody>
+                </Card>
+              </Flex>
+
+              <Spacer mt={10} />
+
+              <Box>
+                {/* <SearchPanel name="Inventory Items" filter="inventory" /> */}
+
+                <Spacer mt={5} />
+
+                <AdminInventoryDT list={list} columnNames={columns} />
+              </Box>
+            </Box>
+
  </Box>
+
+
  </div>
 
   </Box>
 
-  )
+
+  );
 }

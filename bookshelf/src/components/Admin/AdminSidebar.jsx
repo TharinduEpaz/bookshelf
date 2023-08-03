@@ -12,13 +12,16 @@ import {
 
 import { useState } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { IoMdNotificationsOutline } from "react-icons/io";
+//import { LuLayoutDashboard } from "react-icons/lu";
+import {BiHomeAlt} from "react-icons/bi";
+import { BiBell } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
-import { CiShoppingTag } from "react-icons/ci";
-import { LuBuilding2 } from "react-icons/lu";
-import { FiGift } from "react-icons/fi";
+import { BiBuilding } from "react-icons/bi";
+import { BiCollection } from "react-icons/bi";
+import { BiGift } from "react-icons/bi";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { BiShareAlt } from "react-icons/bi";
+import { PiWarningOctagonBold } from "react-icons/pi";
 import { FiSettings } from "react-icons/fi";
 
 const sidebarLinks = [
@@ -26,13 +29,13 @@ const sidebarLinks = [
     id:1,
     url:'/admindashboard',
     text:'Dashboard',
-    icon:<LuLayoutDashboard/>
+    icon:<BiHomeAlt/>
   },
   {
     id:2,
     url:'/adminnotifications',
     text:'Notifications',
-    icon:<IoMdNotificationsOutline/>
+    icon:<BiBell/>
   },
   {
     id:3,
@@ -42,21 +45,21 @@ const sidebarLinks = [
   },
   {
     id:4,
-    url:'/adminshop',
-    text:'Shop',
-    icon:<CiShoppingTag/>
+    url:'/admininventory',
+    text:'Inventory',
+    icon:<BiBuilding/>
   },
   {
     id:5,
-    url:'/admininventory',
-    text:'Inventory',
-    icon:<LuBuilding2/>
+    url:'/adminorders',
+    text:'Orders',
+    icon:<BiCollection/>
   },
   {
     id:6,
     url:'/admindonations',
     text:'Donations',
-    icon:<FiGift/>
+    icon:<BiGift/>
   },
   {
     id:7,
@@ -66,6 +69,18 @@ const sidebarLinks = [
   },
   {
     id:8,
+    url:'/adminbooksharing',
+    text:'Book Sharing',
+    icon:<BiShareAlt/>
+  },
+  {
+    id:9,
+    url:'/admincomplaints',
+    text:'Complaints',
+    icon:<PiWarningOctagonBold/>
+  },
+  {
+    id:10,
     url:'/adminsettings',
     text:'Settings',
     icon:<FiSettings/>

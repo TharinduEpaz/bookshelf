@@ -19,7 +19,7 @@ export default function AdminAllUsers() {
         m={"auto"}
         mt={10}
         w="100%"
-        h="100%"
+        h="100vh"
         borderColor={'rgba(0, 0, 0, 0.20)'}
         borderWidth={'0.5px'}
         borderRadius="6px"
