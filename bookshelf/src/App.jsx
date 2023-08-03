@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
+import Cart from "./pages/Cart"
 
 // import admin pages
 import AdminDashboard from "./pages/AdminDashboard";
@@ -61,7 +62,7 @@ function App() {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-
+          <Route exact path="/cart/:userId" element={<Cart />}></Route>
           {/* Admin Routes */}
           <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
           <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>

@@ -1,5 +1,4 @@
 
-
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 const validator = require('validator');
@@ -44,7 +43,8 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue:'buyer'
-    }, 
+    },
+  
  
 }, {
   // Other model options go here
@@ -52,7 +52,7 @@ const User = sequelize.define('User', {
 })
 
 
-User.sync({  alter: true });
+// User.sync({  alter: true });
 
 
 
