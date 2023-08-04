@@ -2,22 +2,14 @@ import React from "react";
 
 import {
     Button,
-    Spacer,
     Text,
-    HStack,
     Select,
-    Checkbox,
     Menu,
     MenuButton,
     MenuList,
     Stack,
     FormControl,
     FormLabel,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
 } from "@chakra-ui/react";
 
 import { BiFilterAlt } from "react-icons/bi";
