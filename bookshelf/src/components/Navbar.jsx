@@ -13,29 +13,21 @@ import {
   MenuList,
   MenuItem,
   Stack,
+  Icon,
   IconButton,
   useDisclosure,
   useColorModeValue,
   ButtonGroup,
   Heading,
-  Avatar,
-  MenuDivider,
-  useToast,
+  LinkBox,
 } from "@chakra-ui/react";
 
 import { Link as RouterLink } from "react-router-dom";
-import { userContext } from "../context/userContext";
-import { useContext } from "react";
-import axios from "axios";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import {
-  AiOutlineClose,
-  AiOutlineShoppingCart,
-  AiFillCaretDown,
-} from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 
-import { BsFillCartFill } from "react-icons/bs";
+import React from "react";
 
 const navLinks = [
   { name: "New Books", path: "#" },
@@ -47,29 +39,6 @@ const navLinks = [
 
 function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, setUser } = useContext(userContext);
-  const logoutUrl = "http://localhost:3000/api/v1/logout";
-  const toast = useToast();
-
-  const logout = async () => {
-    try {
-      const res = await axios.get(logoutUrl);
-      setUser(null);
-      console.log(res.data);
-
-      return toast({
-        title: 'Successfully logged out',
-        position:'top',
-        status: 'success',
-        duration: 4000,
-        isClosable: true,
-      })
-
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
   return (
     <Box
       as="nav"
@@ -111,66 +80,29 @@ function Navbar() {
             ))}
           </HStack>
         </HStack>
+        <ButtonGroup>
+        
+          <RouterLink to="/login">
+            <Button
+              colorScheme="blue"
+              size="sm"
+              variant={"ghost"}
+              display={{ base: "none", md: "block" }}
+            >
+              Sign in
+            </Button>
+          </RouterLink>
 
-        {!user ? (
-          <ButtonGroup>
-            <RouterLink to="/login">
-              <Button
-                colorScheme="blue"
-                size="sm"
-                variant={"ghost"}
-                display={{ base: "none", md: "block" }}
-              >
-                Sign in
-              </Button>
-            </RouterLink>
-
-            <RouterLink to="/register">
-              <Button
-                colorScheme="facebook"
-                size="sm"
-                display={{ base: "none", md: "block" }}
-              >
-                Sign Up
-              </Button>
-            </RouterLink>
-          </ButtonGroup>
-        ) : (
-          <ButtonGroup>
-            <RouterLink to="/cart">
-              <IconButton
-                colorScheme="blue"
-                aria-label="Call Segun"
-                size="lg"
-                variant={"ghost"}
-                icon={<BsFillCartFill />}
-              />
-            </RouterLink>
-            <Menu w="100">
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-                rightIcon={<AiFillCaretDown />}
-              >
-                <Avatar
-                  size={"sm"}
-                  name="Anushka Rajapaksha"
-                  colorScheme="purple"
-                  src="https://bit.ly/broken-link"
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Account</MenuItem>
-                <MenuItem>Orders</MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={logout}>Log Out</MenuItem>
-              </MenuList>
-            </Menu>
-          </ButtonGroup>
-        )}
+          <RouterLink to="/register">
+            <Button
+              colorScheme="facebook"
+              size="sm"
+              display={{ base: "none", md: "block" }}
+            >
+              Sign Up
+            </Button>
+          </RouterLink>
+        </ButtonGroup>
 
         <IconButton
           size="md"

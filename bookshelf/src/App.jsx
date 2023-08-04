@@ -1,19 +1,10 @@
 import { Box, Container, useColorModeValue, Image } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import g from "./assets/g.png";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Shop from "./pages/Shop";
-import ProductPage from "./pages/ProductPage";
-import Cart from "./pages/Cart"
-
-import { useState, useMemo } from "react";
-
-
-import {UserProvider} from './context/userContext';
 
 // Import Moderator Pages
 import Dashboard from "./pages/Moderator/Dashboard";
@@ -28,18 +19,20 @@ import Setting from "./pages/Moderator/Settings";
 import AdddNewBook from "./pages/Moderator/AdddNewBook";
 
 function App() {
-
   return (
     
     <Box
+      
+      h={"200vh"}
+     
       // objectFit={"cover"}
+      
       // backgroundImage={''}
       // backgroundAttachment={"fixed"}
       // backgroundSize={"90% auto"}
       // backgroundRepeat={"no-repeat"}
       // backgroundPosition={"right"}
       // backgroundOpacity={"30%"}
-      
     >
    
     {/* backGround 3D */}
@@ -57,10 +50,8 @@ function App() {
 
 
       /> */}
-     
     
       <Router>
-      <UserProvider>
       <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -79,11 +70,7 @@ function App() {
           <Route exact path="/moderator/setting" element={<Setting />}></Route>
           <Route exact path="/moderator/addNewBook" element={<AdddNewBook />}></Route>
         </Routes>
-        <Footer />
-        </UserProvider>
       </Router>
-
-      
     </Box>
   );
 }
