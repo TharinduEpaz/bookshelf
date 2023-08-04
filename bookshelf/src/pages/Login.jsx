@@ -17,6 +17,9 @@ import {
   Skeleton,
   SkeletonCircle,
   SkeletonText,
+  CircularProgress,
+  
+
 
 
 
@@ -69,25 +72,32 @@ export default function SimpleCard() {
 
   if(isLoading){
     return (
-      <Box >
-      <Spinner
-      position="absolute"
-      top={"50%"}
-      left={"50%"}
-      right={0}
-      bottom={0}
-      opacity={"90%"}
-      size="xl"
-      color="blue.500"
-      emptyColor="gray.200"
-      thickness="4px"
-      speed="0.65s"
-      />
-    <Box padding='6' boxShadow='lg' bg='blue.100' h={'100vh'}>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='4' noOfLines={30} spacing='4' skeletonHeight='2' color={"blue.200"} />
-</Box>
-      </Box>
+      <Flex
+      minH={'100vh'}
+      
+      justify={'center'}
+      >
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Sign up
+          </Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool features ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
+          <Flex alignItems={'center'} justifyContent={'center'}>
+          <CircularProgress isIndeterminate color='green.300' />
+            
+          </Flex>
+        </Box>
+      </Stack>
+    </Flex>
     )
   }
 
