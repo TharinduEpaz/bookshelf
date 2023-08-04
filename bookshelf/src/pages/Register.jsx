@@ -18,9 +18,35 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Fa500Px } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const[firstName,setFirstName] = useState('');
+  const[lastName,setLastName] = useState('');
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const regUrl = 'http://localhost:3000/api/v1/register';
+
+  const register = async (e) => {
+     e.preventDefault();
+     try {
+      console.log(email);
+      const response = await axios.post(regUrl,{ firstName : firstName, lastName : lastName, email : email, password : password});
+      console.log(response.data);
+      setEmail('');
+      setPassword('');
+      setFirstName('');
+      setLastName('');
+      
+     } catch (error) {
+    console.log(error.response);
+     }
+  
+  }
+
+
+
 
   return (
     <Flex
@@ -43,28 +69,42 @@ export default function SignupCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
+          <form onSubmit={register}>
             <HStack>
               <Box>
                 <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
+                  <Input type="text" 
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+    
+                  />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                  <Input type="text" 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input type={showPassword ? 'text' : 'password'} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -78,6 +118,7 @@ export default function SignupCard() {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+              type='submit'
                 loadingText="Submitting"
                 size="lg"
                 bg={'blue.400'}
@@ -93,6 +134,7 @@ export default function SignupCard() {
                 Already a user? <Link color={'blue.400'}>Login</Link>
               </Text>
             </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>
