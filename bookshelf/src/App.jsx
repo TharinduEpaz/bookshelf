@@ -66,7 +66,6 @@ function App() {
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
-<<<<<<< HEAD
 
           {/* Moderator Routes */}
           <Route exact path="/moderator/dashboard" element={<Dashboard />}></Route>
@@ -79,12 +78,6 @@ function App() {
           <Route exact path="/moderator/booksharing" element={<BookSharing />}></Route>
           <Route exact path="/moderator/setting" element={<Setting />}></Route>
           <Route exact path="/moderator/addNewBook" element={<AdddNewBook />}></Route>
-=======
-          <Route exact path="/shop" element={<Shop />}></Route>
-          <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-          <Route exact path="/cart/:userId" element={<Cart />}></Route>
-          {/* <Route exact path="/logout" element={<Logout />}></Route> */}
->>>>>>> 38eea547e56a15ef46523e2411dffa28d0f6ce11
         </Routes>
         <Footer />
         </UserProvider>
