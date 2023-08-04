@@ -37,12 +37,16 @@ const book = sequelize.define('book', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+
     //types means paperback, hardcover, etc
+
     typesAvailable: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },
+
     //genres means fiction, non-fiction, etc
+    
     genre: {
         type: DataTypes.STRING,
         allowNull: false
@@ -60,10 +64,11 @@ const book = sequelize.define('book', {
         allowNull: true,
         defaultValue: 'uploads/default.jpeg'
     },
+ 
 }, {
     // Other model options go here
 }) 
 
-// book.sync({  alter: true });
+book.sync({  alter: true });
 
 module.exports = book;

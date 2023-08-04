@@ -5,6 +5,11 @@ const router = Router();
 
 const controller = require('../controllers/bookController')
 
+
+
+
+
+
 router.route('/').get(controller.getAllBooks);
 
 router.route('/').post(authenticateUser,authPermissions('admin'), controller.addBook);

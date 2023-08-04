@@ -18,6 +18,7 @@ const addBook = async (req, res, next) => {
       language,
       featuredCategory,
     } = req.body;
+    
     const book = await bookModel.create({
       title,
       price,
