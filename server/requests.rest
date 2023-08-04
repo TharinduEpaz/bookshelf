@@ -1,0 +1,20 @@
+ GET http://localhost:3000
+
+###
+
+GET http://localhost:3000/api/v1/books/
+
+###
+GET http://localhost:3000/api/v1/books/1
+
+###
+POST http://localhost:3000/api/v1/books/addBook
+
+###
+PATCH http://localhost:3000/api/v1/books/1
+
+### 
+DELETE http://localhost:3000/api/v1/books/1
+
+###
+POST http://localhost:3000/api/v1/books/uploadImage
