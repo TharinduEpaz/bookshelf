@@ -164,8 +164,14 @@ function Navbar() {
                 />
               </MenuButton>
               <MenuList>
+              {user.user.role != "admin" ? 
+              <>
                 <MenuItem>Account</MenuItem>
                 <MenuItem>Orders</MenuItem>
+                </>
+                : <RouterLink to="/admindashboard">
+                <MenuItem>Admin Dashboard</MenuItem> 
+                </RouterLink> }
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>
