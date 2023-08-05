@@ -155,10 +155,11 @@ function Navbar() {
                 minW={0}
                 rightIcon={<AiFillCaretDown />}
               >
+              
                 <Avatar
                   size={"sm"}
-                  name="Anushka Rajapaksha"
-                  colorScheme="purple"
+                  name={user.user.name }
+                  colorScheme="blue"
                   src="https://bit.ly/broken-link"
                 />
               </MenuButton>

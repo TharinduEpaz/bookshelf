@@ -69,6 +69,6 @@ const book = sequelize.define('book', {
     // Other model options go here
 }) 
 
-book.sync({  alter: true });
+// book.sync({  alter: true });
 
 module.exports = book;

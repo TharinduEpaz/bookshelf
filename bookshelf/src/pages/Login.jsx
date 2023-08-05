@@ -64,7 +64,7 @@ export default function SimpleCard() {
     } catch (error) {
       // console.log(error.response.data.msg);
 
-      setError(error.response.data.msg);  
+      error.response ? setError(error.response.data.msg) : setError("Something went wrong");  
       setIsLoading(false);
       
     }
