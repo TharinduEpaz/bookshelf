@@ -11,7 +11,23 @@ import {
   Heading,
   Text,
   useColorModeValue,
-} from '@chakra-ui/react';
+  Spinner,
+  Alert,
+  AlertIcon,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  CircularProgress,
+  
+
+
+
+
+
+} from "@chakra-ui/react";
+import { useContext, useState } from "react";
+import axios from "axios";
+import {userContext} from "../context/userContext"
 
 export default function SimpleCard() {
   const [email, setEmail] = useState("");
@@ -48,7 +64,7 @@ export default function SimpleCard() {
     } catch (error) {
       // console.log(error.response.data.msg);
 
-      setError(error.response.data.msg);  
+      error.response ? setError(error.response.data.msg) : setError("Something went wrong");  
       setIsLoading(false);
       
     }
@@ -67,7 +83,7 @@ export default function SimpleCard() {
             Sign up
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            to enjoy all of our cool features ✌
           </Text>
         </Stack>
         <Box
@@ -91,7 +107,7 @@ export default function SimpleCard() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌
           </Text>
         </Stack>
         <Box
@@ -101,34 +117,49 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
+           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
+            <form onSubmit={login}>
+          
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  type="submit"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Sign in
+                </Button>
               </Stack>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                Sign in
-              </Button>
-            </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>
-    </Flex>
-  );
+    </Flex>
+  );
 }
