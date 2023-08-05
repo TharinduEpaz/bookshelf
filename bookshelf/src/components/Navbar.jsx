@@ -155,16 +155,23 @@ function Navbar() {
                 minW={0}
                 rightIcon={<AiFillCaretDown />}
               >
+              
                 <Avatar
                   size={"sm"}
-                  name="Anushka Rajapaksha"
-                  colorScheme="purple"
+                  name={user.user.name }
+                  colorScheme="blue"
                   src="https://bit.ly/broken-link"
                 />
               </MenuButton>
               <MenuList>
+              {user.user.role != "admin" ? 
+              <>
                 <MenuItem>Account</MenuItem>
                 <MenuItem>Orders</MenuItem>
+                </>
+                : <RouterLink to="/admindashboard">
+                <MenuItem>Admin Dashboard</MenuItem> 
+                </RouterLink> }
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>
