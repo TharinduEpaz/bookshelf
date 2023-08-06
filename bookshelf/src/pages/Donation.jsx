@@ -90,7 +90,7 @@ function Home() {
         title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
         image={bookgirl}
         mainButton="Donate"
-        route="/Don_home.jsx"
+        route="/Don_home"
       />
       <Box
         m={"auto"}
