@@ -11,25 +11,13 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  InputGroup,
-  InputRightElement,
 } from '@chakra-ui/react';
-import bookgirl from "../assets/bookgirl.png";
-import { useState } from 'react';
-
-import { RiReactjsLine } from "react-icons/ri";
-import { AiOutlineEye } from "react-icons/ai";
-import { AiOutlineEyeInvisible } from 'react-icons/ai';
-
-
 
 export default function SimpleCard() {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
     <Flex
       minH={'100vh'}
-
+  
       justify={'center'}
     >
 
@@ -47,70 +35,40 @@ export default function SimpleCard() {
         bg={useColorModeValue('blure')}>
 
         <Stack align={'center'}>
-          <Heading fontSize={'3xl'} marginTop={-5}>Login</Heading>
+          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+          </Text>
         </Stack>
-        <Box>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
           <Stack spacing={4}>
             <FormControl id="email">
-              <InputGroup>
-                <Input type="email"
-                  placeholder='Email'
-                  bg={useColorModeValue('white')}/>
-
-                <InputRightElement>
-                  <RiReactjsLine/>
-                </InputRightElement>
-              </InputGroup>
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" />
             </FormControl>
-
-            <FormControl id="password" isRequired>
-              <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'}
-                  placeholder='Create Password'
-                  bg={useColorModeValue('white')} />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={''}
-                    size={"xlarge"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }>
-                    {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" />
             </FormControl>
-
             <Stack spacing={10}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 align={'start'}
-                justify={'space-between'}
-                marginTop={10}>
-
+                justify={'space-between'}>
                 <Checkbox>Remember me</Checkbox>
-
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack>
-
               <Button
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
                 }}>
-                Login
-
-              </Button>
-
-              <p align='center'>or</p>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                Login with Google
+                Sign in
               </Button>
             </Stack>
           </Stack>
