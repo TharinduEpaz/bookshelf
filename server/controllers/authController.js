@@ -30,7 +30,7 @@ const login = async (req, res, next) => {
     //if user exists check if password is correct
     if (await bcrypt.compare(req.body.password, user.password)) {
       const tokenUser = {
-        name: user.firstName,
+        name: user.firstName + " " + user.lastName,
         userId: user.id,
         email: user.email,
         role: user.role,
