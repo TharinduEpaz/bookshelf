@@ -10,7 +10,13 @@ import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart"
 
+import { useState, useMemo } from "react";
+
+
+import {UserProvider} from './context/userContext';
+
 function App() {
+
   return (
     
     <Box
@@ -39,8 +45,10 @@ function App() {
 
 
       /> */}
+     
     
       <Router>
+      <UserProvider>
       <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -49,9 +57,13 @@ function App() {
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
           <Route exact path="/cart/:userId" element={<Cart />}></Route>
+          {/* <Route exact path="/logout" element={<Logout />}></Route> */}
         </Routes>
         <Footer />
+        </UserProvider>
       </Router>
+
+      
     </Box>
   );
 }
