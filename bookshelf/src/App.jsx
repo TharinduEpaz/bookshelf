@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
 import Donation from "./pages/Donation"
+import Don_home from "./pages/Don_home";
+
 
 function App() {
   return (
@@ -49,6 +51,7 @@ function App() {
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
           <Route exact path="/donation" element={<Donation />}></Route>
+          <Route exact path="/Don_home" element={<Don_home />}></Route>
         </Routes>
         <Footer />
       </Router>
