@@ -26,7 +26,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import { userContext } from "../context/userContext";
 import { useContext } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import {

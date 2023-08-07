@@ -19,11 +19,6 @@ import {
   SkeletonText,
   Spinner,
   CircularProgress,
-
-  
-
-
-
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
@@ -94,9 +89,6 @@ export default function SignupCard() {
     </Flex>
     )
   }
-
-
-
 
   return (
     <Flex
@@ -176,7 +168,7 @@ export default function SignupCard() {
                 Login with Google
               </Button>
             </Stack>
-            {/* <Stack spacing={10} pt={2}>
+            {/* {<Stack spacing={10} pt={2}>
               <Button
               type='submit'
                 loadingText="Submitting"
@@ -188,12 +180,12 @@ export default function SignupCard() {
                 }}>
                 Sign up
               </Button>
-            </Stack> */}
-            {/* <Stack pt={6}>
+            </Stack> }
+            <Stack pt={6}>
               <Text align={'center'}>
                 Already a user? <Link color={'blue.400'}>Login</Link>
               </Text>
-            </Stack>
+            </Stack> */}
           </Stack>
         </Box>
       </Stack>
