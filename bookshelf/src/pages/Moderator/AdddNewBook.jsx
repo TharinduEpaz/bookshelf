@@ -1,29 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
-  Card,
-  CardBody,
-  Flex,
   Grid,
   GridItem,
-  Icon,
-  Spacer,
   Text,
-  StatGroup,
-  InputGroup,
   Input,
-  InputRightElement,
-  HStack,
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Td,
-  Tbody,
   Select,
-  Badge,
-  Checkbox,
   FormControl,
   FormLabel,
   NumberInput,
@@ -34,27 +17,39 @@ import {
   Textarea,
   Stack,
   ButtonGroup,
-  Center,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
-import {
-  BiBookOpen,
-  BiCalendarAlt,
-  BiErrorCircle,
-  BiFilterAlt,
-  BiImage,
-  BiPhotoAlbum,
-  BiPlus,
-  BiSearchAlt,
-  BiSolidImageAdd,
-} from "react-icons/bi";
-import { MdCloudUpload, MdDelete } from "react-icons/md";
-import { AiFillFileImage } from "react-icons/ai";
 import SideMenu from "../../components/Moderator/SIdeMenu";
-import StatCard from "../../components/Moderator/StatCard";
-import { Form, Link } from "react-router-dom";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
 export default function Inventry() {
+  const [value, setValue] = React.useState("1");
+
+  const [bookName, setBookName] = React.useState("");
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      const body = { bookName };
+      // const response = await fetch("http://localhost:3000/api/v1/books", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(body),
+      // });
+
+      const response= await fetch({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+
+      console.log(response);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
   return (
     <>
       <Box
@@ -90,57 +85,103 @@ export default function Inventry() {
                 Add New Book
               </Text>
 
-              <Grid templateColumns="repeat(2, 1fr)" gap={200} h={"100%"}>
-                <GridItem colSpan={1}>
-                  <Stack spacing={5} mt={10}>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>
-                        Name of the Book
-                      </FormLabel>
-                      <Input type="text" placeholder="Name of the Book" />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>Category</FormLabel>
-                      <Select placeholder="Select the category of the book">
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                      </Select>
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>
-                        Name of the Book
-                      </FormLabel>
-                      <Input type="text" placeholder="Name of the Book" />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>
-                        Selling Price (Rs)
-                      </FormLabel>
-                      <Input type="text" placeholder="Name of the Book" />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>
-                        Quantity in Stock
-                      </FormLabel>
-                      <NumberInput>
-                        <NumberInputField placeholder="Quantity in Stock" />
-                        <NumberInputStepper>
-                          <NumberIncrementStepper />
-                          <NumberDecrementStepper />
-                        </NumberInputStepper>
-                      </NumberInput>
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel fontWeight={"semibold"}>Description</FormLabel>
-                      <Textarea placeholder="Add a Description about Book" />
-                    </FormControl>
-                  </Stack>
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <Stack spacing={5} mt={10}>
-                    <ImageUploader />
+              <form onSubmit={onSubmitForm}>
+                <Grid templateColumns="repeat(2, 1fr)" gap={200} h={"100%"}>
+                  <GridItem colSpan={1}>
+                    <Stack spacing={5} mt={10}>
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Name of the Book
+                        </FormLabel>
+                        <Input type="text" 
+                        placeholder="Name of the Book"
+                        value={bookName}
+                        onChange={(e) => setBookName(e.target.value)}
+                        />
+                      </FormControl>
 
-                    {/* <FormControl bgColor={"#F4F5FA"} p={7} borderRadius={20}>
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>Author</FormLabel>
+                        <Input type="text" placeholder="Author of the Book" />
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>ISBN</FormLabel>
+                        <Input type="int" placeholder="ISBN of the Book" />
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>Language</FormLabel>
+                        <Select placeholder="Select the language of the book">
+                          <option value="option1">Option 1</option>
+                          <option value="option2">Option 2</option>
+                        </Select>
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>Genre</FormLabel>
+                        <Select placeholder="Select the genre of the book">
+                          <option value="option1">Option 1</option>
+                          <option value="option2">Option 2</option>
+                        </Select>
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Featured Category
+                        </FormLabel>
+                        <Select placeholder="Select the category of the book">
+                          <option value="option1">Option 1</option>
+                          <option value="option2">Option 2</option>
+                        </Select>
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Available Types
+                        </FormLabel>
+                        <RadioGroup onChange={setValue} value={value}>
+                          <Stack direction="row">
+                            <Radio value="1">Paperback</Radio>
+                            <Radio value="2">Hardcover</Radio>
+                          </Stack>
+                        </RadioGroup>
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Selling Price (Rs)
+                        </FormLabel>
+                        <Input type="text" placeholder="Name of the Book" />
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Quantity in Stock
+                        </FormLabel>
+                        <NumberInput>
+                          <NumberInputField placeholder="Quantity in Stock" />
+                          <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                          </NumberInputStepper>
+                        </NumberInput>
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel fontWeight={"semibold"}>
+                          Description
+                        </FormLabel>
+                        <Textarea placeholder="Add a Description about Book" />
+                      </FormControl>
+                    </Stack>
+                  </GridItem>
+
+                  <GridItem colSpan={1}>
+                    <Stack spacing={5} mt={10}>
+                      <ImageUploader />
+
+                      {/* <FormControl bgColor={"#F4F5FA"} p={7} borderRadius={20}>
                       <Center flexDir={"column"}>
                         <Icon
                           as={BiSolidImageAdd}
@@ -153,17 +194,22 @@ export default function Inventry() {
                       </Center>
                     </FormControl> */}
 
-                    <ButtonGroup justifyContent={'flex-end'}>
-                      <Button colorScheme="blue" size={"sm"}>
-                        Add
-                      </Button>
-                      <Button colorScheme="red" variant={"outline"} size={"sm"}>
-                        Cancel
-                      </Button>
-                    </ButtonGroup>
-                  </Stack>
-                </GridItem>
-              </Grid>
+                      <ButtonGroup justifyContent={"flex-end"}>
+                        <Button type="sumbit" colorScheme="blue" size={"sm"}>
+                          Add
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          variant={"outline"}
+                          size={"sm"}
+                        >
+                          Cancel
+                        </Button>
+                      </ButtonGroup>
+                    </Stack>
+                  </GridItem>
+                </Grid>
+              </form>
             </Box>
           </GridItem>
         </Grid>

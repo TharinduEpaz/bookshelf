@@ -5,7 +5,7 @@ export default function Dashboard() {
   return (
     <>
       <Box
-        height={"100%"}
+        h="100vh"
         m={"auto"}
         mt={10}
         w="80%"
