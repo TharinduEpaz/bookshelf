@@ -23,8 +23,8 @@ import {
 
 import AdminSidebar from "../components/Admin/AdminSidebar";
 import AdminStatCard from "../components/Admin/AdminStatCard";
-import AdminInventoryDT from "../components/Admin/AdminInventoryDT";
 import { Link } from "react-router-dom";
+import AdminDtataTable from "../components/Admin/AdminDtataTable";
 
 //import SearchPanel from "../../components/Moderator/SearchPanel";
 
@@ -92,11 +92,11 @@ export default function AdminInventory() {
 
   return (
     
-       <Box
+    <Box
     m={"auto"}
     mt={10}
     w="80%"
-    h="100vh"
+    h="100%"
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
@@ -107,10 +107,11 @@ export default function AdminInventory() {
 
   >
 
+
   <AdminSidebar />
 
   <div>
-    <Box
+  <Box
       borderColor={'rgba(0, 0, 0, 0.20)'}
       borderWidth={'0.5px'}
       borderRadius={'10px'}
@@ -118,7 +119,7 @@ export default function AdminInventory() {
       w="76%"
       ml={270}
       mt={1}
-      p={5}
+      mb={40}
     >
 
   <Flex
@@ -134,7 +135,7 @@ export default function AdminInventory() {
           <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Inventry Summory
+                  Inventory Summary
                 </Text>
                 <Spacer />
                 <Link to="adminaddnewbook">
@@ -201,7 +202,7 @@ export default function AdminInventory() {
 
                 <Spacer mt={5} />
 
-                <AdminInventoryDT list={list} columnNames={columns} />
+                <AdminDtataTable list={list} columnNames={columns} />
               </Box>
             </Box>
 

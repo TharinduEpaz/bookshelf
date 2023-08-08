@@ -21,7 +21,7 @@ import {
 //import DateFilter from "../../components/Moderator/DateFilter";
 //import SearchPanel from "../../components/Moderator/SearchPanel";
 import AdminStatCard from '../components/Admin/AdminStatCard';
-import AdminOrdersDT from '../components/Admin/AdminOrdersDT';
+import AdminDtataTable from '../components/Admin/AdminDtataTable';
 
 export default function AdminOrders() {
 
@@ -89,7 +89,7 @@ export default function AdminOrders() {
     m={"auto"}
     mt={10}
     w="80%"
-    h="100vh"
+    h="100%"
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
@@ -112,6 +112,7 @@ export default function AdminOrders() {
       ml={270}
       mt={1}
       p={5}
+      mb={40}
     >
 
   <Flex
@@ -128,7 +129,7 @@ export default function AdminOrders() {
  <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Order Summory
+                  Order Summary
                 </Text>
               </Flex>
 
@@ -187,7 +188,7 @@ export default function AdminOrders() {
 
                 <Spacer mt={5} />
 
-                <AdminOrdersDT list={list} columnNames={columns} />
+                <AdminDtataTable list={list} columnNames={columns} />
               </Box>
             </Box>
 

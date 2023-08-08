@@ -1,19 +1,90 @@
-import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
-
+import React from "react";
 import {
-    Box, 
-    Flex
-} from '@chakra-ui/react'
+  Box,
+  Card,
+  CardBody,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  StatGroup,
+  Text,
+  Spacer,
+  Link,
+  Button,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  TabPanels,
+  Select
+} from "@chakra-ui/react";
+
+import AdminSidebar from "../components/Admin/AdminSidebar";
+import { BiBookOpen, BiPlus } from "react-icons/bi";
+import AdminStatCard from "../components/Admin/AdminStatCard";
+import AdminDtataTable from "../components/Admin/AdminDtataTable";
 
 export default function AdminSubscriptions() {
+
+  const columns = [
+    "Customer ID",
+    "Customer Name",
+    "Subscription plan",
+    "Book",
+    "Tracking ID",
+    "Actions",
+  ];
+  const list = [
+    {
+      id: "c0001",
+      name: "Lorem ipsum",
+      plan: "Book Reader",
+      book: "Anne",
+      tracking_id: "10",
+      actions: "In-Progess",
+    },
+    {
+      id: "c0002",
+      name: "Lorem ipsum",
+      plan: "Book Lover",
+      book: "Village By The Sea",
+      tracking_id: "10",
+      actions: "In-Progess",
+    },
+    {
+      id: "c0003",
+      name: "Lorem ipsum",
+      plan: "Book Worm",
+      book: "Mary",
+      tracking_id: "10",
+      actions: "In-Progess",
+    },
+    {
+      id: "c0004",
+      name: "Lorem ipsum",
+      plan: "Book Lover",
+      book: "Anne",
+      tracking_id: "10",
+      actions: "In-Progess",
+    },
+    {
+      id: "c0005",
+      name: "Lorem ipsum",
+      plan: "Book Lover",
+      book: "Sheli",
+      tracking_id: "10",
+      actions: "In-Progess",
+    },
+  ];
+
   return (
    
     <Box
     m={"auto"}
     mt={10}
     w="80%"
-    h="100vh"
+    h="100%"
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
@@ -36,6 +107,7 @@ export default function AdminSubscriptions() {
       ml={270}
       mt={1}
       p={5}
+      mb={40}
     >
 
   <Flex
@@ -46,9 +118,92 @@ export default function AdminSubscriptions() {
       flexWrap={"wrap"}
     >  
 
-  
-
  </Flex>
+
+    
+ <Box p={10}>
+              <Flex>
+                <Text fontSize="lg" fontWeight={"bold"}>
+                  Subscriptions Summary
+                </Text>
+                <Spacer />
+              
+              </Flex>
+
+              <Flex gap={5}>
+                <Card
+                  mt={10}
+                  p={2}
+                  pl={5}
+                  pr={5}
+                  boxShadow="sm"
+                  borderRadius="md"
+                  bgColor={"#EDF2F7"}
+                  w={"fit-content"}
+                >
+                  <CardBody>
+                    <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
+                    <StatGroup gap={50}>
+                      <AdminStatCard 
+                        lable="All Subscriptions" 
+                        value="200" 
+                        type="increase"
+                        percentage="23.36"
+                      />
+                    </StatGroup>
+                  </CardBody>
+                </Card>
+
+                <Card
+                  mt={10}
+                  p={2}
+                  pl={2}
+                  pr={2}
+                  boxShadow="sm"
+                  borderRadius="md"
+                  bgColor={"#EDF2F7"}
+                  w={"fit-content"}
+                >
+                  <CardBody>
+                  <Flex
+                      justifyContent={"space-between"}
+                    >
+                    <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
+                      <Select width={"100px"} ml={10}>
+                        <option value="option1">All</option>
+                        <option value="option2">This week</option>
+                        <option value="option2">This Month</option>
+                      </Select>
+                    </Flex>
+                    <StatGroup gap={50}>
+                      <AdminStatCard 
+                        lable="New Subscriptions" 
+                        value="40" 
+                        type="increase"
+                        percentage="23.36"
+                      />
+                    </StatGroup>
+                  </CardBody>
+                </Card>
+
+
+              
+
+              </Flex>
+
+              <Spacer mt={10} />
+
+              <Box>
+                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+
+                <Spacer mt={5} />
+
+                <AdminDtataTable list={list} columnNames={columns} />
+              </Box>
+
+              
+            </Box>
+
 
  </Box>
  </div>

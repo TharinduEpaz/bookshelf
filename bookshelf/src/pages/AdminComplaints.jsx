@@ -1,12 +1,77 @@
 import React from 'react'
 import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminDtataTable from '../components/Admin/AdminDtataTable';
 
 import {
     Box, 
-    Flex
+    Button, 
+    Flex,
+    Spacer,
+    Text
 } from '@chakra-ui/react'
 
 export default function AdminComplaints() {
+
+  const columns = [
+    "Complain ID",
+    "Title",
+    "Description",
+    "Date",
+    "Action"
+  ];
+  const list = [
+    {
+      id: "c0001",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "c0002",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    }, 
+    {
+      id: "c0003",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "c0004",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "c0005",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "c0006",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "c0007",
+      title: "Late delivering",
+      description: "Poor communication",
+      date: "31.07.2023",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+  ];
+
+
   return (
    
     <Box
@@ -46,9 +111,23 @@ export default function AdminComplaints() {
       flexWrap={"wrap"}
     >  
 
-  
-
  </Flex>
+
+  <Box p={5}>
+              <Flex>
+                <Text fontSize="lg" fontWeight={"bold"}>
+                  Complaints
+                </Text>
+              </Flex>
+
+              <Box>
+                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+
+                <Spacer mt={5} />
+
+                <AdminDtataTable list={list} columnNames={columns} />
+              </Box>
+    </Box>
 
  </Box>
  </div>

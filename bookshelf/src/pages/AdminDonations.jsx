@@ -21,8 +21,8 @@ import {
 
 import AdminSidebar from "../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
-import AdminDonationsDT from "../components/Admin/AdminDonationsDT";
 import AdminStatCard from "../components/Admin/AdminStatCard";
+import AdminDtataTable from "../components/Admin/AdminDtataTable";
 
 
 export default function AdminDonations() {
@@ -82,6 +82,38 @@ export default function AdminDonations() {
       org: "lorem ipsum",
       action: "Action",
     },
+    {
+      id: "n0001",
+      name: "Lorem ipsum",
+      Date: "01.02.2023",
+      units: "10",
+      org: "lorem ipsum",
+      action: "Action",
+    },
+    {
+      id: "n0001",
+      name: "Lorem ipsum",
+      Date: "01.02.2023",
+      units: "10",
+      org: "lorem ipsum",
+      action: "Action",
+    },
+    {
+      id: "n0001",
+      name: "Lorem ipsum",
+      Date: "01.02.2023",
+      units: "10",
+      org: "lorem ipsum",
+      action: "Action",
+    },
+    {
+      id: "n0001",
+      name: "Lorem ipsum",
+      Date: "01.02.2023",
+      units: "10",
+      org: "lorem ipsum",
+      action: "Action",
+    },
   ];
 
   return (
@@ -90,7 +122,7 @@ export default function AdminDonations() {
     m={"auto"}
     mt={10}
     w="80%"
-    h="100vh"
+    h="100%"
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
@@ -198,14 +230,14 @@ export default function AdminDonations() {
 
                       <Spacer mt={5} />
 
-                      <AdminDonationsDT list={org_list} columnNames={org_columns} />
+                      <AdminDtataTable list={org_list} columnNames={org_columns} />
                     </TabPanel>
                     <TabPanel>
 
                     {/* <SearchPanel name="Donations" filter="donations"/> */}
 
                       <Spacer mt={5} />
-                      <AdminDonationsDT list={don_list} columnNames={don_columns} />
+                      <AdminDtataTable list={don_list} columnNames={don_columns} />
 
                     </TabPanel>
                   </TabPanels>

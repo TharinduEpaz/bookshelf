@@ -1,6 +1,5 @@
 import React from 'react'
 import SearchBar from '../components/Admin/SearchBar';
-import AdminBuyersTable from '../components/Admin/AdminBuyersTable';
 
 import { 
     Checkbox, 
@@ -9,17 +8,137 @@ import {
     Spacer,
     Text,
     Box,
-    Center
+    Center,
+    Button
 } from '@chakra-ui/react'
+import AdminUsersTable from '../components/Admin/AdminUsersTable';
 
 export default function AdminAllUsers() {
+
+  const columns = [
+    "User ID",
+    "User Name",
+    "User Type",
+    "Email",
+    "Action",
+  ];
+  const list = [
+    {
+      id: "u0001",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0002",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0003",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0004",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0005",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0006",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0007",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0008",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0009",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0010",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0011",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0012",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0013",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0014",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    {
+      id: "u0015",
+      name: "Anne Rex",
+      type: "Buyer",
+      email: "ann@gmail.com",
+      action: <Button colorScheme='blue' size='md'>Action</Button>,
+    },
+    
+  ];
+
+
   return (
     
     <Box
         m={"auto"}
         mt={10}
         w="100%"
-        h="100vh"
+        h="100%"
         borderColor={'rgba(0, 0, 0, 0.20)'}
         borderWidth={'0.5px'}
         borderRadius="6px"
@@ -56,7 +175,14 @@ export default function AdminAllUsers() {
 
           </Flex>
 
-    <AdminBuyersTable/>
+
+    <Box>
+                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+
+                <Spacer mt={5} />
+
+                <AdminUsersTable list={list} columnNames={columns} />
+              </Box>
 
       </Box>
 
