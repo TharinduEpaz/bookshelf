@@ -4,8 +4,6 @@ const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse } = require("../utils/jwt");
 
-
-
 const login = async (req, res, next) => {
   try {
     //destructuring email and password 
@@ -15,8 +13,8 @@ const login = async (req, res, next) => {
     if (!email || !password)
       throw new CustomError.BadRequestError(
         "Please provide email and password"
-      );
-
+    );
+    
     //check if user exists in the database
     const user = await userModel.findOne({
       where: {
@@ -32,7 +30,7 @@ const login = async (req, res, next) => {
     //if user exists check if password is correct
     if (await bcrypt.compare(req.body.password, user.password)) {
       const tokenUser = {
-        name: user.firstName,
+        name: user.firstName + " " + user.lastName,
         userId: user.id,
         email: user.email,
         role: user.role,
@@ -68,6 +66,17 @@ const register = async (req, res, next) => {
       email: req.body.email,
       password: hashedPassword,
     });
+
+    //validate the data
+    if (!user) {
+      throw new Error("Invalid Data");
+    }
+
+    //check if name contains digits or special characters
+    if (/\d/.test(user.firstName) || /\d/.test(user.lastName)) {
+      throw new Error("Name cannot contain digits or special characters");
+    }
+    
 
     const tokenUser = {
       name: user.firstName,
