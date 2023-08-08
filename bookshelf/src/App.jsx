@@ -1,4 +1,4 @@
-import { Box, Container, useColorModeValue, Image } from "@chakra-ui/react";
+import { Box, Container, useColorModeValue, Image,Icon,useBreakpointValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -12,6 +12,23 @@ import {UserProvider} from './context/userContext';
 import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
 
 import {Dashboard, Settings, Orders, Chat} from "./components/Account";
+
+const Blur = (props) => {
+  return (
+    <Icon
+      width={useBreakpointValue({ base: '100%', md: '40vw', lg: '30vw' })}
+      zIndex={useBreakpointValue({ base: -1, md: -1, lg: 0 })}
+      height="560px"
+      viewBox="0 0 528 560"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+    <circle cx="100%" cy="100%" r="100%" fill="hsla(1334, 86%, 52%, 0.2)" />
+      {/* <circle cx="100%" cy="100%" r="100%" fill="hsla(343, 91%, 58%, 1)" /> */}
+      <circle cx="85%" cy="43%" r="50%" fill="hsla(194, 89%, 52%, 0.2)" />
+    </Icon>
+  )
+}
 
 function App() {
 
@@ -69,6 +86,7 @@ function App() {
         <Footer />
         </UserProvider>
       </Router>
+      <Blur position={'fixed'} top={-10} left={-10} zIndex={-100} style={{ filter: 'blur(70px)' }} />
 
       
     </Box>

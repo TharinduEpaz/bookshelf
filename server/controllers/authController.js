@@ -67,6 +67,17 @@ const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
+    //validate the data
+    if (!user) {
+      throw new Error("Invalid Data");
+    }
+
+    //check if name contains digits or special characters
+    if (/\d/.test(user.firstName) || /\d/.test(user.lastName)) {
+      throw new Error("Name cannot contain digits or special characters");
+    }
+    
+
     const tokenUser = {
       name: user.firstName,
       userId: user.id,

@@ -138,7 +138,7 @@ function Settings() {
                 </FormControl>
                 <FormControl>
                 
-                <Input placeholder="Enter New Postal Code"  w={300} mt={5}/>
+                <Input placeholder="Enter New Postal Code"  w={400} mt={5}/>
                 </FormControl>
                
 
