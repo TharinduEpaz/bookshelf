@@ -137,7 +137,7 @@ function Navbar() {
           </ButtonGroup>
         ) : (
           <ButtonGroup>
-            <RouterLink to="/cart">
+            <RouterLink to={`cart/${user.user.userId}`}>
               <IconButton
                 colorScheme="blue"
                 aria-label="Call Segun"
@@ -166,9 +166,14 @@ function Navbar() {
               <MenuList>
               {user.user.role != "admin" ? 
               <>
+                <RouterLink to="/account">
                 <MenuItem>Account</MenuItem>
+                </RouterLink>
+
+                <RouterLink to="account/orders">
                 <MenuItem>Orders</MenuItem>
-                </>
+                </RouterLink>
+              </>
                 : <RouterLink to="/admindashboard">
                 <MenuItem>Admin Dashboard</MenuItem> 
                 </RouterLink> }
