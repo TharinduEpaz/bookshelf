@@ -5,10 +5,7 @@ import {
     Box,
     Heading,
     Text,
-    VStack,
-    StackDivider,
     Flex,
-    useColorModeValue,
     Avatar,
     HStack,
 } from "@chakra-ui/react";
@@ -17,9 +14,9 @@ import { useState } from "react";
 import { NavLink as RouterLink } from "react-router-dom";
 
 import { AiFillWarning, AiTwotoneMessage } from "react-icons/ai";
-import { BiSolidDashboard } from "react-icons/bi";
-import { ImBooks } from "react-icons/im";
-import { IoMdSettings } from "react-icons/io";
+import { BiDetail } from "react-icons/bi";
+import { MdSettingsSuggest } from "react-icons/md";
+import { FaBookOpen } from "react-icons/fa";
 
 import { useContext } from "react";
 import { userContext } from "../../context/userContext";
@@ -29,19 +26,19 @@ const SideNavDetailsLinks = [
         id: 1,
         url: "details",
         text: "Details",
-        icon: <BiSolidDashboard />,
+        icon: <BiDetail />,
     },
     {
         id: 2,
         url: "selectBook",
         text: "Select Books",
-        icon: <IoMdSettings />,
+        icon: <FaBookOpen />,
     },
     {
         id: 3,
         url: "manageSubscription",
         text: "Manage Subscriptions",
-        icon: <ImBooks />,
+        icon: <MdSettingsSuggest />,
     },
     {
         id: 5,
@@ -82,7 +79,7 @@ export function SideNavDetails() {
                 size="14px"
                 color="#204974"
                 fontFamily="Montserrat"
-                fontSize="14px"
+                fontSize="18px"
                 fontStyle="normal"
                 fontWeight="500"
                 lineHeight="normal"
@@ -93,12 +90,12 @@ export function SideNavDetails() {
             <Text
                 color="#204974"
                 fontFamily="Montserrat"
-                fontSize="14px"
+                fontSize="16px"
                 fontStyle="normal"
                 fontWeight="600"
                 lineHeight="10"
             >
-                Account overview
+                Subscription Details
             </Text>
             <Flex flexDirection={'column'} gap={2} w={'80%'} mb={10} mt={5} >
 

@@ -29,7 +29,7 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Fa500Px } from 'react-icons/fa';
-//import axios from 'axios';
+import axios from 'axios';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -69,7 +69,6 @@ export default function SignupCard() {
     return (
       <Flex
         minH={'100vh'}
-
         justify={'center'}
       >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
@@ -78,7 +77,7 @@ export default function SignupCard() {
               Sign up
             </Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool features ✌️
+              to enjoy all of our cool features ✌
             </Text>
           </Stack>
           <Box
@@ -108,7 +107,7 @@ export default function SignupCard() {
             Sign up
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            to enjoy all of our cool features ✌
           </Text>
         </Stack>
         <Box
@@ -118,10 +117,10 @@ export default function SignupCard() {
           p={8}>
           <Stack spacing={4}>
             {error && <Alert status="error"> <AlertIcon /> {error}</Alert>}
-  
-          <form onSubmit={register}>
-  
-            <HStack>
+
+            <form onSubmit={register}>
+
+              <HStack>
                 <Box>
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>

@@ -21,7 +21,7 @@ import {
 
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-//import axios from "axios";
+import axios from "axios";
 import { userContext } from "../context/userContext"
 
 export default function SimpleCard() {
@@ -40,7 +40,7 @@ export default function SimpleCard() {
     setIsLoading(true);
     console.log(email, password);
     e.preventDefault();
-    
+
     try {
 
       const response = await axios.post(loginUrl, {
@@ -85,7 +85,7 @@ export default function SimpleCard() {
               Sign up
             </Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool features ✌️
+              to enjoy all of our cool features ✌
             </Text>
           </Stack>
           <Box
@@ -109,7 +109,7 @@ export default function SimpleCard() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌
           </Text>
         </Stack>
         <Box

@@ -1,4 +1,4 @@
-import {
+    import {
     Flex,
     Circle,
     Box,
@@ -50,7 +50,7 @@ function Rating({ rating, numReviews }) {
     );
 }
 
-function BookCard({ name, author, price, imageURL, rating, }) {
+function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) {
     return (
         <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
             <Box
@@ -107,7 +107,13 @@ function BookCard({ name, author, price, imageURL, rating, }) {
                 </Box>
             </Box>
             <RouterLink to="#">
-                <Button marginTop={8} colorScheme="red" variant={'outline'} borderRadius={15}>
+                <Button
+                    marginTop={8}
+                    colorScheme="red"
+                    variant={'outline'}
+                    borderRadius={15}
+                    onClick={() => onRemove(bookKey)}
+                >
                     Remove
                 </Button>
             </RouterLink>
