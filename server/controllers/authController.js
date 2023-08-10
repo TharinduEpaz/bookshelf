@@ -1,4 +1,5 @@
 const userModel = require("../models/user");
+const notification = require("../models/userNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -86,6 +87,14 @@ const register = async (req, res, next) => {
 
     attachCookiesToResponse(res, { user: tokenUser });
 
+    //send notification to user to confirm email
+    notification.create({
+      userId: user.id,
+      type: "warning",
+      message: "Please Confirm your email address to activate your account to access our all features",
+      cause: "email verification",
+    });
+
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
     next(error);
@@ -100,11 +109,41 @@ const logout = async (req, res) => {
   res.status(statusCodes.StatusCodes.OK).json({ message: "Logged Out" });
 }
 
+const verifyEmail = async (req, res, next) => {
+  try {
+    const {verificationToken, email} = req.body;
+    console.log(verificationToken, email);
+    const user = await userModel.findOne({
+      where: {
+        email: email,
+      },
+    });
+    console.log(user);
+    if(!user) {
+      throw new CustomError.BadRequestError("Verification Failed");
+    }
+    if(user.emailVerified) {
+      throw new CustomError.BadRequestError("Email Already Verified");
+    }
+    if(user.verificationToken !== verificationToken) {
+      throw new CustomError.BadRequestError("Verification Failed");
+    }
+    user.emailVerified = true;
+    await user.save();
+    res.status(statusCodes.StatusCodes.OK).json({message: "Email Verified"});
+  }
+  catch(error) {
+    console.log(error);
+    next(error);
+  }
+}
+
 
 
 module.exports = {
 
   register,
   login,
-  logout
+  logout,
+  verifyEmail
 };
