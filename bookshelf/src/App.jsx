@@ -22,6 +22,8 @@ import {UserProvider} from './context/userContext';
 import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
 
 import {Dashboard, Settings, Orders, Chat} from "./components/Account";
+import SideNavDetails from "./components/Subscription/SideNavDetails";
+import SelectLover from "./components/Subscription/SelectLover";
 
 const Blur = (props) => {
   return (
@@ -56,7 +58,7 @@ function App() {
           <Route exact path="/sharingPost" element={<SharingPost />}></Route>
           <Route exact path="/subscriptions" element={<Subscription />}></Route>
           <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
-          <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route>
+          {/* <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route> */}
           <Route exact path="/selectBookReader" element={<SelectBookReader/>}></Route>
           <Route exact path="/selectBookWorm" element={<SelectBookWorm/>}></Route>
           <Route exact path="/selectBook" element={<SelectBook/>}></Route>
@@ -74,6 +76,14 @@ function App() {
       
             <Route path = "chat" element={<Chat />} />
           </Route>
+
+            <Route exact path="/selectBookLover" element={<SelectBookLover />}>
+              <Route index element={<SelectLover />} />
+              <Route path="details" element={<SelectLover />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
           
         </Routes>
         <Footer />

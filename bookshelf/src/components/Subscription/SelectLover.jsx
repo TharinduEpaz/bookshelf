@@ -1,5 +1,6 @@
 import React from 'react'
 import BookDetails from "../../components/Subscription/BookDetails";
+import SelectLoverIcon from '../../components/Subscription/SelectLoverIcon';
 
 import {
     Box,
@@ -14,7 +15,9 @@ import { BsFillCalendar2DateFill } from "react-icons/bs";
 
 function SelectLover() {
     return (
-        <Box py={7} px={12}>
+        <Box py={7} px={12} >
+            <SelectLoverIcon />
+            
             <Text fontSize={'21'} color={'#204974'} as={'b'}>
                 Next Delivery
             </Text>
