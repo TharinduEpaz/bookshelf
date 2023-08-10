@@ -7,6 +7,7 @@ import {
 import SideNavDetails from '../../components/Subscription/SideNavDetails';
 import SelectReaderIcon from '../../components/Subscription/SelectReaderIcon';
 import SelectReader from '../../components/Subscription/SelectReader';
+import { Outlet } from 'react-router-dom';
 function SelectBookReader() {
     return (
         <Box
@@ -30,18 +31,8 @@ function SelectBookReader() {
                     <SideNavDetails />
                 </GridItem>
 
-                <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <Box padding={10}>
-                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
-                            Current Subscription
-                        </Text>
-                        <SelectReaderIcon />
-                    </Box>
-                    
-                </GridItem>
-
-                <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectReader />
+                <GridItem rowSpan={5} colSpan={4} >
+                    <Outlet/>
                 </GridItem>
             </Grid>
 

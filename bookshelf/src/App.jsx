@@ -1,4 +1,4 @@
-import { Box, Container, useColorModeValue, Image,Icon,useBreakpointValue } from "@chakra-ui/react";
+import { Box, Container, useColorModeValue, Image, Icon, useBreakpointValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -14,16 +14,17 @@ import SelectBookWorm from "./pages/Subscription/SelectBookWorm";
 import SelectBook from "./pages/Subscription/SelectBook";
 import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
 import ManageSubscription from "./pages/Subscription/ManageSubscription";
-
-
-
-import {UserProvider} from './context/userContext';
-
-import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
-
-import {Dashboard, Settings, Orders, Chat} from "./components/Account";
-import SideNavDetails from "./components/Subscription/SideNavDetails";
 import SelectLover from "./components/Subscription/SelectLover";
+import SelectReader from "./components/Subscription/SelectReader"
+import SelectWorm from "./components/Subscription/SelectWorm"
+
+
+
+import { UserProvider } from './context/userContext';
+
+import { Account, Cart, Home, Login, ProductPage, Register, Shop } from "./pages";
+
+import { Dashboard, Settings, Orders, Chat } from "./components/Account";
 
 const Blur = (props) => {
   return (
@@ -35,7 +36,7 @@ const Blur = (props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
-    <circle cx="100%" cy="100%" r="100%" fill="hsla(1334, 86%, 52%, 0.2)" />
+      <circle cx="100%" cy="100%" r="100%" fill="hsla(1334, 86%, 52%, 0.2)" />
       {/* <circle cx="100%" cy="100%" r="100%" fill="hsla(343, 91%, 58%, 1)" /> */}
       <circle cx="85%" cy="43%" r="50%" fill="hsla(194, 89%, 52%, 0.2)" />
     </Icon>
@@ -45,37 +46,35 @@ const Blur = (props) => {
 function App() {
 
   return (
-    
+
     <Box>
       <Router>
-      <UserProvider>
-      <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-          <Route exact path="/register" element={<Register />}></Route>
-          <Route exact path="/sharing" element={<Sharing />}></Route>
-          <Route exact path="/sharingPost" element={<SharingPost />}></Route>
-          <Route exact path="/subscriptions" element={<Subscription />}></Route>
-          <Route exact path="/selectSubscription" element={<SelectSubscription/>}></Route>
-          {/* <Route exact path="/selectBookLover" element={<SelectBookLover/>}></Route> */}
-          <Route exact path="/selectBookReader" element={<SelectBookReader/>}></Route>
-          <Route exact path="/selectBookWorm" element={<SelectBookWorm/>}></Route>
-          <Route exact path="/selectBook" element={<SelectBook/>}></Route>
-          <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
-          <Route exact path="/manageSubscription" element={<ManageSubscription />}></Route>
-          <Route exact path="/shop" element={<Shop />}></Route>
-          <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-          <Route exact path="/cart/:userId" element={<Cart />}></Route>
+        <UserProvider>
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/register" element={<Register />}></Route>
+            <Route exact path="/sharing" element={<Sharing />}></Route>
+            <Route exact path="/sharingPost" element={<SharingPost />}></Route>
+            <Route exact path="/subscriptions" element={<Subscription />}></Route>
+            <Route exact path="/selectSubscription" element={<SelectSubscription />}></Route>
+            <Route exact path="selectBook" element={<SelectBook />} ></Route>
+            <Route exact path="/selectBookReader" element={<SelectBookReader />}></Route>
+            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}></Route>
+            <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
+            <Route exact path="/shop" element={<Shop />}></Route>
+            <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+            <Route exact path="/cart/:userId" element={<Cart />}></Route>
 
-          <Route exact path="/account" element={<Account />}>
-            <Route index element={<Dashboard />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path = "settings" element={<Settings />} />
-            <Route path = "orders" element={<Orders />} />
-      
-            <Route path = "chat" element={<Chat />} />
-          </Route>
+            <Route exact path="/account" element={<Account />}>
+              <Route index element={<Dashboard />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="orders" element={<Orders />} />
+
+              <Route path="chat" element={<Chat />} />
+            </Route>
 
             <Route exact path="/selectBookLover" element={<SelectBookLover />}>
               <Route index element={<SelectLover />} />
@@ -84,14 +83,30 @@ function App() {
               <Route path="manageSubscription" element={<ManageSubscription />} />
               <Route path="chat" element={<Chat />} />
             </Route>
-          
-        </Routes>
-        <Footer />
+
+            <Route exact path="/selectBookReader" element={<SelectBookReader />}>
+              <Route index element={<SelectReader />} />
+              <Route path="details" element={<SelectReader />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+
+            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}>
+              <Route index element={<SelectWorm />} />
+              <Route path="details" element={<SelectWorm />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+
+          </Routes>
+          <Footer />
         </UserProvider>
       </Router>
       <Blur position={'fixed'} top={-10} left={-10} zIndex={-100} style={{ filter: 'blur(70px)' }} />
 
-      
+
     </Box>
   );
 }

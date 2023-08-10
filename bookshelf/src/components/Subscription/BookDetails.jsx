@@ -52,7 +52,7 @@ function Shop() {
                 }
 
                 <Box marginTop={160}>
-                    <RouterLink to="/selectBook">
+                    <RouterLink to="/selectBookLover/selectBook">
                         <Box marginLeft={45}>
                             <BsFillPlusCircleFill size={25} />
                         </Box>

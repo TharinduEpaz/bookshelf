@@ -5,8 +5,7 @@ import {
 } from "@chakra-ui/react";
 
 import SideNavDetails from '../../components/Subscription/SideNavDetails';
-import SelectWormIcon from '../../components/Subscription/SelectWormIcon';
-import SelectWorm from '../../components/Subscription/SelectWorm';
+import { Outlet } from 'react-router-dom';
 function SelectBookWorm() {
     return (
         <Box
@@ -30,18 +29,8 @@ function SelectBookWorm() {
                     <SideNavDetails />
                 </GridItem>
 
-                <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <Box padding={10}>
-                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
-                            Current Subscription
-                        </Text>
-                        <SelectWormIcon />
-                    </Box>
-
-                </GridItem>
-
-                <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
-                    <SelectWorm />
+                <GridItem rowSpan={5} colSpan={4} >
+                    <Outlet />
                 </GridItem>
             </Grid>
 
