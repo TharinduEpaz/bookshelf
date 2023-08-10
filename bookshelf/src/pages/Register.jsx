@@ -67,8 +67,7 @@ export default function SignupCard() {
   if(isLoading){
     return (
       <Flex
-      minH={'100vh'}
-      
+      minH={'100vh'} 
       justify={'center'}
       >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
@@ -95,9 +94,6 @@ export default function SignupCard() {
     )
   }
 
-
-
-
   return (
     <Flex
       minH={'100vh'}
@@ -120,7 +116,9 @@ export default function SignupCard() {
           p={8}>
           <Stack spacing={4}>
           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
+
           <form onSubmit={register}>
+
             <HStack>
               <Box>
                 <FormControl id="firstName" isRequired>

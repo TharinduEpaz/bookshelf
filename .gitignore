@@ -1,2 +1,2 @@
-node_modules
-.env
+./bookshelf/node_modules
+./server/node_modules
