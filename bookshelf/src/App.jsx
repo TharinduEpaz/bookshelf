@@ -4,8 +4,6 @@ import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import g from "./assets/g.png";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Sharing from "./pages/Sharing/SharingHome";
 import SharingPost from "./pages/Sharing/SharingPost";
 import Subscription from "./pages/Subscription/SubscriptionHome";
@@ -13,12 +11,9 @@ import SelectSubscription from "./pages/Subscription/SelectSubscription";
 import SelectBookLover from "./pages/Subscription/SelectBookLover";
 import SelectBookReader from "./pages/Subscription/SelectBookReader";
 import SelectBookWorm from "./pages/Subscription/SelectBookWorm";
-import Shop from "./pages/Shop";
-import ProductPage from "./pages/ProductPage";
 import SelectBook from "./pages/Subscription/SelectBook";
 import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
 import ManageSubscription from "./pages/Subscription/ManageSubscription";
-import Cart from "./pages/Cart"
 
 
 
