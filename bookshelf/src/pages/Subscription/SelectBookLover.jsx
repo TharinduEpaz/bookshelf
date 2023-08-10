@@ -31,7 +31,7 @@ function SelectBookLover() {
                    
                 </GridItem>
                 
-                <GridItem rowSpan={5} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'}> 
+                <GridItem rowSpan={5} colSpan={4} > 
                     <Outlet/>
                 </GridItem>
             </Grid>
