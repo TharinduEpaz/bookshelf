@@ -22,10 +22,9 @@ function Account() {
           <GridItem colSpan={1} rowSpan={1}>
             <Sidebar />
           </GridItem>
-          <GridItem colSpan={3} rowSpan={1}>
 
+          <GridItem colSpan={3} rowSpan={1}>
             <Outlet />
-            
           </GridItem>
         </Grid>
       </Box>

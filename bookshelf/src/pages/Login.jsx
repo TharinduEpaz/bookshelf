@@ -19,11 +19,6 @@ import {
   SkeletonText,
   CircularProgress,
   
-
-
-
-
-
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import axios from "axios";
@@ -39,10 +34,13 @@ export default function SimpleCard() {
 
   const loginUrl = "http://localhost:3000/api/v1/login";
 
+
+
   const login = async (e) => {
     setIsLoading(true);
     console.log(email,password);
     e.preventDefault();
+    
     try {
       
       const response = await axios.post(loginUrl, {
@@ -69,6 +67,9 @@ export default function SimpleCard() {
       
     }
   };
+
+
+
 
   if(isLoading){
     return (

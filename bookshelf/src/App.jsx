@@ -78,7 +78,6 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
-      
             <Route path = "chat" element={<Chat />} />
           </Route>
           
@@ -86,7 +85,7 @@ function App() {
         <Footer />
         </UserProvider>
       </Router>
-      <Blur position={'fixed'} top={-10} left={-10} zIndex={-100} style={{ filter: 'blur(70px)' }} />
+      
 
       
     </Box>
