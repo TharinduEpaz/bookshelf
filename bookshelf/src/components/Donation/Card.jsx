@@ -12,13 +12,13 @@ import {
   import React from "react";
   import Search from "../Search";
   
-  function Card({ title, image }) {
+  function Card({ title, image, text}) {
     return (
       <Box
         m={"auto"}
         mt={10}
         w="80%"
-        h="40vh"
+        h="auto"
         borderRadius="2xl"
         boxShadow="sm"
         bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
@@ -46,6 +46,7 @@ import {
             >
               {title}
             </Heading>
+          
           </GridItem>
           <GridItem rowSpan={5} colSpan={2}>
             <Image
@@ -59,6 +60,10 @@ import {
           </GridItem>
           
         </Grid>
+        <Box mb={5} ml={5} fontSize={'20'}>
+        {text}
+        </Box>
+       
       </Box>
     );
   }

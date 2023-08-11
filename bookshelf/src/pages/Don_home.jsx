@@ -67,10 +67,12 @@ function Shop() {
       <Card
         title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need, illuminating lives with endless possibilities."
         //image={bookgirl}
+
+      text= 
+        "Support and help the much needed local communities in Sri Lanka by donating books and educational materials."
+      
       />
-      <Text fontSize={'lg'} color={'gray.600'}>
-        Support and help the much needed local communities in Sri Lanka by donating books and educational materials 
-      </Text>
+      
     <Box
     height={'100%'}
     m={"auto"}
@@ -82,7 +84,9 @@ function Shop() {
     // filter="blur(8px)"
     backdropFilter="blur(8px)"
     p={10}
+    
   >
+  
     
     <Grid
       

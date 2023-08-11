@@ -1,5 +1,5 @@
 import React from "react";
-import BlurWhiteBox from "../components/Home/BlurWhiteBox";
+import BlurWhiteBox from "../components/Donation/BlurWhiteBox";
 import HomeItemBox from "../components/Home/HomeItemBox";
 import { Box, Center, Divider, Flex, Heading } from "@chakra-ui/react";
 import bookgirl from "../assets/bookgirl.png";
@@ -90,7 +90,9 @@ function Home() {
         title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
         image={bookgirl}
         mainButton="Donate"
-        route="/DonationRequest"
+        route="/Don_home"
+        mainButton1="Request for Donation"
+        route1="/DonationRequest"
         
       />
       <Box

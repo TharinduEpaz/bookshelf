@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import Search from "../Search";
 
-function BlurWhiteBox({ title, image, mainButton,route }) {
+function BlurWhiteBox({ title, image, mainButton,route,mainButton1,route1 }) {
   return (
     <Box
       m={"auto"}
@@ -61,7 +61,10 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
         <Link to={route}>
            <Button ml={5} colorScheme="purple" pl={10} pr={10} borderRadius={100}>{mainButton}</Button> 
             </Link>
-           <Search />
+   
+            <Link to={route1}>
+           <Button ml={5} colorScheme="green" pl={10} pr={10} borderRadius={100}>{mainButton1}</Button> 
+            </Link>
            
         </GridItem>
         
