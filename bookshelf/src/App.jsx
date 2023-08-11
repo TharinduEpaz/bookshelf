@@ -16,16 +16,17 @@ import { useState, useMemo } from "react";
 import {UserProvider} from './context/userContext';
 
 // Import Moderator Pages
-import Dashboard from "./pages/Moderator/Dashboard";
-import Notifications from "./pages/Moderator/Notifications";
+import Dashboard from "./pages/Moderator/M_Dashboard";
+import Notifications from "./pages/Moderator/M_Notifications";
 import Inventry from "./pages/Moderator/Inventry";
-import Shop_M from "./pages/Moderator/Shop_M";
-import Orders from "./pages/Moderator/Orders";
-import Donations from "./pages/Moderator/Donations";
-import Subscriptions from "./pages/Moderator/Subscriptions";
-import BookSharing from "./pages/Moderator/BookSharing";
-import Setting from "./pages/Moderator/Settings";
-import AdddNewBook from "./pages/Moderator/AdddNewBook";
+import Shop_M from "./pages/Moderator/M_Shop";
+import Orders from "./pages/Moderator/M_Orders";
+import Donations from "./pages/Moderator/M_Donations";
+import Subscriptions from "./pages/Moderator/M_Subscriptions";
+import BookSharing from "./pages/Moderator/M_BookSharing";
+import Setting from "./pages/Moderator/M_Settings";
+import AdddNewBook from "./pages/Moderator/M_AddNewBook";
+import Moderator from "./pages/Moderator/Moderator";
 
 function App() {
 
@@ -72,16 +73,19 @@ function App() {
           {/* <Route exact path="/logout" element={<Logout />}></Route> */}
 
           {/* Moderator Routes */}
-          <Route exact path="/moderator/dashboard" element={<Dashboard />}></Route>
-          <Route exact path="/moderator/notifications" element={<Notifications />}></Route>
-          <Route exact path="/moderator/inventry" element={<Inventry />}></Route>
-          <Route exact path="/moderator/shop_M" element={<Shop_M />}></Route>
-          <Route exact path="/moderator/orders" element={<Orders />}></Route>
-          <Route exact path="/moderator/donations" element={<Donations />}></Route>
-          <Route exact path="/moderator/subscriptions" element={<Subscriptions />}></Route>
-          <Route exact path="/moderator/booksharing" element={<BookSharing />}></Route>
-          <Route exact path="/moderator/setting" element={<Setting />}></Route>
-          <Route exact path="/moderator/addNewBook" element={<AdddNewBook />}></Route>
+          <Route  path="/moderator/" element={<Moderator />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="inventry" element={<Inventry />} />
+            <Route path="shop_M" element={<Shop_M />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="donations" element={<Donations />} />
+            <Route path="subscriptions" element={<Subscriptions />} />
+            <Route path="booksharing" element={<BookSharing />} />
+            <Route path="setting" element={<Setting />} />
+            <Route path="addNewBook" element={<AdddNewBook />} />
+          </Route>
         </Routes>
         <Footer />
         </UserProvider>

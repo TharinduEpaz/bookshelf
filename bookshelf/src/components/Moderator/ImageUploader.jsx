@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   Input,
@@ -59,6 +59,7 @@ export default function ImageUploader() {
         <Box display={"Flex"} gap={5} alignItems={"Center"}>
           {fileName}
           <MdDelete
+            cursor={"pointer"}
             onClick={() => {
               setFileName("No Selected file");
               setImage(null);

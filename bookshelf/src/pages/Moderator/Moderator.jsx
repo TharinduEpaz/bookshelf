@@ -1,11 +1,14 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import SideMenu from "../../components/Moderator/SIdeMenu";
 
-export default function Dashboard() {
+
+export default function Moderator() {
   return (
     <>
       <Box
-        h="100vh"
+        h="auto"
         m={"auto"}
         mt={10}
         w="80%"
@@ -21,6 +24,7 @@ export default function Dashboard() {
           templateColumns="repeat(5, 1fr)"
           gap={2}
           h={"100%"}
+          minHeight={"80vh"}
         >
           <GridItem
             colSpan={1}
@@ -36,10 +40,10 @@ export default function Dashboard() {
             borderColor={"blue.200"}
             rounded={"md"}
           >
-
+            <Outlet />
           </GridItem>
         </Grid>
       </Box>
     </>
-  );
+  )
 }
