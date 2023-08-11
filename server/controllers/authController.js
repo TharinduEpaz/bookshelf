@@ -99,7 +99,7 @@ const register = async (req, res, next) => {
     notification.create({
       userId: user.id,
       type: "warning",
-      message: "Please Confirm your email address to activate your account to access our all features",
+      message: "Please Confirm your email address to activate your account to access our all features. Check your email inbox or spam folder.",
       cause: "email verification",
     });
 
@@ -155,6 +155,16 @@ const verifyEmail = async (req, res, next) => {
         id: result.user
       }
     });
+    
+
+    await notification.destroy({
+      where: {
+        userId: result.user,
+        cause: "email verification",
+      }
+
+    });
+
     res.status(statusCodes.StatusCodes.OK).send("Email Verified");
   }
   catch(error) {

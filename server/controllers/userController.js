@@ -1,4 +1,5 @@
 const userModel = require("../models/user");
+const notificationModel = require("../models/userNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -67,10 +68,19 @@ const updateUserPassword = async (req, res, next) => {
   }
 };
 
+const getNotifications = async (req, res, next) => {
+  const notifications = await notificationModel.findAll({
+    where: { userId: req.params.id },
+  });
+  console.log(notifications);
+  res.status(statusCodes.StatusCodes.OK).json(notifications);
+};
+
 module.exports = {
   getAllUsers,
   getSingeUser,
   getCurrentUser,
   updateUser,
   updateUserPassword,
+  getNotifications,
 };
