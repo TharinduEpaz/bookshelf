@@ -3,7 +3,6 @@ import {
     Box, Grid, GridItem, Heading
 } from "@chakra-ui/react";
 
-import SideNavManageSubscription from '../../components/Subscription/SideNavManageSubscription';
 import ManageItems from '../../components/Subscription/ManageItems';
 
 function ManageSubscription() {

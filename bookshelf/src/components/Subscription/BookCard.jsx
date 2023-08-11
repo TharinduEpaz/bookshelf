@@ -6,9 +6,16 @@
     useColorModeValue,
     Heading,
     Button,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    useDisclosure,
 } from '@chakra-ui/react';
+import { useRef } from 'react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-import { Link as RouterLink } from "react-router-dom";
 
 
 const data = {
@@ -23,7 +30,7 @@ const data = {
 
 
 
-function Rating({ rating, numReviews }) {
+function Rating({ rating}) {
     return (
         <Box display="flex" alignItems="center" justifyContent={'center'}>
             {Array(5)
@@ -50,7 +57,17 @@ function Rating({ rating, numReviews }) {
     );
 }
 
+
+    
 function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef();
+
+    const handleDelete = () => {
+        onRemove(bookKey);
+        onClose();
+    };
+
     return (
         <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
             <Box
@@ -86,7 +103,6 @@ function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) 
                         <Box
                             fontSize="sm"
                             fontWeight="light"
-
                             lineHeight="tight"
                         >
                             <Heading size={'sm'}>{name}</Heading>
@@ -106,17 +122,43 @@ function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) 
                     </Flex>
                 </Box>
             </Box>
-            <RouterLink to="#">
-                <Button
-                    marginTop={8}
-                    colorScheme="red"
-                    variant={'outline'}
-                    borderRadius={15}
-                    onClick={() => onRemove(bookKey)}
-                >
+            
+            {/* popup message */}
+
+            <Button marginTop={8}
+                colorScheme="red"
+                variant={'outline'}
+                borderRadius={15} onClick={onOpen}>
                     Remove
                 </Button>
-            </RouterLink>
+
+                <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                >
+                    <AlertDialogOverlay>
+                        <AlertDialogContent>
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                Remove Subscription
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                                Are you sure want to remove this subscription?
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                                <Button ref={cancelRef} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='red'
+                                onClick={() => onRemove(bookKey)} ml={3}>
+                                    Remove
+                                </Button>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialogOverlay>
+                </AlertDialog>
         </Flex>
     );
 }
