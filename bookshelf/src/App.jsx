@@ -13,6 +13,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import g from "./assets/g.png";
 
 import { UserProvider } from "./context/userContext";
+import { BooksProvider } from "./context/booksContext";
 
 import {
   Account,
@@ -75,6 +76,8 @@ function App() {
 
       <Router>
         <UserProvider>
+        <BooksProvider>
+        
           <Navbar />
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
@@ -85,6 +88,7 @@ function App() {
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
 
             <Route element={<PrivateRoutes />}>
+
               <Route exact path="/account" element={<Account />}>
                 <Route index element={<Dashboard />} />
                 <Route path="dashboard" element={<Dashboard />} />
@@ -92,9 +96,14 @@ function App() {
                 <Route path="orders" element={<Orders />} />
                 <Route path="chat" element={<Chat />} />
               </Route>
+
+
+
+
             </Route>
           </Routes>
           <Footer />
+          </BooksProvider>
         </UserProvider>
       </Router>
     </Box>
