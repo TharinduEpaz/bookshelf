@@ -26,7 +26,7 @@ import {
 
 } from "@chakra-ui/react";
 import Search from "../components/Shop/Search";
-import LinkTree from "../components/LinkTree";
+import LinkTree from "../components/Donation/LinkTree";
 import RadioCard from "../components/Shop/RadioSet";
 import { BsCart, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import Summaries from "../components/Shop/Summaries";
