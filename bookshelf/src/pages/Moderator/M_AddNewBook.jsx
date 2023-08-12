@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,21 +11,15 @@ import {
   FormLabel,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Textarea,
   Stack,
   ButtonGroup,
-  RadioGroup,
-  Radio,
   CheckboxGroup,
   Checkbox,
 } from "@chakra-ui/react";
-import SideMenu from "../../components/Moderator/SIdeMenu";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
-export default function Inventry() {
+export default function AddNewBook() {
   const [value, setValue] = React.useState("1");
 
   const [bookName, setBookName] = React.useState("");
@@ -38,8 +32,10 @@ export default function Inventry() {
   const [sellingPrice, setSellingPrice] = React.useState("");
   const [quantityInStock, setQuantityInStock] = React.useState("1");
   const [description, setDescription] = React.useState("");
-  const [fileName, setFileName] = React.useState("");
+  // const [fileName, setFileName] = React.useState("");
   // const [coverImgURL, setCoverImgURL] = React.useState("");
+
+  const [image, setImage] = useState(null);
 
   //Check box
   const handleCheckboxChange = (value) => {
@@ -64,7 +60,8 @@ export default function Inventry() {
         sellingPrice,
         quantityInStock,
         description,
-        fileName,
+        image,
+        // fileName,
       };
       // const response = await fetch("http://localhost:3000/api/v1/books", {
       //   method: "POST",
@@ -113,12 +110,13 @@ export default function Inventry() {
 
                 <FormControl>
                   <FormLabel fontWeight={"semibold"}>ISBN</FormLabel>
-                  <Input
-                    type="int"
-                    placeholder="ISBN of the Book"
-                    value={isbn}
-                    onChange={(e) => setIsbn(e.target.value)}
-                  />
+                  <NumberInput>
+                    <NumberInputField
+                      placeholder="ISBN of the Book"
+                      value={isbn}
+                      onChange={(e) => setIsbn(e.target.value)}
+                    />
+                  </NumberInput>
                 </FormControl>
 
                 <FormControl>
@@ -183,12 +181,13 @@ export default function Inventry() {
                   <FormLabel fontWeight={"semibold"}>
                     Selling Price (Rs)
                   </FormLabel>
-                  <Input
-                    type="int"
-                    placeholder="Price of the Book"
-                    value={sellingPrice}
-                    onChange={(e) => setSellingPrice(e.target.value)}
-                  />
+                  <NumberInput>
+                    <NumberInputField
+                      placeholder="Price of the Book"
+                      value={sellingPrice}
+                      onChange={(e) => setSellingPrice(e.target.value)}
+                    />
+                  </NumberInput>
                 </FormControl>
 
                 <FormControl>
@@ -221,7 +220,7 @@ export default function Inventry() {
 
             <GridItem colSpan={1}>
               <Stack spacing={5} mt={10}>
-                <ImageUploader onImageUpload={setFileName} />
+                <ImageUploader onImageUpload={setImage} />
 
                 {/* <FormControl bgColor={"#F4F5FA"} p={7} borderRadius={20}>
                       <Center flexDir={"column"}>

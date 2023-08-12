@@ -6,15 +6,21 @@ import {
   HStack,
   Box,
   Spacer,
-  Center,
 } from "@chakra-ui/react";
 
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 
-export default function ImageUploader() {
-  const [image, setImage] = useState(null);
+export default function ImageUploader({ onImageUpload }) {
+  const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("No Selected file");
+
+  const handleImageUpload = (e) => {
+    setSelectedImage(URL.createObjectURL(e.target.files[0]));
+    setFileName(e.target.files[0].name);
+    onImageUpload(e.target.files[0]);
+  };
+
   return (
     <>
       <FormControl
@@ -34,15 +40,10 @@ export default function ImageUploader() {
           accept="image/*"
           className="input-field"
           hidden
-          onChange={({ target: { files } }) => {
-            files[0] && setFileName(files[0].name);
-            if (files) {
-              setImage(URL.createObjectURL(files[0]));
-            }
-          }}
+          onChange={handleImageUpload}
         />
-        {image ? (
-          <img src={image} height={150} width={150} alt={fileName} />
+        {selectedImage ? (
+          <img src={selectedImage} style={{maxHeight:280}} alt={fileName} />
         ) : (
           <>
             <MdCloudUpload color="#1475cf" size={60} />
@@ -52,6 +53,7 @@ export default function ImageUploader() {
             </Text>
           </>
         )}
+        
       </FormControl>
       <HStack bgColor={"gray.300"} p={2} borderRadius={5}>
         <AiFillFileImage color="#1475cf" />
@@ -62,7 +64,7 @@ export default function ImageUploader() {
             cursor={"pointer"}
             onClick={() => {
               setFileName("No Selected file");
-              setImage(null);
+              setSelectedImage(null);
             }}
           />
         </Box>

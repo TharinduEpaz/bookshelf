@@ -4,8 +4,6 @@ import {
   Card,
   CardBody,
   Flex,
-  Grid,
-  GridItem,
   Icon,
   Spacer,
   Text,
@@ -13,7 +11,6 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { BiBookOpen } from "react-icons/bi";
-import SideMenu from "../../components/Moderator/SIdeMenu";
 import StatCard from "../../components/Moderator/StatCard";
 import DataTable from "../../components/Moderator/DataTable";
 import SearchPanel from "../../components/Moderator/SearchPanel";

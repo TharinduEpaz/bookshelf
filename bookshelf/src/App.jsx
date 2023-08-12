@@ -18,7 +18,7 @@ import {UserProvider} from './context/userContext';
 // Import Moderator Pages
 import Dashboard from "./pages/Moderator/M_Dashboard";
 import Notifications from "./pages/Moderator/M_Notifications";
-import Inventry from "./pages/Moderator/Inventry";
+import Inventry from "./pages/Moderator/M_Inventry";
 import Shop_M from "./pages/Moderator/M_Shop";
 import Orders from "./pages/Moderator/M_Orders";
 import Donations from "./pages/Moderator/M_Donations";
