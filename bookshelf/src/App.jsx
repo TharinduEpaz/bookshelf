@@ -8,6 +8,8 @@ import g from "./assets/g.png";
 import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
+import ShareBook from "./components/Sharing/ShareBook";
+
 
 
 import {UserProvider} from './context/userContext';
@@ -85,10 +87,13 @@ function App() {
             <Route path = "chat" element={<Chat />} />
           </Route>
           <Route exact path="/sharingHome" element={<SharingHome />}></Route>
-          <Route exact path="/PostRequest" element={<PostRequest />}></Route>
-
+          
+    
           <Route exact path="/PostRequest" element={<PostRequest />}>
-          <Route path="shareRequest" element={<ShareRequest />} />
+          <Route index element={<ShareBook />} />
+            <Route path="shareBook" element={<ShareBook/>} />
+            <Route path="shareRequest" element={<ShareRequest />} />
+            
           </Route> 
 
          

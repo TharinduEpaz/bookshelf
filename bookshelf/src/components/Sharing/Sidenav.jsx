@@ -24,7 +24,7 @@ import { userContext } from "../../context/userContext";
 const SidenavDetailsLinks = [
     {
         id: 1,
-        url: "books",
+        url: "shareBook",
         text: "Books",
         icon: <FaBookOpen/>,
     },
