@@ -1,30 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 import {
-    Box,
-    Text,
-    VStack,
-    useColorModeValue,
-    List,
-    ListItem,
-    ListIcon,
-    Button,
-    Grid,
-    GridItem
+	Box,
+	Text,
+	VStack,
+	useColorModeValue,
+	List,
+	ListItem,
+	ListIcon,
+	Button,
+	Grid,
+	GridItem,
 } from "@chakra-ui/react";
 
-
 import { FaCheckCircle } from "react-icons/fa";
-import { FaBookReader } from "react-icons/fa"; 
+import { FaBookReader } from "react-icons/fa";
 import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
+
 interface Props {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 function PriceWrapper(props: Props) {
-    const { children } = props;
-
-    return (
+	const { children } = props;
+	return (
 		<Box
 			mb={4}
 			shadow="base"
@@ -40,7 +40,25 @@ function PriceWrapper(props: Props) {
 }
 
 function BookReder() {
-  return (
+	const [subscriptionType, setSubscriptionType] = useState();
+
+	useEffect(() => {
+		const getSubscription = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:3000/api/v1/subscriptions"
+				);
+				setSubscriptionType(response.data);
+				console.log(response.data);
+			} catch (error) {}
+		};
+		getSubscription();
+	}, []);
+
+	if (!subscriptionType) {
+		return <></>;
+	}
+	return (
 		<div>
 			<PriceWrapper>
 				<Box py={7} px={12}>
@@ -48,19 +66,19 @@ function BookReder() {
 						{/* First column with icon */}
 						<GridItem marginTop={6}>
 							{/* Add your desired icon from the react-icons library */}
-							<FaBookReader size={40} color='darkblue'/>
+							<FaBookReader size={40} color="darkblue" />
 						</GridItem>
 
 						{/* Second column (spanning two rows) */}
 						<GridItem textAlign={"start"}>
 							{/* First row in the second column */}
 							<Text fontWeight="500" fontSize="3xl">
-								BOOK
+								{subscriptionType[0].firstName}
 							</Text>
 
 							{/* Second row in the second column */}
 							<Text fontSize="4xl" fontWeight="900">
-								READER
+								{subscriptionType[1].LastName}
 							</Text>
 						</GridItem>
 					</Grid>
@@ -74,7 +92,10 @@ function BookReder() {
 					<List spacing={3} textAlign="start" px={12}>
 						<ListItem fontSize={18}>
 							<ListIcon as={FaCheckCircle} color="green.500" />
-							<strong>1 book every for 2 months. </strong>
+							<strong>
+								{subscriptionType[0].book_count} book every for {" "}
+								{subscriptionType[0].time_period}.
+							</strong>
 						</ListItem>
 						<ListItem>
 							<ListIcon as={FaCheckCircle} color="green.500" />
@@ -89,7 +110,7 @@ function BookReder() {
 						<RouterLink to="/selectBookReader">
 							<Button
 								ml={5}
-                                variant={'outline'}
+								variant={"outline"}
 								colorScheme="purple"
 								w={130}
 								borderRadius={100}
@@ -101,7 +122,7 @@ function BookReder() {
 				</VStack>
 			</PriceWrapper>
 		</div>
-  );
+	);
 }
 
-export default BookReder
+export default BookReder;
