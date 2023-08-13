@@ -1,195 +1,158 @@
 import {
-    Flex,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    InputGroup,
-    HStack,
-    InputRightElement,
-    Stack,
-    Button,
-    Heading,
-    Text,
-    useColorModeValue,
-    Link,
-    Alert,  
-    AlertIcon,
-    SkeletonCircle,
-    SkeletonText,
-    Spinner,
-    CircularProgress,
-  
-    
-  
-  
-  
-  } from '@chakra-ui/react';
-  
-  import { useState } from 'react';
-  //import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-  import { Fa500Px } from 'react-icons/fa';
-  //import axios from 'axios';
-  
-  export default function SignupCard() {
-    const [showPassword, setShowPassword] = useState(false);
-    const[firstName,setFirstName] = useState('');
-    const[lastName,setLastName] = useState('');
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [error,setError] = useState('');
-    const [isLoading,setIsLoading] = useState(false);
-  
-    const regUrl = 'http://localhost:3000/api/v1/register';
-  
-    const register = async (e) => {
-       e.preventDefault();
-       try {
-        setIsLoading(true);
-      
-        const response = await axios.post(regUrl,{ firstName : firstName, lastName : lastName, email : email, password : password});
-        console.log(response.data);
-        setEmail('');
-        setPassword('');
-        setFirstName('');
-        setLastName('');
-        setIsLoading(false);
-  
-        window.location.href = "/login";
-        
-       } catch (error) {
-        setError(error.response.data.msg);  
-        setIsLoading(false);
-      console.log(error.response);
-       }
-    
-    }
-  
-    if(isLoading){
-      return (
-        <Flex
-        minH={'100vh'}
-        
-        justify={'center'}
-        >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'} textAlign={'center'}>
-              Sign up
-            </Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool features ✌️
-            </Text>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
-            <Flex alignItems={'center'} justifyContent={'center'}>
-            <CircularProgress isIndeterminate color='green.300' />
-              
-            </Flex>
-          </Box>
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  HStack,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  Link,
+  Alert,
+  AlertIcon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react';
+
+import { useState } from 'react';
+
+export default function SignupCard() {
+  const [fullname, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [nic, setNIC] = useState('');
+  const [address, setAddress] = useState('');
+  const [error, setError] = useState('');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const validateNIC = (nic) => {
+    // Implement your NIC validation logic here
+    // Return true if NIC is valid, otherwise return false
+  };
+
+  const validateContactNumber = (contactNumber) => {
+    // Implement your contact number validation logic here
+    // Return true if contact number is valid, otherwise return false
+  };
+
+  const register = async (e) => {
+    e.preventDefault();
+    // Your registration logic here
+    // Show the success modal
+    setIsSuccessModalOpen(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setIsSuccessModalOpen(false);
+  };
+
+  return (
+    <Flex minH={'100vh'} justify={'center'}>
+      <Stack spacing={8} mx={'auto'} maxW={'xl'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Apply for Donation
+          </Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            WE CARE YOUR DREAM
+          </Text>
         </Stack>
-      </Flex>
-      )
-    }
-  
-  
-  
-  
-    return (
-      <Flex
-        minH={'100vh'}
-        
-        justify={'center'}
-        >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'} textAlign={'center'}>
-              Sign up
-            </Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool features ✌️
-            </Text>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
-            <Stack spacing={4}>
-            {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
+        <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
+          <Stack spacing={4}>
+            {error && (
+              <Alert status="error">
+                <AlertIcon /> {error}
+              </Alert>
+            )}
             <form onSubmit={register}>
-              <HStack>
-                <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input type="text" 
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-      
-                    />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
-                    <Input type="text" 
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </FormControl>
-                </Box>
-              </HStack>
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              <FormControl id="fullname" isRequired>
+                <FormLabel>Full Name</FormLabel>
+                <Input
+                  type="text"
+                  value={fullname}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </FormControl>
-              <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <InputRightElement h={'full'}>
-                    <Button
-                      variant={'ghost'}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }>
-                      {showPassword ? <Fa500Px/> : <Fa500Px/>}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
+              <FormControl id="nic" isRequired>
+                <FormLabel>National Identity Card Number</FormLabel>
+                <Input
+                  type="text"
+                  value={nic}
+                  onChange={(e) => setNIC(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="address" isRequired>
+                <FormLabel>Address</FormLabel>
+                <Input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="contactNumber" isRequired>
+                <FormLabel>Contact Number</FormLabel>
+                <Input
+                  type="tel"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="email" isRequired>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="description" isRequired>
+                <FormLabel>Brief description about the need</FormLabel>
+                <Input
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
-                type='submit'
+                  type="submit"
                   loadingText="Submitting"
                   size="lg"
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
                     bg: 'blue.500',
-                  }}>
-                  Sign up
+                  }}
+                >
+                  Submit
                 </Button>
               </Stack>
-              <Stack pt={6}>
-                <Text align={'center'}>
-                  Already a user? <Link color={'blue.400'}>Login</Link>
-                </Text>
-              </Stack>
-              </form>
-            </Stack>
-          </Box>
-        </Stack>
-      </Flex>
-    );
-  }
+            </form>
+          </Stack>
+        </Box>
+      </Stack>
+
+      {/* Success Modal */}
+      <Modal isOpen={isSuccessModalOpen} onClose={handleCloseSuccessModal} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Success</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Successfully Submitted! Our team will contact you as soon as possible.
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Flex>
+  );
+}
+
+

@@ -7,7 +7,7 @@ import g from "./assets/g.png";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Shop from "./pages/Shop";
-import ProductPage from "./pages/ProductPage";
+//import ProductPage from "./pages/ProductPage";
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
@@ -50,7 +50,7 @@ function App() {
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/shop" element={<Shop />}></Route>
-          <Route exact path="/Don_home/:id" element={<ProductPage />}></Route>
+          
           <Route exact path="/donation" element={<Donation />}></Route>
           <Route exact path="/Don_home" element={<Don_home />}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
