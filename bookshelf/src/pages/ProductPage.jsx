@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Flex,
@@ -21,7 +21,8 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
+  Spinner
 
 
 } from "@chakra-ui/react";
@@ -32,18 +33,40 @@ import { BsCart, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import Summaries from "../components/Shop/Summaries";
 import SimpleReview from "../components/Shop/SimpleReview";
 import AboutAuthor from "../components/Shop/AboutAuthor";
+import axios from "axios";
+import { useBooksContext } from "../context/booksContext";
+import { useParams } from "react-router-dom";
+
+
+
 
 function ProductPage() {
-  const productDetails = {
-    name: "Song og Ice and Fire",
-    author: "George R.R. Martin",
-    price: 1990.0,
-    rating: 5,
-    variants: ["hardcover", "paperback"],
-    description:
-      "A Game of Thrones is the first novel in A Song of Ice and Fire, a series of fantasy novels by the American author George R. R. Martin. It was first published on August 1, 1996. The novel won the 1997 Locus Award and was nominated for both the 1997 Nebula Award and the 1997 World Fantasy Award.",
-  };
-  return (
+  const id = useParams();
+  const {
+    isLoading,
+    fetchSingleBook,
+    currentBook
+  } = useBooksContext();
+
+  useEffect(() => {
+    const getBook = async () => {
+      fetchSingleBook(id.id);
+    }
+    getBook();
+  }, []);
+
+  console.log(currentBook);
+
+  if (!currentBook) {
+    return (
+      <>
+        <Spinner />
+      </>
+    );
+
+  }
+
+  else return (
     <>
       <Box
         height={"100%"}
@@ -90,7 +113,7 @@ function ProductPage() {
               alignItems={"start"}
             >
               <Image
-                src="https://dev.lareviewofbooks.org/wp-content/uploads/2014/04/GameofThronesCover.jpg"
+                src={currentBook.image}
                 alt="Dan Abramov"
                 borderRadius={"md"}
                 maxH={400}
@@ -104,14 +127,14 @@ function ProductPage() {
               <Badge colorScheme="red">Out Of Stock</Badge>
               <Badge colorScheme="purple">New</Badge>
             </Stack>
-            <Heading>Song Of Ice And Fire</Heading>
+            <Heading>{currentBook.title}</Heading>
 
             <Box display="flex" alignItems={"center"} mt={4}>
               {Array(5)
                 .fill("")
                 .map((_, i) => {
                   const roundedRating =
-                    Math.round(productDetails.rating * 2) / 2;
+                    Math.round(currentBook.averageRating * 2) / 2;
                   if (roundedRating - i >= 1) {
                     return (
                       <BsStarFill
@@ -144,12 +167,12 @@ function ProductPage() {
                 fontFamily={"montserrat"}
                 fontWeight={"light"}
               >
-                By {productDetails.author}
+                By {currentBook.author}
               </Heading>
             </Box>
             {/* varients as two buttons */}
             <Box mt={10}>
-              <RadioCard options={productDetails.variants} />
+              <RadioCard options={currentBook.typesAvailable} />
             </Box>
             <Box mt={10}>
               <Heading
@@ -159,7 +182,7 @@ function ProductPage() {
                 fontWeight={'thin'}
                
               >
-                Rs. {productDetails.price}
+                Rs. {currentBook.price}
               </Heading>
 
                  <Box display={'flex'} alignItems={'center'} gap={10} mt={10}>
@@ -174,7 +197,7 @@ function ProductPage() {
               <Divider mt={5} mb={5} color={'black.600'} borderWidth={1} borderColor={'blue.200'}/>
 
               <Text>
-                {productDetails.description}
+                {currentBook.description}
               </Text>
             </Box>
           </GridItem>

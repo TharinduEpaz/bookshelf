@@ -9,6 +9,7 @@ import {
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   import { FiShoppingCart } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
   
   const data = {
     isNew: true,
@@ -47,9 +48,10 @@ import {
     );
   }
   
-  function BookCard({name, author, price,imageURL, rating,}) {
+  function BookCard({name, author, price,imageURL, rating,id}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
+      
         <Box
           bg={useColorModeValue('white', 'gray.800')}
          maxW={'200px'}
@@ -103,6 +105,7 @@ import {
             </Flex>
           </Box>
         </Box>
+        
       </Flex>
     );
   }
