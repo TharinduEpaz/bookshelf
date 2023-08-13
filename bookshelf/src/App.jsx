@@ -1,33 +1,48 @@
-import { Box, Container, useColorModeValue, Image } from "@chakra-ui/react";
+import { Box, Container, useColorModeValue, Image,Icon,useBreakpointValue } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import g from "./assets/g.png";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Shop from "./pages/Shop";
-import ProductPage from "./pages/ProductPage";
-import Cart from "./pages/Cart"
 
-import { useState, useMemo } from "react";
+import g from "./assets/g.png";
+
 
 
 import {UserProvider} from './context/userContext';
 
+import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
+
+import {Dashboard, Settings, Orders, Chat} from "./components/Account";
+
+const Blur = (props) => {
+  return (
+    <Icon
+      width={useBreakpointValue({ base: '100%', md: '40vw', lg: '30vw' })}
+      zIndex={useBreakpointValue({ base: -1, md: -1, lg: 0 })}
+      height="560px"
+      viewBox="0 0 528 560"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+    <circle cx="100%" cy="100%" r="100%" fill="hsla(1334, 86%, 52%, 0.2)" />
+      {/* <circle cx="100%" cy="100%" r="100%" fill="hsla(343, 91%, 58%, 1)" /> */}
+      <circle cx="85%" cy="43%" r="50%" fill="hsla(194, 89%, 52%, 0.2)" />
+    </Icon>
+  )
+}
+
 // Import Moderator Pages
-import Dashboard from "./pages/Moderator/Dashboard";
+//import Dashboard from "./pages/Moderator/Dashboard";
 import Notifications from "./pages/Moderator/Notifications";
 import Inventry from "./pages/Moderator/Inventry";
 import Shop_M from "./pages/Moderator/Shop_M";
-import Orders from "./pages/Moderator/Orders";
+//import Orders from "./pages/Moderator/Orders";
 import Donations from "./pages/Moderator/Donations";
 import Subscriptions from "./pages/Moderator/Subscriptions";
 import BookSharing from "./pages/Moderator/BookSharing";
 import Setting from "./pages/Moderator/Settings";
 import AdddNewBook from "./pages/Moderator/AdddNewBook";
 
-// import admin pages
+
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminNotifications from "./pages/AdminNotifications";
 import AdminUserMgt from "./pages/AdminUserMgt";
@@ -40,6 +55,7 @@ import AdminOrders from "./pages/AdminOrders";
 import AdminBookSharing from "./pages/AdminBookSharing";
 import AdminComplaints from "./pages/AdminComplaints";
 import AdminAddNewBook from "./pages/AdminAddNewBook";
+
 
 function App() {
 
@@ -83,7 +99,16 @@ function App() {
           <Route exact path="/shop" element={<Shop />}></Route>
           <Route exact path="/shop/:id" element={<ProductPage />}></Route>
           <Route exact path="/cart/:userId" element={<Cart />}></Route>
-          {/* <Route exact path="/logout" element={<Logout />}></Route> */}
+
+          <Route exact path="/account" element={<Account />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path = "settings" element={<Settings />} />
+            <Route path = "orders" element={<Orders />} />
+      
+            <Route path = "chat" element={<Chat />} />
+          </Route>
+          
 
           {/* Moderator Routes */}
           <Route exact path="/moderator/dashboard" element={<Dashboard />}></Route>
@@ -113,6 +138,7 @@ function App() {
         <Footer />
         </UserProvider>
       </Router>
+      <Blur position={'fixed'} top={-10} left={-10} zIndex={-100} style={{ filter: 'blur(70px)' }} />
 
       
     </Box>

@@ -1,0 +1,102 @@
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  SimpleGrid,
+  CardFooter,
+  Heading,
+    Text,
+    Button,
+    Divider,
+    Stack,
+    Alert,
+    AlertIcon
+
+
+} from "@chakra-ui/react";
+import React from "react";
+
+function Dashboard() {
+  return (
+    <Box
+      position={"relative"}
+      h={"100%"}
+      
+      borderRadius={"10px"}
+      ml={2}
+      p={5}
+        border={"1px solid #E2E8F0"}
+    >
+    <Box>
+        <Heading size="md"> Dashboard </Heading>
+    </Box>
+    <Divider mb={10}></Divider>
+    
+    <Box mb={10}>
+    <Stack spacing={3}>
+  <Alert status='error'>
+    <AlertIcon />
+    There was an error processing your Order Go to order page for more details
+  </Alert>
+
+  <Alert status='success'>
+    <AlertIcon />
+    Order 546 Shipped Successfully
+  </Alert>
+
+  <Alert status='warning'>
+    <AlertIcon />
+    Please Confirm your email address to activate your account to access our all features
+  </Alert>
+</Stack>
+    </Box>
+      <SimpleGrid
+        spacing={4}
+        templateColumns="repeat(auto-fill, minmax(30%, 1fr))"
+      >
+        <Card>
+          <CardHeader>
+            <Heading size="md"> Orders </Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              View a summary of all your customers over the last month.
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button>View here</Button>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Heading size="md"> Customer dashboard</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              View a summary of all your customers over the last month.
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button>View here</Button>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Heading size="md"> Customer dashboard</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              View a summary of all your customers over the last month.
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button>View here</Button>
+          </CardFooter>
+        </Card>
+      </SimpleGrid>
+    </Box>
+  );
+}
+
+export default Dashboard;

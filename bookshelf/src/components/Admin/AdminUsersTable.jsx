@@ -17,7 +17,7 @@ import {
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function AdminUsersTable({ list, columnNames }) {
+export default function AdminUsersTable({ list, columnNames, onSuspendClick  }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +46,7 @@ export default function AdminUsersTable({ list, columnNames }) {
   return (
     
     <TableContainer>
-    <Table variant='simple' p={10} mt={50} borderWidth={1} borderColor="gray.200">
+    <Table variant='simple' p={10} mt={50} borderWidth={1} borderColor="gray.200" fontSize="sm">
 
       <Thead fontWeight="semibold">
         <Tr bgColor="gray.100">
@@ -57,6 +57,7 @@ export default function AdminUsersTable({ list, columnNames }) {
               <Td key={index}>{headerItem}</Td>
             ))
             }
+             <Td>Action</Td>
         </Tr>
       </Thead>
 
@@ -67,9 +68,16 @@ export default function AdminUsersTable({ list, columnNames }) {
               <Td>
                 <Checkbox />
               </Td>
+
               {Object.values(Obj).map((value, index2) => (
                 <Td key={index2}>{value}</Td>
               ))}
+              
+               <Td>
+                <Button colorScheme="red" size="sm" onClick={() => onSuspendClick(user)}>
+                  Suspend
+                </Button>
+              </Td>
             </Tr>
           ))
         )}

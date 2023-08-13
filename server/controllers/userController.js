@@ -3,6 +3,35 @@ const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 
+
+
+const addUser = async (req, res, next) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      emailVerified,
+      role
+    } = req.body;
+    
+    const users = await userModel.create({
+      firstName,
+      lastName,
+      email,
+      password,
+      emailVerified,
+      role
+    });
+    res.status(statusCodes.StatusCodes.CREATED).json(users);
+  } catch (error) {
+    next(error);
+  }
+  // res.send("Add user");
+};
+
+
 const getAllUsers = async (req, res) => {
   const users = await userModel.findAll();
   res.json(users);
@@ -68,6 +97,7 @@ const updateUserPassword = async (req, res, next) => {
 };
 
 module.exports = {
+  addUser,
   getAllUsers,
   getSingeUser,
   getCurrentUser,

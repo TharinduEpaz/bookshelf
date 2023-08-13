@@ -25,6 +25,7 @@ import AdminSidebar from "../components/Admin/AdminSidebar";
 import AdminStatCard from "../components/Admin/AdminStatCard";
 import { Link } from "react-router-dom";
 import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import { useEffect, useState } from "react";
 
 //import SearchPanel from "../../components/Moderator/SearchPanel";
 
@@ -35,60 +36,38 @@ export default function AdminInventory() {
   const columns = [
     "Book ID",
     "Book Name",
+    "Author",
     "Genre",
     "Unit Price",
     "In-Stock",
-    "Action",
-    "Status",
   ];
 
-  const list = [
-    {
-      id: "n0001",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0002",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0003",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0004",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0005",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-  ];
+
+  const [list, setBookList] = useState([]);
+
+  const getBooks = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/books")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((book) => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        unitPrice: book.price,
+        inStock: book.stock,
+      }));
+      
+      setBookList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getBooks();
+  }, [])
 
   return (
     

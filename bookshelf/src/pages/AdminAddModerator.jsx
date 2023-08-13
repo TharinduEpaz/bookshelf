@@ -1,4 +1,7 @@
 import React from 'react'
+import { useState } from "react";
+import axios from "axios";
+
 import {
   FormControl,
   FormLabel,
@@ -10,10 +13,51 @@ import {
   Button, 
   ButtonGroup,
   Heading,
-  Text
+  Text,
+  Alert,
+  AlertIcon
 } from '@chakra-ui/react'
 
 export default function AdminAddModerator() {
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [error, setError] = useState("");
+
+  const addModeratorUrl = "http://localhost:3000/api/v1/users";
+
+  const addUser = async (e) => {
+    e.preventDefault();
+    try {
+
+      const response = await axios.post(addModeratorUrl, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        role: role,
+        emailverified: true,
+      });
+      console.log(response.data);
+      setEmail("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
+      setRole("");
+
+      window.location.href = "/adminusermgt";
+      
+    } catch (error) {
+      setError(error.response.data.msg);
+      console.log(error.response);
+    }
+  };
+
+
+
   return (
     
     <>
@@ -65,47 +109,98 @@ export default function AdminAddModerator() {
       Fill in the data for profile. It will take a couple of minutes. You only need a passport
     </Text>
 
+    {error && (
+              <Alert status="error">
+                {" "}
+                <AlertIcon /> {error}
+              </Alert>
+            )}
+
+    <form onSubmit={addUser}>
     <FormControl pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>User Type</FormLabel>
+      {/*
         <Select placeholder='Moderator' fontSize={14} h={8}>
           <option>Buyer</option>
-          <option>Subscriber</option>
-          <option>Donator</option>
-        </Select>
+  </Select>*/}
+          <Input
+          fontSize={14} 
+          h={8}
+          type="text"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        />
       </FormControl>
 
     <FormControl isRequired pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>First Name</FormLabel>
-      <Input type='name' fontSize={14} h={8}/>
+        <Input
+          fontSize={14} 
+          h={8}
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
       {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
     </FormControl>
 
     <FormControl isRequired pb={5} pl={10} pr={10}>
-      <FormLabel fontSize={14}>Second Name</FormLabel>
-      <Input type='name' fontSize={14} h={8}/>
+      <FormLabel fontSize={14}>Last Name</FormLabel>
+      <Input
+          fontSize={14} 
+          h={8}
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
       {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
     </FormControl>
 
     <FormControl isRequired pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>Email</FormLabel>
-      <Input type='email' fontSize={14} h={8}/>
+      <Input
+          fontSize={14} 
+          h={8}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
     </FormControl>
 
     <FormControl isRequired pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>Password</FormLabel>
-      <Input type='password' fontSize={14} h={8}/>
+      <Input
+          fontSize={14} 
+          h={8}
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
     </FormControl>
 
-    <Button colorScheme='blue' variant='solid' mt={10} mr={5} ml={10} mb={10}>
+    <Button 
+        type="submit"
+        colorScheme='blue' 
+        variant='solid' 
+        mt={10} 
+        mr={5} 
+        ml={10} 
+        mb={10}>
       Add User
     </Button>
 
-    <Button colorScheme='red' variant='outline' mt={10} mb={10}>
-      Cancel
-    </Button>
+    <Button 
 
+      type="submit"
+      colorScheme='red' 
+      variant='outline' 
+      mt={10} 
+      mb={10}>
+        Cancel
+    </Button>
+</form>
     </Box>
     
       </>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDisclosure } from '@chakra-ui/react'; 
 import SearchBar from '../components/Admin/SearchBar';
 
 import { 
@@ -9,128 +10,68 @@ import {
     Text,
     Box,
     Center,
-    Button
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
 } from '@chakra-ui/react'
 import AdminUsersTable from '../components/Admin/AdminUsersTable';
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 export default function AdminAllUsers() {
 
+  
   const columns = [
     "User ID",
-    "User Name",
-    "User Type",
+    "First Name",
+    "Last Name",
     "Email",
-    "Action",
-  ];
-  const list = [
-    {
-      id: "u0001",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0002",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0003",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0004",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0005",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0006",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0007",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0008",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0009",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0010",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0011",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0012",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0013",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0014",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "u0015",
-      name: "Anne Rex",
-      type: "Buyer",
-      email: "ann@gmail.com",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    
+    "User Type",
   ];
 
+  const [list, setUsersList] = useState([]);
+  const [userModals, setUserModals] = useState({});
+
+  async function getAllUsers() {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/users/");
+       
+
+      const jsonData = await response.json();
+
+      const filteredData = jsonData.map((users) => ({
+        id: users.id,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        email: users.email,
+        role: users.role,
+      }));
+
+      setUsersList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getAllUsers();
+  }, [])
+
+
+
+  const toggleModal = (userId) => {
+    setUserModals((prevModals) => ({
+      ...prevModals,
+      [userId]: !prevModals[userId]
+    }));
+  };
+
+  
 
   return (
     
@@ -157,7 +98,7 @@ export default function AdminAllUsers() {
     <SearchBar/>
     
               <Select 
-                placeholder='Buyers' 
+                placeholder='All' 
                 w={'250px'} 
                 size={'sm'} 
                 borderRadius={5} 
@@ -167,6 +108,7 @@ export default function AdminAllUsers() {
                 ml={10}
                 mt={5}
                >
+                  <option value='option1'>Buyers</option>
                   <option value='option1'>Moderators</option>
                   <option value='option2'>Subscribers</option>
                   <option value='option3'>Donators</option>
@@ -177,11 +119,35 @@ export default function AdminAllUsers() {
 
 
     <Box>
+
                 {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
 
                 <Spacer mt={5} />
 
-                <AdminUsersTable list={list} columnNames={columns} />
+                <AdminUsersTable  list={list} columnNames={columns} onSuspendClick={toggleModal} />
+
+                 {list.map((user) => (
+            <Modal key={user.id} isOpen={userModals[user.id]} onClose={() => toggleModal(user.id)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Delete User</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Text>Are you sure you want to suspend the user?</Text>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="red" mr={3} onClick={() => toggleModal(user.id)}>
+                  Suspend
+                </Button>
+                <Button variant="ghost" onClick={() => toggleModal(user.id)}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        ))}
+
+
               </Box>
 
       </Box>

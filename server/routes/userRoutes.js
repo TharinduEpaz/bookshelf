@@ -5,7 +5,13 @@ const router = Router();
 
 const controller = require('../controllers/userController')
 
-router.route('/').get(authenticateUser,authPermissions('admin'), controller.getAllUsers);
+//router.route('/').post(authenticateUser,authPermissions('admin'), controller.addUser);
+
+router.route('/').post(controller.addUser);
+
+router.route('/').get(controller.getAllUsers);
+//router.route('/').get(authenticateUser,authPermissions('admin'), controller.getAllUsers);
+
 router.get('/showMe',authenticateUser, controller.getCurrentUser);
 router.get('/:id', controller.getSingeUser);
 router.patch('/updatePassword',authenticateUser, controller.updateUserPassword);
