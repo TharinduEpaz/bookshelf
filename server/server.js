@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-
+const donationRoutes = require("./routes/donationRoutes");
 
 //routes
 app.get("/", (req, res) => {
@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/v1/', authRoutes);
 app.use('/api/v1/users/', userRoutes);
+app.use('/api/v1/donations/', donationRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

@@ -52,6 +52,7 @@ const login = async (req, res, next) => {
 const register = async (req, res, next) => {
   try {
     const email = req.body.email;
+
     const emailExists = await userModel.findOne({
       where: {
         email: email,
@@ -62,6 +63,7 @@ const register = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    
     const user = await userModel.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
