@@ -23,7 +23,6 @@ app.use(cors());
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const bookRoutes = require("./routes/bookRoutes");
-const subscriptionRoutes = require("./routes/subscriptionRoutes");
 
 
 //routes
@@ -36,7 +35,6 @@ app.get("/", (req, res) => {
 app.use('/api/v1/', authRoutes);
 app.use('/api/v1/users/', userRoutes);
 app.use('/api/v1/books/', bookRoutes);
-app.use('/api/v1/subscriptions/', subscriptionRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

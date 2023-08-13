@@ -1,32 +1,30 @@
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 
-const subscription = sequelize.define('subscription', {
+const subscription = sequelize.define('subsription', {
+
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement:true,
-        allowNull: false
+        autoIncrement: true,
+        primaryKey: true
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false
     },
-    book_count: {
-        type: DataTypes.INTEGER,
+    price: {
+        type: DataTypes.FLOAT,
         allowNull: false
     },
-    time_period: {
-        type: DataTypes.STRING,
+    description: {
+        type: DataTypes.STRING(100),
         allowNull: false
-    }
-
+    },
+    
 }, {
 
     
 });
-
-// subscription.sync({ alter: true });
 
 
 module.exports = subscription;

@@ -6,7 +6,6 @@ import CategoryFilter from '../components/Shop/CategoryFilter'
 import BookCard from '../components/Shop/BookCard'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useBooksContext } from '../context/booksContext'
 
 function Shop() {
   // const bookDetails = {
@@ -89,25 +88,25 @@ function Shop() {
   //     price: "14.99",
   //     rating: 4.9,
   //   },
-  
+
   // };
   const [bookDetails, setBookDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const getBooks = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get(`http://localhost:3000/api/v1/books`);
-  //       console.log(response.data);
-  //       setBookDetails(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getBooks();
-  // }, []);
+  useEffect(() => {
+    const getBooks = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`http://localhost:3000/api/v1/books`);
+        console.log(response.data);
+        setBookDetails(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBooks();
+  }, []);
 
 
 
@@ -154,18 +153,17 @@ function Shop() {
               {isLoading && <Skeleton> <BookCard /></Skeleton>}
               {isLoading && <Skeleton> <BookCard /></Skeleton>}
 
-              {Object.keys(books).map((item) => (
-                <Link to={`/shop/${books[item].id}`}
-                  key={books[item].id}>
+              {Object.keys(bookDetails).map((item) => (
+                <Link to={`/shop/${bookDetails[item].id}`}
+                  key={bookDetails[item].id}>
 
                   <BookCard
-                    name={books[item].title}
-                    author={books[item].author}
-                    price={books[item].price}
-                    imageURL={books[item].image}
-                    rating={books[item].rating}
-                    id={books[item].id}
-            />
+                    name={bookDetails[item].title}
+                    author={bookDetails[item].author}
+                    price={bookDetails[item].price}
+                    imageURL={bookDetails[item].image}
+                    rating={bookDetails[item].rating}
+                  />
                 </Link>
               ))}
             </Flex>
