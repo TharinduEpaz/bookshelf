@@ -1,8 +1,13 @@
 const userModel = require("../models/user");
+const notification = require("../models/userNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse } = require("../utils/jwt");
+const sendMail = require('../utils/sendMail');
+require("dotenv").config();
+
+const jwt = require('jsonwebtoken');
 
 const login = async (req, res, next) => {
   try {
@@ -35,6 +40,8 @@ const login = async (req, res, next) => {
         email: user.email,
         role: user.role,
       };
+
+
       //attach cookies to response and send response
       attachCookiesToResponse(res, { user: tokenUser });
       res.status(statusCodes.StatusCodes.OK).json({ user: tokenUser });
@@ -46,6 +53,8 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+
+
 
 const register = async (req, res, next) => {
   try {
@@ -86,8 +95,38 @@ const register = async (req, res, next) => {
 
     attachCookiesToResponse(res, { user: tokenUser });
 
+    //send notification to user to confirm email
+    notification.create({
+      userId: user.id,
+      type: "warning",
+      message: "Please Confirm your email address to activate your account to access our all features. Check your email inbox or spam folder.",
+      cause: "email verification",
+    });
+
+    //send email to user to confirm email
+
+    jwt.sign(
+      {
+        user: user.id,
+      },
+      process.env.EMAIL_SECRET,
+      {
+        expiresIn: "1d",
+      },
+      (err, emailToken) => {
+        const url = `http://localhost:3000/api/v1/verifyEmail/${emailToken}`;
+        sendMail(user.email, "Verify Email", `Please click this email to confirm your email: <a href="${url}">${url}</a>`);
+      }
+    )
+
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
+    //delete created user if exists
+    await userModel.destroy({
+      where: {
+        email: req.body.email,
+      },
+    });
     next(error);
   }
 };
@@ -100,11 +139,46 @@ const logout = async (req, res) => {
   res.status(statusCodes.StatusCodes.OK).json({ message: "Logged Out" });
 }
 
+const verifyEmail = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+    if (!token) {
+      throw new CustomError.BadRequestError("Invalid Token");
+    }
+
+    const result = jwt.verify(token, process.env.EMAIL_SECRET);
+   
+    await userModel.update({
+      emailVerified: true
+    }, {
+      where: {
+        id: result.user
+      }
+    });
+    
+
+    await notification.destroy({
+      where: {
+        userId: result.user,
+        cause: "email verification",
+      }
+
+    });
+
+    res.status(statusCodes.StatusCodes.OK).send("Email Verified");
+  }
+  catch(error) {
+    console.log(error);
+    next(error);
+  }
+}
+
 
 
 module.exports = {
 
   register,
   login,
-  logout
+  logout,
+  verifyEmail
 };
