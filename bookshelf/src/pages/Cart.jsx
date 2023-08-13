@@ -9,6 +9,8 @@ import {
   } from '@chakra-ui/react'
   import { CartItem } from '../components/Cart/CartItem'
   import { CartOrderSummary } from '../components/Cart/CartOrderSummary'
+  import { useCartContext } from '../context/cartContext'
+  
   
 
   const cartData = [
@@ -44,8 +46,11 @@ import {
     },
   ]
   
-  export const Cart = () => (
+  export function Cart() {
 
+    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
+
+    return (
     <Box
       maxW={{
         base: '3xl',
@@ -114,6 +119,7 @@ import {
         </Flex>
       </Stack>
     </Box>
-  )
+    )
+  }
 
   export default Cart;

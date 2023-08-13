@@ -14,6 +14,7 @@ import g from "./assets/g.png";
 
 import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
+import { CartProvider } from "./context/cartContext";
 
 import {
   Account,
@@ -77,6 +78,7 @@ function App() {
       <Router>
         <UserProvider>
         <BooksProvider>
+        <CartProvider>
         
           <Navbar />
           <Routes>
@@ -103,6 +105,8 @@ function App() {
             </Route>
           </Routes>
           <Footer />
+          
+          </CartProvider>
           </BooksProvider>
         </UserProvider>
       </Router>

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -23,6 +23,7 @@ import {
   Tab,
   TabPanel,
   Spinner,
+  Radio,
 } from "@chakra-ui/react";
 import Search from "../components/Shop/Search";
 import LinkTree from "../components/LinkTree";
@@ -36,12 +37,16 @@ import { useBooksContext } from "../context/booksContext";
 import { useParams } from "react-router-dom";
 import AddToCart from "../components/Shop/AddToCart";
 
+
 function ProductPage() {
   const id = useParams();
   const { isLoading, fetchSingleBook, currentBook } = useBooksContext();
-  const [amount,setAmount] = useState(1)
-  
-  // console.log(amount);
+  const [amount, setAmount] = useState(1);
+
+
+
+
+  console.log(amount);
 
   useEffect(() => {
     const getBook = async () => {
@@ -50,7 +55,7 @@ function ProductPage() {
     getBook();
   }, []);
 
-  console.log(currentBook);
+  // console.log(currentBook);
 
   if (!currentBook || isLoading) {
     return (
@@ -168,7 +173,8 @@ function ProductPage() {
               </Box>
               {/* varients as two buttons */}
               <Box mt={10}>
-                <RadioCard options={currentBook.typesAvailable} />
+                {/* <RadioCard options={currentBook.typesAvailable} bookType={bookType} setBookType={setBookType}  /> */}
+              
               </Box>
               <Box mt={10}>
                 <Heading
@@ -185,7 +191,16 @@ function ProductPage() {
                   {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
 
                   {currentBook.stock > 0 ? (
-                    <AddToCart amount={amount}/>
+                    <AddToCart
+                      amount={amount}
+                    
+                      bookId={currentBook.id}
+                      title={currentBook.title}
+                      price={currentBook.price}
+                      image={currentBook.image}
+                      stock={currentBook.stock}
+
+                    />
                   ) : (
                     <Button
                       w={200}
@@ -244,7 +259,7 @@ function HookUsage(props) {
       defaultValue: 1,
       min: 1,
       max: stock,
-      
+      onChange: (value) => props.setAmount(value),
     });
 
   const inc = getIncrementButtonProps();
@@ -258,11 +273,10 @@ function HookUsage(props) {
       </Button>
       <Input
         {...input}
-        onChange= {props.setAmount(input.value)}
+    
         fontWeight={"bold"}
         textAlign={"center"}
         borderRadius={100}
-        
       />
       <Button {...dec} bg={"blue.100"} borderRadius={100}>
         -
