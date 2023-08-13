@@ -13,42 +13,32 @@ import {
   
   
 
-  const cartData = [
-    {
-      id: '1',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'Subtle Art of not giving a F*ck',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_UF1000,1000_QL80_.jpg',
-    },
-    {
-      id: '2',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'GreenLights',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://jumpbooks.lk/ceruvef/uploads/2021/08/Greenlights-.jpeg',
-    },
-    {
-      id: '3',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'So Good They Cant Ignore You',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://m.media-amazon.com/images/I/519wEQvVwGL.jpg',
-    },
-  ]
+ 
+
+//   amount
+// : 
+// 1
+// id
+// : 
+// "ee46879f-92ef-49ab-9394-fa9f5f76733f"
+// image
+// : 
+// "http://localhost:3000/uploads/default.jpeg"
+// price
+// : 
+// 30
+// stock
+// : 
+// 4
+// title
+// : 
+// "The Science of Everything"
   
   export function Cart() {
 
     const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
+    console.log(cartItems);
+    const cartData = cartItems;
 
     return (
     <Box

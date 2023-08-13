@@ -20,7 +20,17 @@ const dummyCartItem = {
 };
 
 const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+
+    const localStorageKey = "cartItems";
+    
+    const [cartItems, setCartItems] = useState(() => {
+        const storedCartItems = localStorage.getItem(localStorageKey);
+        return storedCartItems ? JSON.parse(storedCartItems) : initialState.cartItems;
+      });
+    
+      useEffect(() => {
+        localStorage.setItem(localStorageKey, JSON.stringify(cartItems));
+      }, [cartItems]);
 
   function getItemQuantity(id) {
     const item = cartItems.find((item) => item.id === id);
