@@ -33,9 +33,9 @@ const book = sequelize.define('book', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    inventory: {
+    stock: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
 
     //types means paperback, hardcover, etc
