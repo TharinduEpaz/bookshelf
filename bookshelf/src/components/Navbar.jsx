@@ -42,7 +42,7 @@ const navLinks = [
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "#" },
   { name: "Subscriptions", path: "#" },
-  { name: "Share a Book", path: "sharingHome" },
+  { name: "Share a Book", path: "/sharingHome" },
 ];
 
 function Navbar() {
