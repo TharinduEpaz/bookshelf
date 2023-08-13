@@ -5,9 +5,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import g from "./assets/g.png";
 
-
+import SharingHome from "./pages/sharing/SharingHome";
+import PostRequest from "./pages/sharing/postrequest";
+import ShareRequest from "./components/Sharing/ShareRequest";
 
 import {UserProvider} from './context/userContext';
+
 
 import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
 
@@ -80,6 +83,15 @@ function App() {
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
           </Route>
+          <Route exact path="/sharingHome" element={<SharingHome />}></Route>
+          <Route exact path="/PostRequest" element={<PostRequest />}></Route>
+
+          <Route exact path="/PostRequest" element={<PostRequest />}>
+          <Route path="shareRequest" element={<ShareRequest />} />
+          </Route> 
+
+         
+          
           
         </Routes>
         <Footer />
