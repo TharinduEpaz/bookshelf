@@ -1,12 +1,32 @@
-import React from 'react'
-
-import {
-    Box, Grid, GridItem, Text
-} from "@chakra-ui/react";
-
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import axios from 'axios';
 import { GiSandSnake } from "react-icons/gi";
 
 function SelectWormIcon() {
+    const [subscriptionType, setSubscriptionType] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const getSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions"
+                );
+                setSubscriptionType(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+                setLoading(false);
+            }
+        };
+        getSubscription();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Box py={3} px={10} >
          <Grid templateColumns="auto 1fr" gap={4} paddingTop={3}>
@@ -20,12 +40,12 @@ function SelectWormIcon() {
                 <GridItem textAlign={"start"}>
                     {/* First row in the second column */}
                     <Text fontWeight="500" fontSize="24">
-                        BOOK
+                        {subscriptionType[0].firstName}
                     </Text>
 
                     {/* Second row in the second column */}
                     <Text fontSize="36" fontWeight="900">
-                        Worm
+                        {subscriptionType[0].LastName}
                     </Text>
                 </GridItem>
             </Grid>

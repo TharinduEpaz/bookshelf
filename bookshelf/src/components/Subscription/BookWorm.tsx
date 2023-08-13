@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
 	Box,
@@ -16,12 +16,15 @@ import {
 import { FaCheckCircle } from "react-icons/fa";
 import { GiSandSnake } from "react-icons/gi"; 
 import { Link as RouterLink } from "react-router-dom";
-interface Props {
-	children: React.ReactNode;
-}
+import axios from "axios";
 
-function PriceWrapper(props: Props) {
-	const { children } = props;
+interface Subscription {
+	firstName: string;
+	LastName: string;
+	time_period: number;
+	book_count: number;
+}
+function PriceWrapper({ children }: { children: React.ReactNode }){
 
 	return (
 		<Box
@@ -39,6 +42,23 @@ function PriceWrapper(props: Props) {
 }
 
 function BookReder() {
+	const [subscriptionType, setSubscriptionType] = useState<Subscription[]>(
+		[]
+	);
+
+	useEffect(() => {
+		const getSubscription = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:3000/api/v1/subscriptions"
+				);
+				setSubscriptionType(response.data);
+			} catch (error) {
+				console.error("Error fetching subscription:", error);
+			}
+		};
+		getSubscription();
+	}, []);
 	return (
 		<div>
 			<PriceWrapper>
@@ -53,14 +73,18 @@ function BookReder() {
 						{/* Second column (spanning two rows) */}
 						<GridItem textAlign={"start"}>
 							{/* First row in the second column */}
-							<Text fontWeight="500" fontSize="3xl">
-								BOOK
-							</Text>
-
-							{/* Second row in the second column */}
-							<Text fontSize="4xl" fontWeight="900">
-								Worm
-							</Text>
+							{subscriptionType.length > 0 ? (
+								<>
+									<Text fontWeight="500" fontSize="3xl">
+										{subscriptionType[0].firstName}
+									</Text>
+									<Text fontSize="4xl" fontWeight="900">
+										{subscriptionType[0].LastName}
+									</Text>
+								</>
+							) : (
+								<Text>Loading subscription data...</Text>
+							)}
 						</GridItem>
 					</Grid>
 				</Box>
@@ -72,7 +96,17 @@ function BookReder() {
 					<List spacing={3} textAlign="start" px={12}>
 						<ListItem fontSize={18}>
 							<ListIcon as={FaCheckCircle} color="green.500" />
-							<strong>1 book every for every 2 weeks </strong>
+							<Text as={"b"}>
+								{subscriptionType.length > 0 ? (
+									<>
+										{subscriptionType[0].book_count} book
+										every for{" "}
+										{subscriptionType[0].time_period}
+									</>
+								) : (
+									<Text> </Text>
+								)}
+							</Text>
 						</ListItem>
 						<ListItem>
 							<ListIcon as={FaCheckCircle} color="green.500" />

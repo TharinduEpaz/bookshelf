@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
 	Box,
 	Text,
@@ -12,25 +11,25 @@ import {
 	Grid,
 	GridItem,
 } from "@chakra-ui/react";
-
 import { FaCheckCircle } from "react-icons/fa";
 import { FaBookReader } from "react-icons/fa";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
-interface Props {
-	children: React.ReactNode;
+interface Subscription {
+	firstName: string;
+	LastName: string;
+	time_period: number;
+	book_count: number;
 }
 
-function PriceWrapper(props: Props) {
-	const { children } = props;
+function PriceWrapper({ children }: { children: React.ReactNode }) {
 	return (
 		<Box
 			mb={4}
 			shadow="base"
 			borderWidth="1px"
 			alignSelf={{ base: "center", lg: "flex-start" }}
-			// borderColor={useColorModeValue("gray.200", "gray.500")}
 			borderColor={"blue.200"}
 			borderRadius={"xl"}
 		>
@@ -40,7 +39,9 @@ function PriceWrapper(props: Props) {
 }
 
 function BookReder() {
-	const [subscriptionType, setSubscriptionType] = useState();
+	const [subscriptionType, setSubscriptionType] = useState<Subscription[]>(
+		[]
+	);
 
 	useEffect(() => {
 		const getSubscription = async () => {
@@ -49,15 +50,13 @@ function BookReder() {
 					"http://localhost:3000/api/v1/subscriptions"
 				);
 				setSubscriptionType(response.data);
-				console.log(response.data);
-			} catch (error) {}
+			} catch (error) {
+				console.error("Error fetching subscription:", error);
+			}
 		};
 		getSubscription();
 	}, []);
 
-	if (!subscriptionType) {
-		return <></>;
-	}
 	return (
 		<div>
 			<PriceWrapper>
@@ -71,15 +70,18 @@ function BookReder() {
 
 						{/* Second column (spanning two rows) */}
 						<GridItem textAlign={"start"}>
-							{/* First row in the second column */}
-							<Text fontWeight="500" fontSize="3xl">
-								{subscriptionType[0].firstName}
-							</Text>
-
-							{/* Second row in the second column */}
-							<Text fontSize="4xl" fontWeight="900">
-								{subscriptionType[1].LastName}
-							</Text>
+							{subscriptionType.length > 0 ? (
+								<>
+									<Text fontWeight="500" fontSize="3xl">
+										{subscriptionType[1].firstName}
+									</Text>
+									<Text fontSize="4xl" fontWeight="900">
+										{subscriptionType[1].LastName}
+									</Text>
+								</>
+							) : (
+								<Text>Loading subscription data...</Text>
+							)}
 						</GridItem>
 					</Grid>
 				</Box>
@@ -92,10 +94,17 @@ function BookReder() {
 					<List spacing={3} textAlign="start" px={12}>
 						<ListItem fontSize={18}>
 							<ListIcon as={FaCheckCircle} color="green.500" />
-							<strong>
-								{subscriptionType[0].book_count} book every for {" "}
-								{subscriptionType[0].time_period}.
-							</strong>
+							<Text as={'b'}>
+								{subscriptionType.length > 0 ? (
+									<>
+										{subscriptionType[1].book_count} book
+										every for{" "}
+										{subscriptionType[1].time_period}
+									</>
+								) : (
+									<Text> </Text>
+								)}
+							</Text>
 						</ListItem>
 						<ListItem>
 							<ListIcon as={FaCheckCircle} color="green.500" />
