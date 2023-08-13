@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, Flex, Grid, GridItem} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Box, Flex, Grid, GridItem,Skeleton, } from '@chakra-ui/react'
 import Search from '../components/Shop/Search'
 import Filter from '../components/Shop/Filter'
 import CategoryFilter from '../components/Shop/CategoryFilter'
@@ -109,7 +109,7 @@ function Shop() {
   }, []);
 
 
-  
+
   return (
     <>
       <Box
@@ -125,7 +125,6 @@ function Shop() {
         p={10}
       >
         <Grid
-
           templateRows="50px 50px repeat(8, 1fr)"
           templateColumns="repeat(5, 1fr)"
           gap={2}
@@ -142,19 +141,31 @@ function Shop() {
           </GridItem>
           <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
             <Flex flexWrap={'wrap'} gap={10} p={10}>
+
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+              {isLoading && <Skeleton> <BookCard /></Skeleton>}
+
               {Object.keys(bookDetails).map((item) => (
-            <Link to={`/shop/${bookDetails[item].id}`} 
-              key={bookDetails[item].id}>
-            
-            <BookCard
-                      name={bookDetails[item].title}
-                  author={bookDetails[item].author}
-                  price={bookDetails[item].price}
-                  imageURL={bookDetails[item].image}
-                  rating={bookDetails[item].rating}
-                />
+                <Link to={`/shop/${bookDetails[item].id}`}
+                  key={bookDetails[item].id}>
+
+                  <BookCard
+                    name={bookDetails[item].title}
+                    author={bookDetails[item].author}
+                    price={bookDetails[item].price}
+                    imageURL={bookDetails[item].image}
+                    rating={bookDetails[item].rating}
+                  />
                 </Link>
-          ))}
+              ))}
             </Flex>
           </GridItem>
         </Grid>

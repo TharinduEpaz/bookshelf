@@ -56,7 +56,7 @@ function BookCard({ name,  price, imageURL, id }) {
             <Box
                 bg={useColorModeValue('white', 'gray.800')}
                 maxW={'240px'}
-                maxH={'400px'}
+                maxH={'500px'}
                 borderWidth="1px"
                 rounded="lg"
 
@@ -80,13 +80,14 @@ function BookCard({ name,  price, imageURL, id }) {
 
                 />
 
-                <Box p="6">
+                <Box p="6" >
 
-                    <Flex mt="1" justifyContent="center" alignContent="center">
+                    <Flex  justifyContent="center" alignContent="center">
                         <Box
                             fontSize="sm"
                             fontWeight="light"
                             lineHeight="tight"
+                            
                         >
                             <Heading fontSize={20}>{name}</Heading>
                         </Box>
@@ -94,12 +95,12 @@ function BookCard({ name,  price, imageURL, id }) {
 
                     <Flex alignContent="center" direction={'column'} mt={2}>
                         <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                            <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'}>
+                            <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'} >
                                 <Text  as={'del'} fontWeight={'bold'} color={'#0A3BBA'}>
                                     Rs. {price}
                                 </Text>
                                 <Text as={'b'} color={'#0A3BBA'} marginLeft={3}>
-                                    Rs. {price-1650}.00
+                                    Rs. {price-15}.00
                                 </Text>
 
                             </Box>
