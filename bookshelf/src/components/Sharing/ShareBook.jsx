@@ -3,23 +3,40 @@ import {
   Box,
   Grid,
   GridItem,
-  SimpleGrid,
-  Stack,
-  Heading,
-  Text,
-  Button,
-  ButtonGroup,
-  Divider,
-  Image,
+  
 } from "@chakra-ui/react";
 import Search from "../../components/Sharing/Search";
 import Filter from "../../components/Sharing/Filter";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
-
-import { MdAddBox, MdDelete } from "react-icons/md";
-import { AiFillExclamationCircle } from "react-icons/ai";
+import ShareBookDetails from "../../components/Sharing/ShareBookDetails";
+import { Link } from 'react-router-dom'
 
 function ShareBook() {
+  const bookDetails = {
+    book1: {
+      id: '1',
+      title: "The Midnight Library",
+      author: "Matt Haig",
+      image: "https://images-na.ssl-images-amazon.com/images/I/81h2gWPTYJL.jpg",
+    },
+    book2: {
+      id: '2',
+      title: "The Vanishing Half",
+      author: "Brit Bennett",
+      image: "https://m.media-amazon.com/images/I/81ICvbFe2+L.jpg",
+    },
+    book3: {
+      id: '3',
+      title: "The Four Winds",
+      author: "Kristin Hannah",
+      image: "https://m.media-amazon.com/images/I/6132R6AHGjL.jpg",
+    },
+    book4: {
+      id: '4',
+      title: "The Sanatorium",
+      author: "Sarah Pearse",
+      image: "https://m.media-amazon.com/images/I/51k-rWw95NL.jpg",
+    },
+  }
   return (
     <Box
       border={"1px"}
@@ -42,47 +59,22 @@ function ShareBook() {
 
         <GridItem
           rowSpan={8}
-          colSpan={4}
-          border={"1px"}
-          borderColor={"blue.200"}
-          rounded={"md"}
+          colSpan={5}
         >
-          <Card>
-            <CardBody>
-              {/* <Text>
-                View a summary of all your customers over the last month.
-              </Text> */}
-              <SimpleGrid columns={5} spacing={4}>
-                <GridItem>
-                  <Box>
-                  <Image
-      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-      alt='Green double couch with wooden legs'
-      borderRadius='lg'
-    />
-                    
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Box>
-                    
-                    <Text pt="2" fontSize="sm">
-                      Check out the overview of your clients.
-                    </Text>
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Box>
-                    
-                    <Text pt="2" fontSize="sm" marginLeft={50}>
-                      See a detailed analysis of all your business clients.
-                    </Text>
-                  </Box>
-                </GridItem>
-              </SimpleGrid>
-            </CardBody>
-          </Card>
-        </GridItem>
+          {Object.keys(bookDetails).map((item) => (
+            // <Link to={`/shareBook/${bookDetails[item].id}`}
+            //   key={bookDetails[item].id}>
+              <ShareBookDetails
+                name={bookDetails[item].title}
+                author={bookDetails[item].author}
+                
+                imageURL={bookDetails[item].image}
+              />
+          
+            // </Link>
+          ))}
+          
+          </GridItem>
       </Grid>
     </Box>
   );
