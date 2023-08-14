@@ -18,6 +18,9 @@ import SelectLover from "./components/Subscription/SelectLover";
 import SelectReader from "./components/Subscription/SelectReader"
 import SelectWorm from "./components/Subscription/SelectWorm"
 
+import { UserProvider } from "./context/userContext";
+import { BooksProvider } from "./context/booksContext";
+import { CartProvider } from "./context/cartContext";
 
 
 import { UserProvider } from './context/userContext';
@@ -50,6 +53,9 @@ function App() {
     <Box>
       <Router>
         <UserProvider>
+        <BooksProvider>
+        <CartProvider>
+        
           <Navbar />
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
@@ -102,6 +108,9 @@ function App() {
 
           </Routes>
           <Footer />
+          
+          </CartProvider>
+          </BooksProvider>
         </UserProvider>
       </Router>
       
