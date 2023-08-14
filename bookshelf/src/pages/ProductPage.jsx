@@ -21,8 +21,7 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel,
-  Spinner
+  TabPanel
 
 
 } from "@chakra-ui/react";
@@ -35,32 +34,16 @@ import SimpleReview from "../components/Shop/SimpleReview";
 import AboutAuthor from "../components/Shop/AboutAuthor";
 
 function ProductPage() {
-  const id = useParams();
-  const {
-    isLoading,
-    fetchSingleBook,
-    currentBook
-  } = useBooksContext();
-
-  useEffect(() => {
-    const getBook = async () => {
-      fetchSingleBook(id.id);
-    }
-    getBook();
-  }, []);
-
-  console.log(currentBook);
-
-  if (!currentBook) {
-    return (
-      <>
-        <Spinner />
-      </>
-    );
-
-  }
-
-  else return (
+  const productDetails = {
+    name: "Song og Ice and Fire",
+    author: "George R.R. Martin",
+    price: 1990.0,
+    rating: 5,
+    variants: ["hardcover", "paperback"],
+    description:
+      "A Game of Thrones is the first novel in A Song of Ice and Fire, a series of fantasy novels by the American author George R. R. Martin. It was first published on August 1, 1996. The novel won the 1997 Locus Award and was nominated for both the 1997 Nebula Award and the 1997 World Fantasy Award.",
+  };
+  return (
     <>
       <Box
         height={"100%"}
@@ -107,7 +90,7 @@ function ProductPage() {
               alignItems={"start"}
             >
               <Image
-                src={currentBook.image}
+                src="https://dev.lareviewofbooks.org/wp-content/uploads/2014/04/GameofThronesCover.jpg"
                 alt="Dan Abramov"
                 borderRadius={"md"}
                 maxH={400}
@@ -121,14 +104,14 @@ function ProductPage() {
               <Badge colorScheme="red">Out Of Stock</Badge>
               <Badge colorScheme="purple">New</Badge>
             </Stack>
-            <Heading>{currentBook.title}</Heading>
+            <Heading>Song Of Ice And Fire</Heading>
 
             <Box display="flex" alignItems={"center"} mt={4}>
               {Array(5)
                 .fill("")
                 .map((_, i) => {
                   const roundedRating =
-                    Math.round(currentBook.averageRating * 2) / 2;
+                    Math.round(productDetails.rating * 2) / 2;
                   if (roundedRating - i >= 1) {
                     return (
                       <BsStarFill
@@ -161,12 +144,12 @@ function ProductPage() {
                 fontFamily={"montserrat"}
                 fontWeight={"light"}
               >
-                By {currentBook.author}
+                By {productDetails.author}
               </Heading>
             </Box>
             {/* varients as two buttons */}
             <Box mt={10}>
-              <RadioCard options={currentBook.typesAvailable} />
+              <RadioCard options={productDetails.variants} />
             </Box>
             <Box mt={10}>
               <Heading
@@ -176,108 +159,74 @@ function ProductPage() {
                 fontWeight={'thin'}
                
               >
-                Rs. {currentBook.price}
+                Rs. {productDetails.price}
               </Heading>
 
-                <Box display={"flex"} alignItems={"center"} gap={10} mt={10}>
-                  <HookUsage stock={currentBook.stock} setAmount={setAmount} />
-                  {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
+                 <Box display={'flex'} alignItems={'center'} gap={10} mt={10}>
+                 <HookUsage /> 
+                 {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
+                 <Button leftIcon={<BsCart />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
+    Add To Cart
+  </Button>
 
-                  {currentBook.stock > 0 ? (
-                    <AddToCart
-                      amount={amount}
-                    
-                      bookId={currentBook.id}
-                      title={currentBook.title}
-                      price={currentBook.price}
-                      image={currentBook.image}
-                      stock={currentBook.stock}
+                 </Box> 
 
-                    />
-                  ) : (
-                    <Button
-                      w={200}
-                      colorScheme="red"
-                      borderRadius={15}
-                      disabled
-                    >
-                      Out Of Stock
-                    </Button>
-                  )}
-                </Box>
-
-                <Divider
-                  mt={5}
-                  mb={5}
-                  color={"black.600"}
-                  borderWidth={1}
-                  borderColor={"blue.200"}
-                />
+              <Divider mt={5} mb={5} color={'black.600'} borderWidth={1} borderColor={'blue.200'}/>
 
               <Text>
-                {currentBook.description}
+                {productDetails.description}
               </Text>
             </Box>
           </GridItem>
         </Grid>
 
-          <Tabs isLazy>
-            <TabList>
-              {/* <Tab>Summaries</Tab> */}
-              <Tab>Reviews</Tab>
-              <Tab>About the author</Tab>
-            </TabList>
-            <TabPanels>
-              {/* initially mounted */}
-              {/* <TabPanel>
+        <Tabs isLazy>
+  <TabList>
+    {/* <Tab>Summaries</Tab> */}
+    <Tab>Reviews</Tab>
+    <Tab>About the author</Tab>
+  </TabList>
+  <TabPanels>
+    {/* initially mounted */}
+    {/* <TabPanel>
       <Summaries />
     </TabPanel> */}
-              {/* initially not mounted */}
-              <TabPanel>
-                <SimpleReview />
-              </TabPanel>
-              <TabPanel>
-                <AboutAuthor />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
-      </>
-    );
+    {/* initially not mounted */}
+    <TabPanel>
+      <SimpleReview />
+    </TabPanel>
+    <TabPanel>
+      <AboutAuthor />
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+      </Box>
+    </>
+  );
 }
 
-function HookUsage(props) {
-  const { stock } = props;
+
+function HookUsage() {
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
       defaultValue: 1,
       min: 1,
-      max: stock,
-      onChange: (value) => props.setAmount(value),
-    });
+      max: 10,
+      
+    })
 
-  const inc = getIncrementButtonProps();
-  const dec = getDecrementButtonProps();
-  const input = getInputProps();
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
 
   return (
-    <HStack maxW="150px">
-      <Button {...inc} bg={"blue.100"} borderRadius={100}>
-        +
-      </Button>
-      <Input
-        {...input}
-    
-        fontWeight={"bold"}
-        textAlign={"center"}
-        borderRadius={100}
-      />
-      <Button {...dec} bg={"blue.100"} borderRadius={100}>
-        -
-      </Button>
+    <HStack maxW='150px'>
+      <Button {...inc} bg={'blue.100'} borderRadius={100}>+</Button>
+      <Input {...input} fontWeight={'bold'} textAlign={'center'} borderRadius={100}/>
+      <Button {...dec}bg={'blue.100'}  borderRadius={100}>-</Button>
     </HStack>
-  );
+  )
 }
 
 export default ProductPage;

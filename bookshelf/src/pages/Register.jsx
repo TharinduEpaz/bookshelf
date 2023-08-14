@@ -49,7 +49,6 @@ export default function SignupCard() {
 
       const response = await axios.post(regUrl, { firstName: firstName, lastName: lastName, email: email, password: password });
       console.log(response.data);
-      
       setEmail('');
       setPassword('');
       setFirstName('');
