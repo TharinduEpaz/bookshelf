@@ -8,7 +8,6 @@ const controller = require('../controllers/subscriptionController')
 router.route('/').get(controller.getAllSubscriptions);
 
 
-router.route("/userSubscription").get(controller.getUserSubscription);
 
 
 
