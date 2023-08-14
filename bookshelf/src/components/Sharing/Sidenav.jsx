@@ -36,7 +36,7 @@ const SidenavDetailsLinks = [
     },
     {
         id: 3,
-        url: "manageSubscription",
+        url: "ManageRequest",
         text: "Manage Your Request",
         icon: <MdSettingsSuggest />,
     },

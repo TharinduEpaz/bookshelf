@@ -9,6 +9,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
+import ManageRequest from "./components/Sharing/ManageRequest";
 
 
 
@@ -93,7 +94,7 @@ function App() {
           <Route index element={<ShareBook />} />
             <Route path="shareBook" element={<ShareBook/>} />
             <Route path="shareRequest" element={<ShareRequest />} />
-            
+            <Route path="ManageRequest" element={<ManageRequest />} />
           </Route> 
 
          
