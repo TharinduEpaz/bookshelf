@@ -45,7 +45,7 @@ export default function Inventry() {
         author: book.author,
         genre: book.genre,
         unitPrice: book.price,
-        inStock: book.inventory,
+        inStock: book.stock,
       }));
 
       setBookList(filteredData);
@@ -127,7 +127,7 @@ export default function Inventry() {
 
           <Spacer mt={5} />
 
-          <DataTable list={list} columnNames={columns} />
+          <DataTable list={list} columnNames={columns} actions={"inventory"}/>
         </Box>
       </Box>
     </>
