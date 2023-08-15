@@ -15,7 +15,7 @@ const userSubscription = sequelize.define(
 			type: DataTypes.UUID,
 			allowNull: false,
 		},
-		subscriptionYype: {
+		subscriptionType: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -25,6 +25,6 @@ const userSubscription = sequelize.define(
 	}
 );
 
-//userSubscription.sync({ alter: true });
+// userSubscription.sync({ alter: true });
 
 module.exports = userSubscription;

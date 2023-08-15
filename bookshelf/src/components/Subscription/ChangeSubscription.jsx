@@ -66,17 +66,6 @@ export default function ChangeSubscription() {
                 <Box>
                     {otherSubscription1}
                     <Box marginTop={2}>
-                        <RouterLink to={otherSubscriptionManage1}>
-                            <Button
-                                color={'#3182CE'}
-                                variant={'outline'}
-                                border={'1px'}
-                                borderRadius={10}
-                                marginLeft={10}
-                            >
-                                Select
-                            </Button>
-                        </RouterLink>
                         <RouterLink to={otherSubscriptionDetail1}>
                             <Button
                                 border={'1px'}
@@ -87,13 +76,34 @@ export default function ChangeSubscription() {
                                 View Details
                             </Button>
                         </RouterLink>
-                        
+
+                        <RouterLink to={otherSubscriptionManage1}>
+                            <Button
+                                color={'#3182CE'}
+                                variant={'outline'}
+                                border={'1px'}
+                                borderRadius={10}
+                                marginLeft={10}
+                            >
+                                Select
+                            </Button>
+                        </RouterLink>    
                     </Box>
                 </Box>
 
                 <Box>
                     {otherSubscription2}
                     <Box marginTop={2}>
+                        <RouterLink to={otherSubscriptionDetail2}>
+                            <Button
+                                border={'1px'}
+                                borderColor={'blackAlpha.400'}
+                                borderRadius={10}
+                                marginLeft={8}
+                            >
+                                View Details
+                            </Button>
+                        </RouterLink>
                         <RouterLink to={otherSubscriptionManage2}>
                             <Button
                                 color={'#3182CE'}
@@ -105,16 +115,7 @@ export default function ChangeSubscription() {
                                 Select
                             </Button>
                         </RouterLink>
-                        <RouterLink to={otherSubscriptionDetail2}>
-                            <Button
-                                border={'1px'}
-                                borderColor={'blackAlpha.400'}
-                                borderRadius={10}
-                                marginLeft={8}
-                            >
-                                View Details
-                            </Button>
-                        </RouterLink>
+                        
                     </Box>
                 </Box>
             </SimpleGrid>

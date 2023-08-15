@@ -47,6 +47,7 @@ function BookReder() {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const cancelRef = React.useRef()
 
+	//get subscription details
 	useEffect(() => {
 		const getSubscription = async () => {
 			try {
@@ -60,6 +61,32 @@ function BookReder() {
 		};
 		getSubscription();
 	}, []);
+
+	//add subscription user
+	
+	const addSubscriptionUser = async () => {
+			try {
+				const response = await axios.post(
+					"http://localhost:3000/api/v1/subscriptions/addSubscription",
+					{
+						subscriptionType: "Book Lover"
+					},
+					{
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					}
+				);
+
+				
+			} catch (error) {
+				console.error("Error fetching subscription:", error);
+			}
+		};
+		
+	
+
+	
 
 	return (
 		<div>
@@ -190,7 +217,7 @@ function BookReder() {
 											No
 										</Button>
 										<RouterLink to={'/selectBookLover'}>
-											<Button colorScheme='red' ml={3}>
+											<Button colorScheme='red' ml={3} onClick={addSubscriptionUser}>
 												Yes
 											</Button>
 										</RouterLink>
