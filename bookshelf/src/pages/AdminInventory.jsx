@@ -76,6 +76,7 @@ export default function AdminInventory() {
     mt={10}
     w="80%"
     h="100%"
+    minH={800}
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"

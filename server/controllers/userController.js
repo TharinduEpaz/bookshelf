@@ -4,7 +4,6 @@ const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 
 
-
 const addUser = async (req, res, next) => {
   try {
     const {
@@ -15,26 +14,38 @@ const addUser = async (req, res, next) => {
       emailVerified,
       role
     } = req.body;
-    
-    const users = await userModel.create({
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user with hashedPassword
+    const user = await userModel.create({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword, 
       emailVerified,
       role
     });
-    res.status(statusCodes.StatusCodes.CREATED).json(users);
+
+    res.status(statusCodes.StatusCodes.CREATED).json(user);
   } catch (error) {
     next(error);
   }
-  // res.send("Add user");
 };
 
 
-const getAllUsers = async (req, res) => {
-  const users = await userModel.findAll();
-  res.json(users);
+
+const getAllUsers = async (req, res, next) => {
+  try {
+    const { role } = req.query;
+    const whereClause = role && role !== 'All' ? { role } : {}; // Check for undefined or 'All'
+
+    const users = await userModel.findAll({ where: whereClause });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getSingeUser = async (req, res, next) => {
@@ -96,6 +107,23 @@ const updateUserPassword = async (req, res, next) => {
   }
 };
 
+
+const deleteUser = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await userModel.findOne({ where: { id } });
+    if (!user) {
+      throw new CustomError.NotFoundError("No user found");
+    }
+    await user.destroy();
+    res.status(statusCodes.StatusCodes.OK).json({ message: "User deleted" });
+  } catch (error) {
+    next(error);
+  }
+  // res.send("Delete book" + id);
+};
+
+
 module.exports = {
   addUser,
   getAllUsers,
@@ -103,4 +131,5 @@ module.exports = {
   getCurrentUser,
   updateUser,
   updateUserPassword,
+  deleteUser
 };

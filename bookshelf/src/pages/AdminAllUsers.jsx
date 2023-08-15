@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDisclosure } from '@chakra-ui/react'; 
 import SearchBar from '../components/Admin/SearchBar';
+import { Alert, AlertIcon } from '@chakra-ui/react';
+
 
 import { 
     Checkbox, 
@@ -35,35 +37,63 @@ export default function AdminAllUsers() {
   ];
 
   const [list, setUsersList] = useState([]);
-  const [userModals, setUserModals] = useState({});
+  const [selectedRole, setSelectedRole] = useState('All'); 
+  //const [userModals, setUserModals] = useState({});
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  async function getAllUsers() {
-    try {
-      const response = await fetch("http://localhost:3000/api/v1/users/");
-       
+  const deleteUser = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
+      method: "DELETE"
+    });
 
-      const jsonData = await response.json();
-
-      const filteredData = jsonData.map((users) => ({
-        id: users.id,
-        firstName: users.firstName,
-        lastName: users.lastName,
-        email: users.email,
-        role: users.role,
-      }));
-
-      setUsersList(filteredData);
-    } catch (err) {
-      console.error(err.message);
+    if (response.ok) {
+      console.log('User deleted successfully');
+      setShowSuccessAlert(true);
+      
+    } else {
+      console.error('Failed to delete user');
     }
+  } catch (err) {
+    console.error(err.message);
   }
+};
+
+
+async function getAllUsers(role) {
+  try {
+    let url = "http://localhost:3000/api/v1/users/";
+    if (role !== 'All') {
+      url += `?role=${role}`;
+    }
+
+    const response = await fetch(url);
+    const jsonData = await response.json();
+
+    console.log('Filtered Data:', jsonData); 
+
+    const filteredData = jsonData.map((users) => ({
+      id: users.id,
+      firstName: users.firstName,
+      lastName: users.lastName,
+      email: users.email,
+      role: users.role,
+    }));
+
+    console.log('Filtered Users:', filteredData); 
+
+    setUsersList(filteredData);
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
 
   useEffect(() => {
-    getAllUsers();
-  }, [])
+    getAllUsers(selectedRole); 
+  }, [selectedRole]);
 
-
-
+/*
   const toggleModal = (userId) => {
     setUserModals((prevModals) => ({
       ...prevModals,
@@ -71,7 +101,7 @@ export default function AdminAllUsers() {
     }));
   };
 
-  
+  */
 
   return (
     
@@ -80,6 +110,7 @@ export default function AdminAllUsers() {
         mt={10}
         w="100%"
         h="100%"
+        minH={800}
         borderColor={'rgba(0, 0, 0, 0.20)'}
         borderWidth={'0.5px'}
         borderRadius="6px"
@@ -107,11 +138,13 @@ export default function AdminAllUsers() {
                 pl={10}
                 ml={10}
                 mt={5}
+                onChange={(e) => setSelectedRole(e.target.value)} 
+                value={selectedRole}
                >
-                  <option value='option1'>Buyers</option>
-                  <option value='option1'>Moderators</option>
-                  <option value='option2'>Subscribers</option>
-                  <option value='option3'>Donators</option>
+                  <option value='All'>All</option>
+                  <option value='buyer'>Buyers</option>
+                  <option value='moderator'>Moderators</option>
+          
             
               </Select>
 
@@ -124,7 +157,18 @@ export default function AdminAllUsers() {
 
                 <Spacer mt={5} />
 
+                <AdminUsersTable  list={list} columnNames={columns} deleteUser={deleteUser}/>
+
+              {showSuccessAlert && (
+        <Alert status="success" mt={4}>
+          <AlertIcon />
+          User deleted successfully!
+        </Alert>
+      )}
+
+{/*
                 <AdminUsersTable  list={list} columnNames={columns} onSuspendClick={toggleModal} />
+
 
                  {list.map((user) => (
             <Modal key={user.id} isOpen={userModals[user.id]} onClose={() => toggleModal(user.id)}>
@@ -147,7 +191,7 @@ export default function AdminAllUsers() {
           </Modal>
         ))}
 
-
+                 */}
               </Box>
 
       </Box>

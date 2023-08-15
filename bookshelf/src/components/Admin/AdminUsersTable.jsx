@@ -17,7 +17,7 @@ import {
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function AdminUsersTable({ list, columnNames, onSuspendClick  }) {
+export default function AdminUsersTable({ list, columnNames, deleteUser  }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +74,10 @@ export default function AdminUsersTable({ list, columnNames, onSuspendClick  }) 
               ))}
               
                <Td>
-                <Button colorScheme="red" size="sm" onClick={() => onSuspendClick(user)}>
+               <Button 
+                  colorScheme="red" size="sm" 
+                  onClick={() => deleteUser(Obj.id)}
+                >
                   Suspend
                 </Button>
               </Td>

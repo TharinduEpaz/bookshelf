@@ -114,6 +114,7 @@ export default function AdminSidebar() {
       borderWidth="0.5px"
       bg='rgba(255, 255, 255, 0.90)' 
       h="90%"
+      minH={700}
       w="20%"
       ml="2"
     >

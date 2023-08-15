@@ -38,7 +38,7 @@ export default function AdminAddModerator() {
         lastName: lastName,
         email: email,
         password: password,
-        role: role,
+        role: "Moderator",
         emailverified: true,
       });
       console.log(response.data);
@@ -117,12 +117,14 @@ export default function AdminAddModerator() {
             )}
 
     <form onSubmit={addUser}>
+
+      {/*
     <FormControl pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>User Type</FormLabel>
-      {/*
+      
         <Select placeholder='Moderator' fontSize={14} h={8}>
           <option>Buyer</option>
-  </Select>*/}
+  </Select>
           <Input
           fontSize={14} 
           h={8}
@@ -131,6 +133,7 @@ export default function AdminAddModerator() {
           onChange={(e) => setRole(e.target.value)}
         />
       </FormControl>
+      */}
 
     <FormControl isRequired pb={5} pl={10} pr={10}>
       <FormLabel fontSize={14}>First Name</FormLabel>
