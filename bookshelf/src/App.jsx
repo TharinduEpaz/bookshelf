@@ -51,7 +51,7 @@ const Blur = (props) => {
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
 import Notifications from "./pages/Moderator/M_Notifications";
-import Inventry from "./pages/Moderator/M_Inventry";
+import Inventory from "./pages/Moderator/M_Inventory";
 import Shop_M from "./pages/Moderator/M_Shop";
 import M_Orders from "./pages/Moderator/M_Orders";
 import Donations from "./pages/Moderator/M_Donations";
@@ -122,7 +122,7 @@ function App() {
             <Route index element={<M_Dashboard />} />
             <Route path="dashboard" element={<M_Dashboard />} />
             <Route path="notifications" element={<Notifications />} />
-            <Route path="inventry" element={<Inventry />} />
+            <Route path="inventory" element={<Inventory />} />
             <Route path="shop_M" element={<Shop_M />} />
             <Route path="orders" element={<M_Orders />} />
             <Route path="donations" element={<Donations />} />

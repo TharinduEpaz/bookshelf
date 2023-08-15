@@ -81,8 +81,6 @@ export default function AddNewBook() {
       setSellingPrice("");
       setQuantityInStock("");
       setDescription("");
-
-      window.location = "/moderator/inventory";
     } catch (err) {
       console.error(err.message);
     }

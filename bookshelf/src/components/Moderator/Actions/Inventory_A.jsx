@@ -23,16 +23,35 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 export default function Inventory_A(id) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookDetails, setBookDetails] = useState("");
+  const bookID = id.id;
 
+  //get book details
   const getBookDetails = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/books/" + id.id
+        "http://localhost:3000/api/v1/books/" + bookID
       );
       const jsonData = await response.json();
 
       setBookDetails(jsonData);
-      console.log(bookId);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  //delete book
+  const deleteBook = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/v1/books/" + bookID,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        alert("Book deleted successfully");
+        window.location.reload();
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -65,6 +84,7 @@ export default function Inventory_A(id) {
             bgColor={"red.400"}
             fontSize={25}
             borderRadius={5}
+            onClick={deleteBook}
           />
         </HStack>
       </Td>
@@ -115,9 +135,17 @@ export default function Inventory_A(id) {
                   </Stack>
                   <Stack>
                     <p>{bookDetails.genre}</p>
-                    <p>{bookDetails.language ? bookDetails.language : "No record"}</p>
+                    <p>
+                      {bookDetails.language
+                        ? bookDetails.language
+                        : "No record"}
+                    </p>
                     <p>{bookDetails.description}</p>
-                    <p>{bookDetails.featuredCategory ? bookDetails.featuredCategory : "No Record"}</p>
+                    <p>
+                      {bookDetails.featuredCategory
+                        ? bookDetails.featuredCategory
+                        : "No Record"}
+                    </p>
                     <p>{bookDetails.typesAvailable}</p>
                     <p>{bookDetails.createdAt}</p>
                     <p>{bookDetails.updatedAt}</p>

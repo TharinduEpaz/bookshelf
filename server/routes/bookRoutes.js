@@ -20,7 +20,7 @@ router.get('/:id', controller.getSingleBook);
 
 router.route('/:id', ).patch(authenticateUser,authPermissions('admin'), controller.updateBook);
 
-router.route('/:id', ).delete(authenticateUser,authPermissions('admin'), controller.deleteBook);
+router.route('/:id', ).delete(controller.deleteBook);
 
 
 
