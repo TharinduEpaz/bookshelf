@@ -49,11 +49,11 @@ const Blur = (props) => {
 };
 
 // Import Moderator Pages
-import Dashboard from "./pages/Moderator/M_Dashboard";
+import M_Dashboard from "./pages/Moderator/M_Dashboard";
 import Notifications from "./pages/Moderator/M_Notifications";
 import Inventry from "./pages/Moderator/M_Inventry";
 import Shop_M from "./pages/Moderator/M_Shop";
-import Orders from "./pages/Moderator/M_Orders";
+import M_Orders from "./pages/Moderator/M_Orders";
 import Donations from "./pages/Moderator/M_Donations";
 import Subscriptions from "./pages/Moderator/M_Subscriptions";
 import BookSharing from "./pages/Moderator/M_BookSharing";
@@ -119,12 +119,12 @@ function App() {
   
           {/* Moderator Routes */}
           <Route  path="/moderator/" element={<Moderator />}>
-            <Route index element={<Dashboard />} />
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route index element={<M_Dashboard />} />
+            <Route path="dashboard" element={<M_Dashboard />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="inventry" element={<Inventry />} />
             <Route path="shop_M" element={<Shop_M />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="orders" element={<M_Orders />} />
             <Route path="donations" element={<Donations />} />
             <Route path="subscriptions" element={<Subscriptions />} />
             <Route path="booksharing" element={<BookSharing />} />
