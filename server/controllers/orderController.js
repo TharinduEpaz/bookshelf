@@ -3,6 +3,39 @@ const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
 
+
+//create order
+const addOrder = async (req, res, next) => {
+    try {
+        const {
+            orderDate,
+            orderStatus,
+            totalPrice,
+            buyer_id
+        } = req.body;
+
+        console.log("Order values:", orderDate, orderStatus, totalPrice, buyer_id);
+
+        const order = await orderModel.create({
+            orderDate,
+            orderStatus,
+            totalPrice,
+            buyer_id
+        });
+
+        console.log("Created order:", order);
+
+        res.status(statusCodes.StatusCodes.CREATED).json(order);
+    } catch (error) {
+        console.error("Error adding order:", error);
+        next(error);
+    }
+};
+
+
+
+
+
 //get all orders
 const getAllOrders = async (req, res, next) => {
     try {
@@ -25,6 +58,7 @@ const countOrders = async (req, res, next) => {
 
 
 module.exports = {
+    addOrder,
     getAllOrders,
     countOrders
 };

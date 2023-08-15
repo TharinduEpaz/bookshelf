@@ -22,65 +22,43 @@ import {
 //import SearchPanel from "../../components/Moderator/SearchPanel";
 import AdminStatCard from '../components/Admin/AdminStatCard';
 import AdminDtataTable from '../components/Admin/AdminDtataTable';
+import { useEffect, useState } from "react";
 
 export default function AdminOrders() {
 
   const columns = [
-    "Customer ID",
-    "Customer Name",
-    "Order date",
-    "Order type",
-    "Tracking ID",
-    "Total price",
+    "Order ID",
+    "Date",
+    "Total Price (Rs.)",
     "Status",
+    "Buyer Id",
   ];
-  const list = [
-    {
-      id: "c0001",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0002",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0003",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0004",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0005",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-  ];
+
+
+  const [list, setOrderList] = useState([]);
+
+  const getOrders = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/orders")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((order) => ({
+        id: order.id,
+        orderDate: new Date(order.orderDate).toLocaleDateString(),
+        totalPrice: order.totalPrice.toLocaleString(),
+        orderStatus: order.orderStatus,
+        buyer_id: order.buyer_id
+      }));
+      
+      setOrderList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getOrders();
+  }, [])
 
 
   return (
@@ -190,6 +168,9 @@ export default function AdminOrders() {
                 <Spacer mt={5} />
 
                 <AdminDtataTable list={list} columnNames={columns} />
+
+
+
               </Box>
             </Box>
 
