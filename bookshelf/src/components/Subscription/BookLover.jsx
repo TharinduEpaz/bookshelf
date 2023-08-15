@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
 	Box,
@@ -11,30 +11,28 @@ import {
 	Button,
 	Grid,
 	GridItem,
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogContent,
+	AlertDialogOverlay,
+	AlertDialogCloseButton,
+	useDisclosure,
 } from "@chakra-ui/react";
 
 import { FaCheckCircle } from "react-icons/fa";
-import { PiHandHeartDuotone } from "react-icons/pi"; 
+import { PiHandHeartDuotone } from "react-icons/pi";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
-
-interface Subscription {
-	firstName: string;
-	LastName: string;
-	time_period: number;
-	book_count: number;
-}
-
-function PriceWrapper({ children }: { children: React.ReactNode }) {
-	
+function PriceWrapper({ children }) {
 	return (
 		<Box
 			mb={4}
 			shadow="base"
 			borderWidth="1px"
 			alignSelf={{ base: "center", lg: "flex-start" }}
-			// borderColor={useColorModeValue("gray.200", "gray.500")}
 			borderColor={"blue.200"}
 			borderRadius={"xl"}
 			height={425}
@@ -45,9 +43,9 @@ function PriceWrapper({ children }: { children: React.ReactNode }) {
 }
 
 function BookReder() {
-	const [subscriptionType, setSubscriptionType] = useState<Subscription[]>(
-		[]
-	);
+	const [subscriptionType, setSubscriptionType] = useState([]);
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	const cancelRef = React.useRef()
 
 	useEffect(() => {
 		const getSubscription = async () => {
@@ -123,7 +121,7 @@ function BookReder() {
 									color="green.500"
 								/>
 								{subscriptionType.length > 0 ? (
-									<Text as={'b'}>
+									<Text as={"b"}>
 										{subscriptionType[2].book_count} book
 										every for{" "}
 										{subscriptionType[2].time_period}
@@ -148,16 +146,58 @@ function BookReder() {
 							</ListItem>
 						</List>
 						<Box w="80%" pt={7}>
-							<RouterLink to="/selectBookLover">
-								<Button
-									ml={5}
-									colorScheme="purple"
-									w={130}
-									borderRadius={100}
-								>
-									Select
-								</Button>
-							</RouterLink>
+							{/* <RouterLink to="/selectBookWorm"> */}
+							<Button
+								ml={5}
+								colorScheme="purple"
+								w={130}
+								borderRadius={100}
+								onClick={onOpen}
+							>
+								Select
+							</Button>
+							{/* </RouterLink> */}
+							<AlertDialog
+								motionPreset='slideInBottom'
+								leastDestructiveRef={cancelRef}
+								onClose={onClose}
+								isOpen={isOpen}
+								isCentered
+								size={'lg'}
+							>
+								<AlertDialogOverlay />
+
+								<AlertDialogContent>
+									<AlertDialogHeader>Select Subscription?</AlertDialogHeader>
+									<AlertDialogCloseButton />
+									<AlertDialogBody >
+										<Text fontSize={18}>
+											Are you sure you want to Select {subscriptionType.length > 0 ? (
+												<Text as={'b'} fontSize={20}>
+													{subscriptionType[2].firstName}
+													{" "}
+													{subscriptionType[2].LastName} {" "}
+												</Text>
+
+											) : (
+												<Text> </Text>
+											)}.
+											subscription
+										</Text>
+									</AlertDialogBody>
+									<AlertDialogFooter>
+										<Button ref={cancelRef} onClick={onClose}>
+											No
+										</Button>
+										<RouterLink to={'/selectBookLover'}>
+											<Button colorScheme='red' ml={3}>
+												Yes
+											</Button>
+										</RouterLink>
+
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
 						</Box>
 					</VStack>
 				</Box>

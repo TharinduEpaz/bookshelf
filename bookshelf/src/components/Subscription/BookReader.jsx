@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
 	Box,
 	Text,
@@ -11,28 +10,27 @@ import {
 	Button,
 	Grid,
 	GridItem,
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogContent,
+	AlertDialogOverlay,
+	AlertDialogCloseButton,
+	useDisclosure,
 } from "@chakra-ui/react";
-
 import { FaCheckCircle } from "react-icons/fa";
-import { GiSandSnake } from "react-icons/gi"; 
+import { FaBookReader } from "react-icons/fa";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
-interface Subscription {
-	firstName: string;
-	LastName: string;
-	time_period: number;
-	book_count: number;
-}
-function PriceWrapper({ children }: { children: React.ReactNode }){
-
+function PriceWrapper({ children }) {
 	return (
 		<Box
 			mb={4}
 			shadow="base"
 			borderWidth="1px"
 			alignSelf={{ base: "center", lg: "flex-start" }}
-			// borderColor={useColorModeValue("gray.200", "gray.500")}
 			borderColor={"blue.200"}
 			borderRadius={"xl"}
 		>
@@ -42,9 +40,9 @@ function PriceWrapper({ children }: { children: React.ReactNode }){
 }
 
 function BookReder() {
-	const [subscriptionType, setSubscriptionType] = useState<Subscription[]>(
-		[]
-	);
+	const [subscriptionType, setSubscriptionType] = useState([]);
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const cancelRef = React.useRef();
 
 	useEffect(() => {
 		const getSubscription = async () => {
@@ -59,6 +57,7 @@ function BookReder() {
 		};
 		getSubscription();
 	}, []);
+
 	return (
 		<div>
 			<PriceWrapper>
@@ -67,19 +66,18 @@ function BookReder() {
 						{/* First column with icon */}
 						<GridItem marginTop={6}>
 							{/* Add your desired icon from the react-icons library */}
-							<GiSandSnake size={50} color="darkgreen" />
+							<FaBookReader size={40} color="darkblue" />
 						</GridItem>
 
 						{/* Second column (spanning two rows) */}
 						<GridItem textAlign={"start"}>
-							{/* First row in the second column */}
 							{subscriptionType.length > 0 ? (
 								<>
 									<Text fontWeight="500" fontSize="3xl">
-										{subscriptionType[0].firstName}
+										{subscriptionType[1].firstName}
 									</Text>
 									<Text fontSize="4xl" fontWeight="900">
-										{subscriptionType[0].LastName}
+										{subscriptionType[1].LastName}
 									</Text>
 								</>
 							) : (
@@ -88,6 +86,7 @@ function BookReder() {
 						</GridItem>
 					</Grid>
 				</Box>
+
 				<VStack
 					bg={useColorModeValue("gray.50", "gray.700")}
 					py={4}
@@ -99,9 +98,9 @@ function BookReder() {
 							<Text as={"b"}>
 								{subscriptionType.length > 0 ? (
 									<>
-										{subscriptionType[0].book_count} book
+										{subscriptionType[1].book_count} book
 										every for{" "}
-										{subscriptionType[0].time_period}
+										{subscriptionType[1].time_period}
 									</>
 								) : (
 									<Text> </Text>
@@ -118,17 +117,59 @@ function BookReder() {
 						</ListItem>
 					</List>
 					<Box w="80%" pt={7}>
-						<RouterLink to="/selectBookWorm">
-							<Button
-								ml={5}
-								variant={"outline"}
-								colorScheme="purple"
-								w={130}
-								borderRadius={100}
-							>
-								Select
-							</Button>
-						</RouterLink>
+						{/* <RouterLink to="/selectBookWorm"> */}
+						<Button
+							ml={5}
+							variant={"outline"}
+							colorScheme="purple"
+							w={130}
+							borderRadius={100}
+							onClick={onOpen}
+						>
+							Select
+						</Button>
+						{/* </RouterLink> */}
+						<AlertDialog
+							motionPreset="slideInBottom"
+							leastDestructiveRef={cancelRef}
+							onClose={onClose}
+							isOpen={isOpen}
+							isCentered
+							size={"lg"}
+						>
+							<AlertDialogOverlay />
+
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									Select Subscription?
+								</AlertDialogHeader>
+								<AlertDialogCloseButton />
+								<AlertDialogBody>
+									<Text fontSize={18}>
+										Are you sure you want to Select{" "}
+										{subscriptionType.length > 0 ? (
+											<Text as={"b"} fontSize={20}>
+												{subscriptionType[1].firstName}{" "}
+												{subscriptionType[1].LastName}{" "}
+											</Text>
+										) : (
+											<Text> </Text>
+										)}
+										. subscription
+									</Text>
+								</AlertDialogBody>
+								<AlertDialogFooter>
+									<Button ref={cancelRef} onClick={onClose}>
+										No
+									</Button>
+									<RouterLink to={"/selectBookReader"}>
+										<Button colorScheme="red" ml={3}>
+											Yes
+										</Button>
+									</RouterLink>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
 					</Box>
 				</VStack>
 			</PriceWrapper>
