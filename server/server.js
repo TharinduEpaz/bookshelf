@@ -24,6 +24,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
+const sharingRoutes = require("./routes/sharingRoutes");
 
 
 //routes
@@ -37,6 +38,7 @@ app.use('/api/v1/', authRoutes);
 app.use('/api/v1/users/', userRoutes);
 app.use('/api/v1/books/', bookRoutes);
 app.use('/api/v1/subscriptions/', subscriptionRoutes);
+app.use('/api/v1/bookSharing/', sharingRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

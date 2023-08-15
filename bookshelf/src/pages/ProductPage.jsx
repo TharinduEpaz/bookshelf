@@ -36,15 +36,18 @@ import axios from "axios";
 import { useBooksContext } from "../context/booksContext";
 import { useParams } from "react-router-dom";
 import AddToCart from "../components/Shop/AddToCart";
+import { userContext } from "../context/userContext";
+import { useContext } from "react";
 
 
 function ProductPage() {
   const id = useParams();
   const { isLoading, fetchSingleBook, currentBook } = useBooksContext();
   const [amount, setAmount] = useState(1);
+  const { user } = useContext(userContext);
 
-
-
+  console.log(currentBook);
+  // console.log(currentBook.createdAt);
 
   console.log(amount);
 
@@ -123,10 +126,12 @@ function ProductPage() {
             </GridItem>
             <GridItem rowSpan={7} colSpan={3} ml={10}>
               <Stack direction="row" mb={5}>
-                <Badge>Fiction</Badge>
-                <Badge colorScheme="green">In Stock</Badge>
-                <Badge colorScheme="red">Out Of Stock</Badge>
-                <Badge colorScheme="purple">New</Badge>
+                <Badge>{currentBook.genre}</Badge>
+
+                {currentBook.stock > 0 ? <Badge colorScheme="green">In Stock</Badge> :
+                <Badge colorScheme="red">Out Of Stock</Badge> }
+
+                {new Date(currentBook.createdAt) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) ? <Badge colorScheme="purple">New</Badge> : null}
               </Stack>
               <Heading>{currentBook.title}</Heading>
 
@@ -187,7 +192,7 @@ function ProductPage() {
                 </Heading>
 
                 <Box display={"flex"} alignItems={"center"} gap={10} mt={10}>
-                  <HookUsage stock={currentBook.stock} setAmount={setAmount} />
+               <HookUsage stock={currentBook.stock} setAmount={setAmount} /> 
                   {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
 
                   {currentBook.stock > 0 ? (

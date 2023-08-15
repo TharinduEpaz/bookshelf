@@ -20,7 +20,7 @@ const dummyCartItem = {
 };
 
 const CartProvider = ({ children }) => {
-
+  let totalAmount = 0;
     const localStorageKey = "cartItems";
     
     const [cartItems, setCartItems] = useState(() => {
@@ -41,11 +41,22 @@ const CartProvider = ({ children }) => {
     const item = cartItems.find((item) => item.id === id);
     if (item) {
       item.amount = item.amount + amount;
+      
       setCartItems([...cartItems]);
     } else {
       setCartItems([...cartItems, { id, title, price, image, stock, amount }]);
+      
     }
   }
+
+  function getTotalPrice() {
+    cartItems.forEach((item) => {
+      totalAmount += item.amount * item.price;
+    });
+  }
+
+
+
 
   function decreaseItemQuantity(id) {
     if (cartItems.find((item) => item.id === id)?.amount === 1) {
@@ -64,8 +75,9 @@ const CartProvider = ({ children }) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   }
 
+  
   return (
-    <cartContext.Provider value={{ cartItems,getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart }}>
+    <cartContext.Provider value={{ cartItems,getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, getTotalPrice }}>
       {children}
     </cartContext.Provider>
   );
