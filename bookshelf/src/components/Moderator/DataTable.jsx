@@ -21,7 +21,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Inventory_A from "./Actions/Inventory_A";
 
 export default function DataTable({ list, columnNames, actions }) {
-  const [itemsPerPage, setItemsPerPage] = useState(2); // Set initial items per page to 2
+  const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -55,7 +55,7 @@ export default function DataTable({ list, columnNames, actions }) {
             {columnNames.map((headerItem, index) => (
               <Td key={index}>{headerItem}</Td>
             ))}
-            <Td>Status</Td>
+            {/* <Td>Status</Td> */}
             <Td>Action</Td>
           </Tr>
         </Thead>
@@ -70,11 +70,11 @@ export default function DataTable({ list, columnNames, actions }) {
                 {Object.values(Obj).map((value, index2) => (
                   <Td key={index2}>{value}</Td>
                 ))}
-                <Td>
+                {/* <Td>
                   <Badge colorScheme="green">
                     Active
                   </Badge>
-                </Td>
+                </Td> */}
                 {actions === "inventory" && <Inventory_A id={Obj.id}/>}
               </Tr>
             ))
@@ -90,8 +90,8 @@ export default function DataTable({ list, columnNames, actions }) {
           value={itemsPerPage}
           onChange={handleItemsPerPageChange}
         >
-          <option value="2">2</option>
           <option value="5">5</option>
+          <option value="10">10</option>
         </Select>
         <Text fontSize={"sm"} mr={5}>
           Items per page

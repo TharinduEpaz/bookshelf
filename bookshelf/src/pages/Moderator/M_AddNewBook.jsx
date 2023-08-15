@@ -16,12 +16,15 @@ import {
   ButtonGroup,
   CheckboxGroup,
   Checkbox,
+  Alert,
+  AlertIcon
 } from "@chakra-ui/react";
 import axios from "axios";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
 export default function AddNewBook() {
   const [value, setValue] = React.useState("1");
+  const [error,setError] = useState(null);
 
   const [bookName, setBookName] = React.useState("");
   const [author, setAuthor] = React.useState("");
@@ -81,8 +84,9 @@ export default function AddNewBook() {
       setSellingPrice("");
       setQuantityInStock("");
       setDescription("");
-    } catch (err) {
-      console.error(err.message);
+    } catch (error) {
+      console.error(error.message);
+      error.response ? setError(error.response.data.msg) : setError("Something went wrong");
     }
   };
 
@@ -92,14 +96,14 @@ export default function AddNewBook() {
         <Text fontSize={"3xl"} fontWeight={"bold"}>
           Add New Book
         </Text>
-
+        {error && <Alert status="error"> <AlertIcon /> {error}</Alert>}
         <form onSubmit={onSubmitForm}>
           <Grid templateColumns="repeat(2, 1fr)" gap={200} h={"100%"}>
             <GridItem colSpan={1}>
               <Stack spacing={5} mt={10}>
                 <FormControl>
                   <FormLabel fontWeight={"semibold"}>
-                    Name of the Book
+                    Name of the Book *
                   </FormLabel>
                   <Input
                     type="text"
@@ -110,7 +114,7 @@ export default function AddNewBook() {
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel fontWeight={"semibold"}>Author</FormLabel>
+                  <FormLabel fontWeight={"semibold"}>Author *</FormLabel>
                   <Input
                     type="text"
                     placeholder="Author of the Book"
@@ -120,7 +124,7 @@ export default function AddNewBook() {
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel fontWeight={"semibold"}>ISBN</FormLabel>
+                  <FormLabel fontWeight={"semibold"}>ISBN *</FormLabel>
                   <NumberInput>
                     <NumberInputField
                       placeholder="ISBN of the Book"
@@ -145,7 +149,7 @@ export default function AddNewBook() {
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel fontWeight={"semibold"}>Genre</FormLabel>
+                  <FormLabel fontWeight={"semibold"}>Genre *</FormLabel>
                   <Select
                     placeholder="Select the genre of the book"
                     value={genre}

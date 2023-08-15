@@ -32,7 +32,7 @@ function SideMenu() {
 
       <NavItem icon={BiHomeAlt} title="DashBoard" link="dashboard" />
       <NavItem icon={BiBell} title="Notification" link="notifications" />
-      <NavItem icon={BiBuilding} title="Inventry" link="inventry" />
+      <NavItem icon={BiBuilding} title="Inventory" link="inventory" />
       <NavItem icon={BiCollection} title="Orders" link="orders" />
       <NavItem icon={BiGift} title="Donations" link="donations" />
       <NavItem icon={BiMoney} title="Subscriptions" link="subscriptions" />

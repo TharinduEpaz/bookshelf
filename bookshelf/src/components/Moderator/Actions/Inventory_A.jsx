@@ -16,6 +16,7 @@ import {
   Stack,
   HStack,
   Image,
+  Box,
 } from "@chakra-ui/react";
 import { BiBasket, BiDetail, BiEditAlt, BiSolidDetail } from "react-icons/bi";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
@@ -65,27 +66,16 @@ export default function Inventory_A(id) {
   return (
     <>
       <Td>
-        <HStack spacing={1}>
-          <Icon
-            as={BiSolidDetail}
-            onClick={onOpen}
-            bgColor={"green.400"}
-            fontSize={25}
-            borderRadius={5}
-          />
-          <Icon
-            as={BiEditAlt}
-            bgColor={"blue.400"}
-            fontSize={25}
-            borderRadius={5}
-          />
-          <Icon
-            as={AiFillDelete}
-            bgColor={"red.400"}
-            fontSize={25}
-            borderRadius={5}
-            onClick={deleteBook}
-          />
+        <HStack>
+          <Box bgColor={"green.500"} pt={1} px={1} borderRadius={4}>
+            <Icon as={BiSolidDetail} onClick={onOpen} fontSize={"md"} color={"white"}/>
+          </Box>
+          <Box bgColor={"blue.600"} pt={1} px={1} borderRadius={4}>
+            <Icon as={AiFillEdit} fontSize={"md"} color={"white"} />
+          </Box>
+          <Box bgColor={"red.500"} pt={1} px={1} borderRadius={4}>
+            <Icon as={AiFillDelete} onClick={deleteBook} fontSize={"md"} color={"white"}/>
+          </Box>
         </HStack>
       </Td>
 

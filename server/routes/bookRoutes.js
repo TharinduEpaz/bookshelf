@@ -14,7 +14,7 @@ router.route('/').get(controller.getAllBooks);
 
 router.route('/').post(controller.addBook);
 
-router.route('/uploadImage').post(authenticateUser,authPermissions('admin'), controller.uploadImage);
+router.route('/uploadImage').post(controller.uploadImage);
 
 router.get('/:id', controller.getSingleBook);
 
