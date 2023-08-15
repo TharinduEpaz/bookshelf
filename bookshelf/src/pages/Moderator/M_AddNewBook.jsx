@@ -56,23 +56,33 @@ export default function AddNewBook() {
         title: bookName,
         author: author,
         ISBN: isbn,
-        language : language,
+        language: language,
         genre: genre,
         featuredCategory: featuredCategory,
         typesAvailable: availableTypes,
         price: sellingPrice,
         stock: quantityInStock,
         description: description,
+        averageRating: 0,
         //image,
         // fileName,
       };
-      const response = await fetch(addBookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const response = await axios.post(addBookURL, body);
 
-      // console.log(response.data);
+      console.log(body);
+      // set variables null
+      setBookName("");
+      setAuthor("");
+      setIsbn("");
+      setLanguage("");
+      setGenre("");
+      setFeaturedCategory("");
+      setSelectedTypes([]);
+      setSellingPrice("");
+      setQuantityInStock("");
+      setDescription("");
+
+      window.location = "/moderator/inventory";
     } catch (err) {
       console.error(err.message);
     }
@@ -160,8 +170,12 @@ export default function AddNewBook() {
                     <option value="Horror">Horror</option>
                     <option value="Western">Western</option>
                     <option value="Humor">Humor</option>
-                    <option value="Religious/Spiritual">Religious/Spiritual</option>
-                    <option value="Graphic Novels/Comics">Graphic Novels/Comics</option>
+                    <option value="Religious/Spiritual">
+                      Religious/Spiritual
+                    </option>
+                    <option value="Graphic Novels/Comics">
+                      Graphic Novels/Comics
+                    </option>
                     <option value="Other">Other</option>
                   </Select>
                 </FormControl>
