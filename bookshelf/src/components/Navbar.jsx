@@ -137,7 +137,7 @@ function Navbar() {
           </ButtonGroup>
         ) : (
           <ButtonGroup>
-            <RouterLink to="/cart">
+            <RouterLink to={`cart/${user.user.userId}`}>
               <IconButton
                 colorScheme="blue"
                 aria-label="Call Segun"
@@ -155,16 +155,28 @@ function Navbar() {
                 minW={0}
                 rightIcon={<AiFillCaretDown />}
               >
+              
                 <Avatar
                   size={"sm"}
-                  name="Anushka Rajapaksha"
-                  colorScheme="purple"
+                  name={user.user.name }
+                  colorScheme="blue"
                   src="https://bit.ly/broken-link"
                 />
               </MenuButton>
               <MenuList>
+              {user.user.role != "admin" ? 
+              <>
+                <RouterLink to="/account">
                 <MenuItem>Account</MenuItem>
+                </RouterLink>
+
+                <RouterLink to="account/orders">
                 <MenuItem>Orders</MenuItem>
+                </RouterLink>
+              </>
+                : <RouterLink to="/admindashboard">
+                <MenuItem>Admin Dashboard</MenuItem> 
+                </RouterLink> }
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>

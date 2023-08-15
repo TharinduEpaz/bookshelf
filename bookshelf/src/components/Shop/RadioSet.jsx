@@ -3,7 +3,8 @@ import { Box, Heading, HStack, useRadio, useRadioGroup } from '@chakra-ui/react'
 
 function RadioCard(props) {
     const { getInputProps, getRadioProps } = useRadio(props)
-  
+    const { bookType, setBookType } = props
+
     const input = getInputProps()
     const checkbox = getRadioProps()
   
@@ -27,6 +28,7 @@ function RadioCard(props) {
           }}
           px={5}
           py={3}
+          onClick={console.log(bookType)}
         >
           {props.children}
         </Box>
@@ -34,12 +36,11 @@ function RadioCard(props) {
     )
   }
   export function RadioSet(props) {
-    const options = props.options
+    const {options,bookType, setBookType} = props
   
     const { getRootProps, getRadioProps } = useRadioGroup({
       name: 'framework',
       defaultValue: 'react',
-      onChange: console.log,
     })
   
     const group = getRootProps()
@@ -49,7 +50,7 @@ function RadioCard(props) {
         {options.map((value) => {
           const radio = getRadioProps({ value })
           return (
-            <RadioCard key={value} {...radio}>
+            <RadioCard key={value} bookType={bookType} setBookType={setBookType} {...radio}>
               {value}
             </RadioCard>
           )

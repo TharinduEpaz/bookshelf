@@ -35,7 +35,7 @@ const book = sequelize.define('book', {
     },
     stock: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
 
     //types means paperback, hardcover, etc
@@ -69,6 +69,6 @@ const book = sequelize.define('book', {
     // Other model options go here
 }) 
 
-book.sync({  alter: true });
+// book.sync({  alter: true });
 
 module.exports = book;
