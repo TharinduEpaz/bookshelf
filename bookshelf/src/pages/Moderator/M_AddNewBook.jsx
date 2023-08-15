@@ -17,6 +17,7 @@ import {
   CheckboxGroup,
   Checkbox,
 } from "@chakra-ui/react";
+import axios from "axios";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
 export default function AddNewBook() {
@@ -37,6 +38,8 @@ export default function AddNewBook() {
 
   const [image, setImage] = useState(null);
 
+  const addBookURL = "http://localhost:3000/api/v1/books";
+
   //Check box
   const handleCheckboxChange = (value) => {
     if (availableTypes.includes(value)) {
@@ -50,26 +53,26 @@ export default function AddNewBook() {
     e.preventDefault();
     try {
       const body = {
-        bookName,
-        author,
-        isbn,
-        language,
-        genre,
-        featuredCategory,
-        availableTypes,
-        sellingPrice,
-        quantityInStock,
-        description,
-        image,
+        title: bookName,
+        author: author,
+        ISBN: isbn,
+        language : language,
+        genre: genre,
+        featuredCategory: featuredCategory,
+        typesAvailable: availableTypes,
+        price: sellingPrice,
+        stock: quantityInStock,
+        description: description,
+        //image,
         // fileName,
       };
-      // const response = await fetch("http://localhost:3000/api/v1/books", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(body),
-      // });
+      const response = await fetch(addBookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-      console.log(body);
+      // console.log(response.data);
     } catch (err) {
       console.error(err.message);
     }
@@ -126,8 +129,10 @@ export default function AddNewBook() {
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}
                   >
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
+                    <option value="English">English</option>
+                    <option value="Sinhala">Sinhala</option>
+                    <option value="Sinhala">Tamil</option>
+                    <option value="Other">Other</option>
                   </Select>
                 </FormControl>
 
@@ -138,8 +143,26 @@ export default function AddNewBook() {
                     value={genre}
                     onChange={(e) => setGenre(e.target.value)}
                   >
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
+                    <option value="Literary Fiction">Literary Fiction</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Science">Science</option>
+                    <option value="History">Historical</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Biography">Biography</option>
+                    <option value="Autobiography">Autobiography</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Children's">Children's</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Western">Western</option>
+                    <option value="Humor">Humor</option>
+                    <option value="Religious/Spiritual">Religious/Spiritual</option>
+                    <option value="Graphic Novels/Comics">Graphic Novels/Comics</option>
+                    <option value="Other">Other</option>
                   </Select>
                 </FormControl>
 
@@ -152,8 +175,12 @@ export default function AddNewBook() {
                     value={featuredCategory}
                     onChange={(e) => setFeaturedCategory(e.target.value)}
                   >
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
+                    <option value="Recommended">Recommended</option>
+                    <option value="New Releases">New Releases</option>
+                    <option value="Best Sellers">Best Sellers</option>
+                    <option value="Culinary">Culinary</option>
+                    <option value="Featured">Featured</option>
+                    <option value="Other">Other</option>
                   </Select>
                 </FormControl>
 

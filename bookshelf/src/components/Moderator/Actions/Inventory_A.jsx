@@ -23,10 +23,12 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 export default function Inventory_A(id) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookDetails, setBookDetails] = useState("");
-  
+
   const getBookDetails = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/books/"+ bookId);
+      const response = await fetch(
+        "http://localhost:3000/api/v1/books/" + id.id
+      );
       const jsonData = await response.json();
 
       setBookDetails(jsonData);
@@ -34,19 +36,37 @@ export default function Inventory_A(id) {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
   useEffect(() => {
-    if(isOpen){
+    if (isOpen) {
       getBookDetails();
     }
-  }, [isOpen])
+  }, [isOpen]);
   return (
     <>
       <Td>
-        <Icon as={BiSolidDetail} onClick={onOpen} />
-        <Icon as={BiEditAlt} />
-        <Icon as={AiFillDelete} />
+        <HStack spacing={1}>
+          <Icon
+            as={BiSolidDetail}
+            onClick={onOpen}
+            bgColor={"green.400"}
+            fontSize={25}
+            borderRadius={5}
+          />
+          <Icon
+            as={BiEditAlt}
+            bgColor={"blue.400"}
+            fontSize={25}
+            borderRadius={5}
+          />
+          <Icon
+            as={AiFillDelete}
+            bgColor={"red.400"}
+            fontSize={25}
+            borderRadius={5}
+          />
+        </HStack>
       </Td>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -62,7 +82,7 @@ export default function Inventory_A(id) {
                     src="https://m.media-amazon.com/images/I/81ICvbFe2+L.jpg"
                     h={"230"}
                   />
-                  <HStack spacing={10}>
+                  <HStack spacing={5}>
                     <Stack>
                       <b>Book ID :</b>
                       <b>Book Name :</b>
@@ -83,7 +103,7 @@ export default function Inventory_A(id) {
                     </Stack>
                   </HStack>
                 </HStack>
-                <HStack spacing={10}>
+                <HStack spacing={5}>
                   <Stack>
                     <b>Genre :</b>
                     <b>Language :</b>
@@ -95,9 +115,9 @@ export default function Inventory_A(id) {
                   </Stack>
                   <Stack>
                     <p>{bookDetails.genre}</p>
-                    <p>{bookDetails.language}</p>
+                    <p>{bookDetails.language ? bookDetails.language : "No record"}</p>
                     <p>{bookDetails.description}</p>
-                    <p>{bookDetails.featuredCategory}</p>
+                    <p>{bookDetails.featuredCategory ? bookDetails.featuredCategory : "No Record"}</p>
                     <p>{bookDetails.typesAvailable}</p>
                     <p>{bookDetails.createdAt}</p>
                     <p>{bookDetails.updatedAt}</p>
