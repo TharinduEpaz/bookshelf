@@ -15,7 +15,6 @@ const theme = extendTheme({
       body: {
         bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))",
         paddingTop: "70px",
-        
       },
     },
   },
