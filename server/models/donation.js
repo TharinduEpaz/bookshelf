@@ -40,13 +40,13 @@ const donationRequest = sequelize.define('donationRequest', {
 // Define associations if you have any, e.g., donationRequest.belongsTo(...)
 
 // Sync the model with the database
-(async () => {
-  try {
-    await donationRequest.sync({ alter: true });
-    console.log('donationRequest model synced successfully.');
-  } catch (error) {
-    console.error('Error syncing donationRequest model:', error);
-  }
-})();
+// (async () => {
+//   try {
+//     await donationRequest.sync({ alter: true });
+//     console.log('donationRequest model synced successfully.');
+//   } catch (error) {
+//     console.error('Error syncing donationRequest model:', error);
+//   }
+// })();
 
 module.exports = donationRequest;
