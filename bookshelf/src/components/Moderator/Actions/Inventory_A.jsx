@@ -195,8 +195,8 @@ export default function Inventory_A(id) {
                     : "No Record"}
                 </p>
                 <p>{bookDetails.typesAvailable}</p>
-                <p>{bookDetails.createdAt}</p>
-                <p>{bookDetails.updatedAt}</p>
+                <p>{new Date(bookDetails.createdAt).toLocaleDateString()}</p>
+                <p>{new Date(bookDetails.updatedAt).toLocaleDateString()}</p>
               </Stack>
             </HStack>
           </Stack>
