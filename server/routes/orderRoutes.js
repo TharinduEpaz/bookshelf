@@ -7,5 +7,6 @@ const controller = require('../controllers/orderController')
 
 router.route('/').get(controller.getAllOrders); // get all orders
 router.route('/count').get(controller.countOrders); // count orders
+router.route('/').post(controller.createOrder); // create order
 
 module.exports = router;

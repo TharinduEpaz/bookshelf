@@ -25,19 +25,15 @@ export default function BookSharing() {
     "Shared By (ID)",
     "Shared By (Name)",
     "Shared Date",
-    "Status",
-    "Action",
   ];
   const list = [
     {
       book_id: "n0001",
-      book_name: "Lorem ipsum",
-      author: "Lorem ipsum",
+      book_name: "Mystery at Midnight Manor",
+      author: "Sam Johnson",
       user_id: "c0001",
-      user_name: "Lorem ipsum",
-      date: "01.02.2023",
-      status: "Active",
-      action: "Registered",
+      user_name: "Nishan Madushanka",
+      date: "14.08.2023",
     },
   ];
   return (
@@ -69,28 +65,7 @@ export default function BookSharing() {
                   <option value="option2">This Month</option>
                 </Select>
               </Flex>
-              <StatGroup gap={100}>
-                <StatCard lable="All Orders" value={"100"} />
-                <StatCard
-                  lable="Pending"
-                  value="20"
-                  type="increase"
-                  percentage="80"
-                />
-                <StatCard
-                  lable="Completed"
-                  value="70"
-                  type="increase"
-                  percentage="80"
-                />
-                <StatCard
-                  color={"red"}
-                  lable="Canceled"
-                  value="0"
-                  type="increase"
-                  percentage="80"
-                />
-              </StatGroup>
+                <StatCard lable="All" value={"1"} />
             </CardBody>
           </Card>
         </Flex>

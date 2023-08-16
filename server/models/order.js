@@ -29,6 +29,6 @@ const order = sequelize.define('order', {
 }, {
     // Other model options go here  
 })
-order.sync({ force: true })
+//order.sync({ force: true })
 
 module.exports = order;
