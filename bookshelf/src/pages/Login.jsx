@@ -116,31 +116,46 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
+           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
+            <form onSubmit={login}>
+          
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  type="submit"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Sign in
+                </Button>
               </Stack>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                Sign in
-              </Button>
-            </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>
