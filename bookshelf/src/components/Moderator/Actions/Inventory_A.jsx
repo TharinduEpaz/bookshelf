@@ -123,8 +123,10 @@ export default function Inventory_A(id) {
       console.log(body);
       if (response.ok) {
         console.log("Book updated successfully");
-        setShowSuccessAlert(true);
-        //window.location.reload('/inventory');
+        //setShowSuccessAlert(true);
+        onClose();
+        window.location.reload('/inventory');
+        alert("Book updated successfully")
       }
     } catch (error) {
       console.error(error.message);
@@ -378,7 +380,7 @@ export default function Inventory_A(id) {
           <Button colorScheme="blue" mr={3} type="submit">
             Save
           </Button>
-          <Button colorScheme="red" mr={3} onClick={onClose}>
+          <Button colorScheme="gray" color={"black"} mr={3} onClick={onClose}>
             Close
           </Button>
         </ModalFooter>
