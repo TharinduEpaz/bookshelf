@@ -31,17 +31,17 @@ export default function Donations() {
   ];
   const org_list = [
     {
-      id: "n0001",
-      name: "Lorem ipsum",
-      Date: "01.02.2023",
-      email: "aaa@gmail.com",
-      contact_number: "0111111111",
+      id: "n00001",
+      name: "ke/kehelwaththa M.V",
+      Date: "01.08.2023",
+      email: "kehelwaththamv@gmail.com",
+      contact_number: "0355689562",
     },
     {
-      id: "n0001",
-      name: "Lorem ipsum",
-      Date: "01.02.2023",
-      email: "aaa@gmail.com",
+      id: "n00002",
+      name: "St. Joseph's College",
+      Date: "01.08.2023",
+      email: "josephscollege@gmail.com",
       contact_number: "0111111111",
     },
   ];
@@ -55,18 +55,18 @@ export default function Donations() {
   ];
   const don_list = [
     {
-      id: "n0001",
-      name: "Lorem ipsum",
+      id: "d0001",
+      name: "Heshan Amarasinghe",
       Date: "01.02.2023",
       units: "10",
-      org: "lorem ipsum",
+      org: "kehelwaththamv@gmail.com",
     },
     {
-      id: "n0001",
-      name: "Lorem ipsum",
+      id: "d0002",
+      name: "Pasindu Handagama",
       Date: "01.02.2023",
       units: "10",
-      org: "lorem ipsum",
+      org: "josephscollege@gmail.com",
     },
   ];
 
