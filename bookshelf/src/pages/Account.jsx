@@ -19,8 +19,6 @@ function Account() {
         p={10}
       >
         <Grid templateColumns="repeat(4, 1fr)" templateRows="repeat(1,1fr)">
-
-
           <GridItem colSpan={1} rowSpan={1}>
             <Sidebar />
           </GridItem>
@@ -28,9 +26,6 @@ function Account() {
           <GridItem colSpan={3} rowSpan={1}>
             <Outlet />
           </GridItem>
-
-
-          
         </Grid>
       </Box>
     </>

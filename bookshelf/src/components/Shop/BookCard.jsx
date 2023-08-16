@@ -5,14 +5,10 @@ import {
     Image,
     Badge,
     useColorModeValue,
-    Icon,
-    chakra,
-    Tooltip,
     Heading,
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   import { FiShoppingCart } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
   
   const data = {
     isNew: true,
@@ -49,13 +45,12 @@ import { Link } from 'react-router-dom';
     );
   }
   
-  function BookCard({name, author, price,imageURL, rating,id}) {
+  function BookCard({name, author, price,imageURL, rating,}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
-      
         <Box
           bg={useColorModeValue('white', 'gray.800')}
-         maxW={'180px'}
+         maxW={'200px'}
          maxH={'380px'}
           borderWidth="1px"
           rounded="lg"
@@ -106,7 +101,6 @@ import { Link } from 'react-router-dom';
             </Flex>
           </Box>
         </Box>
-        
       </Flex>
     );
   }

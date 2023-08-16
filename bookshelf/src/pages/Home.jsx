@@ -9,6 +9,7 @@ import { ImBooks } from "react-icons/im";
 import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
 
+
 function Home() {
   const itemBoxDetails = {
     bestSellers: {

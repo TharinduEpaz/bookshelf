@@ -41,8 +41,8 @@ const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "#" },
-  { name: "Subscriptions", path: "#" },
-  { name: "Share a Book", path: "/sharingHome" },
+  { name: "Subscriptions", path: "/subscriptions" },
+  { name: "Share a Book", path: "/sharing" },
 ];
 
 function Navbar() {
@@ -66,7 +66,7 @@ function Navbar() {
         isClosable: true,
       });
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
