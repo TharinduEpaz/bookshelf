@@ -84,6 +84,19 @@ import AdminBookSharing from "./pages/AdminBookSharing";
 import AdminComplaints from "./pages/AdminComplaints";
 import AdminAddNewBook from "./pages/AdminAddNewBook";
 
+// Import Moderator Pages
+import M_Dashboard from "./pages/Moderator/M_Dashboard";
+import Notifications from "./pages/Moderator/M_Notifications";
+import Inventory from "./pages/Moderator/M_Inventory";
+import Shop_M from "./pages/Moderator/M_Shop";
+import M_Orders from "./pages/Moderator/M_Orders";
+import Donations from "./pages/Moderator/M_Donations";
+import Subscriptions from "./pages/Moderator/M_Subscriptions";
+import BookSharing from "./pages/Moderator/M_BookSharing";
+import Setting from "./pages/Moderator/M_Settings";
+import AdddNewBook from "./pages/Moderator/M_AddNewBook";
+import Moderator from "./pages/Moderator/Moderator";
+
 
 function App() {
   return (
@@ -128,12 +141,15 @@ function App() {
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
 
+            <Route element={<PrivateRoutes />}>
+
           <Route exact path="/account" element={<Account />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+          </Route>
           </Route>
 
             <Route exact path="/subscriptions" element={<Subscription />}></Route>
@@ -176,6 +192,8 @@ function App() {
             <Route path="ManageRequest" element={<ManageRequest />} />
           </Route> 
 
+          <Route element={<PrivateRoutes />}>
+
           {/* Admin Routes */}
           <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
           <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>
@@ -188,6 +206,24 @@ function App() {
           <Route exact path="/admincomplaints" element={<AdminComplaints />}></Route>
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
+
+          {/* Moderator Routes */}
+          
+
+          </Route>
+          <Route  path="/moderator/" element={<Moderator />}>
+            <Route index element={<M_Dashboard />} />
+            <Route path="dashboard" element={<M_Dashboard />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="shop_M" element={<Shop_M />} />
+            <Route path="orders" element={<M_Orders />} />
+            <Route path="donations" element={<Donations />} />
+            <Route path="subscriptions" element={<Subscriptions />} />
+            <Route path="booksharing" element={<BookSharing />} />
+            <Route path="setting" element={<Setting />} />
+            <Route path="addNewBook" element={<AdddNewBook />} />
+          </Route>
 
               </Routes>
           <Footer />

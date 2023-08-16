@@ -41,8 +41,8 @@ const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "#" },
-  { name: "Subscriptions", path: "/subscriptions" },
-  { name: "Share a Book", path: "/sharingHome" },
+  { name: "Subscriptions", path: "#" },
+  { name: "Share a Book", path: "#" },
 ];
 
 function Navbar() {
@@ -55,8 +55,7 @@ function Navbar() {
     try {
       const res = await axios.get(logoutUrl);
       setUser(null);
-
-      localStorage.removeItem("cartItems");
+      console.log(res.data);
 
       return toast({
         title: "Successfully logged out",
@@ -163,7 +162,8 @@ function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                {user.user.role != "admin" ? (
+                {user.user.role !== "admin" &&
+                user.user.role !== "moderator" ? (
                   <>
                     <RouterLink to="/account">
                       <MenuItem>Account</MenuItem>
@@ -174,10 +174,19 @@ function Navbar() {
                     </RouterLink>
                   </>
                 ) : (
-                  <RouterLink to="/admindashboard">
-                    <MenuItem>Admin Dashboard</MenuItem>
-                  </RouterLink>
+                  <>
+                    {user.user.role === "admin" ? (
+                      <RouterLink to="/admindashboard">
+                        <MenuItem>Admin Dashboard</MenuItem>
+                      </RouterLink>
+                    ) : (
+                      <RouterLink to="/moderator">
+                        <MenuItem>Moderator Dashboard</MenuItem>
+                      </RouterLink>
+                    )}
+                  </>
                 )}
+
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>
