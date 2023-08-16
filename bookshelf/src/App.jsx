@@ -19,7 +19,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
-
+import ManageRequest from "./pages/sharing/ManageRequest"
 
 import {
   Account,
@@ -35,9 +35,9 @@ import { Dashboard, Settings, Orders, Chat } from "./components/Account";
 
 import { PrivateRoutes } from "./utils/privateRoutes";
 
-import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
+// import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
 
-import {Dashboard, Settings, Orders, Chat} from "./components/Account";
+// import {Dashboard, Settings, Orders, Chat} from "./components/Account";
 
 const Blur = (props) => {
   return (
@@ -64,6 +64,7 @@ import AdminInventory from "./pages/AdminInventory";
 import AdminDonations from "./pages/AdminDonations";
 import AdminSubscriptions from "./pages/AdminSubscriptions";
 import AdminSettings from "./pages/AdminSettings";
+
 
 function App() {
   return (
@@ -115,7 +116,7 @@ function App() {
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
           </Route>
-                    <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
+          <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
           <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>
           <Route exact path="/adminusermgt" element={<AdminUserMgt />}></Route>
           <Route exact path="/adminshop" element={<AdminShop />}></Route>
@@ -130,27 +131,8 @@ function App() {
           <Route index element={<ShareBook />} />
             <Route path="shareBook" element={<ShareBook/>} />
             <Route path="shareRequest" element={<ShareRequest />} />
-            
+            <Route path="ManageRequest" element={<ManageRequest />} />
           </Route> 
-
-         
-          
-          
-        
-        <Footer />
-     
-      
-
-      
-        
-              <Route exact path="/account" element={<Account />}>
-                <Route index element={<Dashboard />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="chat" element={<Chat />} />
-              </Route>
-
 
               </Routes>
           <Footer />
