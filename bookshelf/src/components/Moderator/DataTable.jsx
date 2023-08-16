@@ -21,7 +21,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Inventory_A from "./Actions/Inventory_A";
 
 export default function DataTable({ list, columnNames, actions }) {
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -90,8 +90,9 @@ export default function DataTable({ list, columnNames, actions }) {
           value={itemsPerPage}
           onChange={handleItemsPerPageChange}
         >
-          <option value="5">5</option>
           <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
         </Select>
         <Text fontSize={"sm"} mr={5}>
           Items per page

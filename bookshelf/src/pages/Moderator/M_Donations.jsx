@@ -28,8 +28,6 @@ export default function Donations() {
     "Registered Date",
     "email",
     "Contact Number",
-    "Status",
-    "Action",
   ];
   const org_list = [
     {
@@ -38,8 +36,6 @@ export default function Donations() {
       Date: "01.02.2023",
       email: "aaa@gmail.com",
       contact_number: "0111111111",
-      status: "Registered",
-      action: "Registered",
     },
     {
       id: "n0001",
@@ -47,8 +43,6 @@ export default function Donations() {
       Date: "01.02.2023",
       email: "aaa@gmail.com",
       contact_number: "0111111111",
-      status: "Registered",
-      action: "Registered",
     },
   ];
 
@@ -58,7 +52,6 @@ export default function Donations() {
     "Donated Date",
     "No. of Units",
     "Organization",
-    "Action",
   ];
   const don_list = [
     {
@@ -67,7 +60,6 @@ export default function Donations() {
       Date: "01.02.2023",
       units: "10",
       org: "lorem ipsum",
-      action: "Action",
     },
     {
       id: "n0001",
@@ -75,7 +67,6 @@ export default function Donations() {
       Date: "01.02.2023",
       units: "10",
       org: "lorem ipsum",
-      action: "Action",
     },
   ];
 

@@ -22,7 +22,6 @@ export default function Orders() {
     "Order date",
     "Order type",
     "Total price",
-    "Status",
   ];
 
   const [list, setOrderList] = useState([]);
