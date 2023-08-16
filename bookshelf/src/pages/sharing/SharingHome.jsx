@@ -1,18 +1,16 @@
 import React from "react";
-import BlurWhiteBox from "../../components/Sharing/BlureWhiteBox";
-import HomeItemBox from "../../components/Home/HomeItemBox";
-import { Center, Divider, Flex, Heading } from "@chakra-ui/react";
+import BlurWhiteBox from "../../components/Sharing/BlurWhiteBox";
+import HomeItemBox  from "../../components/Sharing/HomeItemBox";
 import books from "../../assets/g.png";
+import { Center, Flex, Heading } from "@chakra-ui/react";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
 
 
-
-
-
 function SharingHome() {
     const itemBoxDetails = {
+
         bestSellers: {
             header: "Best Sellers",
             bgColor: "#F9EFFF",
