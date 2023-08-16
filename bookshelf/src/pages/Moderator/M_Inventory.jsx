@@ -16,6 +16,7 @@ import {
   BiErrorCircle,
   BiPlus,
 } from "react-icons/bi";
+import { IoAddCircle } from "react-icons/io5";
 import StatCard from "../../components/Moderator/StatCard";
 import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
@@ -68,7 +69,7 @@ export default function Inventry() {
           <Spacer />
           <Link to="/moderator/addNewBook">
             <Button colorScheme="blue" size={"sm"}>
-              <Icon as={BiPlus} />
+              <Icon as={IoAddCircle} />
               <Text ml={2}>Add a New Book</Text>
             </Button>
           </Link>

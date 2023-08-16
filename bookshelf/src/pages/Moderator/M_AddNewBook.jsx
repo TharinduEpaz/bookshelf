@@ -17,14 +17,14 @@ import {
   CheckboxGroup,
   Checkbox,
   Alert,
-  AlertIcon
+  AlertIcon,
 } from "@chakra-ui/react";
 import axios from "axios";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
 export default function AddNewBook() {
   const [value, setValue] = React.useState("1");
-  const [error,setError] = useState(null);
+  const [error, setError] = useState(null);
 
   const [bookName, setBookName] = React.useState("");
   const [author, setAuthor] = React.useState("");
@@ -38,6 +38,7 @@ export default function AddNewBook() {
   const [description, setDescription] = React.useState("");
   // const [fileName, setFileName] = React.useState("");
   // const [coverImgURL, setCoverImgURL] = React.useState("");
+  const [showSuccessAlert, setSuccessAlert] = useState(null);
 
   const [image, setImage] = useState(null);
 
@@ -71,8 +72,11 @@ export default function AddNewBook() {
         // fileName,
       };
       const response = await axios.post(addBookURL, body);
+      console.log(response);
 
       console.log(body);
+      setSuccessAlert(true);
+      setError(null);
       // set variables null
       setBookName("");
       setAuthor("");
@@ -86,7 +90,9 @@ export default function AddNewBook() {
       setDescription("");
     } catch (error) {
       console.error(error.message);
-      error.response ? setError(error.response.data.msg) : setError("Something went wrong");
+      error.response
+        ? setError(error.response.data.msg)
+        : setError("Something went wrong");
     }
   };
 
@@ -96,7 +102,18 @@ export default function AddNewBook() {
         <Text fontSize={"3xl"} fontWeight={"bold"}>
           Add New Book
         </Text>
-        {error && <Alert status="error"> <AlertIcon /> {error}</Alert>}
+        {error && (
+          <Alert status="error">
+            {" "}
+            <AlertIcon /> {error}
+          </Alert>
+        )}
+        {showSuccessAlert && (
+          <Alert status="success" mt={4}>
+            <AlertIcon />
+            Book added successfully!
+          </Alert>
+        )}
         <form onSubmit={onSubmitForm}>
           <Grid templateColumns="repeat(2, 1fr)" gap={200} h={"100%"}>
             <GridItem colSpan={1}>
