@@ -59,6 +59,28 @@ function BookReder() {
 		getSubscription();
 	}, []);
 
+	async function addSubscriptionUser() {
+
+		try {
+			const response = await axios.post(
+				"http://localhost:3000/api/v1/subscriptions/addSubscription",
+				{
+					userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
+					subscriptionType: "Book Reader"
+				},
+				{
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+
+
+		} catch (error) {
+			console.error("Error fetching subscription:", error);
+		}
+	}
+
 	return (
 		<div>
 			<PriceWrapper>
@@ -163,7 +185,7 @@ function BookReder() {
 										No
 									</Button>
 									<RouterLink to={'/selectBookWorm'}>
-										<Button colorScheme='red' ml={3}>
+										<Button colorScheme='purple' ml={3}>
 											Yes
 										</Button>
 									</RouterLink>

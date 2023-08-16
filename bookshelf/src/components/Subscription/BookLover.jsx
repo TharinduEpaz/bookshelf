@@ -69,6 +69,7 @@ function BookReder() {
 				const response = await axios.post(
 					"http://localhost:3000/api/v1/subscriptions/addSubscription",
 					{
+						userId:"d384f58e-ee9a-48eb-8c96-141e66f6af60",
 						subscriptionType: "Book Lover"
 					},
 					{
@@ -216,8 +217,8 @@ function BookReder() {
 										<Button ref={cancelRef} onClick={onClose}>
 											No
 										</Button>
-										<RouterLink to={'/selectBookLover'}>
-											<Button colorScheme='red' ml={3} onClick={addSubscriptionUser}>
+										<RouterLink to={'/selectBookLover'} onClick={addSubscriptionUser}>
+											<Button colorScheme='purple' ml={3}>
 												Yes
 											</Button>
 										</RouterLink>

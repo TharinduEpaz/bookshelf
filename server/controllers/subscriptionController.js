@@ -1,6 +1,7 @@
 const subscriptionModel = require("../models/subscription");
 const userSubscriptionModel = require("../models/userSubscription");
 const subscriptionDetailsModel = require("../models/subscriptionDetails");
+const subscriptionComplaint = require("../models/subscriptionComplaint");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -21,10 +22,11 @@ const getAllSubscriptions = async (req, res, next) => {
 const addSubscriptionType = async (req, res, next) => {
 	try {
 		const {
+			userId,
             subscriptionType
 		} = req.body;
 
-		const userId = req.user.userId;
+		
 		const type = await userSubscriptionModel.create({
 		
 			userId,
@@ -54,10 +56,15 @@ const getAllSubscriptionDetails = async (req, res, next) => {
 	}
 };
 
+const addSubscriptionCompliant =async (req, res, next) => {
+	res.send(" ")
+};
+
 
 module.exports = {
 	getAllSubscriptions,
 	getAllUserSubscriptions,
 	addSubscriptionType,
-	getAllSubscriptionDetails
+	getAllSubscriptionDetails,
+	addSubscriptionCompliant
 };
