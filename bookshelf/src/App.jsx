@@ -115,8 +115,8 @@ function App() {
           <Route exact path="/adminsubscriptions" element={<AdminSubscriptions />}></Route>
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
 
-        </Routes>
-        <Footer />
+      
+        
               <Route exact path="/account" element={<Account />}>
                 <Route index element={<Dashboard />} />
                 <Route path="dashboard" element={<Dashboard />} />
@@ -126,7 +126,7 @@ function App() {
               </Route>
 
 
-           
+              </Routes>
           <Footer />
           
           </CartProvider>
