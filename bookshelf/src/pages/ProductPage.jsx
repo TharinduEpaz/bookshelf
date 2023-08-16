@@ -63,6 +63,7 @@ function ProductPage() {
   if (!currentBook || isLoading) {
     return (
       <>
+      <Box mb={'100vh'}>
         <Spinner
           position={"absolute"}
           top={"30%"}
@@ -72,7 +73,9 @@ function ProductPage() {
           speed="0.65s"
           emptyColor="gray.200"
           color="blue.500"
+          
         />
+        </Box>
       </>
     );
   } else
