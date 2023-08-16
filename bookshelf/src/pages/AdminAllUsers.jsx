@@ -40,6 +40,7 @@ export default function AdminAllUsers() {
   const [list, setUsersList] = useState([]);
   const [selectedRole, setSelectedRole] = useState('All');
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showUpdateSuccessAlert, setShowUpdateSuccessAlert] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [deleteUserId, setDeleteUserId] = useState(null);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
@@ -78,16 +79,15 @@ export default function AdminAllUsers() {
 
 
   //Edit user
-  
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `http://localhost:3000/api/v1/users/${updatedUserData.id}`,
         updatedUserData
       );
   
       if (response.status === 200) {
-        // Find the index of the updated user in the list
+        // index of the updated user in the list
         const userIndex = list.findIndex(user => user.id === updatedUserData.id);
         
         if (userIndex !== -1) {
@@ -95,7 +95,7 @@ export default function AdminAllUsers() {
           const updatedList = [...list];
           updatedList[userIndex] = { ...updatedUserData }; // Make sure to spread the object
           setUsersList(updatedList);
-          setShowSuccessAlert(true);
+          setShowUpdateSuccessAlert(true);
           handleUpdateModalClose();
         }
       } else {
@@ -273,6 +273,15 @@ async function getAllUsers(role) {
                 User deleted successfully!
                 </Alert>
                 )}
+
+              {showUpdateSuccessAlert && (
+                <Alert status="success" mt={4}>
+                <AlertIcon />
+                User updated successfully!
+                </Alert>
+                )}
+
+
 
 
       {/* View modal */}

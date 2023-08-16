@@ -26,6 +26,8 @@ export default function AdminAddModerator() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [error, setError] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
 
   const addModeratorUrl = "http://localhost:3000/api/v1/users";
 
@@ -48,6 +50,7 @@ export default function AdminAddModerator() {
       setLastName("");
       setRole("");
 
+      setShowSuccessAlert(true);
       window.location.href = "/adminusermgt";
       
     } catch (error) {
@@ -115,6 +118,13 @@ export default function AdminAddModerator() {
                 <AlertIcon /> {error}
               </Alert>
             )}
+
+{showSuccessAlert && (
+                <Alert status="success" mt={4}>
+                <AlertIcon />
+                User successfully added!
+                </Alert>
+                )}
 
     <form onSubmit={addUser}>
 
@@ -204,7 +214,10 @@ export default function AdminAddModerator() {
         Cancel
     </Button>
 </form>
+
     </Box>
+
+    
     
       </>
 
