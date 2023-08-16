@@ -4,12 +4,16 @@ import AdminDbSummary from "../components/Admin/AdminDbSummary";
 //import Chart from "../components/Admin/Chart";
 import AdminDBTable from "../components/Admin/AdminDBTable";
 import React, { useState } from 'react';
+import AdminBarChart from "../components/Admin/AdminBarChart";
+import AdminLineChart from "../components/Admin/AdminLineChart";
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 
 import {
     Box, 
     Flex,
-    Heading
+    Heading,
+    Text
 } from '@chakra-ui/react'
 
 /*
@@ -25,6 +29,169 @@ const [userData, setUserData] = useState(
 */
 
 export default function AdminDashboard() {
+
+
+  const barChartData = [
+    {
+      name: "Sales",
+      data: [15, 25, 28, 10, 25, 20],
+    },
+  ];
+
+  const barChartOptions = {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "dark",
+    },
+    xaxis: {
+      categories: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: {
+        style: {
+          colors: "#A0AEC0",
+          fontSize: "12px",
+        },
+      },
+      show: true,
+      axisBorder: {
+        show: false,
+      },
+    },
+    yaxis: {
+      show: true,
+      color: "#A0AEC0",
+      labels: {
+        show: true,
+        style: {
+          colors: "#A0AEC0",
+          fontSize: "14px",
+        },
+      },
+    },
+    fill: {
+      colors: "#3ac1cf",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    grid: {
+      strokeDashArray: 5,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        columnWidth: "15px",
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          plotOptions: {
+            bar: {
+              borderRadius: 0,
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  //linechart data
+  const lineChartData = [
+    {
+      name: "Subscriptions",
+      data: [1000, 40000, 15000, 22000, 25500, 25420, 41000, 23000, 35000],
+    },
+    {
+      name: "Sales",
+      data: [30000, 40900, 40000, 14000, 29620, 29000, 34000, 23000, 40000],
+    },
+  ];
+
+  const lineChartOptions = {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "light",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: "#fff",
+          fontSize: "12px",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#fff",
+          fontSize: "12px",
+        },
+      },
+    },
+    legend: {
+      show: false,
+    },
+    grid: {
+      strokeDashArray: 5,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "vertical",
+        shadeIntensity: 0.5,
+        inverseColors: true,
+        opacityFrom: 0.8,
+        opacityTo: 0,
+        stops: [],
+      },
+      colors: ["#de789a", "#3acfb8"],
+    },
+    colors: ["#254b98", "#257198"],
+  };
+
+
+
+
+
+
+
 
   const adminDbSummaryDetails = {
     totalRevenue: {
@@ -55,12 +222,13 @@ export default function AdminDashboard() {
 
   return (
 
-    <>
+
     <Box
       m={"auto"}
       mt={10}
       w="80%"
       h="100%"
+      minH={800}
       borderRadius="6px"
       bg='rgba(255, 255, 255, 0.90)'
       boxShadow="sm"
@@ -114,7 +282,22 @@ export default function AdminDashboard() {
         mt={10}
         mr={5}
       >
-        Chart
+
+        <Flex gap={20}>
+          <Box h={300} w={"50%"} mt={10}>
+            <Text fontWeight={"semibold"} pl={20}>Sales</Text>
+            <AdminBarChart chartData={barChartData} chartOptions={barChartOptions} />
+          </Box>
+          <Box h={300} w={"50%"} mt={10}>
+            <Text fontWeight={"semibold"} pl={20}>Revenue</Text>
+            <AdminLineChart
+              chartData={lineChartData}
+              chartOptions={lineChartOptions}
+            />
+          </Box>
+        </Flex> 
+
+
       </Box>
 
       <Box
@@ -138,9 +321,35 @@ export default function AdminDashboard() {
         mt={'10px'}
         mb={'20px'}
       >
-        Best Sellers
+        Recent Summary Percentages
       </Heading>
-      <AdminDBTable/>
+
+
+    <Flex
+    
+    >
+      <CircularProgress 
+        value={40} color='green.400' size='120px' thickness='15px'>
+      <CircularProgressLabel>45%</CircularProgressLabel>
+      </CircularProgress>
+      <Text p={5}>Donations</Text>
+
+      <CircularProgress 
+        value={40} color='green.400' size='120px' thickness='15px'>
+      <CircularProgressLabel>68%</CircularProgressLabel>
+      </CircularProgress>
+      <Text p={5}>Subscriptions</Text>
+
+      <CircularProgress 
+        value={40} color='green.400' size='120px' thickness='15px'>
+      <CircularProgressLabel>72%</CircularProgressLabel>
+      </CircularProgress>
+      <Text p={5}>Sharings</Text>
+
+      </Flex>
+      {/* <AdminDBTable/> */}
+
+
       </Box>
 
    </Box>
@@ -149,7 +358,7 @@ export default function AdminDashboard() {
     </Box>
     
     
-    </>
+
 
   )
 }

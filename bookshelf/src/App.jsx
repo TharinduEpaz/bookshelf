@@ -55,14 +55,7 @@ const Blur = (props) => {
     </Icon>
   );
 };
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminNotifications from "./pages/AdminNotifications";
-import AdminUserMgt from "./pages/AdminUserMgt";
-import AdminShop from "./pages/AdminShop";
-import AdminInventory from "./pages/AdminInventory";
-import AdminDonations from "./pages/AdminDonations";
-import AdminSubscriptions from "./pages/AdminSubscriptions";
-import AdminSettings from "./pages/AdminSettings";
+
 
 
 import g from "./assets/g.png";
@@ -77,6 +70,19 @@ import ManageSubscription from "./pages/Subscription/ManageSubscription";
 import SelectLover from "./components/Subscription/SelectLover";
 import SelectReader from "./components/Subscription/SelectReader"
 import SelectWorm from "./components/Subscription/SelectWorm"
+
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminNotifications from "./pages/AdminNotifications";
+import AdminUserMgt from "./pages/AdminUserMgt";
+import AdminShop from "./pages/AdminShop";
+import AdminInventory from "./pages/AdminInventory";
+import AdminDonations from "./pages/AdminDonations";
+import AdminSubscriptions from "./pages/AdminSubscriptions";
+import AdminSettings from "./pages/AdminSettings";
+import AdminOrders from "./pages/AdminOrders";
+import AdminBookSharing from "./pages/AdminBookSharing";
+import AdminComplaints from "./pages/AdminComplaints";
+import AdminAddNewBook from "./pages/AdminAddNewBook";
 
 
 function App() {
@@ -129,18 +135,7 @@ function App() {
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
           </Route>
-          <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
-          <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>
-          <Route exact path="/adminusermgt" element={<AdminUserMgt />}></Route>
-          <Route exact path="/adminshop" element={<AdminShop />}></Route>
-          <Route exact path="/admininventory" element={<AdminInventory />}></Route>
-          <Route exact path="/admindonations" element={<AdminDonations />}></Route>
-          <Route exact path="/adminsubscriptions" element={<AdminSubscriptions />}></Route>
-          <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
-          <Route exact path="/sharingHome" element={<SharingHome />}></Route>
-          
-        
-           
+
             <Route exact path="/subscriptions" element={<Subscription />}></Route>
             <Route exact path="/selectSubscription" element={<SelectSubscription />}></Route>
             <Route exact path="selectBook" element={<SelectBook />} ></Route>
@@ -180,6 +175,19 @@ function App() {
             <Route path="shareRequest" element={<ShareRequest />} />
             <Route path="ManageRequest" element={<ManageRequest />} />
           </Route> 
+
+          {/* Admin Routes */}
+          <Route exact path="/admindashboard" element={<AdminDashboard />}></Route>
+          <Route exact path="/adminnotifications" element={<AdminNotifications />}></Route>
+          <Route exact path="/adminusermgt" element={<AdminUserMgt />}></Route>
+          <Route exact path="/admininventory" element={<AdminInventory />}></Route>
+          <Route exact path="/adminorders" element={<AdminOrders />}></Route>
+          <Route exact path="/admindonations" element={<AdminDonations />}></Route>
+          <Route exact path="/adminsubscriptions" element={<AdminSubscriptions />}></Route>
+          <Route exact path="/adminbooksharing" element={<AdminBookSharing />}></Route>
+          <Route exact path="/admincomplaints" element={<AdminComplaints />}></Route>
+          <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
+          <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
 
               </Routes>
           <Footer />
