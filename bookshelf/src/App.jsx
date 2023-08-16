@@ -18,7 +18,6 @@ import SelectLover from "./components/Subscription/SelectLover";
 import SelectReader from "./components/Subscription/SelectReader"
 import SelectWorm from "./components/Subscription/SelectWorm"
 
-import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
 import { CartProvider } from "./context/cartContext";
 import SharingHome from "./pages/sharing/SharingHome";
