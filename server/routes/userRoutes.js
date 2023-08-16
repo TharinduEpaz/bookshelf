@@ -15,6 +15,7 @@ router.get('/', controller.getAllUsers);
 
 router.get('/showMe',authenticateUser, controller.getCurrentUser);
 router.get('/:id', controller.getSingeUser);
+
 router.patch('/updatePassword',authenticateUser, controller.updateUserPassword);
 router.patch('/:id', controller.updateUser);
 

@@ -65,9 +65,32 @@ const getCurrentUser = async (req, res) => {
   res.status(statusCodes.StatusCodes.OK).json(req.user);
 };
 
-const updateUser = async (req, res) => {
-  console.log("updateUser");
+
+
+
+const updateUser = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await userModel.findOne({ where: { id } });
+    if (!user) {
+      throw new CustomError.NotFoundError("No user found");
+    }
+    const updatedUser = await user.update(req.body);
+    res.status(statusCodes.StatusCodes.OK).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+  // res.send("Update user" + id);
 };
+
+
+
+// const updateUser = async (req, res) => {
+//   console.log("updateUser");
+// };
+
+
+
 
 const updateUserPassword = async (req, res, next) => {
   try {

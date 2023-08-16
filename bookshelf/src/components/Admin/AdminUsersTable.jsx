@@ -14,10 +14,15 @@ import {
   Icon,
   Spacer,
 } from "@chakra-ui/react";
-
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function AdminUsersTable({ list, columnNames, deleteUser  }) {
+export default function AdminUsersTable({
+  list,
+  columnNames,
+  deleteUser,
+  updateUser,
+  setSelectedUser,
+}) {
 
   const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +62,7 @@ export default function AdminUsersTable({ list, columnNames, deleteUser  }) {
               <Td key={index}>{headerItem}</Td>
             ))
             }
-             <Td>Action</Td>
+             <Td colSpan={3}>Action</Td>
         </Tr>
       </Thead>
 
@@ -73,14 +78,24 @@ export default function AdminUsersTable({ list, columnNames, deleteUser  }) {
                 <Td key={index2}>{value}</Td>
               ))}
               
-               <Td>
-               <Button 
-                  colorScheme="red" size="sm" 
-                  onClick={() => deleteUser(Obj.id)}
-                >
-                  Suspend
-                </Button>
-              </Td>
+              <Td>
+      <Button colorScheme="red" size="sm" onClick={() => deleteUser(Obj.id)}>
+        Suspend
+      </Button>
+    </Td>
+
+    <Td>
+      <Button colorScheme="teal" size="sm" onClick={() => updateUser(Obj)}>
+        Edit
+      </Button>
+    </Td>
+
+    <Td>
+      <Button colorScheme="blue" size="sm" onClick={() => setSelectedUser(Obj)}>
+        View
+      </Button>
+    </Td>
+
             </Tr>
           ))
         )}

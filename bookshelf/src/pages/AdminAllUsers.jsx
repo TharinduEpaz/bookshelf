@@ -20,6 +20,7 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+    Input 
 } from '@chakra-ui/react'
 import AdminUsersTable from '../components/Admin/AdminUsersTable';
 import { useEffect, useState } from "react";
@@ -37,29 +38,130 @@ export default function AdminAllUsers() {
   ];
 
   const [list, setUsersList] = useState([]);
-  const [selectedRole, setSelectedRole] = useState('All'); 
-  //const [userModals, setUserModals] = useState({});
+  const [selectedRole, setSelectedRole] = useState('All');
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [updatedUserData, setUpdatedUserData] = useState({
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: '',
+  });
 
-  const deleteUser = async (id) => {
-  try {
-    const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
-      method: "DELETE"
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleCloseModal = () => {
+    setSelectedUser(null);
+  };
+
+  //Edit modal
+  const handleUpdateModalOpen = (user) => {
+    setUpdatedUserData(user);
+    setUpdateModalOpen(true);
+    onOpen();
+  };
+  
+
+  const handleUpdateModalClose = () => {
+    setUpdateModalOpen(false);
+    setUpdatedUserData({
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: '',
     });
+    onClose();
+  };
 
-    if (response.ok) {
-      console.log('User deleted successfully');
-      setShowSuccessAlert(true);
-      
-    } else {
-      console.error('Failed to delete user');
+
+  //Edit user
+  
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/v1/users/${updatedUserData.id}`,
+        updatedUserData
+      );
+  
+      if (response.status === 200) {
+        // Find the index of the updated user in the list
+        const userIndex = list.findIndex(user => user.id === updatedUserData.id);
+        
+        if (userIndex !== -1) {
+          // Create a new array with the updated user data
+          const updatedList = [...list];
+          updatedList[userIndex] = updatedUserData;
+          
+          setUsersList(updatedList);
+          setShowSuccessAlert(true);
+          handleUpdateModalClose();
+        }
+      }
+    } catch (error) {
+      console.error('Failed to update user', error);
     }
-  } catch (err) {
-    console.error(err.message);
-  }
-};
+  };
+  
+  
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
+
+  //Delete modal
+  const handleDeleteModalOpen = (userId) => {
+    setDeleteUserId(userId);
+    onOpen();
+  };
+
+  const handleDeleteModalClose = () => {
+    setDeleteUserId(null);
+    onClose();
+  };
+
+  //Delete user
+  const deleteUser = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        console.log('User deleted successfully');
+        setShowSuccessAlert(true);
+        getAllUsers(selectedRole); 
+        handleDeleteModalClose();
+      } else {
+        console.error('Failed to delete user');
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
 
+  const handleDelete = async () => {
+    try {
+      await deleteUser(deleteUserId);
+    } catch (error) {
+      console.error('Failed to delete user', error);
+    }
+  };
+
+
+
+
+
+ //Get all users
 async function getAllUsers(role) {
   try {
     let url = "http://localhost:3000/api/v1/users/";
@@ -87,7 +189,6 @@ async function getAllUsers(role) {
     console.error(err.message);
   }
 }
-
 
   useEffect(() => {
     getAllUsers(selectedRole); 
@@ -157,41 +258,112 @@ async function getAllUsers(role) {
 
                 <Spacer mt={5} />
 
-                <AdminUsersTable  list={list} columnNames={columns} deleteUser={deleteUser}/>
+                <AdminUsersTable
+                  list={list}
+                  columnNames={columns}
+              
+                  deleteUser={handleDeleteModalOpen}
+                  setSelectedUser={setSelectedUser} // setSelectedUser function
+                  updateUser={handleUpdateModalOpen}
+                  
+                />
 
               {showSuccessAlert && (
-        <Alert status="success" mt={4}>
-          <AlertIcon />
-          User deleted successfully!
-        </Alert>
+                <Alert status="success" mt={4}>
+                <AlertIcon />
+                User deleted successfully!
+                </Alert>
+                )}
+
+
+
+      {selectedUser && (
+        <Modal isOpen={!!selectedUser} onClose={handleCloseModal}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>User Details</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              {/* Render user details here */}
+              <p>ID: {selectedUser.id}</p>
+              <p>First Name: {selectedUser.firstName}</p>
+              <p>Last Name: {selectedUser.lastName}</p>
+              <p>Email: {selectedUser.email}</p>
+              <p>User Type: {selectedUser.role}</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" onClick={handleCloseModal}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       )}
 
-{/*
-                <AdminUsersTable  list={list} columnNames={columns} onSuspendClick={toggleModal} />
 
 
-                 {list.map((user) => (
-            <Modal key={user.id} isOpen={userModals[user.id]} onClose={() => toggleModal(user.id)}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Delete User</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Text>Are you sure you want to suspend the user?</Text>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="red" mr={3} onClick={() => toggleModal(user.id)}>
-                  Suspend
-                </Button>
-                <Button variant="ghost" onClick={() => toggleModal(user.id)}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        ))}
+  {selectedUser && (
+    <Modal isOpen={isOpen || updateModalOpen} onClose={handleUpdateModalClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Update User</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Input
+            name="firstName"
+            placeholder="First Name"
+            value={updatedUserData.firstName}
+            onChange={handleInputChange}
+          />
+          <Input
+            name="lastName"
+            placeholder="Last Name"
+            value={updatedUserData.lastName}
+            onChange={handleInputChange}
+          />
+          <Input
+            name="email"
+            placeholder="Email"
+            value={updatedUserData.email}
+            onChange={handleInputChange}
+          />
+          
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="blue" onClick={handleUpdate}>
+            Update
+          </Button>
+          <Button variant="ghost" onClick={handleUpdateModalClose}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )}
 
-                 */}
+
+{deleteUserId && (
+      <Modal isOpen={isOpen} onClose={handleDeleteModalClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Delete</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Are you sure you want to delete this user?
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" onClick={handleDelete}>
+              Delete
+            </Button>
+            <Button variant="ghost" onClick={handleDeleteModalClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    )}
+
+
               </Box>
 
       </Box>
