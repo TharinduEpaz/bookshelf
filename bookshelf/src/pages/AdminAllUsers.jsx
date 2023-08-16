@@ -43,6 +43,8 @@ export default function AdminAllUsers() {
   const [showUpdateSuccessAlert, setShowUpdateSuccessAlert] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [deleteUserId, setDeleteUserId] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [updatedUserData, setUpdatedUserData] = useState({
     id: '',
@@ -120,13 +122,14 @@ export default function AdminAllUsers() {
   //Delete modal
   const handleDeleteModalOpen = (userId) => {
     setDeleteUserId(userId);
-    onOpen();
+    setDeleteModalOpen(true);
   };
-
+  
   const handleDeleteModalClose = () => {
     setDeleteUserId(null);
-    onClose();
+    setDeleteModalOpen(false);
   };
+  
 
   //Delete user
   const deleteUser = async (id) => {
@@ -134,12 +137,12 @@ export default function AdminAllUsers() {
       const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
         method: "DELETE"
       });
-
+  
       if (response.ok) {
         console.log('User deleted successfully');
         setShowSuccessAlert(true);
         getAllUsers(selectedRole); 
-        handleDeleteModalClose();
+        handleDeleteModalClose(); // Close the delete modal
       } else {
         console.error('Failed to delete user');
       }
@@ -147,6 +150,7 @@ export default function AdminAllUsers() {
       console.error(err.message);
     }
   };
+  
 
 
   const handleDelete = async () => {
@@ -351,7 +355,7 @@ async function getAllUsers(role) {
 
 {/* Delete modal */}
 {deleteUserId && (
-      <Modal isOpen={isOpen} onClose={handleDeleteModalClose}>
+      <Modal isOpen={deleteModalOpen} onClose={handleDeleteModalClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Confirm Delete</ModalHeader>
