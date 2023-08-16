@@ -15,6 +15,11 @@ import g from "./assets/g.png";
 import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
 import { CartProvider } from "./context/cartContext";
+import SharingHome from "./pages/sharing/SharingHome";
+import PostRequest from "./pages/sharing/postrequest";
+import ShareRequest from "./components/Sharing/ShareRequest";
+import ShareBook from "./components/Sharing/ShareBook";
+
 
 import {
   Account,
@@ -29,6 +34,10 @@ import {
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
 
 import { PrivateRoutes } from "./utils/privateRoutes";
+
+import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";
+
+import {Dashboard, Settings, Orders, Chat} from "./components/Account";
 
 const Blur = (props) => {
   return (
@@ -114,6 +123,23 @@ function App() {
           <Route exact path="/admindonations" element={<AdminDonations />}></Route>
           <Route exact path="/adminsubscriptions" element={<AdminSubscriptions />}></Route>
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
+          <Route exact path="/sharingHome" element={<SharingHome />}></Route>
+          
+    
+          <Route exact path="/PostRequest" element={<PostRequest />}>
+          <Route index element={<ShareBook />} />
+            <Route path="shareBook" element={<ShareBook/>} />
+            <Route path="shareRequest" element={<ShareRequest />} />
+            
+          </Route> 
+
+         
+          
+          
+        
+        <Footer />
+     
+      
 
       
         
