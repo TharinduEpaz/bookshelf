@@ -41,7 +41,7 @@ const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "#" },
-  { name: "Subscriptions", path: "#" },
+  { name: "Subscriptions", path: "/subscriptions" },
   { name: "Share a Book", path: "/sharingHome" },
 ];
 

@@ -10,7 +10,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import g from "./assets/g.png";
 
 import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
@@ -64,6 +63,20 @@ import AdminInventory from "./pages/AdminInventory";
 import AdminDonations from "./pages/AdminDonations";
 import AdminSubscriptions from "./pages/AdminSubscriptions";
 import AdminSettings from "./pages/AdminSettings";
+
+
+import g from "./assets/g.png";
+import Subscription from "./pages/Subscription/SubscriptionHome";
+import SelectSubscription from "./pages/Subscription/SelectSubscription";
+import SelectBookLover from "./pages/Subscription/SelectBookLover";
+import SelectBookReader from "./pages/Subscription/SelectBookReader";
+import SelectBookWorm from "./pages/Subscription/SelectBookWorm";
+import SelectBook from "./pages/Subscription/SelectBook";
+import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
+import ManageSubscription from "./pages/Subscription/ManageSubscription";
+import SelectLover from "./components/Subscription/SelectLover";
+import SelectReader from "./components/Subscription/SelectReader"
+import SelectWorm from "./components/Subscription/SelectWorm"
 
 
 function App() {
@@ -126,7 +139,41 @@ function App() {
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/sharingHome" element={<SharingHome />}></Route>
           
-    
+        
+           
+            <Route exact path="/subscriptions" element={<Subscription />}></Route>
+            <Route exact path="/selectSubscription" element={<SelectSubscription />}></Route>
+            <Route exact path="selectBook" element={<SelectBook />} ></Route>
+            <Route exact path="/selectBookReader" element={<SelectBookReader />}></Route>
+            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}></Route>
+            <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
+         
+
+            <Route exact path="/selectBookLover" element={<SelectBookLover />}>
+              <Route index element={<SelectLover />} />
+              <Route path="details" element={<SelectLover />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+
+            <Route exact path="/selectBookReader" element={<SelectBookReader />}>
+              <Route index element={<SelectReader />} />
+              <Route path="details" element={<SelectReader />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+
+            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}>
+              <Route index element={<SelectWorm />} />
+              <Route path="details" element={<SelectWorm />} />
+              <Route path="selectBook" element={<SelectBook />} />
+              <Route path="manageSubscription" element={<ManageSubscription />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+
+
           <Route exact path="/PostRequest" element={<PostRequest />}>
           <Route index element={<ShareBook />} />
             <Route path="shareBook" element={<ShareBook/>} />
