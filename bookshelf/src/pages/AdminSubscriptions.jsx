@@ -24,11 +24,38 @@ import AdminSidebar from "../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
 import AdminStatCard from "../components/Admin/AdminStatCard";
 import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import AdminSubscriptionPlans from "../components/Admin/AdminSubscriptionPlans";
+
 
 export default function AdminSubscriptions() {
 
+
+
+
+  
+
+  //Subscription plans
+  const planColumnNames = [
+    "Subscription Plans"  
+  ];
+  const planList = [
+    {
+      plan: "Book Reader"
+    },
+    {
+      plan: "Book Lover"
+    },
+    {
+      plan: "Book Worm"
+    },
+  
+  ];
+
+
+  
+  //Subscriptions
   const columns = [
-    "Customer ID",
+    "Plan",
     "Customer Name",
     "Subscription plan",
     "Book",
@@ -186,6 +213,21 @@ export default function AdminSubscriptions() {
                     </StatGroup>
                   </CardBody>
                 </Card>
+
+                <Box
+                  mt={10}
+                  p={2}
+                  pl={5}
+                  pr={5}
+                  boxShadow="sm"
+                  borderRadius="md"
+                  bgColor={"#EDF2F7"}
+                  w={"fit-content"}
+                >
+
+                    <AdminSubscriptionPlans planList={planList} planColumnNames={planColumnNames}/>
+
+                </Box>
 
 
               

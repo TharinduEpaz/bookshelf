@@ -64,7 +64,6 @@ export default function AdminAllUsers() {
     onOpen();
   };
   
-
   const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
     setUpdatedUserData({
@@ -94,12 +93,13 @@ export default function AdminAllUsers() {
         if (userIndex !== -1) {
           // Create a new array with the updated user data
           const updatedList = [...list];
-          updatedList[userIndex] = updatedUserData;
-          
+          updatedList[userIndex] = { ...updatedUserData }; // Make sure to spread the object
           setUsersList(updatedList);
           setShowSuccessAlert(true);
           handleUpdateModalClose();
         }
+      } else {
+        console.error('Failed to update user:', response.statusText);
       }
     } catch (error) {
       console.error('Failed to update user', error);
@@ -107,7 +107,7 @@ export default function AdminAllUsers() {
   };
   
   
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedUserData((prevData) => ({
@@ -259,14 +259,13 @@ async function getAllUsers(role) {
                 <Spacer mt={5} />
 
                 <AdminUsersTable
-                  list={list}
-                  columnNames={columns}
-              
-                  deleteUser={handleDeleteModalOpen}
-                  setSelectedUser={setSelectedUser} // setSelectedUser function
-                  updateUser={handleUpdateModalOpen}
-                  
-                />
+  list={list}
+  columnNames={columns}
+  deleteUser={handleDeleteModalOpen}
+  setSelectedUser={setSelectedUser}
+  updateUser={handleUpdateModalOpen} // Make sure this is passed correctly
+/>
+
 
               {showSuccessAlert && (
                 <Alert status="success" mt={4}>
@@ -276,7 +275,7 @@ async function getAllUsers(role) {
                 )}
 
 
-
+      {/* View modal */}
       {selectedUser && (
         <Modal isOpen={!!selectedUser} onClose={handleCloseModal}>
           <ModalOverlay />
@@ -301,8 +300,8 @@ async function getAllUsers(role) {
       )}
 
 
-
-  {selectedUser && (
+  {/* Update modal */}
+  {updatedUserData && (
     <Modal isOpen={isOpen || updateModalOpen} onClose={handleUpdateModalClose}>
       <ModalOverlay />
       <ModalContent>
@@ -341,7 +340,7 @@ async function getAllUsers(role) {
     </Modal>
   )}
 
-
+{/* Delete modal */}
 {deleteUserId && (
       <Modal isOpen={isOpen} onClose={handleDeleteModalClose}>
         <ModalOverlay />

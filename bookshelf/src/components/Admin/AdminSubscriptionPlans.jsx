@@ -14,24 +14,20 @@ import {
   Icon,
   Spacer,
 } from "@chakra-ui/react";
+
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function AdminUsersTable({
-  list,
-  columnNames,
-  deleteUser,
-  updateUser,
-  setSelectedUser,
-}) {
+export default function AdminSubscriptionPlans({ planList, planColumnNames }) {
 
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
+
+  const [itemsPerPage, setItemsPerPage] = useState(3); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = planList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(list.length / itemsPerPage);
+  const totalPages = Math.ceil(planList.length / itemsPerPage);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -50,19 +46,14 @@ export default function AdminUsersTable({
 
   return (
     
-    <TableContainer>
-    <Table variant='simple' p={10} mt={50} borderWidth={1} borderColor="gray.200" fontSize="sm">
 
+    <TableContainer>
+    <Table variant="simple" fontSize="sm">
       <Thead fontWeight="semibold">
         <Tr bgColor="gray.100">
-          <Td>
-            <Checkbox></Checkbox>
-          </Td>
-            {columnNames.map((headerItem,index)=>(
-              <Td key={index}>{headerItem}</Td>
-            ))
-            }
-             <Td colSpan={3}>Action</Td>
+          {planColumnNames.map((headerItem, index) => (
+            <Td key={index}>{headerItem}</Td>
+          ))}
         </Tr>
       </Thead>
 
@@ -70,39 +61,21 @@ export default function AdminUsersTable({
         {Object.values(
           currentItems.map((Obj, index) => (
             <Tr key={index}>
-              <Td>
-                <Checkbox />
-              </Td>
-
               {Object.values(Obj).map((value, index2) => (
-                <Td key={index2}>{value}</Td>
+                <Td 
+                    bg={"#ffffff"}
+                    borderRadius={5}
+                    m={5}
+                    key={index2}
+                >
+                    {value}
+                </Td>
               ))}
-              
-              <Td>
-      <Button colorScheme="red" size="sm" onClick={() => deleteUser(Obj.id)}>
-        Suspend
-      </Button>
-    </Td>
-
-    <Td>
-      <Button colorScheme="teal" size="sm"  onClick={() => updateUser(Obj)}>
-        Edit
-      </Button>
-    </Td>
-
-    <Td>
-      <Button colorScheme="blue" size="sm" onClick={() => setSelectedUser(Obj)}>
-        View
-      </Button>
-    </Td>
-
             </Tr>
           ))
         )}
       </Tbody>
-     
     </Table>
-
     <HStack justifyContent={"flex-end"} mt={5}>
       <Select
         w="fit-content"
@@ -112,13 +85,10 @@ export default function AdminUsersTable({
         value={itemsPerPage}
         onChange={handleItemsPerPageChange}
       >
+        <option value="3">3</option>
         <option value="5">5</option>
-        <option value="10">10</option>
       </Select>
-      <Text fontSize={"sm"} mr={5}>
-        Items per page
-      </Text>
-
+      
       <Spacer />
       <Icon
         as={BiChevronLeft}
@@ -128,9 +98,7 @@ export default function AdminUsersTable({
         disabled={currentPage === 1}
       />
 
-      <Text fontSize={"sm"}>
-        Page {currentPage} of {totalPages}
-      </Text>
+     
       
       <Icon
         as={BiChevronRight}
@@ -141,9 +109,10 @@ export default function AdminUsersTable({
       />
     </HStack>
   </TableContainer>
+   
 
 
-  )
+  );
 }
 
 
