@@ -14,6 +14,7 @@ import g from "./assets/g.png";
 
 import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
+import { CartProvider } from "./context/cartContext";
 
 import {
   Account,
@@ -83,15 +84,20 @@ function App() {
       /> */}
 
       <Router>
-      <UserProvider>
-      <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-          <Route exact path="/register" element={<Register />}></Route>
-          <Route exact path="/shop" element={<Shop />}></Route>
-          <Route exact path="/shop/:id" element={<ProductPage />}></Route>
-          <Route exact path="/cart/:userId" element={<Cart />}></Route>
+      
+        
+        <UserProvider>
+        <BooksProvider>
+        <CartProvider>
+        
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/register" element={<Register />}></Route>
+            <Route exact path="/shop" element={<Shop />}></Route>
+            <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+            <Route exact path="/cart/:userId" element={<Cart />}></Route>
 
           <Route exact path="/account" element={<Account />}>
             <Route index element={<Dashboard />} />
@@ -111,6 +117,20 @@ function App() {
 
         </Routes>
         <Footer />
+              <Route exact path="/account" element={<Account />}>
+                <Route index element={<Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="chat" element={<Chat />} />
+              </Route>
+
+
+           
+          <Footer />
+          
+          </CartProvider>
+          </BooksProvider>
         </UserProvider>
       </Router>
     </Box>
