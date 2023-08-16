@@ -4,6 +4,7 @@ import AdminDbSummary from "../components/Admin/AdminDbSummary";
 //import Chart from "../components/Admin/Chart";
 import AdminDBTable from "../components/Admin/AdminDBTable";
 import React, { useState } from 'react';
+import AdminBarChart from "../components/Admin/AdminBarChart";
 
 
 import {
@@ -25,6 +26,169 @@ const [userData, setUserData] = useState(
 */
 
 export default function AdminDashboard() {
+
+
+  const barChartData = [
+    {
+      name: "Sales",
+      data: [15, 25, 28, 10, 25, 20],
+    },
+  ];
+
+  const barChartOptions = {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "dark",
+    },
+    xaxis: {
+      categories: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: {
+        style: {
+          colors: "#A0AEC0",
+          fontSize: "12px",
+        },
+      },
+      show: true,
+      axisBorder: {
+        show: false,
+      },
+    },
+    yaxis: {
+      show: true,
+      color: "#A0AEC0",
+      labels: {
+        show: true,
+        style: {
+          colors: "#A0AEC0",
+          fontSize: "14px",
+        },
+      },
+    },
+    fill: {
+      colors: "#ED8936",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    grid: {
+      strokeDashArray: 5,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 15,
+        columnWidth: "15px",
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          plotOptions: {
+            bar: {
+              borderRadius: 0,
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  //barchart data
+  const lineChartData = [
+    {
+      name: "Subscriptions",
+      data: [1000, 40000, 15000, 22000, 25500, 25420, 41000, 23000, 35000],
+    },
+    {
+      name: "Sales",
+      data: [30000, 40900, 40000, 14000, 29620, 29000, 34000, 23000, 40000],
+    },
+  ];
+
+  const lineChartOptions = {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "light",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: "#fff",
+          fontSize: "12px",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#fff",
+          fontSize: "12px",
+        },
+      },
+    },
+    legend: {
+      show: false,
+    },
+    grid: {
+      strokeDashArray: 5,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "vertical",
+        shadeIntensity: 0.5,
+        inverseColors: true,
+        opacityFrom: 0.8,
+        opacityTo: 0,
+        stops: [],
+      },
+      colors: ["#fff", "#3182CE"],
+    },
+    colors: ["#fff", "#3182CE"],
+  };
+
+
+
+
+
+
+
 
   const adminDbSummaryDetails = {
     totalRevenue: {
