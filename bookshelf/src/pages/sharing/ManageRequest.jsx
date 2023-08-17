@@ -1,19 +1,44 @@
-// Your component code
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useContext } from "react";
+import { userContext } from "../../context/userContext";
 
 function ManageRequest() {
+  const { user, setUser } = useContext(userContext);
+
+  const [requestDetails, setRequestDetails] = useState({});
+  const [userEmail, setUserEmail] = useState(""); // State to store user email
+
+  useEffect(() => {
+    const getRequestDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/bookSharing/requests`
+        );
+        console.log(response.data);
+        setRequestDetails(response.data);
+        console.log(requestDetails);
+
+        // Set the user email to the state
+        setUserEmail(user.email);
+        console.log(setUserEmail);    
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRequestDetails();
+  }, [user]); // Include user in dependency array
+
   return (
     <TableContainer
       bg={"white"}
@@ -33,66 +58,31 @@ function ManageRequest() {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>Segun Adebayo</Td>
-            <Td>Founder of Chakra UI</Td>
+          {Object.keys(requestDetails).map((item) => (
+            <Tr key={item}>
+              <Td>{requestDetails[item].bookName}</Td>
+              <Td>{requestDetails[item].details}</Td>
 
-            <Td colSpan={2} align="center">
-              <Button
-                colorScheme="purple"
-                variant={"outline"}
-                borderRadius={15}
-              >
-                Edit
-              </Button>
-              <Button
-                marginLeft={"5"}
-                colorScheme="red"
-                variant={"outline"}
-                borderRadius={15}
-              >
-                Delete
-              </Button>
-            </Td>
-            <Td >sage@chakra-ui.com</Td>
-          </Tr>
-          <Tr>
-            <Td>Mark Chandler</Td>
-            <Td>Developer</Td>
-            <Td colSpan={2} align="center">
-              <Button colorScheme="purple" variant={"outline"} borderRadius={15}>
-                Edit
-              </Button>
-              <Button
-                marginLeft={"5"}
-                colorScheme="red"
-                variant={"outline"}
-                borderRadius={15}
-              >
-                Delete
-              </Button>
-            </Td>
-            <Td >mark@chakra-ui.com</Td>
-          </Tr>
-          <Tr>
-            <Td>Lazar Nikolov</Td>
-            <Td>DevRel</Td>
-            <Td colSpan={2} align="center">
-              <Button colorScheme="purple" variant={"outline"} borderRadius={15}>
-                Edit
-              </Button>
-              <Button
-                marginLeft={"5"}
-                colorScheme="red"
-                variant={"outline"}
-                borderRadius={15}
-              >
-                Delete
-              </Button>
-            </Td>
-
-            <Td>lazar@chakra-ui.com</Td>
-          </Tr>
+              <Td colSpan={2} align="center">
+                <Button
+                  colorScheme="purple"
+                  variant={"outline"}
+                  borderRadius={15}
+                >
+                  Edit
+                </Button>
+                <Button
+                  marginLeft={"5"}
+                  colorScheme="red"
+                  variant={"outline"}
+                  borderRadius={15}
+                >
+                  Delete
+                </Button>
+              </Td>
+              <Td>lasinduwathsan@gmail.com</Td> {/* Display user email */}
+            </Tr>
+          ))}
         </Tbody>
       </Table>
     </TableContainer>

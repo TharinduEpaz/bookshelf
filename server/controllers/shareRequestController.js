@@ -17,8 +17,8 @@ const getAllShareRequests = async (req, res, next) => {
 
 const postShareRequest = async (req, res, next) => {
     try{
-        const { bookName, details, listOfBooks} = req.body;
-        const userId = req.user.userId;
+        const { bookName, details, listOfBooks,userId} = req.body;
+        // const userId = req.user.userId;
         console.log(userId);
         const shareRequest = await shareRequestModel.create({ bookName, details, listOfBooks, userId });
         res.status(statusCodes.StatusCodes.CREATED).json(shareRequest)
