@@ -97,6 +97,10 @@ import Setting from "./pages/Moderator/M_Settings";
 import AdddNewBook from "./pages/Moderator/M_AddNewBook";
 import Moderator from "./pages/Moderator/Moderator";
 
+import Donation from "./pages/Donation"
+import Don_home from "./pages/Don_home";
+import DonationRequest from "./pages/DonationRequest";
+
 
 function App() {
   return (
@@ -185,12 +189,18 @@ function App() {
             </Route>
 
 
+          <Route exact path="/sharing" element={<SharingHome />}></Route>
+
           <Route exact path="/PostRequest" element={<PostRequest />}>
           <Route index element={<ShareBook />} />
             <Route path="shareBook" element={<ShareBook/>} />
             <Route path="shareRequest" element={<ShareRequest />} />
             <Route path="ManageRequest" element={<ManageRequest />} />
           </Route> 
+
+          <Route exact path="/donation" element={<Donation />}></Route>
+          <Route exact path="/Don_home" element={<Don_home />}></Route>
+          <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
 
           <Route element={<PrivateRoutes />}>
 
