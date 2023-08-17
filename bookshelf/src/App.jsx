@@ -220,7 +220,7 @@ function App() {
           {/* Moderator Routes */}
           
 
-          </Route>
+         
           <Route  path="/moderator/" element={<Moderator />}>
             <Route index element={<M_Dashboard />} />
             <Route path="dashboard" element={<M_Dashboard />} />
@@ -233,6 +233,7 @@ function App() {
             <Route path="booksharing" element={<BookSharing />} />
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
+          </Route>
           </Route>
 
               </Routes>
