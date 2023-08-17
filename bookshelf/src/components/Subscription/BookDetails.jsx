@@ -17,13 +17,7 @@ function Shop() {
             price: "14.99",
             rating: 4,
         },
-        book2: {
-            title: "The Vanishing Half",
-            author: "Brit Bennett",
-            image: "https://m.media-amazon.com/images/I/81ICvbFe2+L.jpg",
-            price: "34.99",
-            rating: 4.5,
-        },
+        
     };
 
     const [bookDetails, setBookDetails] = useState(initialBookDetails);

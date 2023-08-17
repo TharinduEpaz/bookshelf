@@ -1,60 +1,50 @@
+// import React from 'react'
+
+// function chat() {
+//   return (
+//     <div>
+
+//     </div>
+//   )
+// }
+
+// export default chat
+import { Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
+// import Divider from "../components/Divider";
+// import Footer from "../components/Footer";
+// import Header from "../components/Header";
+// import Messages from "../components/Messages";
 
-const chatContainerStyle = {
-  width: "300px",
-  height: "400px",
-  border: "1px solid #ccc",
-  overflow: "hidden",
-  position: "relative",
-};
-
-const messageStyle = {
-  marginBottom: "10px",
-  padding: "8px",
-  borderRadius: "8px",
-  maxWidth: "80%",
-};
-
-const userMessageStyle = {
-  ...messageStyle,
-  backgroundColor: "#cceeff",
-  alignSelf: "flex-end",
-};
-
-const botMessageStyle = {
-  ...messageStyle,
-  backgroundColor: "#f0f0f0",
-  alignSelf: "flex-start",
-};
-
-const ChatMessage = ({ message, isUser }) => (
-  <div style={isUser ? userMessageStyle : botMessageStyle}>
-    {message.text}
-  </div>
-);
-
-const ChatInterface = () => {
+const Chat = () => {
   const [messages, setMessages] = useState([
-    { text: "Hello! How can I help you?", isUser: false },
-    { text: "Hi there! I have a question.", isUser: true },
-    { text: "Sure, feel free to ask.", isUser: false },
+    { from: "computer", text: "Hi, My Name is HoneyChat" },
+    { from: "me", text: "Hey there" },
+    { from: "me", text: "Myself Ferin Patel" },
+    {
+      from: "computer",
+      text: "Nice to meet you. You can send me message and i'll reply you with same message.",
+    },
   ]);
+  const [inputMessage, setInputMessage] = useState("");
+
+  const handleSendMessage = () => {
+    if (!inputMessage.trim().length) {
+      return;
+    }
+    const data = inputMessage;
+
+    setMessages((old) => [...old, { from: "me", text: data }]);
+    setInputMessage("");
+
+    setTimeout(() => {
+      setMessages((old) => [...old, { from: "computer", text: data }]);
+    }, 1000);
+  };
 
   return (
-    <div style={{display:'flex',width:'100%',justifyContent:'center'}}>
-    <div style={chatContainerStyle} >
-      <div style={{ padding: "10px", overflowY: "auto", height: "calc(100% - 40px)" }}>
-        {messages.map((message, index) => (
-          <ChatMessage
-            key={index}
-            message={message}
-            isUser={message.isUser}
-          />
-        ))}
-      </div>
-    </div>
-    </div>
-  );
-};
+    <div>chat</div>
+  )
+}
 
-export default ChatInterface;
+export default Chat;
