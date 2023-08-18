@@ -78,11 +78,13 @@ function Home() {
 
   };
 
+  const homeImage = 'home.png'
+
   return (
     <>
       <BlurWhiteBox
         title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
-        image={bookgirl}
+        image={homeImage}
         mainButton="Shop"
         route="/shop"
       />
