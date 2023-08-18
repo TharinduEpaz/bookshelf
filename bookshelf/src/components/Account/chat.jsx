@@ -1,50 +1,65 @@
-// import React from 'react'
-
-// function chat() {
-//   return (
-//     <div>
-
-//     </div>
-//   )
-// }
-
-// export default chat
-import { Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
-// import Divider from "../components/Divider";
-// import Footer from "../components/Footer";
-// import Header from "../components/Header";
-// import Messages from "../components/Messages";
 
-const Chat = () => {
+const chatContainerStyle = {
+  width: "600px",
+  height: "100%",
+  border: "1px solid #ccc",
+  overflow: "hidden",
+  position: "relative",
+  backgroundColor:"white",
+  borderRadius: "20px",
+  padding: "10px",
+
+
+};
+
+const messageStyle = {
+  marginBottom: "10px",
+  padding: "8px",
+  borderRadius: "8px",
+  maxWidth: "80%",
+};
+
+const userMessageStyle = {
+  ...messageStyle,
+  backgroundColor: "#cceeff",
+  alignSelf: "flex-end",
+};
+
+const botMessageStyle = {
+  ...messageStyle,
+  backgroundColor: "#f0f0f0",
+  alignSelf: "flex-start",
+};
+
+const ChatMessage = ({ message, isUser }) => (
+  <div style={isUser ? userMessageStyle : botMessageStyle}>
+    {message.text}
+  </div>
+);
+
+const ChatInterface = () => {
   const [messages, setMessages] = useState([
-    { from: "computer", text: "Hi, My Name is HoneyChat" },
-    { from: "me", text: "Hey there" },
-    { from: "me", text: "Myself Ferin Patel" },
-    {
-      from: "computer",
-      text: "Nice to meet you. You can send me message and i'll reply you with same message.",
-    },
+    { text: "Hello! How can I help you?", isUser: false },
+    { text: "Hi there! I have a question.", isUser: true },
+    { text: "Sure, feel free to ask.", isUser: false },
   ]);
-  const [inputMessage, setInputMessage] = useState("");
-
-  const handleSendMessage = () => {
-    if (!inputMessage.trim().length) {
-      return;
-    }
-    const data = inputMessage;
-
-    setMessages((old) => [...old, { from: "me", text: data }]);
-    setInputMessage("");
-
-    setTimeout(() => {
-      setMessages((old) => [...old, { from: "computer", text: data }]);
-    }, 1000);
-  };
 
   return (
-    <div>chat</div>
-  )
-}
+    <div style={{display:'flex',width:'100%',justifyContent:'center', paddingTop:100,height:"50%"} }>
+    <div style={chatContainerStyle}>
+      <div style={{ padding: "10px", overflowY: "auto", height: "calc(100% - 40px)" }}>
+        {messages.map((message, index) => (
+          <ChatMessage
+            key={index}
+            message={message}
+            isUser={message.isUser}
+          />
+        ))}
+      </div>
+    </div>
+    </div>
+  );
+};
 
-export default Chat;
+export default ChatInterface;

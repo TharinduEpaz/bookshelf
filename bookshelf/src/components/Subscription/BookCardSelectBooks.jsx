@@ -100,7 +100,7 @@ function BookCard({ name,  price, imageURL, id }) {
                                     Rs. {price}
                                 </Text>
                                 <Text as={'b'} color={'#0A3BBA'} marginLeft={3}>
-                                    Rs. {price-15}.00
+                                    Rs. {price-price*0.8}.00
                                 </Text>
 
                             </Box>

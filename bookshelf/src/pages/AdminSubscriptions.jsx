@@ -55,8 +55,7 @@ export default function AdminSubscriptions() {
   
   //Subscriptions
   const columns = [
-    "Plan",
-    "Customer Name",
+    "Customer Id",
     "Subscription plan",
     "Book",
     "Tracking ID",
@@ -65,7 +64,6 @@ export default function AdminSubscriptions() {
   const list = [
     {
       id: "c0001",
-      name: "Lorem ipsum",
       plan: "Book Reader",
       book: "Anne",
       tracking_id: "10",
@@ -73,34 +71,30 @@ export default function AdminSubscriptions() {
     },
     {
       id: "c0002",
-      name: "Lorem ipsum",
       plan: "Book Lover",
       book: "Village By The Sea",
-      tracking_id: "10",
+      tracking_id: "15",
       actions: "In-Progess",
     },
     {
       id: "c0003",
-      name: "Lorem ipsum",
       plan: "Book Worm",
       book: "Mary",
-      tracking_id: "10",
+      tracking_id: "30",
       actions: "In-Progess",
     },
     {
       id: "c0004",
-      name: "Lorem ipsum",
       plan: "Book Lover",
       book: "Anne",
-      tracking_id: "10",
+      tracking_id: "20",
       actions: "In-Progess",
     },
     {
       id: "c0005",
-      name: "Lorem ipsum",
       plan: "Book Lover",
       book: "Sheli",
-      tracking_id: "10",
+      tracking_id: "17",
       actions: "In-Progess",
     },
   ];

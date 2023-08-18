@@ -56,6 +56,7 @@ function Navbar() {
       const res = await axios.get(logoutUrl);
       setUser(null);
       console.log(res.data);
+      localStorage.removeItem("cartItems");
 
       return toast({
         title: "Successfully logged out",

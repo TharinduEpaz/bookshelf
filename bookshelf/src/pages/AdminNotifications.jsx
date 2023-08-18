@@ -1,11 +1,14 @@
 import React from 'react'
 import AdminSidebar from "../components/Admin/AdminSidebar";
 import AdminNotificationsTable from '../components/Admin/AdminNotificationsTable';
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 import {
     Box, 
     Flex,
-    Heading
+    Heading,
+    Text,
+    Stack
 } from '@chakra-ui/react'
 
 export default function AdminNotifications() {
@@ -41,6 +44,59 @@ export default function AdminNotifications() {
       p={5}
     >
 
+<Heading
+        fontSize={'20px'} 
+        color={'#000'} 
+        fontFamily={'Montserrat'} 
+        fontStyle={'normal'} 
+        fontWeight={'800'} 
+        lineHeight={'normal'}
+        //textAlign={'center'}
+        mt={'10px'}
+        mb={'20px'}
+      >
+        Notifications
+      </Heading>
+
+
+      <Stack spacing={4}>
+
+  < Card variant="filled" size={'sm'} h={10}>
+    <CardBody>
+      <Text fontSize="md" color="black.500">
+        12 new orders to checkout
+      </Text>
+    </CardBody>
+  </Card>
+
+  < Card variant="filled" size={'sm'} h={10}>
+    <CardBody>
+      <Text fontSize="md" color="black.500">
+        23 new subscription requests 
+      </Text>
+    </CardBody>
+  </Card>
+
+  < Card variant="filled" size={'sm'} h={10}>
+    <CardBody>
+      <Text fontSize="md" color="black.500">
+        14 new donation requests 
+      </Text>
+    </CardBody>
+  </Card>
+
+
+  < Card variant="filled" size={'sm'} h={10}>
+    <CardBody>
+      <Text fontSize="md" color="black.500">
+        45 new sharing requests 
+      </Text>
+    </CardBody>
+  </Card>
+</Stack>
+
+
+
   <Flex
       gap={5}
       alignItems={"center"}
@@ -61,20 +117,11 @@ export default function AdminNotifications() {
          mr={5}
          p={10}
       >
-      <Heading
-        fontSize={'20px'} 
-        color={'#000'} 
-        fontFamily={'Montserrat'} 
-        fontStyle={'normal'} 
-        fontWeight={'800'} 
-        lineHeight={'normal'}
-        //textAlign={'center'}
-        mt={'10px'}
-        mb={'20px'}
-      >
-        Upcoming orders
-      </Heading>
-      <AdminNotificationsTable/>
+   
+       <AdminNotificationsTable/> 
+
+
+
       </Box>
 
 

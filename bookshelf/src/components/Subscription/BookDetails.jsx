@@ -14,7 +14,7 @@ function Shop() {
             title: "The Midnight Library",
             author: "Matt Haig",
             image: "https://images-na.ssl-images-amazon.com/images/I/81h2gWPTYJL.jpg",
-            price: "14.99",
+            price: "1499",
             rating: 4,
         },
         
