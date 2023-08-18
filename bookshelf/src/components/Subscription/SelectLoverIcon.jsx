@@ -14,6 +14,7 @@ function SelectLoverIcon() {
                     "http://localhost:3000/api/v1/subscriptions"
                 );
                 setSubscriptionType(response.data);
+                console.log(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
@@ -40,12 +41,12 @@ function SelectLoverIcon() {
                 <GridItem textAlign={"start"}>
                     {/* First row in the second column */}
                     <Text fontWeight="500" fontSize="24">
-                        {subscriptionType[2].firstName}
+                        {subscriptionType[0].firstName}
                     </Text>
 
                     {/* Second row in the second column */}
                     <Text fontSize="36" fontWeight="900">
-                        {subscriptionType[2].LastName}
+                        {subscriptionType[0].LastName}
                     </Text>
                 </GridItem>
             </Grid>

@@ -10,17 +10,7 @@ import {
     useDisclosure,
 
 } from "@chakra-ui/react";
-import { useState } from 'react';
-import {
-    Text, Box, Button, AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,
-    useDisclosure,
 
-} from "@chakra-ui/react";
 import { useState } from 'react';
 
 function RevokeSubscription() {
@@ -44,7 +34,7 @@ function RevokeSubscription() {
                 onClick={onOpen} >
                 Revoke
                 marginLeft={5}
-                onClick={onOpen} >
+                onClick={onOpen} 
                 Revoke
             </Button>
             <AlertDialog

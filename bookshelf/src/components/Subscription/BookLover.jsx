@@ -125,10 +125,10 @@ function BookReder() {
 								{subscriptionType.length > 0 ? (
 									<>
 										<Text fontWeight="500" fontSize="3xl">
-											{subscriptionType[2].firstName}
+											{subscriptionType[0].firstName}
 										</Text>
 										<Text fontSize="4xl" fontWeight="900">
-											{subscriptionType[2].LastName}
+											{subscriptionType[0].LastName}
 										</Text>
 									</>
 								) : (
@@ -150,9 +150,9 @@ function BookReder() {
 								/>
 								{subscriptionType.length > 0 ? (
 									<Text as={"b"}>
-										{subscriptionType[2].book_count} book
+										{subscriptionType[0].book_count} book
 										every for{" "}
-										{subscriptionType[2].time_period}
+										{subscriptionType[0].time_period}
 									</Text>
 								) : (
 									<Text> </Text>
@@ -202,9 +202,9 @@ function BookReder() {
 										<Text fontSize={18}>
 											Are you sure you want to Select {subscriptionType.length > 0 ? (
 												<Text as={'b'} fontSize={20}>
-													{subscriptionType[2].firstName}
+													{subscriptionType[0].firstName}
 													{" "}
-													{subscriptionType[2].LastName} {" "}
+													{subscriptionType[0].LastName} {" "}
 												</Text>
 
 											) : (
