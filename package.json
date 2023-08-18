@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.19"
+    "chart.js": "^4.3.0"
   }
 }

@@ -16,4 +16,3 @@ router.route("/subscriptionComplaint").post(controller.addSubscriptionCompliant)
 
 
 module.exports = router;
-

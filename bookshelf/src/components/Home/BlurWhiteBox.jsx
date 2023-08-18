@@ -38,11 +38,11 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
           <Heading
             fontWeight={"100"}
             w={"100%"}
-            lineHeight={"50px"}
+            lineHeight={{lg:'50px',sm:'30px'}}
             ml={5}
             mt={5}
             color={"blue.700"}
-            fontSize={{lg:'2.5rem', sm:'2xl'}}
+            fontSize={{lg:'2.0rem', sm:'xl'}}
           >
             {title}
           </Heading>

@@ -17,8 +17,13 @@ const addBook = async (req, res, next) => {
       genre,
       language,
       featuredCategory,
+
     } = req.body;
     
+    if (!title || !price || !author || !ISBN || !description || !typesAvailable || !genre) {
+      throw new CustomError.BadRequestError("Please provide all required details");
+    }
+
     const book = await bookModel.create({
       title,
       price,

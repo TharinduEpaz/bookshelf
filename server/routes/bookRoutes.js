@@ -12,15 +12,15 @@ const controller = require('../controllers/bookController')
 
 router.route('/').get(controller.getAllBooks);
 
-router.route('/').post(authenticateUser,authPermissions('admin'), controller.addBook);
+router.route('/').post(controller.addBook);
 
-router.route('/uploadImage').post(authenticateUser,authPermissions('admin'), controller.uploadImage);
+router.route('/uploadImage').post(controller.uploadImage);
 
 router.get('/:id', controller.getSingleBook);
 
-router.route('/:id', ).patch(authenticateUser,authPermissions('admin'), controller.updateBook);
+router.route('/:id', ).patch(controller.updateBook);
 
-router.route('/:id', ).delete(authenticateUser,authPermissions('admin'), controller.deleteBook);
+router.route('/:id', ).delete(controller.deleteBook);
 
 
 

@@ -20,10 +20,10 @@ const QuantitySelect = (props) => {
 export const CartItem = (props) => {
   const {
     isGiftWrapping,
-    name,
+    title,
     description,
-    quantity,
-    imageUrl,
+    amount,
+    image,
     currency,
     price,
     onChangeQuantity,
@@ -39,9 +39,9 @@ export const CartItem = (props) => {
       align="center"
     >
       <CartProductMeta
-        name={name}
+        name={title}
         description={description}
-        image={imageUrl}
+        image={image}
         isGiftWrapping={isGiftWrapping}
       />
 
@@ -56,12 +56,12 @@ export const CartItem = (props) => {
         
       >
         <QuantitySelect
-          value={quantity}
+          value={amount}
           onChange={(e) => {
             onChangeQuantity?.(+e.currentTarget.value)
           }}
         />
-        <PriceTag price={price} currency={currency} />
+        <PriceTag price={price} currency={'LKR'} />
         <CloseButton aria-label={`Delete ${name} from cart`} onClick={onClickDelete} />
       </Flex>
 
@@ -80,7 +80,7 @@ export const CartItem = (props) => {
           Delete
         </Link>
         <QuantitySelect
-          value={quantity}
+          value={amount}
           onChange={(e) => {
             onChangeQuantity?.(+e.currentTarget.value)
           }}

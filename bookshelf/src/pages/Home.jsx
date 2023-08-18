@@ -9,7 +9,6 @@ import { ImBooks } from "react-icons/im";
 import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
 
-
 function Home() {
   const itemBoxDetails = {
     bestSellers: {
@@ -75,13 +74,7 @@ function Home() {
       price: "14.99",
       rating: 4.9,
     },
-    book6: {
-      title: "The Survivors",
-      author: "Jane Harper",
-      image: "https://m.media-amazon.com/images/I/51Q1qQ9YJTL.jpg",
-      price: "14.99",
-      rating: 4.5,
-    },
+  
 
   };
 

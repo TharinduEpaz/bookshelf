@@ -18,39 +18,36 @@ import {
   SkeletonCircle,
   SkeletonText,
   CircularProgress,
-
+  
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import axios from "axios";
-import { userContext } from "../context/userContext"
+import {userContext} from "../context/userContext"
 
 export default function SimpleCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading,setIsLoading] = useState(false);
+  const [error,setError] = useState(null);
 
-  const { user, setUser } = useContext(userContext);
+  const {user,setUser} = useContext(userContext);
 
   const loginUrl = "http://localhost:3000/api/v1/login";
 
-
-
   const login = async (e) => {
     setIsLoading(true);
-    console.log(email, password);
+    console.log(email,password);
     e.preventDefault();
-
+    
     try {
-
+      
       const response = await axios.post(loginUrl, {
         email: email,
         password: password
-      }, {
+      },{
         headers: {
           'Content-Type': 'application/json'
-        }
-      });
+    }});
 
       setUser(response.data);
       console.log(response.data.user);
@@ -59,47 +56,47 @@ export default function SimpleCard() {
       setIsLoading(false);
       //redirect to home route
       window.location.href = "/";
-
+      
     } catch (error) {
       // console.log(error.response.data.msg);
 
-      error.response ? setError(error.response.data.msg) : setError("Something went wrong");
+      error.response ? setError(error.response.data.msg) : setError("Something went wrong");  
       setIsLoading(false);
-
+      
     }
   };
 
 
 
 
-  if (isLoading) {
+  if(isLoading){
     return (
       <Flex
-        minH={'100vh'}
-
-        justify={'center'}
+      minH={'100vh'}
+      
+      justify={'center'}
       >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'} textAlign={'center'}>
-              Sign up
-            </Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool features ✌
-            </Text>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
-            <Flex alignItems={'center'} justifyContent={'center'}>
-              <CircularProgress isIndeterminate color='green.300' />
-
-            </Flex>
-          </Box>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Sign In
+          </Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool features ✌️
+          </Text>
         </Stack>
-      </Flex>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
+          <Flex alignItems={'center'} justifyContent={'center'}>
+          <CircularProgress isIndeterminate color='green.300' />
+            
+          </Flex>
+        </Box>
+      </Stack>
+    </Flex>
     )
   }
 
@@ -109,7 +106,7 @@ export default function SimpleCard() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌
+            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
           </Text>
         </Stack>
         <Box
@@ -119,9 +116,9 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
-            {error && <Alert status="error"> <AlertIcon /> {error}</Alert>}
+           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
             <form onSubmit={login}>
-
+          
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
                 <Input

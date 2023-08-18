@@ -7,6 +7,7 @@ const subscriptionComplaint = sequelize.define(
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true, 
+			primaryKey: true, 
 			autoIncrement: true,
 			allowNull: false,
 		},

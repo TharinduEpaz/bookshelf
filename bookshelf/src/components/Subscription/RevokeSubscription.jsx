@@ -11,6 +11,17 @@ import {
 
 } from "@chakra-ui/react";
 import { useState } from 'react';
+import {
+    Text, Box, Button, AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    useDisclosure,
+
+} from "@chakra-ui/react";
+import { useState } from 'react';
 
 function RevokeSubscription() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -32,7 +43,36 @@ function RevokeSubscription() {
                 marginLeft={5}
                 onClick={onOpen} >
                 Revoke
+                marginLeft={5}
+                onClick={onOpen} >
+                Revoke
             </Button>
+            <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Delete Customer
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                            Are you sure? You want to remove your subscription.
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme='red' onClick={onClose} ml={3}>
+                                Revoke
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
             <AlertDialog
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
