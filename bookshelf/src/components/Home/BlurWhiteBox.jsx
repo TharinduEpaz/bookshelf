@@ -36,7 +36,7 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
       >
         <GridItem rowSpan={3} colSpan={3}>
           <Heading
-            fontWeight={"100"}
+            fontWeight={"600"}
             w={"100%"}
             lineHeight={{lg:'50px',sm:'30px'}}
             ml={5}

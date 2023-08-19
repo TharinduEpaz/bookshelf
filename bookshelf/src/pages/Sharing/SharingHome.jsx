@@ -37,11 +37,12 @@ function SharingHome() {
             icon: <ImBooks size={25} color="#FF9798" />,
         },
     };
+    const sharingImage = 'sharingHome.png'
     return (
         <>
             <BlurWhiteBox
                 title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
-                image={books}
+                image={sharingImage}
             />
             <Center>
                 <Heading
