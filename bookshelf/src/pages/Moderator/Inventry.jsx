@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Box,
   Button,
@@ -25,69 +26,49 @@ import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
 import DateFilter from "../../components/Moderator/DateFilter";
 import SearchPanel from "../../components/Moderator/SearchPanel";
+import { useEffect, useState } from "react";
 
 export default function Inventry() {
   const columns = [
     "Book ID",
     "Book Name",
+    "Author",
     "Genre",
     "Unit Price",
     "In-Stock",
-    "Action",
-    "Status",
   ];
-  const list = [
-    {
-      id: "n0001",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0002",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0003",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0004",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-    {
-      id: "n0005",
-      name: "Lorem ipsum",
-      category: "consectetur adipiscing elit",
-      price: "Rs.2990.00",
-      stock: "10",
-      action: "Published",
-      status: "Published",
-    },
-  ];
+
+
+  const [list, setBookList] = useState([]);
+
+  const getBooks = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/books")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((book) => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        unitPrice: book.price,
+        inStock: book.inventory,
+      }));
+      
+      setBookList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getBooks();
+  }, [])
 
   return (
     <>
       <Box
-        height={"100%"}
+        height="100%"
         m={"auto"}
         mt={10}
         w="80%"

@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -22,61 +22,52 @@ import SearchPanel from "../../components/Moderator/SearchPanel";
 
 export default function Orders() {
   const columns = [
+    "Order ID",
     "Customer ID",
-    "Customer Name",
     "Order date",
     "Order type",
-    "Tracking ID",
     "Total price",
     "Status",
   ];
-  const list = [
-    {
-      id: "c0001",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0002",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0003",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0004",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-    {
-      id: "c0005",
-      name: "Lorem ipsum",
-      date: "31.07.2023",
-      type: "Home delivery",
-      tracking_id: "10",
-      price: "Rs.2990.00",
-      status: "In-Progess",
-    },
-  ];
+
+  const[list, setOrderList] = useState([]);
+
+  const getOrders = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/orders")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((order) => ({
+        id: order.id,
+        buyerId: order.buyer_id,
+        orderDate: order.orderDate,
+        orderType: order.orderType,
+        totalPrice: order.totalPrice,
+        status: order.orderStatus
+      }));
+
+      setOrderList(filteredData);
+
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  // const [count, setCount] = useState(0);
+  // const getCount = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/v1/orders/count")
+  //     const jsonData = await response.json()
+  //     setCount(jsonData[0].count);
+
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <>
@@ -138,7 +129,7 @@ export default function Orders() {
                       </Select>
                     </Flex>
                     <StatGroup gap={100}>
-                      <StatCard lable="All Orders" value="100" />
+                      <StatCard lable="All Orders" value={"100"} />
                       <StatCard
                         lable="Pending"
                         value="20"
