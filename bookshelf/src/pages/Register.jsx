@@ -19,12 +19,16 @@ import {
   SkeletonText,
   Spinner,
   CircularProgress,
-} from "@chakra-ui/react";
 
-import { useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { Fa500Px } from "react-icons/fa";
-import axios from "axios";
+  
+
+
+
+} from '@chakra-ui/react';
+
+import { useState } from 'react';
+import { Fa500Px } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);

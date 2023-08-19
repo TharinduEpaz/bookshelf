@@ -31,7 +31,6 @@ const createOrder = async (req, res, next) => {
             totalPrice,
             buyer_id,
             orderDate,
-            orderStatus,
         });
         res.status(statusCodes.StatusCodes.CREATED).json(order);
     } catch (err) {
