@@ -56,9 +56,25 @@ const countOrders = async (req, res, next) => {
     }
 }
 
+//create order
+const createOrder = async (req, res, next) => {
+    try {
+        const { orderDate, orderStatus, totalPrice, buyer_id } = req.body;
+        const order = await orderModel.create({
+            totalPrice,
+            buyer_id,
+            orderDate,
+        });
+        res.status(statusCodes.StatusCodes.CREATED).json(order);
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 module.exports = {
     addOrder,
     getAllOrders,
-    countOrders
+    countOrders,
+    createOrder
 };

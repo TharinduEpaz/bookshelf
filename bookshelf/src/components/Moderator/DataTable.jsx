@@ -13,12 +13,15 @@ import {
   Text,
   Icon,
   Spacer,
+  Badge,
 } from "@chakra-ui/react";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function DataTable({ list, columnNames }) {
-  const [itemsPerPage, setItemsPerPage] = useState(2); // Set initial items per page to 2
+import Inventory_A from "./Actions/Inventory_A";
+
+export default function DataTable({ list, columnNames, actions }) {
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Set initial items per page to 2
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -52,6 +55,8 @@ export default function DataTable({ list, columnNames }) {
             {columnNames.map((headerItem, index) => (
               <Td key={index}>{headerItem}</Td>
             ))}
+            {/* <Td>Status</Td> */}
+            <Td>Action</Td>
           </Tr>
         </Thead>
 
@@ -65,6 +70,12 @@ export default function DataTable({ list, columnNames }) {
                 {Object.values(Obj).map((value, index2) => (
                   <Td key={index2}>{value}</Td>
                 ))}
+                {/* <Td>
+                  <Badge colorScheme="green">
+                    Active
+                  </Badge>
+                </Td> */}
+                {actions === "inventory" && <Inventory_A id={Obj.id}/>}
               </Tr>
             ))
           )}
@@ -79,8 +90,9 @@ export default function DataTable({ list, columnNames }) {
           value={itemsPerPage}
           onChange={handleItemsPerPageChange}
         >
-          <option value="2">2</option>
-          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
         </Select>
         <Text fontSize={"sm"} mr={5}>
           Items per page
@@ -98,7 +110,7 @@ export default function DataTable({ list, columnNames }) {
         <Text fontSize={"sm"}>
           Page {currentPage} of {totalPages}
         </Text>
-        
+
         <Icon
           as={BiChevronRight}
           boxSize={6}

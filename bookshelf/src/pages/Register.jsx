@@ -117,9 +117,7 @@ export default function SignupCard() {
           p={8}>
           <Stack spacing={4}>
           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
-
           <form onSubmit={register}>
-
             <HStack>
               <Box>
                 <FormControl id="firstName" isRequired>

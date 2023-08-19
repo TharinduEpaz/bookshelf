@@ -30,14 +30,14 @@ function SideMenu() {
         </Text>
       </Center>
 
-      <NavItem icon={BiHomeAlt} title="DashBoard" link="/moderator/dashboard" />
-      <NavItem icon={BiBell} title="Notification" link="/moderator/notifications" />
-      <NavItem icon={BiBuilding} title="Inventry" link="/moderator/inventry" />
-      <NavItem icon={BiCollection} title="Orders" link="/moderator/orders" />
-      <NavItem icon={BiGift} title="Donations" link="/moderator/donations" />
-      <NavItem icon={BiMoney} title="Subscriptions" link="/moderator/subscriptions" />
-      <NavItem icon={BiShareAlt} title="Book Sharing" link="/moderator/booksharing" />
-      <NavItem icon={SettingsIcon} title="Setting" link="/moderator/setting" />
+      <NavItem icon={BiHomeAlt} title="DashBoard" link="dashboard" />
+      <NavItem icon={BiBell} title="Notification" link="notifications" />
+      <NavItem icon={BiBuilding} title="Inventory" link="inventory" />
+      <NavItem icon={BiCollection} title="Orders" link="orders" />
+      <NavItem icon={BiGift} title="Donations" link="donations" />
+      <NavItem icon={BiMoney} title="Subscriptions" link="subscriptions" />
+      <NavItem icon={BiShareAlt} title="Book Sharing" link="booksharing" />
+      <NavItem icon={SettingsIcon} title="Setting" link="setting" />
     </Box>
   );
 }

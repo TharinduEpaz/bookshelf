@@ -17,6 +17,7 @@ import OrganizationsFilter from "./Filters/OrganizationsFilter";
 import DonationsFilter from "./Filters/DonationFilter";
 import InventoryFilter from "./Filters/InventoryFilter";
 import OrdersFilter from "./Filters/OrdersFilter";
+import BookSharingFilter from "./Filters/BookSharingFilter";
 
 
 
@@ -41,6 +42,7 @@ export default function SearchPanel({name, filter}) {
           {filter === "orders" && <OrdersFilter />}
           {filter === "organizations" && <OrganizationsFilter />}
           {filter === "donations" && <DonationsFilter />}
+          {filter === "book_sharing" && <BookSharingFilter />}
           <DateFilter /> {/*  Date Filter */}
         </Flex>
       </Flex>
