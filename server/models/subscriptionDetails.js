@@ -1,8 +1,8 @@
 const sequelize = require("./index.js").sequelize;
 const { DataTypes } = require("sequelize");
 
-const details = sequelize.define(
-	"details",
+const mySubscriptionDetails = sequelize.define(
+	"mySubscriptionDetails",
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -14,14 +14,10 @@ const details = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
-		subscriptionDetails: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
 	},
 	{}
 );
 
-// details.sync({ alter: true });
+// mySubscriptionDetails.sync({ alter: true });
 
-module.exports = details;
+module.exports = mySubscriptionDetails;

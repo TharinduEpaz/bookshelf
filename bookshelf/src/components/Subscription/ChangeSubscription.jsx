@@ -26,21 +26,40 @@ export default function ChangeSubscription() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] = useState(null);
     const [showOtherSubscriptionPopup, setShowOtherSubscriptionPopup] = useState(false);
-
-    useEffect(() => {
-        const getSubscription = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:3000/api/v1/subscriptions"
-                );
-                setSubscriptionType(response.data);
+    const [subscriptionDetails, setSubscriptionDetails] = useState([]);
+    // useEffect(() => {
+    //     const getSubscription = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 "http://localhost:3000/api/v1/subscriptions"
+    //             );
+    //             setSubscriptionType(response.data);
                
                 
+    //         } catch (error) {
+    //             console.error("Error fetching subscription:", error);
+    //         }
+    //     };
+    //     getSubscription();
+    // }, []);
+
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            const userId ="d384f58e-ee9a-48eb-8c96-141e66f6af60"
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {userId:userId}
+                );
+                console.log("hello");
+                setSubscriptionDetails(response);
+
+
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
         };
-        getSubscription();
+        getCurrentSubscription();
     }, []);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,7 +123,8 @@ export default function ChangeSubscription() {
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
                     </Text>
-                    {currentSubscription}
+                    {/* {currentSubscription} */}
+                    {subscriptionDetails}
                 </Box>
                 <Button onClick={onOpen}>Change Subscription</Button>
                 <AlertDialog

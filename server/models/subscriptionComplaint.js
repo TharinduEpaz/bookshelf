@@ -15,14 +15,11 @@ const subscriptionComplaint = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
-		firstName: {
+		name: {
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
-		lastName: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
+		
 		complaint: {
 			type: DataTypes.STRING,
 			allowNull: true,
@@ -31,6 +28,6 @@ const subscriptionComplaint = sequelize.define(
 	{}
 );
 
-//subscriptionComplaint.sync({ alter: true });
+// subscriptionComplaint.sync({ alter: true });
 
 module.exports = subscriptionComplaint;

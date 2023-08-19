@@ -14,7 +14,7 @@ function SelectLoverIcon() {
                     "http://localhost:3000/api/v1/subscriptions"
                 );
                 setSubscriptionType(response.data);
-                console.log(response.data);
+                //console.log(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
