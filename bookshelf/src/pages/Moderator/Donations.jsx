@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Card,
@@ -18,15 +17,14 @@ import {
   TabPanel,
   TabPanels,
 } from "@chakra-ui/react";
-
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import React from "react";
+import SideMenu from "../../components/Moderator/SIdeMenu";
+import StatCard from "../../components/Moderator/StatCard";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
-import AdminStatCard from "../components/Admin/AdminStatCard";
-import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import DataTable from "../../components/Moderator/DataTable";
+import SearchPanel from "../../components/Moderator/SearchPanel";
 
-
-export default function AdminDonations() {
-
+export default function Donations() {
   const org_columns = [
     "ID",
     "Name",
@@ -39,19 +37,19 @@ export default function AdminDonations() {
   const org_list = [
     {
       id: "n0001",
-      name: "Apeksha Hosital",
+      name: "Lorem ipsum",
       Date: "01.02.2023",
-      email: "apeksha@gmail.com",
-      contact_number: "0112245321",
+      email: "aaa@gmail.com",
+      contact_number: "0111111111",
       status: "Registered",
       action: "Registered",
     },
     {
-      id: "n0002",
-      name: "Nanasa",
-      Date: "11.03.2023",
-      email: "nanasa@gmail.com",
-      contact_number: "0112775321",
+      id: "n0001",
+      name: "Lorem ipsum",
+      Date: "01.02.2023",
+      email: "aaa@gmail.com",
+      contact_number: "0111111111",
       status: "Registered",
       action: "Registered",
     },
@@ -67,101 +65,57 @@ export default function AdminDonations() {
   ];
   const don_list = [
     {
-      id: "d0001",
-      name: "Mahir Singh",
+      id: "n0001",
+      name: "Lorem ipsum",
       Date: "01.02.2023",
       units: "10",
-      org: "Diwasa Center",
+      org: "lorem ipsum",
       action: "Action",
     },
     {
-      id: "d0002",
-      name: "Gagani Hirusha",
-      Date: "21.02.2023",
-      units: "23",
-      org: "Dikhena Central College",
-      action: "Action",
-    },
-    {
-      id: "d0003",
-      name: "Miyu Sithara",
-      Date: "01.06.2023",
-      units: "34",
-      org: "Arana ",
-      action: "Action",
-    },
-    {
-      id: "d0004",
-      name: "Kimuth",
-      Date: "01.04.2023",
-      units: "67",
-      org: "Apeksha Hospital",
-      action: "Action",
-    },
-    {
-      id: "d0005",
-      name: "Sahan Ranwala",
+      id: "n0001",
+      name: "Lorem ipsum",
       Date: "01.02.2023",
-      units: "56",
-      org: "Diyatha ",
-      action: "Action",
-    },
-    {
-      id: "d0006",
-      name: "Shanu Silva",
-      Date: "01.05.2023",
-      units: "70",
-      org: "Museum",
+      units: "10",
+      org: "lorem ipsum",
       action: "Action",
     },
   ];
 
   return (
-    
-    <Box
-    m={"auto"}
-    mt={10}
-    w="80%"
-    h="100%"
-    minH={800}
-    borderRadius="6px"
-    bg='rgba(255, 255, 255, 0.90)'
-    boxShadow="sm"
-    bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
-    // filter="blur(8px)"
-    backdropFilter="blur(14.5px)"
-    p={4}
-
-  >
-
-  <AdminSidebar />
-
-  <div>
-    <Box
-      borderColor={'rgba(0, 0, 0, 0.20)'}
-      borderWidth={'0.5px'}
-      borderRadius={'10px'}
-      h="100%"
-      w="76%"
-      ml={270}
-      mt={1}
-      p={5}
-    >
-
-  <Flex
-      gap={5}
-      alignItems={"center"}
-      justifyContent={"center"}
-      w={"100%"} 
-      flexWrap={"wrap"}
-    >  
-
- </Flex>
-
- <Box p={10}>
+    <>
+      <Box
+        height={"100%"}
+        m={"auto"}
+        mt={10}
+        w="80%"
+        borderRadius="md"
+        boxShadow="sm"
+        bgColor={"white"}
+        // bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(8px)"
+        p={10}
+      >
+        <Grid templateColumns="repeat(5, 1fr)" gap={2} h={"100%"}>
+          <GridItem
+            colSpan={1}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <SideMenu />
+          </GridItem>
+          <GridItem
+            colSpan={4}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Donations Summory
+                  Inventry Summory
                 </Text>
                 <Spacer />
                 <Link to="/moderator/addNewBook">
@@ -186,9 +140,9 @@ export default function AdminDonations() {
                   <CardBody>
                     <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
                     <StatGroup gap={50}>
-                      <AdminStatCard lable="Organizations" value="100" />
-                      <AdminStatCard lable="Pending Requests" value="10" />
-                      <AdminStatCard
+                      <StatCard lable="Organizations" value="100" />
+                      <StatCard lable="Pending Requests" value="10" />
+                      <StatCard
                         color={"red"}
                         lable="Rejected Requests"
                         value="0"
@@ -209,8 +163,8 @@ export default function AdminDonations() {
                   <CardBody>
                     <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
                     <StatGroup gap={50}>
-                      <AdminStatCard lable="Donations" value="100" />
-                      <AdminStatCard lable="Amount" value="100" />
+                      <StatCard lable="Donations" value="100" />
+                      <StatCard lable="Amount" value="100" />
                     </StatGroup>
                   </CardBody>
                 </Card>
@@ -226,31 +180,22 @@ export default function AdminDonations() {
                   </TabList>
                   <TabPanels>
                     <TabPanel>
-
-                      {/* <SearchPanel name="Organizations" filter="organizations"/> */}
-
+                      <SearchPanel name="Organizations" filter="organizations"/>
                       <Spacer mt={5} />
-
-                      <AdminDtataTable list={org_list} columnNames={org_columns} />
+                      <DataTable list={org_list} columnNames={org_columns} />
                     </TabPanel>
                     <TabPanel>
-
-                    {/* <SearchPanel name="Donations" filter="donations"/> */}
-
+                    <SearchPanel name="Donations" filter="donations"/>
                       <Spacer mt={5} />
-                      <AdminDtataTable list={don_list} columnNames={don_columns} />
-
+                      <DataTable list={don_list} columnNames={don_columns} />
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
               </Box>
             </Box>
-
- </Box>
- </div>
-
-  </Box>
-
-
-  )
+          </GridItem>
+        </Grid>
+      </Box>
+    </>
+  );
 }

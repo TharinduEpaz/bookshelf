@@ -6,7 +6,8 @@ const order = sequelize.define('order', {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        defaultValue: sequelize.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false
     },
     orderDate: {
         type: DataTypes.DATE,

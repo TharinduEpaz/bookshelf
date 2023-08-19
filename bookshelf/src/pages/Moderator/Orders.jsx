@@ -1,41 +1,36 @@
-import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
-
+import {React, useEffect, useState } from "react";
 import {
-    Box, 
-    Flex,
-    Card,
-    CardBody,
-    Icon,
-    Spacer,
-    Text,
-    StatGroup,
-    Select,
-} from '@chakra-ui/react'
-
+  Box,
+  Card,
+  CardBody,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  Spacer,
+  Text,
+  StatGroup,
+  Select,
+} from "@chakra-ui/react";
 import {
   BiBookOpen,
 } from "react-icons/bi";
+import SideMenu from "../../components/Moderator/SIdeMenu";
+import StatCard from "../../components/Moderator/StatCard";
+import DataTable from "../../components/Moderator/DataTable";
+import SearchPanel from "../../components/Moderator/SearchPanel";
 
-//import { Link } from "react-router-dom";
-//import DateFilter from "../../components/Moderator/DateFilter";
-//import SearchPanel from "../../components/Moderator/SearchPanel";
-import AdminStatCard from '../components/Admin/AdminStatCard';
-import AdminDtataTable from '../components/Admin/AdminDtataTable';
-import { useEffect, useState } from "react";
-
-export default function AdminOrders() {
-
+export default function Orders() {
   const columns = [
     "Order ID",
-    "Date",
-    "Total Price (Rs.)",
+    "Customer ID",
+    "Order date",
+    "Order type",
+    "Total price",
     "Status",
-    "Buyer Id",
   ];
 
-
-  const [list, setOrderList] = useState([]);
+  const[list, setOrderList] = useState([]);
 
   const getOrders = async () => {
     try {
@@ -44,71 +39,70 @@ export default function AdminOrders() {
 
       const filteredData = jsonData.map((order) => ({
         id: order.id,
-        orderDate: new Date(order.orderDate).toLocaleDateString(),
-        totalPrice: order.totalPrice.toLocaleString(),
-        orderStatus: order.orderStatus,
-        buyer_id: order.buyer_id
+        buyerId: order.buyer_id,
+        orderDate: order.orderDate,
+        orderType: order.orderType,
+        totalPrice: order.totalPrice,
+        status: order.orderStatus
       }));
-      
+
       setOrderList(filteredData);
+
     } catch (err) {
       console.error(err.message);
     }
   }
 
+  // const [count, setCount] = useState(0);
+  // const getCount = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/v1/orders/count")
+  //     const jsonData = await response.json()
+  //     setCount(jsonData[0].count);
+
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
+
   useEffect(() => {
     getOrders();
-  }, [])
-
+  }, []);
 
   return (
-   
-    <Box
-    m={"auto"}
-    mt={10}
-    w="80%"
-    h="100%"
-    minH={800}
-    borderRadius="6px"
-    bg='rgba(255, 255, 255, 0.90)'
-    boxShadow="sm"
-    bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
-    // filter="blur(8px)"
-    backdropFilter="blur(14.5px)"
-    p={4}
-
-  >
-
-  <AdminSidebar />
-
-  <div>
-    <Box
-      borderColor={'rgba(0, 0, 0, 0.20)'}
-      borderWidth={'0.5px'}
-      borderRadius={'10px'}
-      h="100%"
-      w="76%"
-      ml={270}
-      mt={1}
-      p={5}
-      mb={40}
-    >
-
-  <Flex
-      gap={5}
-      alignItems={"center"}
-      justifyContent={"center"}
-      w={"100%"} 
-      flexWrap={"wrap"}
-    >  
-
- </Flex>
-
-    
- <Box p={10}>
+    <>
+      <Box
+        height={"100%"}
+        m={"auto"}
+        mt={10}
+        w="80%"
+        borderRadius="md"
+        boxShadow="sm"
+        bgColor={"white"}
+        // bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(8px)"
+        p={10}
+      >
+        <Grid templateColumns="repeat(5, 1fr)" gap={2} h={"100%"}>
+          <GridItem
+            colSpan={1}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <SideMenu />
+          </GridItem>
+          <GridItem
+            colSpan={4}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Order Summary
+                  Order Summory
                 </Text>
               </Flex>
 
@@ -135,20 +129,20 @@ export default function AdminOrders() {
                       </Select>
                     </Flex>
                     <StatGroup gap={100}>
-                      <AdminStatCard lable="All Orders" value="100" />
-                      <AdminStatCard
+                      <StatCard lable="All Orders" value={"100"} />
+                      <StatCard
                         lable="Pending"
                         value="20"
                         type="increase"
                         percentage="80"
                       />
-                      <AdminStatCard
+                      <StatCard
                         lable="Completed"
                         value="70"
                         type="increase"
                         percentage="80"
                       />
-                      <AdminStatCard
+                      <StatCard
                         color={"red"}
                         lable="Canceled"
                         value="0"
@@ -163,23 +157,16 @@ export default function AdminOrders() {
               <Spacer mt={10} />
 
               <Box>
-                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+                <SearchPanel name={"Customer Orders"} filter={"orders"} />
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
-
-
-
+                <DataTable list={list} columnNames={columns} />
               </Box>
             </Box>
-
-
- </Box>
- </div>
-
-  </Box>
-
-
-  )
+          </GridItem>
+        </Grid>
+      </Box>
+    </>
+  );
 }

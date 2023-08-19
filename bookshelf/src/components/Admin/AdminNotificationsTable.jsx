@@ -21,7 +21,7 @@ export default function AdminNotificationsTable() {
         <Tr>
           <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>Name</Th>
           <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>Price (Rs)</Th>
-          <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}> Orders</Th>
+          <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>New Orders</Th>
         </Tr>
       </Thead>
       <Tbody>

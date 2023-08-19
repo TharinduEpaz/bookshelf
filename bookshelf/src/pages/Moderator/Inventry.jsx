@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
   Text,
   StatGroup,
 } from "@chakra-ui/react";
-
 import {
   BiBookOpen,
   BiErrorCircle,
@@ -20,21 +20,17 @@ import {
   BiPlus,
   BiSearchAlt,
 } from "react-icons/bi";
-
-import AdminSidebar from "../components/Admin/AdminSidebar";
-import AdminStatCard from "../components/Admin/AdminStatCard";
+import SideMenu from "../../components/Moderator/SIdeMenu";
+import StatCard from "../../components/Moderator/StatCard";
+import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
-import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import DateFilter from "../../components/Moderator/DateFilter";
+import SearchPanel from "../../components/Moderator/SearchPanel";
 import { useEffect, useState } from "react";
 
-//import SearchPanel from "../../components/Moderator/SearchPanel";
-
-
-
-export default function AdminInventory() {
-
+export default function Inventry() {
   const columns = [
-    // "Book ID",
+    "Book ID",
     "Book Name",
     "Author",
     "Genre",
@@ -51,12 +47,12 @@ export default function AdminInventory() {
       const jsonData = await response.json()
 
       const filteredData = jsonData.map((book) => ({
-        // id: book.id,
+        id: book.id,
         title: book.title,
         author: book.author,
         genre: book.genre,
         unitPrice: book.price,
-        inStock: book.stock,
+        inStock: book.inventory,
       }));
       
       setBookList(filteredData);
@@ -70,55 +66,42 @@ export default function AdminInventory() {
   }, [])
 
   return (
-    
-    <Box
-    m={"auto"}
-    mt={10}
-    w="80%"
-    h="100%"
-    minH={800}
-    borderRadius="6px"
-    bg='rgba(255, 255, 255, 0.90)'
-    boxShadow="sm"
-    bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
-    // filter="blur(8px)"
-    backdropFilter="blur(14.5px)"
-    p={4}
-
-  >
-
-
-  <AdminSidebar />
-
-  <div>
-  <Box
-      borderColor={'rgba(0, 0, 0, 0.20)'}
-      borderWidth={'0.5px'}
-      borderRadius={'10px'}
-      h="100%"
-      w="76%"
-      ml={270}
-      mt={1}
-      mb={40}
-    >
-
-  <Flex
-      gap={5}
-      alignItems={"center"}
-      justifyContent={"center"}
-      w={"100%"} 
-      flexWrap={"wrap"}
-    >  
-
- </Flex>
-
-          <Box p={10}>
+    <>
+      <Box
+        height="100%"
+        m={"auto"}
+        mt={10}
+        w="80%"
+        borderRadius="md"
+        boxShadow="sm"
+        bgColor={"white"}
+        // bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(8px)"
+        p={10}
+      >
+        <Grid templateColumns="repeat(5, 1fr)" gap={2} h={"100%"}>
+          <GridItem
+            colSpan={1}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <SideMenu />
+          </GridItem>
+          <GridItem
+            colSpan={4}
+            border={"1px"}
+            borderColor={"blue.200"}
+            rounded={"md"}
+          >
+            <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Inventory Summary
+                  Inventry Summory
                 </Text>
                 <Spacer />
-                <Link to="adminaddnewbook">
+                <Link to="/moderator/addNewBook">
                   <Button colorScheme="blue" size={"sm"}>
                     <Icon as={BiPlus} />
                     <Text ml={2}>Add a New Book</Text>
@@ -140,11 +123,11 @@ export default function AdminInventory() {
                   <CardBody>
                     <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
                     <StatGroup gap={200}>
-                      <AdminStatCard
+                      <StatCard
                         lable="All Books"
                         value="500"
                       />
-                      <AdminStatCard
+                      <StatCard
                         lable="Active"
                         value="480"
                         type="increase"
@@ -165,7 +148,7 @@ export default function AdminInventory() {
                 >
                   <CardBody>
                     <Icon as={BiErrorCircle} boxSize={8} color={"#E53E3E"} />
-                    <AdminStatCard
+                    <StatCard
                       lable="Low Stock Alert"
                       value="10"
                       type="decrease"
@@ -178,21 +161,16 @@ export default function AdminInventory() {
               <Spacer mt={10} />
 
               <Box>
-                {/* <SearchPanel name="Inventory Items" filter="inventory" /> */}
+                <SearchPanel name="Inventory Items" filter="inventory" />
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
+                <DataTable list={list} columnNames={columns} />
               </Box>
             </Box>
-
- </Box>
-
-
- </div>
-
-  </Box>
-
-
+          </GridItem>
+        </Grid>
+      </Box>
+    </>
   );
 }
