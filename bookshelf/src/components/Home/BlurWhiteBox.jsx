@@ -8,11 +8,10 @@ import {
   GridItem,
   Button,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import React from "react";
 import Search from "../Search";
 
-function BlurWhiteBox({ title, image, mainButton,route }) {
+function BlurWhiteBox({ title, image }) {
   return (
     <Box
       m={"auto"}
@@ -58,9 +57,7 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
           />
         </GridItem>
         <GridItem rowSpan={2} colSpan={3}  alignItems={'top'} display={'flex'}>
-        <Link to={route}>
-           <Button ml={5} colorScheme="purple" pl={10} pr={10} borderRadius={100}>{mainButton}</Button> 
-            </Link>
+           <Button ml={5} colorScheme="purple" w={100} borderRadius={100}>Shop</Button> 
            <Search />
            
         </GridItem>
