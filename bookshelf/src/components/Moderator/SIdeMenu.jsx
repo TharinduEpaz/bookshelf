@@ -5,7 +5,7 @@ import {
   Center,
   Text,
 } from "@chakra-ui/react";
-//import { SettingsIcon } from "@chakra-ui/icons";
+import { SettingsIcon } from "@chakra-ui/icons";
 import { BiBell, BiBuilding, BiCollection, BiGift, BiHomeAlt, BiMoney, BiPurchaseTag, BiShareAlt } from "react-icons/bi";
 import React from "react";
 import NavItem from "./NavItem";
