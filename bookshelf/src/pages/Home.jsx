@@ -8,6 +8,7 @@ import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
 import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
+import {motion} from 'framer-motion'
 
 function Home() {
   const itemBoxDetails = {
@@ -78,14 +79,38 @@ function Home() {
 
   };
 
+  const homeImage = 'home.png'
+
   return (
     <>
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
+    >
       <BlurWhiteBox
         title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
-        image={bookgirl}
+        image={homeImage}
         mainButton="Shop"
         route="/shop"
+        
       />
+      </motion.div>
+      <motion.div
+         initial={{ opacity: 0, }}
+      animate={{ opacity: 1}}
+      transition={{
+        duration: 0.3,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
+      >
+
+      
       <Box
         m={"auto"}
         mt={10}
@@ -118,12 +143,22 @@ function Home() {
           
         >
           {Object.keys(itemBoxDetails).map((item) => (
+            <motion.div
+                 initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.8,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
+            >
             <HomeItemBox
               key={item}
               header={itemBoxDetails[item].header}
               bgColor={itemBoxDetails[item].bgColor}
               icon={itemBoxDetails[item].icon}
             />
+            </motion.div>
           ))}
         </Flex>
         <Center>
@@ -158,6 +193,7 @@ function Home() {
         </Flex>
         <Features />
       </Box>
+      </motion.div>
     </>
   );
 }

@@ -34,7 +34,7 @@ import { useEffect, useState } from "react";
 export default function AdminInventory() {
 
   const columns = [
-    "Book ID",
+    // "Book ID",
     "Book Name",
     "Author",
     "Genre",
@@ -51,7 +51,7 @@ export default function AdminInventory() {
       const jsonData = await response.json()
 
       const filteredData = jsonData.map((book) => ({
-        id: book.id,
+        // id: book.id,
         title: book.title,
         author: book.author,
         genre: book.genre,

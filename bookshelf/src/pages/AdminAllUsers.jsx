@@ -189,7 +189,6 @@ async function getAllUsers(role) {
     console.log('Filtered Users:', filteredData); 
 
     setUsersList(filteredData);
-    console.log(filteredData);
   } catch (err) {
     console.error(err.message);
   }

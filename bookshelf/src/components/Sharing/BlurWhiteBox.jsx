@@ -48,14 +48,16 @@ import {
               {title}
             </Heading>
           </GridItem>
-          <GridItem rowSpan={5} colSpan={2}>
+          <GridItem rowSpan={5} colSpan={2} objectFit={'cover'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
             <Image
-              boxSize={"xsm"}
-              objectFit={"cover"}
-              src={image}
-              position={"relative"}
-              top={-5}
-              
+
+            boxSize={"xsm"}
+          
+            src={image}
+            position={"relative"}
+            top={-2}
+            // width={'100%'}
+            height={'100%'}              
             />
           </GridItem>
           <GridItem rowSpan={2} colSpan={3}  alignItems={'top'} display={'flex'}>
