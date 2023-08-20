@@ -25,6 +25,7 @@ export default function NavItem({ title, icon, link, active }) {
               <Text
                 ml={4}
                 color={"#6B7280"}
+                fontWeight={"semibold"}
               >
                 {title}
               </Text>
