@@ -40,9 +40,9 @@ import { BsFillCartFill } from "react-icons/bs";
 const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
-  { name: "Donations", path: "#" },
-  { name: "Subscriptions", path: "#" },
-  { name: "Share a Book", path: "#" },
+  { name: "Donations", path: "/donation" },
+  { name: "Subscriptions", path: "/subscriptions" },
+  { name: "Share a Book", path: "/sharing" },
 ];
 
 function Navbar() {
@@ -56,15 +56,15 @@ function Navbar() {
       const res = await axios.get(logoutUrl);
       setUser(null);
       console.log(res.data);
+      localStorage.removeItem("cartItems");
 
       return toast({
-        title: 'Successfully logged out',
-        position:'top',
-        status: 'success',
+        title: "Successfully logged out",
+        position: "top",
+        status: "success",
         duration: 4000,
         isClosable: true,
-      })
-
+      });
     } catch (error) {
       console.log(error.response);
     }
@@ -155,28 +155,39 @@ function Navbar() {
                 minW={0}
                 rightIcon={<AiFillCaretDown />}
               >
-              
                 <Avatar
                   size={"sm"}
-                  name={user.user.name }
+                  name={user.user.name}
                   colorScheme="blue"
                   src="https://bit.ly/broken-link"
                 />
               </MenuButton>
               <MenuList>
-              {user.user.role != "admin" ? 
-              <>
-                <RouterLink to="/account">
-                <MenuItem>Account</MenuItem>
-                </RouterLink>
+                {user.user.role !== "admin" &&
+                user.user.role !== "moderator" ? (
+                  <>
+                    <RouterLink to="/account">
+                      <MenuItem>Account</MenuItem>
+                    </RouterLink>
 
-                <RouterLink to="account/orders">
-                <MenuItem>Orders</MenuItem>
-                </RouterLink>
-              </>
-                : <RouterLink to="/admindashboard">
-                <MenuItem>Admin Dashboard</MenuItem> 
-                </RouterLink> }
+                    <RouterLink to="account/orders">
+                      <MenuItem>Orders</MenuItem>
+                    </RouterLink>
+                  </>
+                ) : (
+                  <>
+                    {user.user.role === "admin" ? (
+                      <RouterLink to="/admindashboard">
+                        <MenuItem>Admin Dashboard</MenuItem>
+                      </RouterLink>
+                    ) : (
+                      <RouterLink to="/moderator">
+                        <MenuItem>Moderator Dashboard</MenuItem>
+                      </RouterLink>
+                    )}
+                  </>
+                )}
+
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>

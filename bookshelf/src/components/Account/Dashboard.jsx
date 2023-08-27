@@ -15,9 +15,43 @@ import {
 
 
 } from "@chakra-ui/react";
-import React from "react";
+
+import { useContext,useEffect,useState } from "react";
+import { userContext } from "../../context/UserContext";
+
+import axios from "axios";
+
 
 function Dashboard() {
+
+  const { user } = useContext(userContext);
+  
+  const [notifications, setNotifications] = useState([]);
+
+  const getNotifications = async () => {
+  console.log(user);
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/users/getNotifications/${user.user.userId}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+ useEffect(() => {
+  const fetchNotifications = async () => {
+    const fetchedNotifications = await getNotifications();
+    if (fetchedNotifications) {
+      setNotifications(fetchedNotifications);
+    }
+  };
+  fetchNotifications();
+}, []);
+
+ 
+  
   return (
     <Box
       position={"relative"}
@@ -35,7 +69,24 @@ function Dashboard() {
     
     <Box mb={10}>
     <Stack spacing={3}>
-  <Alert status='error'>
+    {/* {notifications.map((notification) => (
+      <Alert status={notification.type}>
+        <AlertIcon />
+        {notification.message}
+      </Alert>
+    ))} */}
+
+    {Object.keys(notifications).map((key) => (
+      <Alert status={notifications[key].type} key={key}>
+
+        <AlertIcon />
+        {notifications[key].message}
+      </Alert>
+    ))}
+
+
+    
+  {/* <Alert status='error'>
     <AlertIcon />
     There was an error processing your Order Go to order page for more details
   </Alert>
@@ -48,7 +99,10 @@ function Dashboard() {
   <Alert status='warning'>
     <AlertIcon />
     Please Confirm your email address to activate your account to access our all features
-  </Alert>
+  </Alert> */}
+
+
+
 </Stack>
     </Box>
       <SimpleGrid

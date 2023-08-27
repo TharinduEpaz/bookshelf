@@ -9,6 +9,8 @@ import {
   } from '@chakra-ui/react'
   import { FaArrowRight } from 'react-icons/fa'
   import { formatPrice } from './PriceTag'
+
+  import { useCartContext } from "../../context/cartContext";
   const OrderSummaryItem = (props) => {
     const { label, value, children } = props
     return (
@@ -22,6 +24,8 @@ import {
   }
   
   export const CartOrderSummary = () => {
+    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, getTotalAmount } = useCartContext();
+
     return (
       <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
         <Heading size="md">Order Summary</Heading>
@@ -43,7 +47,7 @@ import {
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(597)}
+              {formatPrice(getTotalAmount)}
             </Text>
           </Flex>
         </Stack>

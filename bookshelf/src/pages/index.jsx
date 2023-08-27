@@ -7,5 +7,6 @@ import Register from "./Register";
 import Shop from "./Shop";
 
 
+
 export {Account, Cart, Home, Login, ProductPage, Register, Shop};
 
