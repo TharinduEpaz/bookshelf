@@ -24,19 +24,14 @@ import {
   }
   
   export const CartOrderSummary = () => {
-    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, getTotalAmount } = useCartContext();
-
+    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, totalPrice } = useCartContext();
     return (
       <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
         <Heading size="md">Order Summary</Heading>
   
         <Stack spacing="6">
-          <OrderSummaryItem label="Subtotal" value={formatPrice(597)} />
-          <OrderSummaryItem label="Shipping + Tax">
-            <Link href="#" textDecor="underline">
-              Calculate shipping
-            </Link>
-          </OrderSummaryItem>
+          <OrderSummaryItem label="Subtotal" value={formatPrice(totalPrice)} />
+         
           {/* <OrderSummaryItem label="Coupon Code">
             <Link href="#" textDecor="underline">
               Add coupon code
@@ -47,7 +42,7 @@ import {
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(getTotalAmount)}
+              {formatPrice(totalPrice)}
             </Text>
           </Flex>
         </Stack>

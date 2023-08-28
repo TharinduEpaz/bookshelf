@@ -3,14 +3,14 @@ import {
     Flex,
     Heading,
     HStack,
-    Link,
     Stack,
     useColorModeValue as mode,
   } from '@chakra-ui/react'
   import { CartItem } from '../components/Cart/CartItem'
   import { CartOrderSummary } from '../components/Cart/CartOrderSummary'
   import { useCartContext } from '../context/cartContext'
-  
+  import { Link } from 'react-router-dom'
+import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
   
 
  
@@ -37,7 +37,7 @@ import {
   export function Cart() {
 
     const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
-    console.log(cartItems);
+    
     const cartData = cartItems;
 
     return (
@@ -69,7 +69,9 @@ import {
         backdropFilter="blur(8px)"
         p={10}
     >
+    <CartBreadcrumb />
       <Stack
+      mt={10}
         direction={{
           base: 'column',
           lg: 'row',
@@ -90,7 +92,7 @@ import {
           flex="2"
         >
           <Heading fontSize="2xl" fontWeight="extrabold">
-            Shopping Cart (3 items)
+            Shopping Cart 
           </Heading>
   
           <Stack spacing="6">
@@ -104,7 +106,7 @@ import {
           <CartOrderSummary />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
-            <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>
+            <Link style={{color:'#4299E1'}} to={'/shop'}>Continue shopping</Link>
           </HStack>
         </Flex>
       </Stack>
