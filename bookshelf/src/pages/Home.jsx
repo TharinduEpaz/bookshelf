@@ -1,5 +1,9 @@
-import React from "react";
+import {React,useState,useEffect} from "react";
 import BlurWhiteBox from "../components/Home/BlurWhiteBox";
+import {BlurWhiteBox as DonationBox} from "../components/Donation/BlurWhiteBox";
+import {BlurWhiteBox as SubscriptionBox} from "../components/Subscription/BlureWhiteBox";
+import {BlurWhiteBox as SharingBox} from "../components/Sharing/BlurWhiteBox";
+
 import HomeItemBox from "../components/Home/HomeItemBox";
 import { Box, Center, Divider, Flex, Heading } from "@chakra-ui/react";
 import bookgirl from "../assets/bookgirl.png";
@@ -8,7 +12,7 @@ import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
 import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
-import {motion} from 'framer-motion'
+import {motion, AnimatePresence} from 'framer-motion'
 
 function Home() {
   const itemBoxDetails = {
@@ -81,9 +85,22 @@ function Home() {
 
   const homeImage = 'home.png'
 
+  //page section animation changes
+
+    const [activeComponent, setActiveComponent] = useState(1);
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setActiveComponent((prevComponent) => (prevComponent % 4) + 1);
+      }, 5000); // Change component every 5 seconds
+  
+      return () => clearInterval(interval);
+    }, []);
+  
+
   return (
     <>
-    <motion.div
+    {/* <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
@@ -99,7 +116,75 @@ function Home() {
         route="/shop"
         
       />
-      </motion.div>
+      </motion.div> */}
+
+      <AnimatePresence mode="wait">
+        {activeComponent === 1 && (
+          <motion.div
+            key="component1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <BlurWhiteBox
+                title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
+        image={homeImage}
+        mainButton="Shop"
+        route="/shop"
+             />
+          </motion.div>
+        )}
+        {activeComponent === 2 && (
+          <motion.div
+            key="component2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <SubscriptionBox 
+              title="Indulge in your literary cravings with our carefully curated subscriptions,"
+              image={'subscriptionHome.png'}
+            />
+          </motion.div>
+        )}
+        {activeComponent === 3 && (
+          <motion.div
+            key="component3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <SharingBox 
+               title="Connecting Readers, One Swap at a Time"
+               image={'sharingHome.png'}
+            />
+          </motion.div>
+        )}
+        {activeComponent === 4 && (
+          <motion.div
+            key="component4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <DonationBox 
+              title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
+        image={bookgirl}
+        mainButton="Donate"
+        route="/Don_home"
+        mainButton1="Request for Donation"
+        route1="/DonationRequest"
+              
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
+
+
+
+
       <motion.div
          initial={{ opacity: 0, }}
       animate={{ opacity: 1}}
@@ -139,26 +224,18 @@ function Home() {
           justifyContent={"center"}
           w={"100%"}
           mt={10}
-          flexWrap={"wrap"}
+          flexWrap={{ base: "wrap", md: "wrap", lg: "nowrap"}}
           
         >
           {Object.keys(itemBoxDetails).map((item) => (
-            <motion.div
-                 initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.8,
-        delay: 0.8,
-        ease: [0, 0.71, 0.2, 1.01]
-      }}
-            >
+           
             <HomeItemBox
               key={item}
               header={itemBoxDetails[item].header}
               bgColor={itemBoxDetails[item].bgColor}
               icon={itemBoxDetails[item].icon}
             />
-            </motion.div>
+          
           ))}
         </Flex>
         <Center>
@@ -178,7 +255,7 @@ function Home() {
           justifyContent={"center"}
           w={"100%"}
           mt={10}
-          flexWrap={"wrap"}
+          flexWrap={{ base: "wrap", md: "wrap", lg: "nowrap"}}
         >
           {Object.keys(newArrivals).map((item) => (
             <BookCard
@@ -197,5 +274,6 @@ function Home() {
     </>
   );
 }
+
 
 export default Home;

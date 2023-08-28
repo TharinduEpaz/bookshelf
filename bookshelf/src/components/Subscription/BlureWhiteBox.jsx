@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import React from "react";
 import Search from "../Search";
 
-function BlurWhiteBox({ title, image }) {
+export function BlurWhiteBox({ title, image }) {
     return (
         <Box
             m={"auto"}
@@ -44,7 +44,7 @@ function BlurWhiteBox({ title, image }) {
                         ml={5}
                         mt={5}
                         color={"blue.700"}
-                        fontWeight={'100'}
+                        fontWeight={'600'}
                         fontSize={{ lg: '2.0rem', sm: '2xl' }}
                     >
                         {title}
