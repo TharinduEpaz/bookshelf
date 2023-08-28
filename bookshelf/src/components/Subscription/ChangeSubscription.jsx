@@ -26,7 +26,7 @@ export default function ChangeSubscription() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] = useState(null);
     const [showOtherSubscriptionPopup, setShowOtherSubscriptionPopup] = useState(false);
-    const [subscriptionDetails, setSubscriptionDetails] = useState([]);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
     // useEffect(() => {
     //     const getSubscription = async () => {
     //         try {
@@ -45,11 +45,17 @@ export default function ChangeSubscription() {
 
     useEffect(() => {
         const getCurrentSubscription = async () => {
-            const userId ="d384f58e-ee9a-48eb-8c96-141e66f6af60"
             try {
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions/getMySubscription",
-                    {userId:userId}
+                    { 
+                        userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60" 
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
                 );
                 console.log("hello");
                 setSubscriptionDetails(response);
