@@ -39,11 +39,12 @@ function SharingHome() {
             icon: <ImBooks size={25} color="#FF9798" />,
         },
     };
+    const SubscriptionImage = 'subscriptionHome.png'
     return (
         <>
             <BlurWhiteBox
                 title="Indulge in your literary cravings with our carefully curated subscriptions,"
-                image={books}
+                image={SubscriptionImage}
             />
             <Center>
                 <Heading

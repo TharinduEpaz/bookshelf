@@ -37,5 +37,4 @@ const subscription = sequelize.define(
 
 // subscription.sync({ alter: true });
 
-
 module.exports = subscription;

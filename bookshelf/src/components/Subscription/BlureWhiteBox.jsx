@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import React from "react";
 import Search from "../Search";
 
-function BlurWhiteBox({ title, image }) {
+export function BlurWhiteBox({ title, image }) {
     return (
         <Box
             m={"auto"}
@@ -26,6 +26,7 @@ function BlurWhiteBox({ title, image }) {
             // filter="blur(8px)"
             backdropFilter="blur(8px)"
             p={4}
+
         >
             <Grid
                 h="35vh"
@@ -37,13 +38,14 @@ function BlurWhiteBox({ title, image }) {
             >
                 <GridItem rowSpan={3} colSpan={3}>
                     <Heading
-                        fontWeight={"100"}
+                        // fontWeight={"100"}
                         w={"100%"}
                         lineHeight={"50px"}
                         ml={5}
                         mt={5}
                         color={"blue.700"}
-                        fontSize={{ lg: '2.5rem', sm: '2xl' }}
+                        fontWeight={'600'}
+                        fontSize={{ lg: '2.0rem', sm: '2xl' }}
                     >
                         {title}
                     </Heading>
@@ -54,7 +56,7 @@ function BlurWhiteBox({ title, image }) {
                         objectFit={"cover"}
                         src={image}
                         position={"relative"}
-                        top={-75}
+                        top={-2}
 
                     />
                 </GridItem>

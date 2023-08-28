@@ -196,6 +196,7 @@ function App() {
             <Route path="shareBook" element={<ShareBook/>} />
             <Route path="shareRequest" element={<ShareRequest />} />
             <Route path="ManageRequest" element={<ManageRequest />} />
+            <Route path="chat" element={<Chat />} />
           </Route> 
 
           <Route exact path="/donation" element={<Donation />}></Route>
@@ -219,7 +220,7 @@ function App() {
 
           {/* Moderator Routes */}
           
-
+          </Route>
          
           <Route  path="/moderator/" element={<Moderator />}>
             <Route index element={<M_Dashboard />} />
@@ -234,7 +235,7 @@ function App() {
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
           </Route>
-          </Route>
+         
 
               </Routes>
           <Footer />

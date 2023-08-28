@@ -9,6 +9,13 @@ GET http://localhost:3000/api/v1/books/1
 
 ###
 POST http://localhost:3000/api/v1/books/addBook
+```
+{
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "description": "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
+    "price": 10.99,
+    "image": "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200
 
 ###
 PATCH http://localhost:3000/api/v1/books/1

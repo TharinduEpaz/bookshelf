@@ -72,8 +72,7 @@ function ProductPage() {
           thickness="4px"
           speed="0.65s"
           emptyColor="gray.200"
-          color="blue.500"
-          
+          color="blue.500" 
         />
         </Box>
       </>
@@ -102,7 +101,7 @@ function ProductPage() {
               <SimpleGrid columns={1}>
                 <Box h={"40px"} pl={3}>
                   {" "}
-                  <LinkTree />
+                  <LinkTree productName={currentBook.title}/>
                 </Box>
                 <Box h={"60px"}>
                   {" "}

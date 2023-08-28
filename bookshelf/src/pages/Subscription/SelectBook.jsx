@@ -37,7 +37,6 @@ function SelectBook() {
         gap={2}
         h={'100%'}
       >
-        mmm 
         <GridItem rowSpan={1} colSpan={5} >
           <Search />
         </GridItem>
