@@ -2,10 +2,13 @@ const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 
 const review = sequelize.define('review', {
-    id: {
+    bookId: {
         type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: sequelize.UUIDV4
+        allowNull: false
+    },
+    userId: {
+        type: DataTypes.UUID,
+        allowNull: false
     },
     rating: {
         type: DataTypes.INTEGER,
@@ -15,14 +18,7 @@ const review = sequelize.define('review', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    bookId: {
-        type: DataTypes.UUID,
-        allowNull: false
-    },
-    userId: {
-        type: DataTypes.UUID,
-        allowNull: false
-    }
+  
 }, {
     // Other model options go here
 })
@@ -35,8 +31,8 @@ const review = sequelize.define('review', {
 // user.hasMany(review, {foreignKey: 'userId'})
 
 //one user can review a book only once
-review.belongsTo(user, {foreignKey: 'userId', unique: true})
-user.hasMany(review, {foreignKey: 'userId'})
+// review.belongsTo(user, {foreignKey: 'userId', unique: true})
+// user.hasMany(review, {foreignKey: 'userId'})
 
 
 // review.sync({  alter: true });

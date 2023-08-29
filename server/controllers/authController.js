@@ -134,7 +134,7 @@ const register = async (req, res, next) => {
 const logout = async (req, res) => {
   res.cookie("token", "logout", {
     httpOnly: true,
-    expires: new Date(Date.now()),
+    expires: new Date(Date.now() - 1),
   });
   res.status(statusCodes.StatusCodes.OK).json({ message: "Logged Out" });
 }

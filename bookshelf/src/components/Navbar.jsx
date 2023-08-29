@@ -53,7 +53,9 @@ function Navbar() {
 
   const logout = async () => {
     try {
-      const res = await axios.get(logoutUrl);
+      const res = await axios.get(logoutUrl,{
+        withCredentials: true,}
+        );
       setUser(null);
       console.log(res.data);
       localStorage.removeItem("cartItems");
