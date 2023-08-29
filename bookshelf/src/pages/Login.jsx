@@ -44,6 +44,7 @@ export default function SimpleCard() {
         email: email,
         password: password
       },{
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
     }});
