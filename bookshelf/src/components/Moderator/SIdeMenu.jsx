@@ -7,18 +7,18 @@ import {
 } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { BiBell, BiBuilding, BiCollection, BiGift, BiHomeAlt, BiMoney, BiPurchaseTag, BiShareAlt } from "react-icons/bi";
-import React from "react";
+import {React, useContext} from "react";
 import NavItem from "./NavItem";
 import { userContext } from "../../context/userContext";
 
 function SideMenu() {
-  const { user } = React.useContext(userContext);
+  const { user, setUser } = useContext(userContext);
   return (
     <Box m={5} mt={10}>
       <Center>
         <Avatar
           size="lg"
-          name={user.user.name}
+          // name={user.user.name}
           fontWeight={"bold"}
           bg="blue.300"
           src="#"
@@ -28,7 +28,7 @@ function SideMenu() {
       </Center>
       <Center flexDir={"column"}>
         <Text fontSize="m" fontWeight={"bold"} mt={5} mb={5}>
-          {user.user.name}
+          {/* {user.user.name} */}
         </Text>
         <Text fontSize="sm" fontWeight={"bold"} mb={8} color={"blue.700"}>
           Moderator Dashboard
