@@ -17,7 +17,11 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.static('./public'));
 app.use(fileUpload());
-app.use(cors());
+
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5173'
+}));
 
 
 const authRoutes = require("./routes/authRoutes");
