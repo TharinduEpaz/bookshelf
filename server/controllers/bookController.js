@@ -27,7 +27,7 @@ const addBook = async (req, res, next) => {
       ISBN,
       description,
       averageRating,
-      inventory,
+      stock,
       typesAvailable,
       genre,
       language,
@@ -51,15 +51,9 @@ const getAllBooks = async (req, res, next) => {
 };
 
 const getSingleBook = async (req, res, next) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
   try {
-    const book = await bookModel.findOne({
-      where: {
-        id
-      }
-    });
+    const book = await bookModel.findOne({ where: { id } });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -71,15 +65,9 @@ const getSingleBook = async (req, res, next) => {
 };
 
 const updateBook = async (req, res, next) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
   try {
-    const book = await bookModel.findOne({
-      where: {
-        id
-      }
-    });
+    const book = await bookModel.findOne({ where: { id } });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -92,22 +80,14 @@ const updateBook = async (req, res, next) => {
 };
 
 const deleteBook = async (req, res, next) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
   try {
-    const book = await bookModel.findOne({
-      where: {
-        id
-      }
-    });
+    const book = await bookModel.findOne({ where: { id } });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
     await book.destroy();
-    res.status(statusCodes.StatusCodes.OK).json({
-      message: "Book deleted"
-    });
+    res.status(statusCodes.StatusCodes.OK).json({ message: "Book deleted" });
   } catch (error) {
     next(error);
   }
@@ -115,11 +95,9 @@ const deleteBook = async (req, res, next) => {
 };
 
 const uploadImage = async (req, res, next) => {
-  //   console.log(req.files);
+//   console.log(req.files);
   try {
-    const {
-      id
-    } = req.params;
+    const { id } = req.params;
 
     if (!req.files) {
       throw new CustomError.BadRequestError("No file uploaded");
@@ -152,10 +130,7 @@ const uploadImage = async (req, res, next) => {
 
     res
       .status(statusCodes.StatusCodes.OK)
-      .json({
-        message: "Image uploaded",
-        image: `/uploads/${bookImage.name}`
-      });
+      .json({ message: "Image uploaded", image: `/uploads/${bookImage.name}` });
   } catch (error) {
     next(error);
   }

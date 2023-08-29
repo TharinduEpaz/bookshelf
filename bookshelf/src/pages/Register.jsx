@@ -13,7 +13,7 @@ import {
   Text,
   useColorModeValue,
   Link,
-  Alert,
+  Alert,  
   AlertIcon,
   SkeletonCircle,
   SkeletonText,
@@ -32,26 +32,21 @@ import axios from 'axios';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const[firstName,setFirstName] = useState('');
+  const[lastName,setLastName] = useState('');
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [error,setError] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
 
-  const regUrl = "http://localhost:3000/api/v1/register";
+  const regUrl = 'http://localhost:3000/api/v1/register';
 
   const register = async (e) => {
-    e.preventDefault();
-    try {
+     e.preventDefault();
+     try {
       setIsLoading(true);
-
-      const response = await axios.post(regUrl, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      });
+    
+      const response = await axios.post(regUrl,{ firstName : firstName, lastName : lastName, email : email, password : password});
       console.log(response.data);
       
       setEmail('');
@@ -61,14 +56,16 @@ export default function SignupCard() {
       setIsLoading(false);
 
       window.location.href = "/login";
-    } catch (error) {
-      setError(error.response.data.msg);
+      
+     } catch (error) {
+      setError(error.response.data.msg);  
       setIsLoading(false);
-      console.log(error.response);
-    }
-  };
+    console.log(error.response);
+     }
+  
+  }
 
-  if (isLoading) {
+  if(isLoading){
     return (
       <Flex
       minH={'100vh'} 
@@ -99,22 +96,25 @@ export default function SignupCard() {
   }
 
   return (
-    <Flex minH={"100vh"} justify={"center"}>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Stack align={"center"}>
-          <Heading fontSize={"4xl"} textAlign={"center"}>
+    <Flex
+      minH={'100vh'}
+      
+      justify={'center'}
+      >
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign up
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
+          <Text fontSize={'lg'} color={'gray.600'}>
             to enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
           <Stack spacing={4}>
           {error && <Alert status="error"> <AlertIcon /> {error}</Alert>} 
           <form onSubmit={register}>

@@ -218,10 +218,10 @@ function App() {
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
 
-
-            </Route>
-  
           {/* Moderator Routes */}
+          
+          </Route>
+         
           <Route  path="/moderator/" element={<Moderator />}>
             <Route index element={<M_Dashboard />} />
             <Route path="dashboard" element={<M_Dashboard />} />

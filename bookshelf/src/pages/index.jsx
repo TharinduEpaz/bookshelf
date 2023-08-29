@@ -9,3 +9,4 @@ import Shop from "./Shop";
 
 
 export {Account, Cart, Home, Login, ProductPage, Register, Shop};
+

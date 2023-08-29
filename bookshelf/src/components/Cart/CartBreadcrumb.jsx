@@ -4,7 +4,7 @@ import { BsChevronRight } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 
-const LinkTree = (props) => {
+const CartBreadcrumb = (props) => {
   const {productName} = props
   return (
     <Breadcrumb
@@ -23,10 +23,10 @@ const LinkTree = (props) => {
               </BreadcrumbItem>
 
               <BreadcrumbItem isCurrentPage>
-                <BreadcrumbLink href="">{productName}</BreadcrumbLink>
+                <BreadcrumbLink href="">Cart</BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
   )
 }
 
-export default LinkTree;
+export default CartBreadcrumb;

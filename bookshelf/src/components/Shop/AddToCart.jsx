@@ -11,7 +11,7 @@ function AddToCart(props) {
     const {amount,bookId,title,price,image,stock} = props;
     const {user} = useContext(userContext);
     const toast = useToast();
-    console.log(cartItems);
+
     
   return (
     <>
@@ -22,9 +22,20 @@ function AddToCart(props) {
         variant="solid"
         borderRadius={10}
         w={200}
-        onClick={() => {addToCart(bookId,title,price,image,stock,amount)
+        onClick={() => {
           
-          
+      if(cartItems.find((item) => item.id === bookId)){
+        return toast({
+        title: "Item already in the cart",
+        position: "top",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+      }
+
+      addToCart(bookId,title,price,image,stock,amount)
+
       return toast({
         title: "Added To Cart Successfully",
         position: "top",
