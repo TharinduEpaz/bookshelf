@@ -22,6 +22,13 @@ const review = sequelize.define('review', {
 }, {
     // Other model options go here
 })
+
+review.associate = (models) => {
+    review.belongsTo(models.User, {foreignKey: 'userId', x: 'user'})
+}
+
+
+
 //relationship between book and review
 // review.belongsTo(book, {foreignKey: 'bookId'})
 // book.hasMany(review, {foreignKey: 'bookId'})

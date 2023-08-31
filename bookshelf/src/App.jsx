@@ -28,6 +28,7 @@ import {
   ProductPage,
   Register,
   Shop,
+  Checkout,
 } from "./pages";
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
@@ -144,6 +145,8 @@ function App() {
             <Route exact path="/shop" element={<Shop />}></Route>
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
+            <Route exact path="/checkout" element={<Checkout />}></Route>
+
 
             <Route element={<PrivateRoutes />}>
 

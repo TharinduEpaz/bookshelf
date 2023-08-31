@@ -190,7 +190,7 @@ function ProductPage() {
                   fontFamily={"montserrat"}
                   fontWeight={"thin"}
                 >
-                  Rs. {currentBook.price}
+                  Rs.{currentBook.price}
                 </Heading>
 
                 <Box display={"flex"} alignItems={"center"} gap={10} mt={10}>
@@ -246,7 +246,7 @@ function ProductPage() {
     </TabPanel> */}
               {/* initially not mounted */}
               <TabPanel>
-                <SimpleReview />
+                <SimpleReview bookId={currentBook.id}/>
               </TabPanel>
               <TabPanel>
                 <AboutAuthor />

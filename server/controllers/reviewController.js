@@ -8,6 +8,19 @@ const addReview = async (req, res, next) => {
     const { bookId, rating, review } = req.body;
     const userId = req.user.userId;
 
+    //check if user has already reviewed the book
+    const userReview = await reviewModel.findOne({
+        where: {
+            userId: userId,
+            bookId: bookId
+        }
+    });
+
+    if (userReview) {
+        res.status(statusCodes.StatusCodes.BAD_REQUEST).json({ message: "You have already reviewed this book" });
+        return;
+    }
+
     const reviewObj = {
         bookId,
         userId,
@@ -15,15 +28,24 @@ const addReview = async (req, res, next) => {
         review
     }
 
+    try{
     const reviewAdded = await reviewModel.create(reviewObj);
-    
     res.status(statusCodes.StatusCodes.CREATED).json({ message: "Review added successfully" });
+    }
+
+    catch(err){
+        next(err);
+    }
+
 }
 
 const getAllReviews = async (req, res, next) => {
     try {
-        const reviews = await reviewModel.findAll();
-        res.json(reviews);
+
+    const reviews = await reviewModel.findAll();
+    
+    res.json(reviews);
+
     } catch (err) {
         next(err);
     }
@@ -37,8 +59,11 @@ const deleteReview = async (req, res, next) => {
                 id: reviewId
             }
         });
+
         res.json(review);
-    } catch (err) {
+
+    } 
+    catch (err) {
         next(err);
     }
 }
