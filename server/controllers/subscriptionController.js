@@ -19,15 +19,15 @@ const getAllSubscriptions = async (req, res, next) => {
 }
 
 const addSubscriptionType = async (req, res, next) => {
+	const userId =req.user.userId;
+	console.log(userId);
 	try {
 		const {
-			userId,
             subscriptionType
 		} = req.body;
 
 		
 		const type = await userSubscriptionModel.create({
-		
 			userId,
 			subscriptionType,
 		});
@@ -56,9 +56,7 @@ const getAllUserSubscriptions = async (req, res, next) => {
 // };
 
 const getMySubscriptionDetails = async (req, res, next) => {
-	// const { userId } = req.body;
-	const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
-	// console.log(userId);
+	const userId = req.user.userId;
 	try {
 		const details = await userSubscriptionModel.findAll({
 			where: { userId },
@@ -75,7 +73,7 @@ const getMySubscriptionDetails = async (req, res, next) => {
 
 const updateMySubscription = async (req, res, next) => {
 	const { subscriptionType} = req.body;
-	const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+	const userId = req.user.userId;
 
 
 	try {
@@ -91,7 +89,7 @@ const updateMySubscription = async (req, res, next) => {
 			{ subscriptionType: subscriptionType },
 			{
 				where: {
-					userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
+					userId: userId
 				},
 				returning: true,
 			}

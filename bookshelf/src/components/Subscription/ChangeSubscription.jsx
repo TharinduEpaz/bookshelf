@@ -119,7 +119,7 @@ export default function ChangeSubscription() {
         currentSubscriptionIcon = <SelectReaderIcon />;
     } else if (currentSubscription === "Book Worm") {
         currentSubscriptionIcon = <SelectWormIcon />;
-    } else {
+    } else if (currentSubscription === "Book Lover"){
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
 
