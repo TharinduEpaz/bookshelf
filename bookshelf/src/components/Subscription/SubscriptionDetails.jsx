@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Box, 
     Accordion,
@@ -10,8 +10,27 @@ import {
     ListItem,
     UnorderedList,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 function SubscriptionDetails() {
+
+    const [subscriptionType, setSubscriptionType] = useState([]);
+
+    useEffect(() => {
+        const getSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions"
+                );
+                console.log(subscriptionType[0].book_count);
+                setSubscriptionType(response.data);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getSubscription();
+    }, []);
+
   return (
     <div>
           <Accordion allowToggle paddingTop={3}>
@@ -29,7 +48,7 @@ function SubscriptionDetails() {
                         Terms for the book lover subscription package
                       </Text>
                       <UnorderedList paddingLeft={20} fontSize={'lg'}>
-                          <ListItem>L1 book for one month</ListItem>
+                          <ListItem>1 book for one month</ListItem>
                           <ListItem>20% of the original price of the book</ListItem>
                           <ListItem>Doorstep delivery</ListItem>
                           <ListItem>Please make sure the book has the optimal quality when returned to avoid extra quality check charges</ListItem>

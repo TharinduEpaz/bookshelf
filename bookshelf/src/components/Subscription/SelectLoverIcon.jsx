@@ -41,12 +41,12 @@ function SelectLoverIcon() {
                 <GridItem textAlign={"start"}>
                     {/* First row in the second column */}
                     <Text fontWeight="500" fontSize="24">
-                        {subscriptionType[0].firstName}
+                        {subscriptionType[1].firstName}
                     </Text>
 
                     {/* Second row in the second column */}
                     <Text fontSize="36" fontWeight="900">
-                        {subscriptionType[0].LastName}
+                        {subscriptionType[1].LastName}
                     </Text>
                 </GridItem>
             </Grid>

@@ -15,6 +15,7 @@ router.route("/subscriptionComplaint").post(controller.addSubscriptionCompliant)
 
 router.route("/getMySubscription").get(controller.getMySubscriptionDetails);
 router.route("/updateMySubscription").patch(controller.updateMySubscription);
+// router.route("/deleteMySubscription").delete(controller.deleteMySubscription);
 
 
 

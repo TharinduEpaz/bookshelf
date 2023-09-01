@@ -56,8 +56,9 @@ const getAllUserSubscriptions = async (req, res, next) => {
 // };
 
 const getMySubscriptionDetails = async (req, res, next) => {
-	const { userId } = req.body;
-	console.log(userId);
+	// const { userId } = req.body;
+	const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+	// console.log(userId);
 	try {
 		const details = await userSubscriptionModel.findAll({
 			where: { userId },
@@ -73,7 +74,9 @@ const getMySubscriptionDetails = async (req, res, next) => {
 };
 
 const updateMySubscription = async (req, res, next) => {
-	const { userId ,subscriptionType} = req.body;
+	const { subscriptionType} = req.body;
+	const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+
 
 	try {
 		const details = await userSubscriptionModel.findAll({
@@ -88,8 +91,9 @@ const updateMySubscription = async (req, res, next) => {
 			{ subscriptionType: subscriptionType },
 			{
 				where: {
-					userId:userId,
-				},returning: true
+					userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
+				},
+				returning: true,
 			}
 		);
 		
@@ -118,6 +122,23 @@ const addSubscriptionCompliant =async (req, res, next) => {
 
 };
 
+// const deleteMySubscription = async (req, res, next) => {
+// 	const { id } = req.params;
+// 	try {
+// 		const book = await bookModel.findOne({ where: { id } });
+// 		if (!book) {
+// 			throw new CustomError.NotFoundError("No book found");
+// 		}
+// 		await book.destroy();
+// 		res.status(statusCodes.StatusCodes.OK).json({
+// 			message: "Book deleted",
+// 		});
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// 	// res.send("Delete book" + id);
+// };
+
 
 module.exports = {
 	getAllSubscriptions,
@@ -126,5 +147,6 @@ module.exports = {
 	// getAllSubscriptionDetails,
 	addSubscriptionCompliant,
 	getMySubscriptionDetails,
-	updateMySubscription
+	updateMySubscription,
+	// deleteMySubscription,
 };

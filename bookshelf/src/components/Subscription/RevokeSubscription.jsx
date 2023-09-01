@@ -33,9 +33,6 @@ function RevokeSubscription() {
                 marginLeft={5}
                 onClick={onOpen} >
                 Revoke
-                marginLeft={5}
-                onClick={onOpen} 
-                Revoke
             </Button>
             <AlertDialog
                 isOpen={isOpen}
