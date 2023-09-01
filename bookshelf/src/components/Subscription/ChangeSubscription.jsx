@@ -38,8 +38,12 @@ export default function ChangeSubscription() {
         const getSubscription = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/api/v1/subscriptions"
-                );
+                    "http://localhost:3000/api/v1/subscriptions",
+                    {
+                        withCredentials: true
+                    }
+                )
+                
                 setSubscriptionType(response.data);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
@@ -52,7 +56,10 @@ export default function ChangeSubscription() {
         const getCurrentSubscription = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/api/v1/subscriptions/getMySubscription"
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
                 );
                 setSubscriptionDetails(response);
             } catch (error) {
@@ -80,6 +87,9 @@ export default function ChangeSubscription() {
                 "http://localhost:3000/api/v1/subscriptions/updateMySubscription",
                 {
                     subscriptionType: selectedSubscription
+                },
+                {
+                    withCredentials: true
                 }
             );
             // console.log(subscriptionType)

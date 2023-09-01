@@ -16,20 +16,20 @@ function SubscriptionDetails() {
 
     const [subscriptionType, setSubscriptionType] = useState([]);
 
-    useEffect(() => {
-        const getSubscription = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:3000/api/v1/subscriptions"
-                );
-                console.log(subscriptionType[0].book_count);
-                setSubscriptionType(response.data);
-            } catch (error) {
-                console.error("Error fetching subscription:", error);
-            }
-        };
-        getSubscription();
-    }, []);
+    // useEffect(() => {
+    //     const getSubscription = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 "http://localhost:3000/api/v1/subscriptions"
+    //             );
+    //             console.log(subscriptionType[0].book_count);
+    //             setSubscriptionType(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching subscription:", error);
+    //         }
+    //     };
+    //     getSubscription();
+    // }, []);
 
   return (
     <div>
