@@ -1,3 +1,4 @@
+import { calc } from "@chakra-ui/react";
 import React, { createContext, useState, useEffect, useMemo,useContext } from "react";
 
 const cartContext = createContext();
@@ -20,16 +21,18 @@ const dummyCartItem = {
 };
 
 const CartProvider = ({ children }) => {
-  let totalAmount = 0;
+  
     const localStorageKey = "cartItems";
     
     const [cartItems, setCartItems] = useState(() => {
         const storedCartItems = localStorage.getItem(localStorageKey);
         return storedCartItems ? JSON.parse(storedCartItems) : initialState.cartItems;
       });
+      const [totalPrice, setTotalPrice] = useState(0)
     
       useEffect(() => {
         localStorage.setItem(localStorageKey, JSON.stringify(cartItems));
+        calculateTotalPrice();
       }, [cartItems]);
 
   function getItemQuantity(id) {
@@ -38,22 +41,29 @@ const CartProvider = ({ children }) => {
   }
 
   function addToCart(id, title, price, image, stock, amount) {
-    const item = cartItems.find((item) => item.id === id);
-    if (item) {
-      item.amount = item.amount + amount;
-      
-      setCartItems([...cartItems]);
-    } else {
+  
+      setTotalPrice(totalPrice + amount*price);
       setCartItems([...cartItems, { id, title, price, image, stock, amount }]);
-      
-    }
+  
   }
 
-  function getTotalPrice() {
-    cartItems.forEach((item) => {
-      totalAmount += item.amount * item.price;
-    });
-  }
+  function changeItemQuantity (id, amount) {
+    const item = cartItems.find((item) => item.id === id);
+    setTotalPrice(totalPrice + (amount-item.amount)*item.price);
+
+    if (item) {
+      item.amount = amount;
+      }
+    }
+
+    function calculateTotalPrice() {
+      let total = 0;
+      cartItems.forEach((item) => {
+        total += item.price * item.amount;
+      });
+      setTotalPrice(total);
+    }
+
 
 
 
@@ -72,12 +82,14 @@ const CartProvider = ({ children }) => {
   }
 
   function removeFromCart(id) {
+
+    setTotalPrice(totalPrice - cartItems.find((item) => item.id === id).price*cartItems.find((item) => item.id === id).amount);
     setCartItems(cartItems.filter((item) => item.id !== id));
+
   }
 
-  
   return (
-    <cartContext.Provider value={{ cartItems,getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, getTotalPrice }}>
+    <cartContext.Provider value={{ cartItems,getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, totalPrice,changeItemQuantity }}>
       {children}
     </cartContext.Provider>
   );

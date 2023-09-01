@@ -1,4 +1,6 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+
 import {
   Container,
   Heading,
@@ -8,8 +10,28 @@ import {
   Stack,
   HStack,
   Avatar,
-  useColorModeValue
+  useColorModeValue,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  useDisclosure,
+  Textarea,
+  Alert,
+  AlertIcon,
+  ButtonGroup,
+  useToast,
+  Spinner
 } from '@chakra-ui/react';
+import StarRating from './StarRating';
+import axios from 'axios';
 
 const reviewData = [
   {
@@ -47,13 +69,75 @@ const ratingSummary = [
   { id: 5, rating: 1, percentage: '55%' }
 ];
 
-const SimpleReview = () => {
+const SimpleReview = ({bookId}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const toast = useToast();
+
+  const rate = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const reviewUrl = 'http://localhost:3000/api/v1/reviews'
+    try {
+      const response = await axios.post(reviewUrl, {
+        rating: rating,
+        review: review,
+        bookId: bookId
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+    }});
+
+    setRating(0);
+    setReview('');
+    setIsLoading(false);
+
+    onClose();
+    
+    return toast({
+      title: "Review added successfully",
+      position: "top",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    });
+
+
+    } catch (error) {
+
+    // console.error(error.response.data.message);
+    setError(error.response.data.message)
+    setIsLoading(false);
+    
+    return toast({
+      title: 'Sorry something went wrong please try again later',
+      position: "top",
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+    });
+    }
+
+    onClose();
+    
+  }
+
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Box mb={8}>
+      <Flex justify={'space-between'}>
         <Heading as="h3" size="lg" fontWeight="bold" textAlign="left" mb={3}>
           Audience rating summary
         </Heading>
+        <Button colorScheme='blue' variant={'outline'} borderRadius={100} onClick={onOpen}> Write Review </Button>
+        </Flex>
         <Stack spacing={3}>
           <Box>
             <HStack spacing={3}>
@@ -143,6 +227,65 @@ const SimpleReview = () => {
           })}
         </Stack>
       </Box>
+
+     
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+      
+        
+            
+        <ModalOverlay />
+      
+        <ModalContent>
+        <ModalHeader>
+        {/* <Alert status='error' fontSize={15} w={'90%'}>
+    <AlertIcon />
+    You Have to buy this book before writing a review
+  </Alert> */}
+  {
+    error && <Alert status='error' fontSize={15} w={'90%'}>
+    <AlertIcon />
+    {error}
+  </Alert>
+  }
+  </ModalHeader>
+          <ModalHeader>Write a Review</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+          <Text mb={2}>Rate this book</Text>
+          <form onSubmit={rate}>
+          <StarRating rating={rating} setRating={setRating} />
+
+            <FormControl mt={4}>
+              <FormLabel>Your Review</FormLabel>
+              <Textarea placeholder='write review here' onChange={(e)=>setReview(e.target.value) }/>
+            </FormControl>
+            <ButtonGroup mt={5}>
+            <Button colorScheme='blue' mr={3} type='submit'>
+              Submit
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+
+            </ButtonGroup>
+            
+            </form>
+      
+          </ModalBody>
+
+          <ModalFooter>
+            
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      
+
+
+
     </Container>
   );
 };

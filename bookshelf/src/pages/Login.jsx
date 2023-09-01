@@ -40,11 +40,11 @@ export default function SimpleCard() {
     e.preventDefault();
     
     try {
-      
       const response = await axios.post(loginUrl, {
         email: email,
         password: password
       },{
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
     }});
