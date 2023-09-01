@@ -2,13 +2,13 @@ import {
     Button,
     Flex,
     Heading,
-    Link,
     Stack,
     Text,
     useColorModeValue as mode,
   } from '@chakra-ui/react'
   import { FaArrowRight } from 'react-icons/fa'
   import { formatPrice } from './PriceTag'
+  import { Link } from 'react-router-dom'
 
   import { useCartContext } from "../../context/cartContext";
   const OrderSummaryItem = (props) => {
@@ -46,9 +46,12 @@ import {
             </Text>
           </Flex>
         </Stack>
+        
+        <Link to="/checkout">
         <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
           Checkout
         </Button>
+        </Link>
       </Stack>
     )
   }
