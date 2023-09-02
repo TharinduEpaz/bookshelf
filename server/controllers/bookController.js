@@ -2,8 +2,11 @@ const bookModel = require("../models/book");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
+const multer = require("multer");
+
 
 const addBook = async (req, res, next) => {
+
   try {
     const {
       title,
@@ -17,23 +20,28 @@ const addBook = async (req, res, next) => {
       genre,
       language,
       featuredCategory,
+      image,
 
     } = req.body;
-    
-    const book = await bookModel.create({
-      title,
-      price,
-      author,
-      ISBN,
-      description,
-      averageRating,
-      stock,
-      typesAvailable,
-      genre,
-      language,
-      featuredCategory,
-    });
-    res.status(statusCodes.StatusCodes.CREATED).json(book);
+
+    console.log(req.body)
+
+
+    // const book = await bookModel.create({
+    //   title,
+    //   price,
+    //   author,
+    //   ISBN,
+    //   description,
+    //   averageRating,
+    //   stock,
+    //   typesAvailable,
+    //   genre,
+    //   language,
+    //   featuredCategory,
+    //   image: upload(imagePath),
+    // });
+    // res.status(statusCodes.StatusCodes.CREATED).json(book);
   } catch (error) {
     next(error);
   }
@@ -51,9 +59,15 @@ const getAllBooks = async (req, res, next) => {
 };
 
 const getSingleBook = async (req, res, next) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   try {
-    const book = await bookModel.findOne({ where: { id } });
+    const book = await bookModel.findOne({
+      where: {
+        id
+      }
+    });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -65,9 +79,15 @@ const getSingleBook = async (req, res, next) => {
 };
 
 const updateBook = async (req, res, next) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   try {
-    const book = await bookModel.findOne({ where: { id } });
+    const book = await bookModel.findOne({
+      where: {
+        id
+      }
+    });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -80,14 +100,22 @@ const updateBook = async (req, res, next) => {
 };
 
 const deleteBook = async (req, res, next) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   try {
-    const book = await bookModel.findOne({ where: { id } });
+    const book = await bookModel.findOne({
+      where: {
+        id
+      }
+    });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
     await book.destroy();
-    res.status(statusCodes.StatusCodes.OK).json({ message: "Book deleted" });
+    res.status(statusCodes.StatusCodes.OK).json({
+      message: "Book deleted"
+    });
   } catch (error) {
     next(error);
   }
@@ -95,9 +123,11 @@ const deleteBook = async (req, res, next) => {
 };
 
 const uploadImage = async (req, res, next) => {
-//   console.log(req.files);
+  console.log(req.files);
   try {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
 
     if (!req.files) {
       throw new CustomError.BadRequestError("No file uploaded");
@@ -130,7 +160,10 @@ const uploadImage = async (req, res, next) => {
 
     res
       .status(statusCodes.StatusCodes.OK)
-      .json({ message: "Image uploaded", image: `/uploads/${bookImage.name}` });
+      .json({
+        message: "Image uploaded",
+        image: `/uploads/${bookImage.name}`
+      });
   } catch (error) {
     next(error);
   }
@@ -142,5 +175,5 @@ module.exports = {
   getSingleBook,
   updateBook,
   deleteBook,
-  uploadImage,
+  uploadImage
 };

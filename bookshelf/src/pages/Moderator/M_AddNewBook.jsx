@@ -41,6 +41,7 @@ export default function AddNewBook() {
   const [showSuccessAlert, setSuccessAlert] = useState(null);
 
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
 
   const addBookURL = "http://localhost:3000/api/v1/books";
 
@@ -56,38 +57,40 @@ export default function AddNewBook() {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const body = {
-        title: bookName,
-        author: author,
-        ISBN: isbn,
-        language: language,
-        genre: genre,
-        featuredCategory: featuredCategory,
-        typesAvailable: availableTypes,
-        price: sellingPrice,
-        stock: quantityInStock,
-        description: description,
-        averageRating: 0,
-        //image,
-        // fileName,
-      };
-      const response = await axios.post(addBookURL, body);
-      console.log(response);
+      // const body = {
+      //   title: bookName,
+      //   author: author,
+      //   ISBN: isbn,
+      //   language: language,
+      //   genre: genre,
+      //   featuredCategory: featuredCategory,
+      //   typesAvailable: availableTypes,
+      //   price: sellingPrice,
+      //   stock: quantityInStock,
+      //   description: description,
+      //   averageRating: 0,
+      //   image: file,
+      // };
+      const formdata = new FormData();
+      formdata.append("file", file);
+      console.log(formdata.get("file"));
+      const response = await axios.post(addBookURL, formdata);
+      // console.log(response);
 
-      console.log(body);
+      // console.log(body);
       setSuccessAlert(true);
       setError(null);
       // set variables null
-      setBookName("");
-      setAuthor("");
-      setIsbn("");
-      setLanguage("");
-      setGenre("");
-      setFeaturedCategory("");
-      setSelectedTypes([]);
-      setSellingPrice("");
-      setQuantityInStock("");
-      setDescription("");
+      // setBookName("");
+      // setAuthor("");
+      // setIsbn("");
+      // setLanguage("");
+      // setGenre("");
+      // setFeaturedCategory("");
+      // setSelectedTypes([]);
+      // setSellingPrice("");
+      // setQuantityInStock("");
+      // setDescription("");
     } catch (error) {
       console.error(error.message);
       error.response
@@ -95,6 +98,16 @@ export default function AddNewBook() {
         : setError("Something went wrong");
     }
   };
+
+
+  // const onSubmitForm = () => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   console.log(formData);
+  //   axios.post(addBookURL, formData)
+  //   .then( res => {})
+  //   .catch(er => console.log(er));
+  // }
 
   return (
     <>
@@ -114,7 +127,7 @@ export default function AddNewBook() {
             Book added successfully!
           </Alert>
         )}
-        <form onSubmit={onSubmitForm}>
+        <form onSubmit={onSubmitForm} enctype="multipart/form-data">
           <Grid templateColumns="repeat(2, 1fr)" gap={200} h={"100%"}>
             <GridItem colSpan={1}>
               <Stack spacing={5} mt={10}>
@@ -275,12 +288,22 @@ export default function AddNewBook() {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </FormControl>
+
+                <FormControl>
+                  <FormLabel fontWeight={"semibold"}>Description</FormLabel>
+                  <Input
+                    type="file"
+                    placeholder="Image"
+                    // value={image}
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </FormControl>
               </Stack>
             </GridItem>
 
             <GridItem colSpan={1}>
               <Stack spacing={5} mt={10}>
-                <ImageUploader onImageUpload={setImage} />
+                {/* <ImageUploader onImageUpload={setImage} /> */}
 
                 {/* <FormControl bgColor={"#F4F5FA"} p={7} borderRadius={20}>
                       <Center flexDir={"column"}>
