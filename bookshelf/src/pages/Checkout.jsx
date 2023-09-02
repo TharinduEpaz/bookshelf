@@ -33,6 +33,9 @@ const Checkout = () => {
         backdropFilter="blur(8px)"
         p={10}
     >
+    <Heading ml={2} mb={5}>
+      Checkout
+    </Heading>
     <Flex>
       <Flex direction={'column'} w={'70%'}>
         <Box border={'0.5px solid'} borderColor={'blue.200'} borderRadius={5} padding={5}>
