@@ -5,7 +5,9 @@ import Login from "./Login";
 import ProductPage from "./ProductPage";
 import Register from "./Register";
 import Shop from "./Shop";
+import Checkout from "./Checkout";
 
 
 
-export {Account, Cart, Home, Login, ProductPage, Register, Shop};
+export {Account, Cart, Home, Login, ProductPage, Register, Shop, Checkout};
+

@@ -44,6 +44,10 @@ const User = sequelize.define('User', {
         allowNull: false,
         defaultValue:'buyer'
     },
+    verificationToken : {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
   
  
 }, {

@@ -34,19 +34,17 @@ export default function SimpleCard() {
 
   const loginUrl = "http://localhost:3000/api/v1/login";
 
-
-
   const login = async (e) => {
     setIsLoading(true);
     console.log(email,password);
     e.preventDefault();
     
     try {
-      
       const response = await axios.post(loginUrl, {
         email: email,
         password: password
       },{
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
     }});
@@ -81,10 +79,10 @@ export default function SimpleCard() {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
+            Sign In
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            to enjoy all of our cool features ✌
           </Text>
         </Stack>
         <Box
@@ -108,7 +106,7 @@ export default function SimpleCard() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌
           </Text>
         </Stack>
         <Box
@@ -161,6 +159,6 @@ export default function SimpleCard() {
           </Stack>
         </Box>
       </Stack>
-    </Flex>
-  );
+    </Flex>
+  );
 }

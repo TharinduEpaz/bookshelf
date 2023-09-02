@@ -3,49 +3,44 @@ import {
     Flex,
     Heading,
     HStack,
-    Link,
     Stack,
     useColorModeValue as mode,
   } from '@chakra-ui/react'
   import { CartItem } from '../components/Cart/CartItem'
   import { CartOrderSummary } from '../components/Cart/CartOrderSummary'
+  import { useCartContext } from '../context/cartContext'
+  import { Link } from 'react-router-dom'
+import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
   
 
-  const cartData = [
-    {
-      id: '1',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'Subtle Art of not giving a F*ck',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_UF1000,1000_QL80_.jpg',
-    },
-    {
-      id: '2',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'GreenLights',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://jumpbooks.lk/ceruvef/uploads/2021/08/Greenlights-.jpeg',
-    },
-    {
-      id: '3',
-      price: 39.99,
-      currency: 'LKR',
-      name: 'So Good They Cant Ignore You',
-      description: 'Hardcover, 40mm',
-      quantity: 3,
-      imageUrl:
-        'https://m.media-amazon.com/images/I/519wEQvVwGL.jpg',
-    },
-  ]
-  
-  export const Cart = () => (
+ 
 
+//   amount
+// : 
+// 1
+// id
+// : 
+// "ee46879f-92ef-49ab-9394-fa9f5f76733f"
+// image
+// : 
+// "http://localhost:3000/uploads/default.jpeg"
+// price
+// : 
+// 30
+// stock
+// : 
+// 4
+// title
+// : 
+// "The Science of Everything"
+  
+  export function Cart() {
+
+    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
+    
+    const cartData = cartItems;
+
+    return (
     <Box
       maxW={{
         base: '3xl',
@@ -74,7 +69,9 @@ import {
         backdropFilter="blur(8px)"
         p={10}
     >
+    <CartBreadcrumb />
       <Stack
+      mt={10}
         direction={{
           base: 'column',
           lg: 'row',
@@ -95,7 +92,7 @@ import {
           flex="2"
         >
           <Heading fontSize="2xl" fontWeight="extrabold">
-            Shopping Cart (3 items)
+            Shopping Cart 
           </Heading>
   
           <Stack spacing="6">
@@ -109,11 +106,12 @@ import {
           <CartOrderSummary />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
-            <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>
+            <Link style={{color:'#4299E1'}} to={'/shop'}>Continue shopping</Link>
           </HStack>
         </Flex>
       </Stack>
     </Box>
-  )
+    )
+  }
 
   export default Cart;

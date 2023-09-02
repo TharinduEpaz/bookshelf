@@ -12,13 +12,18 @@ const addBook = async (req, res, next) => {
       ISBN,
       description,
       averageRating,
-      inventory,
+      stock,
       typesAvailable,
       genre,
       language,
       featuredCategory,
+
     } = req.body;
     
+    if (!title || !price || !author || !ISBN || !description || !typesAvailable || !genre) {
+      throw new CustomError.BadRequestError("Please provide all required details");
+    }
+
     const book = await bookModel.create({
       title,
       price,
@@ -26,7 +31,7 @@ const addBook = async (req, res, next) => {
       ISBN,
       description,
       averageRating,
-      inventory,
+      stock,
       typesAvailable,
       genre,
       language,
@@ -41,7 +46,7 @@ const addBook = async (req, res, next) => {
 
 const getAllBooks = async (req, res, next) => {
   try {
-    const books = await bookModel.findAll();
+    const books = (await bookModel.findAll());
     res.json(books);
   } catch (error) {
     next(error);
