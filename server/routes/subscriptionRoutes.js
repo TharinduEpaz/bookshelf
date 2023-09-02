@@ -13,8 +13,8 @@ router.route("/addSubscription").post(authenticateUser, controller.addSubscripti
 // router.route ('/details').get(controller.getAllSubscriptionDetails);
 router.route("/subscriptionComplaint").post(controller.addSubscriptionCompliant);
 
-router.route("/getMySubscription").get(authenticateUser, controller.getMySubscriptionDetails);
-router.route("/updateMySubscription").patch(authenticateUser, controller.updateMySubscription);
+router.route("/getMySubscription").get( authenticateUser ,controller.getMySubscriptionDetails);
+router.route("/updateMySubscription").patch(authenticateUser ,controller.updateMySubscription);
 // router.route("/deleteMySubscription").delete(controller.deleteMySubscription);
 
 
