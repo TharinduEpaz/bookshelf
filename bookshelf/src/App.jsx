@@ -101,6 +101,7 @@ import Moderator from "./pages/Moderator/Moderator";
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import StripeCheckout from "./pages/StripeCheckout";
 
 
 function App() {
@@ -146,9 +147,10 @@ function App() {
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
             <Route exact path="/checkout" element={<Checkout />}></Route>
+            <Route exact path="/stripe" element={<StripeCheckout />}></Route>
 
 
-            <Route element={<PrivateRoutes />}>
+          <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
             <Route index element={<Dashboard />} />

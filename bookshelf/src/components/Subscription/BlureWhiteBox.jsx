@@ -17,7 +17,7 @@ export function BlurWhiteBox({ title, image }) {
     return (
         <Box
             m={"auto"}
-            mt={10}
+            mt={2}
             w="80%"
             h="40vh"
             borderRadius="2xl"
@@ -64,7 +64,7 @@ export function BlurWhiteBox({ title, image }) {
                     <RouterLink to="/selectSubscription">
                         <Button ml={5} colorScheme="purple" w={130} borderRadius={100}>Subscription</Button>
                     </RouterLink>
-                    <Search />
+                    {/* <Search /> */}
 
                 </GridItem>
 

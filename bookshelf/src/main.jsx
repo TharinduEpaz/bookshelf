@@ -14,7 +14,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))",
+        bgGradient:"linear(to-b,blue.100 0%, blue.200 25%, blue.300 50%)",
         paddingTop: "70px",
 
       },

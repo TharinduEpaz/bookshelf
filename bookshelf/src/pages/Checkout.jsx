@@ -1,7 +1,9 @@
 import React from 'react'
-import { Box, Button, Card, CardBody,Text,Flex, Heading, FormControl, FormLabel, Input, Textarea, Checkbox, CardFooter, IconButton, Divider, CardHeader } from '@chakra-ui/react'
+import { Box, Button, Card, CardBody,Text,Flex, Heading, FormControl, FormLabel, Input, Textarea, Checkbox, CardFooter, IconButton, Divider, CardHeader, Alert, AlertIcon } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { DeleteIcon } from '@chakra-ui/icons'
+import { Link as RouterLink } from 'react-router-dom'
+
 const Checkout = () => {
   return (
     <>
@@ -33,6 +35,7 @@ const Checkout = () => {
         backdropFilter="blur(8px)"
         p={10}
     >
+   
     <Flex>
       <Flex direction={'column'} w={'70%'}>
         <Box border={'0.5px solid'} borderColor={'blue.200'} borderRadius={5} padding={5}>
@@ -82,9 +85,18 @@ const Checkout = () => {
               <Textarea id='comments' placeholder='Comments' />
             </FormControl>
 
-            <FormControl mt={5}>
+            {/* <FormControl mt={5}>
               <Checkbox fontWeight={600}>Create an account for later use</Checkbox>
-            </FormControl>
+            </FormControl> */}
+
+  <Alert status='info' mt={5}>
+    <AlertIcon />
+    An Account will be automatically created with the email provided. You can Login and view order details.
+  </Alert>
+  <Alert status='info' mt={5}>
+    <AlertIcon />
+    Your Password will be automatically generated and sent to your email.
+  </Alert>
 
           </form>
           
@@ -130,9 +142,12 @@ const Checkout = () => {
       </CardBody>
       </Card>
 
+      
+                <RouterLink to={'/stripe'}>
       <Button colorScheme='purple' w={'100%'}  mr={'auto'} mt={5} borderRadius={20}>
         Proceed To Payment
       </Button>
+      </RouterLink>
         
       </Box>
     </Flex>

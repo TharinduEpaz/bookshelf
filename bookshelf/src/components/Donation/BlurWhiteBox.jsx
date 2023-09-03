@@ -16,7 +16,7 @@ export function BlurWhiteBox({ title, image, mainButton,route,mainButton1,route1
   return (
     <Box
       m={"auto"}
-      mt={10}
+      mt={2}
       w="80%"
       h="40vh"
       borderRadius="2xl"
