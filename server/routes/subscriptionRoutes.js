@@ -15,7 +15,7 @@ router.route("/subscriptionComplaint").post(controller.addSubscriptionCompliant)
 
 router.route("/getMySubscription").get( authenticateUser ,controller.getMySubscriptionDetails);
 router.route("/updateMySubscription").patch(authenticateUser ,controller.updateMySubscription);
-// router.route("/deleteMySubscription").delete(controller.deleteMySubscription);
+ router.route("/deleteMySubscription").delete(authenticateUser, controller.deleteMySubscription);
 
 
 
