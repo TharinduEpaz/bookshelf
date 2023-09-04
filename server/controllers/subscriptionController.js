@@ -138,6 +138,34 @@ const addSubscriptionCompliant =async (req, res, next) => {
 // };
 
 
+//Add subscription plans(Admin)
+const addSubscriptionPlan = async (req, res, next) => {
+	try {
+		const {
+            firstName,
+			LastName,
+			book_count,
+			time_period,
+			discount
+		} = req.body;
+
+		
+		const plan = await subscriptionModel.create({
+			firstName,
+			LastName,
+			book_count,
+			time_period,
+			discount
+		});
+		res.status(statusCodes.StatusCodes.CREATED).json(plan);
+	} catch (error) {
+		next(error);
+	}
+	// res.send("");
+};
+
+
+
 module.exports = {
 	getAllSubscriptions,
 	getAllUserSubscriptions,
@@ -147,4 +175,5 @@ module.exports = {
 	getMySubscriptionDetails,
 	updateMySubscription,
 	// deleteMySubscription,
+	addSubscriptionPlan
 };
