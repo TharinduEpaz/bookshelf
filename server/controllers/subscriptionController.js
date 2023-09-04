@@ -2,9 +2,11 @@ const subscriptionModel = require("../models/subscription");
 const userSubscriptionModel = require("../models/userSubscription");
 const subscriptionComplaint = require("../models/subscriptionComplaint");
 const bookModel = require("../models/book");
+const bookSubscriptionModel = require("../models/bookSubscription"); 
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
+const {Op}=require("sequelize");
 
 const getAllSubscriptions = async (req, res, next) => {
 
@@ -21,7 +23,7 @@ const getAllSubscriptions = async (req, res, next) => {
 
 const addSubscriptionType = async (req, res, next) => {
 	const userId =req.user.userId;
-	console.log(userId);
+	// console.log(userId);
 	try {
 		const {
             subscriptionType
@@ -167,6 +169,33 @@ const getSingleBook = async (req, res, next) => {
 	// res.send("Get single book" + id);
 };
 
+const addBookSubscription = async (req, res, next) => {
+	const userId = req.user.userId;
+	try {
+		const { id } = req.body;
+		const bookExists = await bookSubscriptionModel.findOne({
+			where: {
+				[Op.and]: [
+					{id: id},
+					{userId: userId},
+				],
+			},
+		});
+		if (bookExists) {
+			throw new Error("Book already exists");
+		}
+
+		const addBookSubscription = await bookSubscriptionModel.create({
+			id,
+			userId,
+		});
+		res.status(statusCodes.StatusCodes.CREATED).json(addBookSubscription);
+		
+	} catch (error) {
+		next(error);
+	}
+};
+
 
 module.exports = {
 	getAllSubscriptions,
@@ -178,4 +207,5 @@ module.exports = {
 	updateMySubscription,
 	deleteMySubscription,
 	getSingleBook,
+	addBookSubscription,
 };

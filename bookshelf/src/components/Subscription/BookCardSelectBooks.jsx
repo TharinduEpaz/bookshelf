@@ -106,7 +106,7 @@ function BookCard({ name,  price, imageURL, id }) {
                             <Box justifyContent={'center'} display={'flex'} marginTop={2}>
                                 <Link to={`/selectBook/${id}`} >
                                     <Button color="white" colorScheme='blue' borderRadius={15}>
-                                        Checkout
+                                        View Details
                                     </Button>
                                 </Link>
                             </Box>

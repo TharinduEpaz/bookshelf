@@ -18,9 +18,11 @@ import {
     TabList,
     TabPanels,
     Tab,
-    TabPanel
+    TabPanel,
+    useDisclosure
 } from "@chakra-ui/react";
 
+import { useToast } from '@chakra-ui/react'
 import Search from "../../components/Shop/Search";
 import LinkTree from "../../components/Subscription/LinkTree";
 import RadioCard from "../../components/Shop/RadioSet";
@@ -29,12 +31,16 @@ import { BiSolidSelectMultiple} from "react-icons/bi";
 import SimpleReview from "../../components/Shop/SimpleReview";
 import AboutAuthor from "../../components/Shop/AboutAuthor";
 import { useParams } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
 function SelectBookSubscription() {
     const [book,setBook] =useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [getBook, setGetBook] = useState([]);
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const id = useParams();
+    const toast = useToast()
     // console.log(id);
 
     useEffect(() => {
@@ -53,6 +59,48 @@ function SelectBookSubscription() {
         };
         getBook(id);
     }, []);
+
+    const addBookSubscription = async(id)=>{
+        try {
+            const bookId = id.id;
+            console.log(bookId);
+            const response = await axios.post(
+                "http://localhost:3000/api/v1/subscriptions/bookSubscription",
+                {
+                    id: bookId,
+                    
+                },
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return (
+                toast({
+                    title: 'Successfully Updated.',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                })
+            )
+
+
+        } catch (error) {
+            console.error(error.response.data.msg);
+            return (
+                toast({
+                    title: error.response.data.msg,
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                })
+            )
+        }
+    }
     return (
         <>
             <Box
@@ -187,9 +235,14 @@ function SelectBookSubscription() {
 
                             <Box display={'flex'} alignItems={'center'} gap={10} mt={10}>
                                 {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
-                                <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
+                                {/* <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
                                     Select Book
-                                </Button>
+                                </Button> */}
+                                <RouterLink to={'#'} onClick={() => addBookSubscription(id)}>
+                                    <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' ml={3}>
+                                        Select Book
+                                    </Button>
+                                </RouterLink>
 
                             </Box>
 
