@@ -19,6 +19,8 @@ import {
   TabPanels,
   Select
 } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+
 
 import AdminSidebar from "../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
@@ -32,25 +34,35 @@ export default function AdminSubscriptions() {
 
 
 
-  
-
   //Subscription plans
   const planColumnNames = [
-    "Subscription Plans"  
-  ];
-  const planList = [
-    {
-      plan: "Book Reader"
-    },
-    {
-      plan: "Book Lover"
-    },
-    {
-      plan: "Book Worm"
-    },
-  
+    "Subscription", 
+    " Plans " 
   ];
 
+
+  const [planList, setPlanList] = useState([]);
+
+  const getPlans = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/subscriptions")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((plan) => ({
+        firstName: plan.firstName,
+        LastName:plan.LastName,
+       
+      }));
+      
+      setPlanList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getPlans();
+  }, [])
 
   
   //Subscriptions
