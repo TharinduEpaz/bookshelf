@@ -11,6 +11,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from "axios";
 import { useToast } from '@chakra-ui/react'
+import { color } from 'framer-motion';
 
 function RevokeSubscription() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,11 +39,12 @@ function RevokeSubscription() {
                 console.error("Error deleting subscription:", response.statusText);
             }
             toast({
-                title: 'Successfully Updated.',
-                status: 'success',
+                title: 'Successfully Revoked.',
+                status: 'error',
                 duration: 4000,
                 isClosable: true,
-                position: 'top'
+                position: 'top',
+            
             });
             setReloadPage(true);
         } catch (error) {

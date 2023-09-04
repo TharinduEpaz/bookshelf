@@ -133,9 +133,9 @@ export default function ChangeSubscription() {
     } else if (currentSubscription === "Book Lover"){
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
-    else{
-        currentSubscriptionIcon= <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
-    }
+    // else{
+    //     currentSubscriptionIcon= <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
+    // }
 
     let otherSubscriptionIcon1 = null;
     let otherSubscriptionIcon2 = null;
