@@ -36,7 +36,6 @@ function Rating({ rating, numReviews }) {
                                 color={'gold'}
                                 key={i}
                                 style={{ marginLeft: '1' }}
-
                             />
                         );
                     }

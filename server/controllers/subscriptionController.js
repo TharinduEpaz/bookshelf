@@ -1,6 +1,7 @@
 const subscriptionModel = require("../models/subscription");
 const userSubscriptionModel = require("../models/userSubscription");
 const subscriptionComplaint = require("../models/subscriptionComplaint");
+const bookModel = require("../models/book");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -120,22 +121,7 @@ const addSubscriptionCompliant =async (req, res, next) => {
 
 };
 
-// const deleteMySubscription = async (req, res, next) => {
-// 	const { id } = req.params;
-// 	try {
-// 		const book = await bookModel.findOne({ where: { id } });
-// 		if (!book) {
-// 			throw new CustomError.NotFoundError("No book found");
-// 		}
-// 		await book.destroy();
-// 		res.status(statusCodes.StatusCodes.OK).json({
-// 			message: "Book deleted",
-// 		});
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// 	// res.send("Delete book" + id);
-// };
+
 const deleteMySubscription = async (req, res, next) => {
 	const userId = req.user.userId; // Assuming you can extract userId from the request
 
@@ -167,6 +153,20 @@ const deleteMySubscription = async (req, res, next) => {
 	}
 };
 
+const getSingleBook = async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		const book = await bookModel.findOne({ where: { id } });
+		if (!book) {
+			throw new CustomError.NotFoundError("No book found");
+		}
+		res.status(statusCodes.StatusCodes.OK).json(book);
+	} catch (error) {
+		next(error);
+	}
+	// res.send("Get single book" + id);
+};
+
 
 module.exports = {
 	getAllSubscriptions,
@@ -177,4 +177,5 @@ module.exports = {
 	getMySubscriptionDetails,
 	updateMySubscription,
 	deleteMySubscription,
+	getSingleBook,
 };
