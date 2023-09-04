@@ -37,7 +37,10 @@ export default function AdminSubscriptions() {
   //Subscription plans
   const planColumnNames = [
     "Subscription", 
-    " Plans " 
+    " Plans ",
+    "Book Count",
+    "Time Period",
+    "Discount"
   ];
 
 
@@ -51,6 +54,9 @@ export default function AdminSubscriptions() {
       const filteredData = jsonData.map((plan) => ({
         firstName: plan.firstName,
         LastName:plan.LastName,
+        book_count:plan.book_count,
+        time_period:plan.time_period,
+        discount:plan.discount,
        
       }));
       
@@ -220,8 +226,16 @@ export default function AdminSubscriptions() {
                   </CardBody>
                 </Card>
 
-                <Box
-                  mt={10}
+              </Flex>
+
+
+              {/* Table1: Subscription Plans Details Table */}
+              <Text fontSize="lg" fontWeight={"bold"} mb={2} mt={10}>
+                  Subscription Plans Details
+                </Text>
+
+              <Box
+                  mt={0}
                   p={2}
                   pl={5}
                   pr={5}
@@ -236,11 +250,13 @@ export default function AdminSubscriptions() {
                 </Box>
 
 
-              
-
-              </Flex>
 
               <Spacer mt={10} />
+
+              {/* Table2: Subscription Details Tabel */}
+              <Text fontSize="lg" fontWeight={"bold"} mb={2} mt={10}>
+                  Subscription Details
+                </Text>
 
               <Box>
                 {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
