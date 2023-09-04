@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import {
   Table,
   Thead,
@@ -8,6 +8,13 @@ import {
   Td,
   TableContainer,
   Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
@@ -15,6 +22,8 @@ import { userContext } from "../../context/userContext";
 
 function ManageRequest() {
   const { user, setUser } = useContext(userContext);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
   const [requestDetails, setRequestDetails] = useState({});
   const [userEmail, setUserEmail] = useState(""); // State to store user email
@@ -71,21 +80,51 @@ function ManageRequest() {
                 >
                   Edit
                 </Button>
-                <Button
+                <Button onClick={onOpen}
                   marginLeft={"5"}
                   colorScheme="red"
                   variant={"outline"}
                   borderRadius={15}
+
                 >
                   Delete
                 </Button>
+                
+
               </Td>
               <Td>lasinduwathsan@gmail.com</Td> {/* Display user email */}
             </Tr>
           ))}
         </Tbody>
       </Table>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Customer
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={onClose} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </TableContainer>
+    
   );
 }
 
