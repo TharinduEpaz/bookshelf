@@ -41,7 +41,7 @@ function Shop() {
                     <>
                         <Text  fontSize={18} as={'b'} marginTop={5} ml={2}>No books have been selected for subscription</Text>
 
-                        <RouterLink to="/selectBookLover/selectBook">
+                        <RouterLink to="/selectPackage/selectBook">
                             <Box marginLeft={43} color={'black'}>
                                 <BsFillPlusCircleFill size={25} />
                             </Box>
@@ -68,7 +68,7 @@ function Shop() {
                             ))}
                         </Flex>
                         <Box marginTop={160}>
-                            <RouterLink to="/selectBookLover/selectBook">
+                            <RouterLink to="/selectPackage/selectBook">
                                 <Box marginLeft={45}>
                                     <BsFillPlusCircleFill size={25} />
                                 </Box>

@@ -8,7 +8,7 @@ import SideNavDetails from '../../components/Subscription/SideNavDetails';
 import SelectReaderIcon from '../../components/Subscription/SelectReaderIcon';
 import SelectReader from '../../components/Subscription/SelectReader';
 import { Outlet } from 'react-router-dom';
-function SelectBookReader() {
+function SelectPackage() {
     return (
         <Box
             height={'100%'}
@@ -32,7 +32,7 @@ function SelectBookReader() {
                 </GridItem>
 
                 <GridItem rowSpan={5} colSpan={4} >
-                    <Outlet/>
+                    <Outlet />
                 </GridItem>
             </Grid>
 
@@ -40,4 +40,4 @@ function SelectBookReader() {
     )
 }
 
-export default SelectBookReader
+export default SelectPackage
