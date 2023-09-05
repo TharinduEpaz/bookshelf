@@ -8,7 +8,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 
 
-function Shop() {
+function bookDetails() {
     const initialBookDetails = {
         book1: {
             title: "The Midnight Library",
@@ -115,4 +115,4 @@ function Shop() {
     );
 }
 
-export default Shop;
+export default bookDetails;

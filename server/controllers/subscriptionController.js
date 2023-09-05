@@ -129,13 +129,11 @@ const deleteMySubscription = async (req, res, next) => {
 
 	try {
 		// Delete the user's subscription
-		const response = await userSubscriptionModel.update(
-			{ subscriptionType: "No subscription" },
+		const response = await userSubscriptionModel.destroy(
 			{
 				where: {
 					userId: userId,
 				},
-				returning: true,
 			}
 		);
 
@@ -196,6 +194,9 @@ const addBookSubscription = async (req, res, next) => {
 	}
 };
 
+const checkSubscription =async(req,res,next) => {
+
+}
 
 module.exports = {
 	getAllSubscriptions,
