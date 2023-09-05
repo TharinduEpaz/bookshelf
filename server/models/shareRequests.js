@@ -7,12 +7,11 @@ const shareRequest = sequelize.define('shareRequest', {
         primaryKey: true,
         defaultValue: sequelize.UUIDV4
     },
-    userName: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-
     bookName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    userName: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -25,8 +24,8 @@ const shareRequest = sequelize.define('shareRequest', {
         allowNull: false
     },
     listOfBooks: {
-        // type: DataTypes.ARRAY(DataTypes.STRING),
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        // type: DataTypes.STRING,
         allowNull: false
     },
     userId: {
