@@ -6,8 +6,9 @@ const path = require("path");
 //create order
 const addOrder = async (req, res, next) => {
 	try {
-		const { orderDate, orderStatus, totalPrice, buyer_id } = req.body;
-
+		const { orderDate, orderStatus, totalPrice} = req.body;
+		const buyer_id = req.user.id;
+		
 		console.log(
 			"Order values:",
 			orderDate,
