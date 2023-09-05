@@ -18,6 +18,10 @@ const data = {
     numReviews: 34,
 };
 function ShareBookDetails(props) {
+    // name={requestDetails[item].bookName}
+    // userName={requestDetails[item].userName}
+    // details={requestDetails[item].details}
+    // date={requestDetails[item].createdAt}
     return (
        <>
             <Card border={"1px"}
@@ -40,10 +44,10 @@ function ShareBookDetails(props) {
                         <GridItem colSpan={2}>
                             <Box marginTop={5}>
                                 <Text fontSize="lg" as={'b'}>
-                                    {props.name}
+                                    {props.bookName}
                                 </Text>
                                 <Text>
-                                    by {" "} {props.author}
+                                    by {" "} {props.userName}
                                 </Text>
                             </Box>
                         </GridItem>
@@ -51,7 +55,7 @@ function ShareBookDetails(props) {
                         <GridItem colSpan={7}>
                             <Box marginLeft={24}>
                                 <Text marginTop={8} fontSize="lg" textAlign={'end'}>
-                                    Posted 1 Day ago
+                                    Posted {props.createdAt}
                                 </Text>
                             </Box>
                         </GridItem>
