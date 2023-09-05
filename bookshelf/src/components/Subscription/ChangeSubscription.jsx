@@ -281,7 +281,7 @@ export default function ChangeSubscription() {
                                                             pl={10}
                                                             pr={10}
                                                             onClick={() => {
-                                                                handleSelectSubscription(otherSubscription2)
+                                                                handleSelectSubscription(otherSubscription1)
                                                                 navigate('/selectPackage/manageSubscription');
                                                             }
                                                             }

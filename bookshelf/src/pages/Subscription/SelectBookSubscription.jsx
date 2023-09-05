@@ -238,7 +238,7 @@ function SelectBookSubscription() {
                                 {/* <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
                                     Select Book
                                 </Button> */}
-                                <RouterLink to={'#'} onClick={() => addBookSubscription(id)}>
+                                <RouterLink to={'/selectPackage/details'} onClick={() => addBookSubscription(id)}>
                                     <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' ml={3}>
                                         Select Book
                                     </Button>
