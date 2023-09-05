@@ -136,6 +136,36 @@ const addSubscriptionCompliant =async (req, res, next) => {
 // 	}
 // 	// res.send("Delete book" + id);
 // };
+const deleteMySubscription = async (req, res, next) => {
+	const userId = req.user.userId; // Assuming you can extract userId from the request
+
+	try {
+		// Delete the user's subscription
+		const response = await userSubscriptionModel.update(
+			{ subscriptionType: "No subscription" },
+			{
+				where: {
+					userId: userId,
+				},
+				returning: true,
+			}
+		);
+
+		if (response === 0) {
+			// If no rows were affected, it means there was no subscription to delete
+			throw new CustomError.NotFoundError(
+				"No subscription found to delete"
+			);
+		}
+
+		// Respond with a success message
+		res.status(statusCodes.StatusCodes.OK).json({
+			message: "Subscription deleted successfully",
+		});
+	} catch (error) {
+		next(error);
+	}
+};
 
 
 module.exports = {
@@ -146,5 +176,5 @@ module.exports = {
 	addSubscriptionCompliant,
 	getMySubscriptionDetails,
 	updateMySubscription,
-	// deleteMySubscription,
+	deleteMySubscription,
 };

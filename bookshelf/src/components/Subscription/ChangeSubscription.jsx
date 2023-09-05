@@ -26,6 +26,7 @@ import SelectWormIcon from './SelectWormIcon';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from "axios";
 
+
 export default function ChangeSubscription() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [showOtherSubscriptionPopup, setShowOtherSubscriptionPopup] = useState(false);
@@ -131,6 +132,9 @@ export default function ChangeSubscription() {
         currentSubscriptionIcon = <SelectWormIcon />;
     } else if (currentSubscription === "Book Lover"){
         currentSubscriptionIcon = <SelectLoverIcon />;
+    }
+    else{
+        currentSubscriptionIcon= <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
     }
 
     let otherSubscriptionIcon1 = null;
