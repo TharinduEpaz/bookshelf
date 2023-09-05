@@ -42,7 +42,7 @@ const book = sequelize.define('book', {
 
     typesAvailable: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false
+        allowNull: true
     },
 
     //genres means fiction, non-fiction, etc
