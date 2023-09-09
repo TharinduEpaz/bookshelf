@@ -23,20 +23,20 @@ const order = sequelize.define('order', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    user_id: {
-        type: DataTypes.UUID,
-        allowNull: false
-    },
     is_paid: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+    orderItems: {
+        type: DataTypes.ARRAY(DataTypes.JSON),
+        allowNull: true
     },
    
 
 }, {
     // Other model options go here  
 })
-// order.sync({ force: true })
+// order.sync({ alter: true })
 
 module.exports = order;

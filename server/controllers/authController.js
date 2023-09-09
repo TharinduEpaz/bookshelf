@@ -155,7 +155,6 @@ const verifyEmail = async (req, res, next) => {
         id: result.user
       }
     });
-    
 
     await notification.destroy({
       where: {
@@ -173,10 +172,7 @@ const verifyEmail = async (req, res, next) => {
   }
 }
 
-
-
 module.exports = {
-
   register,
   login,
   logout,

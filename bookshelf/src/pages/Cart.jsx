@@ -39,6 +39,7 @@ import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
     const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
     
     const cartData = cartItems;
+    console.log(JSON.stringify(cartData));
 
     return (
     <Box
