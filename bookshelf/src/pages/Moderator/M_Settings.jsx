@@ -1,4 +1,4 @@
-import { Box, Tab, TabList, TabPanels, TabPanel, Tabs, FormControl, FormLabel, Input, Icon, Flex, Button } from '@chakra-ui/react'
+import { Box, Tab, TabList, TabPanels, TabPanel, Tabs, FormControl, FormLabel, Input, Icon, Flex, Button, ButtonGroup } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
 import { BiX, BiCheck } from 'react-icons/bi'
@@ -185,6 +185,31 @@ export default function Settings() {
                 
                 {/* Save Button */}
                 <Button colorScheme='blue' mt={5}>Save Changes </Button>
+            </TabPanel>
+
+            <TabPanel>{/* Change Password */}
+              <FormControl>
+                <FormLabel fontWeight={"semibold"}>
+                  Current Password
+                </FormLabel>
+                <Input type="password" />
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={"semibold"}>
+                  New Password
+                </FormLabel>
+                <Input type="password" />
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={"semibold"}>
+                  Confirm Password
+                </FormLabel>
+                <Input type="password" />
+              </FormControl>
+              <ButtonGroup mt={5}>
+              <Button colorScheme='blue' mt={5}>Update Password</Button>
+              <Button variant={'outline'} colorScheme='red' mt={5}>Cancel</Button>
+              </ButtonGroup>
             </TabPanel>
           </TabPanels>
         </Tabs>
