@@ -12,6 +12,8 @@ import {
   Flex,
   Button,
   ButtonGroup,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { AiFillCheckCircle, AiFillEdit } from "react-icons/ai";
@@ -29,6 +31,8 @@ export default function Settings() {
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [email, setEmail] = useState("");
+  const [validateErrors, setErrors] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   //URLs
   const url = "http://localhost:3000/api/v1/users/" + user.user.userId;
@@ -40,8 +44,6 @@ export default function Settings() {
         url
       );
       const userData = await response.json();
-      console.log(userData);
-
       setUserData(userData);
       setFName(userData.firstName);
       setLName(userData.lastName);
@@ -51,25 +53,54 @@ export default function Settings() {
     }
   };
 
+  //Validate Form
+  const validateForm = () => {
+    let errors = "";
+    if (fName === "") {
+      errors = "First name cannot be empty"
+    }
+    if (lName === "") {
+      errors = "Last name cannot be empty"
+    }
+    if (email === "") {
+      errors = "Email cannot be empty"
+    }
+    if (/\d/.test(fName) || /\d/.test(lName)) {
+      errors = "Name cannot contain digits or special characters"
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      errors = "Invalid email"
+    }
+    
+    setErrors(errors);
+    return errors === "";
+  }
+
   // Update General Details
   const updateGeneralDetails = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.patch(
-        url,
-        {
-          firstName: fName,
-          lastName: lName,
-          email: email,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
+      if(validateForm()){
+        const response = await axios.patch(
+          url,
+          {
+            firstName: fName,
+            lastName: lName,
+            email: email,
           },
-        }
-      );
-      console.log(response.data);
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setShowSuccessAlert(true);
+        console.log(response);
+      }
+      else {
+        setShowSuccessAlert(false);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -90,6 +121,8 @@ export default function Settings() {
           <TabPanels>
             <TabPanel>
               {/* General Setting */}
+              {validateErrors && <Alert status="error"> <AlertIcon /> {validateErrors}</Alert>}
+              {showSuccessAlert && (<Alert status="success" mt={4}><AlertIcon />Profile updated successfully!</Alert>)}
               <form onSubmit={updateGeneralDetails}>
                 {/* First Name */}
                 <FormControl>
