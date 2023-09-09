@@ -1,20 +1,21 @@
 import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
+import AdminUserMgtTabs from '../../components/Admin/AdminUserMgtTabs';
 
 import {
     Box, 
     Flex
 } from '@chakra-ui/react'
 
-
-export default function AdminShop() {
+export default function AdminUserMgt() {
   return (
     
     <Box
     m={"auto"}
     mt={10}
     w="80%"
-    h="100vh"
+    h="100%"
+    minH={800}
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
@@ -47,9 +48,9 @@ export default function AdminShop() {
       flexWrap={"wrap"}
     >  
 
-  
-
  </Flex>
+
+    <AdminUserMgtTabs/>
 
  </Box>
  </div>

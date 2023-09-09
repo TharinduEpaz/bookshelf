@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
 
 import {
     Box, 
@@ -10,7 +10,7 @@ import {
     Spacer,
     Text,
     StatGroup,
-    Select,
+    Select
 } from '@chakra-ui/react'
 
 import {
@@ -20,45 +20,94 @@ import {
 //import { Link } from "react-router-dom";
 //import DateFilter from "../../components/Moderator/DateFilter";
 //import SearchPanel from "../../components/Moderator/SearchPanel";
-import AdminStatCard from '../components/Admin/AdminStatCard';
-import AdminDtataTable from '../components/Admin/AdminDtataTable';
+import AdminStatCard from '../../components/Admin/AdminStatCard';
+import AdminDtataTable from '../../components/Admin/AdminDtataTable';
 import { useEffect, useState } from "react";
 
-export default function AdminOrders() {
+export default function AdminBookSharing() {
+
 
   const columns = [
-    "Order ID",
+    "Sharing ID",
     "Date",
-    "Total Price (Rs.)",
+    "Customer Id",
+    "Book",
     "Status",
-    "Buyer Id",
+  ];
+
+  const list = [
+    {
+      id: "s0001",
+      date: "2023-05-10",
+      cid: "c0001",
+      book: "Anne",
+      status: "Shared"
+    },
+    {
+      id: "s0002",
+      date: "2023-03-14",
+      cid: "c0005",
+      book: "Sherlock Holmes",
+      status: "Shared"
+    },
+    {
+      id: "s0003",
+      date: "2022-11-10",
+      cid: "c0003",
+      book: "Marry",
+      status: "Shared"
+    },
+    {
+      id: "s0004",
+      date: "2023-01-10",
+      cid: "c0009",
+      book: "Jane ",
+      status: "Shared"
+    },
+    {
+      id: "s0005",
+      date: "2023-05-10",
+      cid: "c0010",
+      book: "Hali",
+      status: "Shared"
+    },
+    {
+      id: "s0006",
+      date: "2023-07-24",
+      cid: "c0081",
+      book: "Oliver Twist",
+      status: "Shared"
+    },
+  
   ];
 
 
-  const [list, setOrderList] = useState([]);
+  // const [list, setOrderList] = useState([]);
 
-  const getOrders = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/v1/orders")
-      const jsonData = await response.json()
+  // const getOrders = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/v1/orders")
+  //     const jsonData = await response.json()
 
-      const filteredData = jsonData.map((order) => ({
-        id: order.id,
-        orderDate: new Date(order.orderDate).toLocaleDateString(),
-        totalPrice: order.totalPrice.toLocaleString(),
-        orderStatus: order.orderStatus,
-        buyer_id: order.buyer_id
-      }));
+  //     const filteredData = jsonData.map((order) => ({
+  //       id: order.id,
+  //       orderDate: new Date(order.orderDate).toLocaleDateString(),
+  //       totalPrice: order.totalPrice.toLocaleString(),
+  //       orderStatus: order.orderStatus,
+  //       buyer_id: order.buyer_id
+  //     }));
       
-      setOrderList(filteredData);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
+  //     setOrderList(filteredData);
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
 
-  useEffect(() => {
-    getOrders();
-  }, [])
+  // useEffect(() => {
+  //   getOrders();
+  // }, [])
+
+
 
 
   return (
@@ -108,7 +157,7 @@ export default function AdminOrders() {
  <Box p={10}>
               <Flex>
                 <Text fontSize="lg" fontWeight={"bold"}>
-                  Order Summary
+                  Book Sharing
                 </Text>
               </Flex>
 
@@ -135,7 +184,7 @@ export default function AdminOrders() {
                       </Select>
                     </Flex>
                     <StatGroup gap={100}>
-                      <AdminStatCard lable="All Orders" value="100" />
+                      <AdminStatCard lable="All Sharing Requests" value="100" />
                       <AdminStatCard
                         lable="Pending"
                         value="20"
@@ -143,7 +192,7 @@ export default function AdminOrders() {
                         percentage="80"
                       />
                       <AdminStatCard
-                        lable="Completed"
+                        lable="Accepted"
                         value="70"
                         type="increase"
                         percentage="80"
@@ -167,6 +216,9 @@ export default function AdminOrders() {
 
                 <Spacer mt={5} />
 
+                <Text fontSize="lg" fontWeight={"bold"} mb={2}>
+                  Book Sharing Details
+                </Text>
                 <AdminDtataTable list={list} columnNames={columns} />
 
 
@@ -183,3 +235,4 @@ export default function AdminOrders() {
 
   )
 }
+

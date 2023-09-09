@@ -22,11 +22,11 @@ import {
 import { useState, useEffect } from "react";
 
 
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
-import AdminStatCard from "../components/Admin/AdminStatCard";
-import AdminDtataTable from "../components/Admin/AdminDtataTable";
-import AdminSubscriptionPlans from "../components/Admin/AdminSubscriptionPlans";
+import AdminStatCard from "../../components/Admin/AdminStatCard";
+import AdminDtataTable from "../../components/Admin/AdminDtataTable";
+import AdminSubscriptionPlans from "../../components/Admin/AdminSubscriptionPlans";
 
 
 export default function AdminSubscriptions() {

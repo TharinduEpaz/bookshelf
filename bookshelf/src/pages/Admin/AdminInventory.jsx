@@ -21,10 +21,10 @@ import {
   BiSearchAlt,
 } from "react-icons/bi";
 
-import AdminSidebar from "../components/Admin/AdminSidebar";
-import AdminStatCard from "../components/Admin/AdminStatCard";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
+import AdminStatCard from "../../components/Admin/AdminStatCard";
 import { Link } from "react-router-dom";
-import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import AdminDtataTable from "../../components/Admin/AdminDtataTable";
 import { useEffect, useState } from "react";
 
 //import SearchPanel from "../../components/Moderator/SearchPanel";

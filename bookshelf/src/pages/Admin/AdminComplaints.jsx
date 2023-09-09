@@ -1,6 +1,6 @@
 import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
-import AdminDtataTable from '../components/Admin/AdminDtataTable';
+import AdminSidebar from "../../components/Admin/AdminSidebar";
+import AdminDtataTable from '../../components/Admin/AdminDtataTable';
 
 import {
   Box,

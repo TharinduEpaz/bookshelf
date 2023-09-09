@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDisclosure } from '@chakra-ui/react'; 
-import SearchBar from '../components/Admin/SearchBar';
+import SearchBar from '../../components/Admin/SearchBar';
 import { Alert, AlertIcon } from '@chakra-ui/react';
 
 
@@ -22,7 +22,7 @@ import {
     ModalCloseButton,
     Input 
 } from '@chakra-ui/react'
-import AdminUsersTable from '../components/Admin/AdminUsersTable';
+import AdminUsersTable from '../../components/Admin/AdminUsersTable';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 

@@ -1,11 +1,11 @@
 
-import AdminSidebar from "../components/Admin/AdminSidebar";
-import AdminDbSummary from "../components/Admin/AdminDbSummary";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
+import AdminDbSummary from "../../components/Admin/AdminDbSummary";
 //import Chart from "../components/Admin/Chart";
-import AdminDBTable from "../components/Admin/AdminDBTable";
+import AdminDBTable from "../../components/Admin/AdminDBTable";
 import React, { useState } from 'react';
-import AdminBarChart from "../components/Admin/AdminBarChart";
-import AdminLineChart from "../components/Admin/AdminLineChart";
+import AdminBarChart from "../../components/Admin/AdminBarChart";
+import AdminLineChart from "../../components/Admin/AdminLineChart";
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 

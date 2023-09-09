@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
 
 import {
     Box, 

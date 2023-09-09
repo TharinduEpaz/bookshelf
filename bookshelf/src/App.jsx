@@ -72,18 +72,18 @@ import SelectLover from "./components/Subscription/SelectLover";
 import SelectReader from "./components/Subscription/SelectReader"
 import SelectWorm from "./components/Subscription/SelectWorm"
 
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminNotifications from "./pages/AdminNotifications";
-import AdminUserMgt from "./pages/AdminUserMgt";
-import AdminShop from "./pages/AdminShop";
-import AdminInventory from "./pages/AdminInventory";
-import AdminDonations from "./pages/AdminDonations";
-import AdminSubscriptions from "./pages/AdminSubscriptions";
-import AdminSettings from "./pages/AdminSettings";
-import AdminOrders from "./pages/AdminOrders";
-import AdminBookSharing from "./pages/AdminBookSharing";
-import AdminComplaints from "./pages/AdminComplaints";
-import AdminAddNewBook from "./pages/AdminAddNewBook";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminNotifications from "./pages/Admin/AdminNotifications";
+import AdminUserMgt from "./pages/Admin/AdminUserMgt";
+import AdminShop from "./pages/Admin/AdminShop";
+import AdminInventory from "./pages/Admin/AdminInventory";
+import AdminDonations from "./pages/Admin/AdminDonations";
+import AdminSubscriptions from "./pages/Admin/AdminSubscriptions";
+import AdminSettings from "./pages/Admin/AdminSettings";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import AdminBookSharing from "./pages/Admin/AdminBookSharing";
+import AdminComplaints from "./pages/Admin/AdminComplaints";
+import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";

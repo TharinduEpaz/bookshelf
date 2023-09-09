@@ -1,6 +1,6 @@
 import React from 'react'
-import AdminSidebar from "../components/Admin/AdminSidebar";
-import AdminNotificationsTable from '../components/Admin/AdminNotificationsTable';
+import AdminSidebar from "../../components/Admin/AdminSidebar";
+import AdminNotificationsTable from '../../components/Admin/AdminNotificationsTable';
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 import {

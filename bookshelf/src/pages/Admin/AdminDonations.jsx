@@ -19,10 +19,10 @@ import {
   TabPanels,
 } from "@chakra-ui/react";
 
-import AdminSidebar from "../components/Admin/AdminSidebar";
+import AdminSidebar from "../../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
-import AdminStatCard from "../components/Admin/AdminStatCard";
-import AdminDtataTable from "../components/Admin/AdminDtataTable";
+import AdminStatCard from "../../components/Admin/AdminStatCard";
+import AdminDtataTable from "../../components/Admin/AdminDtataTable";
 
 
 export default function AdminDonations() {
