@@ -154,9 +154,7 @@ function Home() {
             exit={{ opacity: 0 }}
             duration={0.5}
           >
-      
-        
-          
+
             <BlurWhiteBox
                 title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
         image={homeImage}

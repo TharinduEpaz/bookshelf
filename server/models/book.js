@@ -30,7 +30,7 @@ const book = sequelize.define('book', {
         allowNull: false
     },
     averageRating : {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     stock: {
@@ -39,11 +39,6 @@ const book = sequelize.define('book', {
     },
 
     //types means paperback, hardcover, etc
-
-    typesAvailable: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false
-    },
 
     //genres means fiction, non-fiction, etc
     
