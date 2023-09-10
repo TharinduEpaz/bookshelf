@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { AiFillCheckCircle, AiFillEdit } from "react-icons/ai";
-import { BiX, BiCheck } from "react-icons/bi";
+import { BiX, BiCheck, BiShowAlt, BiHide } from "react-icons/bi";
 import { userContext } from "../../context/userContext";
 import { useContext } from "react";
 import axios from "axios";
@@ -40,6 +40,9 @@ export default function Settings() {
   const [passwordError, setPasswordError] = useState("");
   const [showSuccessAlert1, setShowSuccessAlert1] = useState(false);
   const [showSuccessAlert2, setShowSuccessAlert2] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   //URLs
   const updateUserUrl = "http://localhost:3000/api/v1/users/" + user.user.userId;
@@ -367,15 +370,60 @@ export default function Settings() {
               <form onSubmit={updatePassword}>
               <FormControl>
                 <FormLabel fontWeight={"semibold"}>Current Password</FormLabel>
-                <Input type="password" value={currentPassword} onChange={(e) => setCurretPassword(e.target.value)}/>
+                <Flex alignItems={"center"}>
+                  <Input type={showCurrentPassword ? 'text' : 'password'} value={currentPassword} onChange={(e) => setCurretPassword(e.target.value)}/>
+                {
+                  !showCurrentPassword ? (
+                    <Icon as={BiShowAlt} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() =>{
+                      setShowCurrentPassword(true)
+                      console.log("cliked")
+                    }} />
+                  ) : (
+                    
+                    <Icon as={BiHide} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() => {
+                      setShowCurrentPassword(false)
+                    }} />
+                  )
+                }
+                </Flex>
               </FormControl>
               <FormControl>
                 <FormLabel fontWeight={"semibold"}>New Password</FormLabel>
-                <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+                <Flex alignItems={"center"}>
+                  <Input type={showNewPassword ? 'text' : 'password'} value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+                {
+                  !showNewPassword ? (
+                    <Icon as={BiShowAlt} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() =>{
+                      setShowNewPassword(true)
+                      console.log("cliked")
+                    }} />
+                  ) : (
+                    
+                    <Icon as={BiHide} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() => {
+                      setShowNewPassword(false)
+                    }} />
+                  )
+                }
+                </Flex>
               </FormControl>
               <FormControl>
-                <FormLabel fontWeight={"semibold"}>Confirm Password</FormLabel>
-                <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                <FormLabel fontWeight={"semibold"}>New Password</FormLabel>
+                <Flex alignItems={"center"}>
+                  <Input type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                {
+                  !showConfirmPassword ? (
+                    <Icon as={BiShowAlt} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() =>{
+                      setShowConfirmPassword(true)
+                      console.log("cliked")
+                    }} />
+                  ) : (
+                    
+                    <Icon as={BiHide} w={25} h={25} color="gray" margin={-50} cursor={"pointer"} zIndex={1} onClick={() => {
+                      setShowConfirmPassword(false)
+                    }} />
+                  )
+                }
+                </Flex>
               </FormControl>
               <ButtonGroup mt={5}>
                 <Button colorScheme="blue" mt={5} type="submit">
