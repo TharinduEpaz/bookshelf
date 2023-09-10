@@ -8,8 +8,15 @@ import {
   ButtonGroup,
   Alert,
   AlertIcon,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 import { userContext } from "../../context/userContext";
 import { useContext } from "react";
@@ -26,6 +33,8 @@ export default function PasswordChange() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
   //URLs
   const updatePasswordUrl = "http://localhost:3000/api/v1/users/updatePassword";
@@ -46,14 +55,15 @@ export default function PasswordChange() {
       errors = "Please add current password";
     }
     setPasswordErrors(errors);
-    return errors === "";
+    if (errors === "") {
+        onOpen();
+    }
   };
 
   //Update Password
   const updatePassword = async (e) => {
     e.preventDefault();
     try {
-      if (validatePassword()) {
         console.log(currentPassword);
         const response = await axios.patch(
           updatePasswordUrl,
@@ -71,16 +81,9 @@ export default function PasswordChange() {
         setShowSuccessAlert2(true);
         setPasswordError(false);
         setPasswordErrors(false);
-        if (response.OK) {
-          setCurretPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
-        }
-      } else {
-        setShowSuccessAlert2(false);
-        setPasswordError(false);
-        console.log("invalid");
-      }
+        setCurretPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
     } catch (error) {
       console.error(error);
       setPasswordError(error.response.data.msg);
@@ -221,7 +224,7 @@ export default function PasswordChange() {
           </Flex>
         </FormControl>
         <ButtonGroup mt={5}>
-          <Button colorScheme="blue" mt={5} type="submit">
+          <Button colorScheme="blue" mt={5} onClick={validatePassword}>
             Update Password
           </Button>
           <Button variant={"outline"} colorScheme="red" mt={5} type="reset">
@@ -229,6 +232,38 @@ export default function PasswordChange() {
           </Button>
         </ButtonGroup>
       </form>
+
+      {/* Alert Dialog */}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Update Password
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='blue' onClick={(e) => {
+                updatePassword(e);
+                setShowSuccessAlert2(false);
+                onClose();
+              }} ml={3}>
+                Update
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }
