@@ -1,5 +1,9 @@
 const userModel = require("../models/user");
 const notificationModel = require("../models/userNotifications");
+const orderModel = require("../models/order");
+const subscriptionModel = require("../models/subscription");
+
+
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -133,6 +137,27 @@ const addUser = async (req, res, next) => {
   }
 };
 
+const userDashboard = async (req, res, next) => {
+  try {
+    const { userId } = req.user;
+
+    //get orders count
+    const ordersCount = await orderModel.count({
+      where: {
+        UserId: userId,
+      },
+    });
+
+    res.json({ ordersCount : ordersCount });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+
 module.exports = {
   getAllUsers,
   getSingeUser,
@@ -142,5 +167,6 @@ module.exports = {
   getNotifications,
   deleteUser,
   addUser,
-  updateUser
+  updateUser,
+  userDashboard,
 };

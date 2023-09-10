@@ -5,12 +5,20 @@ import {
     HStack,
     Stack,
     useColorModeValue as mode,
+    Button,
+    Spinner,
+    Alert,
+    useToast,
   } from '@chakra-ui/react'
   import { CartItem } from '../components/Cart/CartItem'
   import { CartOrderSummary } from '../components/Cart/CartOrderSummary'
   import { useCartContext } from '../context/cartContext'
-  import { Link } from 'react-router-dom'
+  import { Link, Navigate, useNavigate } from 'react-router-dom'
 import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
+import axios from 'axios'
+import { useState } from 'react'
+import { FaArrowRight } from 'react-icons/fa'
+
   
 
  
@@ -36,10 +44,39 @@ import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
   
   export function Cart() {
 
-    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart } = useCartContext();
-    
+    const { cartItems, getItemQuantity, addToCart,decreaseItemQuantity,removeFromCart, totalPrice } = useCartContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const toast = useToast();
     const cartData = cartItems;
     console.log(JSON.stringify(cartData));
+    const navigate = useNavigate();
+
+    async function createOrder(){
+      setIsLoading(true);
+      if(cartData.length === 0){
+        setIsError("Cart is empty");
+        setIsLoading(false);
+        return;
+      }
+      try{
+        const response = await axios.post('http://localhost:3000/api/v1/ordes', {
+          orderItems: cartData,
+          totalPrice: totalPrice,
+        },
+        {
+          withCredentials: true,
+          });
+        console.log(response.data);
+        setIsLoading(false);
+        navigate('/checkout');
+      }
+      catch(error){
+        setIsError(error.response.data)
+        console.log(error);
+        setIsLoading(false);
+      }
+    }
 
     return (
     <Box
@@ -71,6 +108,10 @@ import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
         p={10}
     >
     <CartBreadcrumb />
+    <Alert status="error" display={isError ? "block" : "none"}>
+      {isError}
+    </Alert>
+
       <Stack
       mt={10}
         direction={{
@@ -104,7 +145,10 @@ import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
         </Stack>
   
         <Flex direction="column" align="center" flex="1">
-          <CartOrderSummary />
+          <CartOrderSummary  />
+          <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={isLoading ? <Spinner/> : <FaArrowRight />} onClick={createOrder}>
+          Checkout
+        </Button>
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
             <Link style={{color:'#4299E1'}} to={'/shop'}>Continue shopping</Link>

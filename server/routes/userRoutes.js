@@ -11,6 +11,7 @@ router.get('/:id', controller.getSingeUser);
 router.patch('/updatePassword',authenticateUser, controller.updateUserPassword);
 router.patch('/:id', controller.updateUser);
 router.get('/getNotifications/:id', controller.getNotifications);
+router.get('/dashboard',authenticateUser, controller.userDashboard);
 
 
 router.route('/').post(controller.addUser);

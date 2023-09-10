@@ -161,6 +161,45 @@ const getBestSellingBooks = async (req, res, next) => {
   // res.send("Get all books");
 };
 
+const decreaseStock = async (req, res, next) => {
+  try {
+
+    const id = req.body.bookId;
+    const { quantity } = req.body.amount || 1;
+
+    const book = await bookModel.findOne({ where: { id } });
+    
+    if (!book) {
+      throw new CustomError.NotFoundError("No book found");
+    }
+    book.stock = book.stock - quantity;
+    await book.save();
+    res.status(statusCodes.StatusCodes.OK).json(book);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const increaseStock = async (req, res, next) => {
+  try {
+
+    const  id  = req.body.bookId;
+    const { quantity } = req.body.amount || 1;
+
+    const book = await bookModel.findOne({ where: { id } });
+    if (!book) {
+      throw new CustomError.NotFoundError("No book found");
+    }
+    book.stock = book.stock + quantity;
+    await book.save();
+    res.status(statusCodes.StatusCodes.OK).json(book);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
 module.exports = {
   addBook,
   getAllBooks,
