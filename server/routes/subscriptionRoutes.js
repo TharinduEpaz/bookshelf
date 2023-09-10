@@ -19,5 +19,6 @@ router.route("/deleteMySubscription").delete(authenticateUser, controller.delete
 router.route("/:id").get(controller.getSingleBook);
 router.route("/bookSubscription").post(authenticateUser,controller.addBookSubscription);
 router.route("/checkSubscription").get(authenticateUser,controller.checkSubscription);
+router.route("/selectBooks").get(authenticateUser,controller.getSelectBooksByUserId);
 
 module.exports = router;

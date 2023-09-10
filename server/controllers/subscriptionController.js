@@ -9,6 +9,9 @@ const path = require("path");
 const { Op } = require("sequelize");
 const { log } = require("console");
 
+bookModel.hasMany(bookSubscriptionModel);
+bookSubscriptionModel.belongsTo(bookModel);
+
 const getAllSubscriptions = async (req, res, next) => {
   try {
     const subscriptions = await subscriptionModel.findAll();
@@ -230,16 +233,39 @@ const checkSubscription = async (req, res, next) => {
   }
 };
 
+const getSelectBooksByUserId = async (req, res, next) => {
+	try {
+		//get selectBooks with the users who selected them
+     const userId = req.user.userId;
+		const selectBooks = await bookSubscriptionModel.findAll({
+			where: {
+				userId: userId,
+			},
+			include: [
+				{
+					model: bookModel,
+					attributes: ["title", "price","author","averageRating","image"],
+				},
+			],
+		});
+
+		res.json(selectBooks);
+	} catch (err) {
+		next(err);
+	}
+};
+
 module.exports = {
-  getAllSubscriptions,
-  getAllUserSubscriptions,
-  addSubscriptionType,
-  // getAllSubscriptionDetails,
-  addSubscriptionCompliant,
-  getMySubscriptionDetails,
-  updateMySubscription,
-  deleteMySubscription,
-  getSingleBook,
-  addBookSubscription,
-  checkSubscription,
+	getAllSubscriptions,
+	getAllUserSubscriptions,
+	addSubscriptionType,
+	// getAllSubscriptionDetails,
+	addSubscriptionCompliant,
+	getMySubscriptionDetails,
+	updateMySubscription,
+	deleteMySubscription,
+	getSingleBook,
+	addBookSubscription,
+	checkSubscription,
+	getSelectBooksByUserId,
 };
