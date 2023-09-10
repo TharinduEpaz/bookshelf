@@ -31,17 +31,25 @@ export default function Settings() {
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [email, setEmail] = useState("");
+  const [currentPassword, setCurretPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [validateErrors, setErrors] = useState("");
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [passwordErrors, setPasswordErrors] = useState("");
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [showSuccessAlert1, setShowSuccessAlert1] = useState(false);
+  const [showSuccessAlert2, setShowSuccessAlert2] = useState(false);
 
   //URLs
-  const url = "http://localhost:3000/api/v1/users/" + user.user.userId;
+  const updateUserUrl = "http://localhost:3000/api/v1/users/" + user.user.userId;
+  const updatePasswordUrl = "http://localhost:3000/api/v1/users/updatePassword"
 
   // Get User Details
   const getUserDetails = async () => {
     try {
       const response = await fetch(
-        url
+        updateUserUrl
       );
       const userData = await response.json();
       setUserData(userData);
@@ -53,7 +61,7 @@ export default function Settings() {
     }
   };
 
-  //Validate Form
+  //Validate General Details
   const validateForm = () => {
     let errors = "";
     if (fName === "") {
@@ -76,17 +84,37 @@ export default function Settings() {
     return errors === "";
   }
 
+  //Valldate Password
+  const validatePassword= () => {
+    let errors = "";
+    if(currentPassword === ""){
+      errors = "Please enter current password"
+    }
+    if(newPassword === ""){
+      errors = "Please enter new password"
+    }
+    if(confirmPassword === ""){
+      errors = "Please confirm new password"
+    }
+    if(newPassword !== confirmPassword){
+      errors = "Passwords do not match"
+    }
+    setPasswordErrors(errors);
+    return errors === "";
+  }
+
   // Update General Details
   const updateGeneralDetails = async (e) => {
     e.preventDefault();
     try {
       if(validateForm()){
         const response = await axios.patch(
-          url,
+          updateUserUrl,
           {
             firstName: fName,
             lastName: lName,
             email: email,
+            password: newPassword,
           },
           {
             withCredentials: true,
@@ -95,14 +123,56 @@ export default function Settings() {
             },
           }
         );
-        setShowSuccessAlert(true);
+        setShowSuccessAlert1(true);
         console.log(response);
       }
       else {
-        setShowSuccessAlert(false);
+        setShowSuccessAlert1(false);
       }
     } catch (error) {
       console.error(error);
+      setError(error.response.data.msg);
+    }
+  };
+
+  //Update Password
+  const updatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      if(validatePassword()){
+        console.log(currentPassword);
+        const response = await axios.patch(
+          updatePasswordUrl,
+          {
+            oldPassword: currentPassword,
+            newPassword: newPassword,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setShowSuccessAlert2(true);
+        setPasswordError(false)
+        setPasswordErrors(false)
+        if(response.OK){
+          setCurretPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+        }
+      }
+
+      else {
+        setShowSuccessAlert2(false);
+        setPasswordError(false);
+        console.log("invalid")
+      }
+    } catch (error) {
+      console.error(error);
+      setPasswordError(error.response.data.msg);
+      setShowSuccessAlert2(false);
     }
   };
 
@@ -121,8 +191,9 @@ export default function Settings() {
           <TabPanels>
             <TabPanel>
               {/* General Setting */}
+              {error && <Alert status="error"> <AlertIcon /> {error}</Alert>}
               {validateErrors && <Alert status="error"> <AlertIcon /> {validateErrors}</Alert>}
-              {showSuccessAlert && (<Alert status="success" mt={4}><AlertIcon />Profile updated successfully!</Alert>)}
+              {showSuccessAlert1 && (<Alert status="success" mt={4}><AlertIcon />Profile updated successfully!</Alert>)}
               <form onSubmit={updateGeneralDetails}>
                 {/* First Name */}
                 <FormControl>
@@ -290,26 +361,31 @@ export default function Settings() {
 
             <TabPanel>
               {/* Change Password */}
+              {passwordError && <Alert status="error"> <AlertIcon /> {passwordError}</Alert>}
+              {passwordErrors && <Alert status="error"> <AlertIcon /> {passwordErrors}</Alert>}
+              {showSuccessAlert2 && (<Alert status="success" mt={4}><AlertIcon />Password updated successfully!</Alert>)}
+              <form onSubmit={updatePassword}>
               <FormControl>
                 <FormLabel fontWeight={"semibold"}>Current Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" value={currentPassword} onChange={(e) => setCurretPassword(e.target.value)}/>
               </FormControl>
               <FormControl>
                 <FormLabel fontWeight={"semibold"}>New Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
               </FormControl>
               <FormControl>
                 <FormLabel fontWeight={"semibold"}>Confirm Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
               </FormControl>
               <ButtonGroup mt={5}>
-                <Button colorScheme="blue" mt={5}>
+                <Button colorScheme="blue" mt={5} type="submit">
                   Update Password
                 </Button>
-                <Button variant={"outline"} colorScheme="red" mt={5}>
+                <Button variant={"outline"} colorScheme="red" mt={5} type="reset">
                   Cancel
                 </Button>
               </ButtonGroup>
+              </form>
             </TabPanel>
           </TabPanels>
         </Tabs>
