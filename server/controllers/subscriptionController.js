@@ -146,11 +146,15 @@ const deleteMySubscription = async (req, res, next) => {
 
   try {
     // Delete the user's subscription
-    const response = await userSubscriptionModel.destroy({
-      where: {
-        userId: userId,
-      },
-    });
+    const response = await userSubscriptionModel.update(
+		{ subscriptionType: "No Subscription" },
+		{
+			where: {
+				userId: userId,
+			},
+			returning: true,
+		}
+	);
 
     if (response === 0) {
       // If no rows were affected, it means there was no subscription to delete
@@ -205,17 +209,20 @@ const addBookSubscription = async (req, res, next) => {
 
 const checkSubscription = async (req, res, next) => {
   //const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
-  //console.log(userId);
-  const userId = req.user.userId;
+  const uId = req.user.userId;
+  console.log("ss");
   try {
-    const subscription = await userSubscriptionModel.findOne({
+    const subscription = await userSubscriptionModel.get({
       where: {
-        userId: userId,
+        userId: uId,
       },
     });
 
     if (!subscription) {
       res.send("No Subscription Found");
+    }
+    else{
+      console.log("Subscription");
     }
 
   } catch (error) {
