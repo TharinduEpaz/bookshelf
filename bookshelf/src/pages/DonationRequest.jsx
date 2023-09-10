@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function SignupCard() {
   const [fullname, setFullName] = useState('');
@@ -46,22 +47,37 @@ export default function SignupCard() {
   const register = async (e) => {
     e.preventDefault();
     try {
-      const body = {fullname,email,description,contactNumber,nic,address};
-      /* const response = await fetch ("http://localhost:3000/api/v1/donations/addRequest",{
-        method:"POST", 
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(body), 
-      }); */
-
-    console.log(body);
-      
+      const body ={
+        fullName: fullname,
+        email: email,
+        description: description,
+        contactNumber: contactNumber,
+        nic: nic,
+        address: address,
+      }
+      console.log(body);
+      const response = await fetch("http://localhost:3000/api/v1/donations/addRequest", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      //const response = await axios.post('http://localhost:3000/api/v1/donations/addRequest', body);
+      console.log(response);
+      if(response.ok){
+        setIsSuccessModalOpen(true);
+        setError('');
+        setFullName('');
+        setEmail('');
+        setDescription('');
+        setContactNumber('');
+        setNIC('');
+        setAddress('');
+      }else{
+        setError('Something went wrong!');
+      }
     } catch (error) {
-      console.error(error.message)
-      
+      console.error(error.message);
     }
-    // Your registration logic here
-    // Show the success modal
-    setIsSuccessModalOpen(true);
   };
 
   const handleCloseSuccessModal = () => {

@@ -8,9 +8,12 @@ const notFoundMIddleware = require('./middleware/notFound');
 const errorHandlerMiddleware = require('./middleware/errorHandler')
 const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 
 const authRoutes = require("./routes/authRoutes");
