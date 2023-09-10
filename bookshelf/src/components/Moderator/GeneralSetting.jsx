@@ -1,23 +1,30 @@
 import {
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    Icon,
-    Flex,
-    Button,
-    Alert,
-    AlertIcon,
-  } from "@chakra-ui/react";
-  import React, { useEffect, useState } from "react";
-  import { AiFillEdit } from "react-icons/ai";
-  import { BiX, BiCheck } from "react-icons/bi";
-  import { userContext } from "../../context/userContext";
-  import { useContext } from "react";
-  import axios from "axios";
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Icon,
+  Flex,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { AiFillEdit } from "react-icons/ai";
+import { BiX, BiCheck } from "react-icons/bi";
+import { userContext } from "../../context/userContext";
+import { useContext } from "react";
+import axios from "axios";
 
 export default function GeneralSetting() {
-    const { user } = useContext(userContext);
+  const { user } = useContext(userContext);
   const [isEditFName, setIsEditFName] = useState(false);
   const [isEditLName, setIsEditLName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);
@@ -28,16 +35,17 @@ export default function GeneralSetting() {
   const [validateErrors, setErrors] = useState("");
   const [error, setError] = useState("");
   const [showSuccessAlert1, setShowSuccessAlert1] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
   //URLs
-  const updateUserUrl = "http://localhost:3000/api/v1/users/" + user.user.userId;
+  const updateUserUrl =
+    "http://localhost:3000/api/v1/users/" + user.user.userId;
 
   // Get User Details
   const getUserDetails = async () => {
     try {
-      const response = await fetch(
-        updateUserUrl
-      );
+      const response = await fetch(updateUserUrl);
       const userData = await response.json();
       setUserData(userData);
       setFName(userData.firstName);
@@ -52,50 +60,47 @@ export default function GeneralSetting() {
   const validateForm = () => {
     let errors = "";
     if (fName === "") {
-      errors = "First name cannot be empty"
+      errors = "First name cannot be empty";
     }
     if (lName === "") {
-      errors = "Last name cannot be empty"
+      errors = "Last name cannot be empty";
     }
     if (email === "") {
-      errors = "Email cannot be empty"
+      errors = "Email cannot be empty";
     }
     if (/\d/.test(fName) || /\d/.test(lName)) {
-      errors = "Name cannot contain digits or special characters"
+      errors = "Name cannot contain digits or special characters";
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
-      errors = "Invalid email"
+      errors = "Invalid email";
     }
-    
+
     setErrors(errors);
-    return errors === "";
-  }
+    if (errors === "") {
+      onOpen();
+    }
+  };
 
   // Update General Details
   const updateGeneralDetails = async (e) => {
     e.preventDefault();
     try {
-      if(validateForm()){
-        const response = await axios.patch(
-          updateUserUrl,
-          {
-            firstName: fName,
-            lastName: lName,
-            email: email,
+      const response = await axios.patch(
+        updateUserUrl,
+        {
+          firstName: fName,
+          lastName: lName,
+          email: email,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setShowSuccessAlert1(true);
-        console.log(response);
-      }
-      else {
-        setShowSuccessAlert1(false);
-      }
+        }
+      );
+      setShowSuccessAlert1(true);
+      console.log(response);
     } catch (error) {
       console.error(error);
       setError(error.response.data.msg);
@@ -267,10 +272,48 @@ export default function GeneralSetting() {
         </FormControl>
 
         {/* Save Button */}
-        <Button colorScheme="blue" mt={5} type="submit">
+        <Button colorScheme="blue" mt={5} onClick={() => {
+          validateForm();
+          setShowSuccessAlert1(false);
+        }}>
           Save Changes
         </Button>
       </form>
+
+      {/* Alert Dialog */}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Update Password
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="blue"
+                onClick={(e) => {
+                  updateGeneralDetails(e);
+                  onClose();
+                }}
+                ml={3}
+              >
+                Update
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }
