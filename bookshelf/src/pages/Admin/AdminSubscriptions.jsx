@@ -23,6 +23,10 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
+import { Alert, AlertIcon } from "@chakra-ui/react";
+import axios from "axios";
+
+
 import { BiBookOpen } from "react-icons/bi";
 
 import AdminSidebar from "../../components/Admin/AdminSidebar";
@@ -43,7 +47,8 @@ export default function AdminSubscriptions() {
   ];
 
   const [planList, setPlanList] = useState([]);
-  const initialRef = useRef();
+  const [error, setError] = useState("");
+  //const initialRef = useRef();
 
 
   //Get subscription plans
@@ -71,6 +76,45 @@ export default function AdminSubscriptions() {
   }, []);
 
 
+
+  //Add subscription plan
+  const [firstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [book_count, setBook_count] = useState("");
+  const [time_period, setTime_period] = useState("");
+  const [discount, setDiscount] = useState("");
+
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+
+  const addSubscriptionPlanUrl = "http://localhost:3000/api/v1/subscriptions/";
+
+  const addSubscriptionPlan = async (e) => {
+    e.preventDefault();
+    try {
+
+      const response = await axios.post(addSubscriptionPlanUrl, {
+        firstName: firstName,
+        LastName: LastName,
+        book_count: book_count,
+        time_period: time_period,
+        discount: discount,
+      });
+      console.log(response.data);
+      setFirstName("");
+      setLastName("");
+      setBook_count("");
+      setTime_period("");
+      setDiscount("");
+
+      setShowSuccessAlert(true);
+      window.location.href = "/adminsubscriptions";
+      
+    } catch (error) {
+      setError(error.response.data.msg);
+      console.log(error.response);
+    }
+  };
 
 
 
@@ -228,54 +272,114 @@ export default function AdminSubscriptions() {
               Subscription Plans Details
             </Text>
 
+
+            {error && (
+              <Alert status="error">
+                {" "}
+                <AlertIcon /> {error}
+              </Alert>
+            )}
+
+            {showSuccessAlert && (
+                <Alert status="success" mt={4}>
+                <AlertIcon />
+                User successfully added!
+                </Alert>
+                )}
+
+
+       
             <Button onClick={onOpen} ml={380} mt={2} mb={5} colorScheme="blue">
               + Add New Subscription Plan
             </Button>
 
-            <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
+            <Modal isOpen={isOpen} onClose={onClose} >
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Add New Subscription Plan Details</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
 
+                <form onSubmit={addSubscriptionPlan}>
                   <FormControl>
                     <FormLabel>Plan First name</FormLabel>
-                    <Input ref={initialRef} placeholder="First name" />
+                    <Input 
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      //ref={initialRef} 
+                      placeholder="First name" 
+                    />
                   </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Plan Last name</FormLabel>
-                    <Input placeholder="Last name" />
+                    <Input 
+                      type="text"
+                      value={LastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      //ref={initialRef} 
+                      placeholder="Last name" 
+                    />
                   </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Book Count</FormLabel>
-                    <Input placeholder="Book Count" />
+                    <Input 
+                      type="text"
+                      value={book_count}
+                      onChange={(e) => setBook_count(e.target.value)}
+                      //ref={initialRef} 
+                      placeholder="Book Count" 
+                    />
                   </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Time Period</FormLabel>
-                    <Input placeholder="Time Period" />
+                    <Input 
+                      type="text"
+                      value={time_period}
+                      onChange={(e) => setTime_period(e.target.value)}
+                      //ref={initialRef} 
+                      placeholder="Time Period" 
+                    />
                   </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Discount</FormLabel>
-                    <Input placeholder="Discount" />
+                    <Input 
+                      type="text"
+                      value={discount}
+                      onChange={(e) => setDiscount(e.target.value)}
+                      //ref={initialRef} 
+                      placeholder="Discount" 
+                    />
                   </FormControl>
+
+                  <Button 
+                  type="submit"
+                  colorScheme='blue' 
+                  variant='solid' 
+                  mt={10} 
+                  mr={5} 
+                  ml={10} 
+                  mb={10}>
+                  Save
+                  </Button>
+                  
+                  <Button onClick={onClose}>Cancel</Button>
+                  </form>
 
                 </ModalBody>
 
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
-                    Save
-                  </Button>
-                  <Button onClick={onClose}>Cancel</Button>
+                  
                 </ModalFooter>
               </ModalContent>
             </Modal>
+            
 
-
+          
 
 
                         <Box
