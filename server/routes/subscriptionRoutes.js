@@ -18,6 +18,6 @@ router.route("/updateMySubscription").patch(authenticateUser ,controller.updateM
 router.route("/deleteMySubscription").delete(authenticateUser, controller.deleteMySubscription);
 router.route("/:id").get(controller.getSingleBook);
 router.route("/bookSubscription").post(authenticateUser,controller.addBookSubscription);
-// router.route("/checkSubscription").get(authenticateUser,controller.checkSubscription);
+router.route("/checkSubscription").get(authenticateUser,controller.checkSubscription);
 
 module.exports = router;

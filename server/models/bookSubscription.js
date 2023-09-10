@@ -10,12 +10,12 @@ const bookSubscription = sequelize.define("bookSubscription", {
 	},
 
 	id: {
-		type: DataTypes.STRING,
+		type: DataTypes.UUID,
 		primaryKey: true,
 		defaultValue: sequelize.UUIDV4,
 	},
 });
 
-// bookSubscription.sync({  alter: true });
+//bookSubscription.sync({  alter: true });
 
 module.exports = bookSubscription;

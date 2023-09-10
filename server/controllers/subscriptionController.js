@@ -178,8 +178,9 @@ const addBookSubscription = async (req, res, next) => {
 };
 
 const checkSubscription = async (req, res, next) => {
-  const userId = '9e377c8f-956c-42e7-9430-c0884968291c';
-  console.log(userId);
+  //const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+  //console.log(userId);
+  const userId = req.user.userId;
   try {
     const subscription = await userSubscriptionModel.findOne({
       where: {
