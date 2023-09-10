@@ -14,6 +14,8 @@ function Shop() {
       title: "Donate an Educational Pack to Survivors of Child Abuse",
       image: "https://123read2me.org.au/wp-content/uploads/2021/04/123RTM-BinGlove-2-818x1024.png",
       price: "700",
+      needsfor: "Tarana Foundation",
+
     },
     d2: {
       title: "Donate an Educational Pack to Survivors of Child Abuse",
@@ -111,6 +113,7 @@ function Shop() {
               key={item}
               name={bookDetails[item].title}
               price={bookDetails[item].price}
+              needsfor={[item].needsfor}
               imageURL={bookDetails[item].image}
             />
           ))}

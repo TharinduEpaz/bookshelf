@@ -49,7 +49,7 @@ import {
     );
   }
   
-  function BookCard({name, author, price,imageURL, rating,}) {
+  function BookCard({name, author, price,imageURL, needsfor,}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
         <Box
