@@ -24,11 +24,37 @@ const addSubscriptionType = async (req, res, next) => {
   try {
     const { subscriptionType } = req.body;
 
-    const type = await userSubscriptionModel.create({
-      userId,
-      subscriptionType,
+    //check if a subscription already exists and update it if exists
+
+    const subscriptionExists = await userSubscriptionModel.findOne({
+      where: {
+        userId: userId,
+      },
     });
-    res.status(statusCodes.StatusCodes.CREATED).json(type);
+
+    if (subscriptionExists) {
+      const response = await userSubscriptionModel.update(
+        { subscriptionType: subscriptionType },
+        {
+          where: {
+            userId: userId,
+          },
+          returning: true,
+        }
+      );
+      return res.status(statusCodes.StatusCodes.OK).json(response);
+    }
+    else {
+      const type = await userSubscriptionModel.create({
+        subscriptionType,
+        userId,
+      });
+
+      return res.status(statusCodes.StatusCodes.CREATED).json(type);
+    }
+
+   
+  
   } catch (error) {
     next(error);
   }
