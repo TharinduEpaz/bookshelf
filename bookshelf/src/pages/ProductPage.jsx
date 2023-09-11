@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -295,4 +293,3 @@ function HookUsage(props) {
 }
 
 export default ProductPage;
->>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d

@@ -49,11 +49,7 @@ import {
     );
   }
   
-<<<<<<< HEAD
   function BookCard({name, author, price,imageURL, needsfor,}) {
-=======
-  function BookCard({name, author, price,imageURL, rating,}) {
->>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
     return (
       <Flex  alignItems="center" justifyContent="center">
         <Box

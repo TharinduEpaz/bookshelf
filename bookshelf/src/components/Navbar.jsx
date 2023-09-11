@@ -41,13 +41,8 @@ const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "/donation" },
-<<<<<<< HEAD
-  { name: "Subscriptions", path: "#" },
-  { name: "Share a Book", path: "#" },
-=======
   { name: "Subscriptions", path: "/subscriptions" },
   { name: "Share a Book", path: "/sharing" },
->>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
 ];
 
 function Navbar() {
@@ -114,9 +109,7 @@ function Navbar() {
             alignItems="center"
           >
             {navLinks.map((link, index) => (
-              <RouterLink to={link.path}>
               <NavLink key={index} {...link} onClose={onClose} />
-              </RouterLink>
             ))}
           </HStack>
         </HStack>

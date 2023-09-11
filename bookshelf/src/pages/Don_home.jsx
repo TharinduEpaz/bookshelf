@@ -8,17 +8,18 @@ import Card from '../components/Donation/Card'
 import CategoryFilter from '../components/Donation/DonationCategories'
 import DonationCard from '../components/Donation/DonationCard'
 
+import { Link } from 'react-router-dom';
+
+
+
 function Shop() {
   const bookDetails = {
     d1: {
       title: "Donate an Educational Pack to Survivors of Child Abuse",
       image: "https://123read2me.org.au/wp-content/uploads/2021/04/123RTM-BinGlove-2-818x1024.png",
       price: "700",
-<<<<<<< HEAD
       needsfor: "Tarana Foundation",
 
-=======
->>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
     },
     d2: {
       title: "Donate an Educational Pack to Survivors of Child Abuse",
@@ -112,16 +113,14 @@ function Shop() {
       <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
       <Flex flexWrap={'wrap'} gap={10} p={10}>
       {Object.keys(bookDetails).map((item) => (
+            <Link key={item} to={`/DonationDetails/${item}`}>
             <DonationCard
-              key={item}
               name={bookDetails[item].title}
               price={bookDetails[item].price}
-<<<<<<< HEAD
-              needsfor={[item].needsfor}
-=======
->>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
+              needsfor={bookDetails[item].needsfor}
               imageURL={bookDetails[item].image}
             />
+          </Link>
           ))}
           </Flex>
       </GridItem>

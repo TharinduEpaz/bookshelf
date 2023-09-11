@@ -101,6 +101,7 @@ import Moderator from "./pages/Moderator/Moderator";
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import DonationDetails from "./pages/DonationDetails";
 
 
 function App() {
@@ -205,6 +206,7 @@ function App() {
           <Route exact path="/donation" element={<Donation />}></Route>
           <Route exact path="/Don_home" element={<Don_home />}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
+          <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route>
 
           <Route element={<PrivateRoutes />}>
 
