@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 export default function SignupCard() {
   const [fullname, setFullName] = useState('');
