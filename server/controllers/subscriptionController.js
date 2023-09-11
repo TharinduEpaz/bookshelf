@@ -221,22 +221,21 @@ const addBookSubscription = async (req, res, next) => {
 };
 
 const checkSubscription = async (req, res, next) => {
-  //const userId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+  // const uId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
   const uId = req.user.userId;
-  console.log("ss");
+  console.log(uId);
   try {
-    const subscription = await userSubscriptionModel.get({
+    const subscription = await userSubscriptionModel.findOne({
       where: {
         userId: uId,
       },
     });
 
     if (!subscription) {
-      res.send("No Subscription Found");
+      // res.send("No Subscription Found");
     }
-    else{
-      console.log("Subscription");
-    }
+    
+    res.status(statusCodes.StatusCodes.OK).json(subscription);
 
   } catch (error) {
     next(error);
