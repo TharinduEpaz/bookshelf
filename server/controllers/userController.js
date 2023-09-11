@@ -159,7 +159,14 @@ const userDashboard = async (req, res, next) => {
       },
     });
 
-    res.json({ ordersCount : ordersCount });
+    //get shipping address
+    const buyerDetails = await buyerModel.findOne({
+      where: {
+        UserId: userId,
+      },
+    });
+
+    res.json({ ordersCount : ordersCount, buyerDetails: buyerDetails });
 
   } catch (error) {
     next(error);

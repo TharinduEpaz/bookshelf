@@ -150,7 +150,7 @@ function App() {
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
 
 
-          <Route element={<PrivateRoutes />}>
+          {/* <Route element={<PrivateRoutes />}> */}
 
           <Route exact path="/account" element={<Account />}>
             <Route index element={<Dashboard />} />
@@ -159,7 +159,7 @@ function App() {
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
           </Route>
-          </Route>
+          {/* </Route> */}
 
             <Route exact path="/subscriptions" element={<Subscription />}></Route>
             <Route exact path="/selectSubscription" element={<SelectSubscription />}></Route>
