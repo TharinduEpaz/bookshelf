@@ -13,32 +13,70 @@ import {
   MenuList,
   MenuItem,
   Stack,
-  Icon,
   IconButton,
   useDisclosure,
   useColorModeValue,
   ButtonGroup,
   Heading,
-  LinkBox,
+  Avatar,
+  MenuDivider,
+  useToast,
 } from "@chakra-ui/react";
 
 import { Link as RouterLink } from "react-router-dom";
+import { userContext } from "../context/userContext";
+import { useContext } from "react";
+import axios from "axios";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineClose } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineShoppingCart,
+  AiFillCaretDown,
+} from "react-icons/ai";
 
-import React from "react";
+import { BsFillCartFill } from "react-icons/bs";
 
 const navLinks = [
   { name: "New Books", path: "#" },
   { name: "Best Sellers", path: "#" },
   { name: "Donations", path: "/donation" },
+<<<<<<< HEAD
   { name: "Subscriptions", path: "#" },
   { name: "Share a Book", path: "#" },
+=======
+  { name: "Subscriptions", path: "/subscriptions" },
+  { name: "Share a Book", path: "/sharing" },
+>>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
 ];
 
 function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user, setUser } = useContext(userContext);
+  const logoutUrl = "http://localhost:3000/api/v1/logout";
+  const toast = useToast();
+
+  const logout = async () => {
+    try {
+      const res = await axios.get(logoutUrl,{
+        withCredentials: true,}
+        );
+      setUser(null);
+      console.log(res.data);
+      localStorage.removeItem("cartItems");
+
+      return toast({
+        title: "Successfully logged out",
+        position: "top",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <Box
       as="nav"
@@ -82,29 +120,89 @@ function Navbar() {
             ))}
           </HStack>
         </HStack>
-        <ButtonGroup>
-        
-          <RouterLink to="/login">
-            <Button
-              colorScheme="blue"
-              size="sm"
-              variant={"ghost"}
-              display={{ base: "none", md: "block" }}
-            >
-              Sign in
-            </Button>
-          </RouterLink>
 
-          <RouterLink to="/register">
-            <Button
-              colorScheme="facebook"
-              size="sm"
-              display={{ base: "none", md: "block" }}
-            >
-              Sign Up
-            </Button>
-          </RouterLink>
-        </ButtonGroup>
+        {!user ? (
+          <ButtonGroup>
+            <RouterLink to="/login">
+              <Button
+                colorScheme="blue"
+                size="sm"
+                variant={"ghost"}
+                display={{ base: "none", md: "block" }}
+              >
+                Sign in
+              </Button>
+            </RouterLink>
+
+            <RouterLink to="/register">
+              <Button
+                colorScheme="facebook"
+                size="sm"
+                display={{ base: "none", md: "block" }}
+              >
+                Sign Up
+              </Button>
+            </RouterLink>
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <RouterLink to={`cart/${user.user.userId}`}>
+              <IconButton
+                colorScheme="blue"
+                aria-label="Call Segun"
+                size="lg"
+                variant={"ghost"}
+                icon={<BsFillCartFill />}
+              />
+            </RouterLink>
+            <Menu w="100">
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+                rightIcon={<AiFillCaretDown />}
+              >
+                <Avatar
+                  size={"sm"}
+                  name={user.user.name}
+                  colorScheme="blue"
+                  src="https://bit.ly/broken-link"
+                />
+              </MenuButton>
+              <MenuList>
+                {user.user.role !== "admin" &&
+                user.user.role !== "moderator" ? (
+                  <>
+                    <RouterLink to="/account">
+                      <MenuItem>Account</MenuItem>
+                    </RouterLink>
+
+                    <RouterLink to="account/orders">
+                      <MenuItem>Orders</MenuItem>
+                    </RouterLink>
+                  </>
+                ) : (
+                  <>
+                    {user.user.role === "admin" ? (
+                      <RouterLink to="/admindashboard">
+                        <MenuItem>Admin Dashboard</MenuItem>
+                      </RouterLink>
+                    ) : (
+                      <RouterLink to="/moderator">
+                        <MenuItem>Moderator Dashboard</MenuItem>
+                      </RouterLink>
+                    )}
+                  </>
+                )}
+
+                <MenuDivider />
+                <MenuItem onClick={logout}>Log Out</MenuItem>
+              </MenuList>
+            </Menu>
+          </ButtonGroup>
+        )}
 
         <IconButton
           size="md"

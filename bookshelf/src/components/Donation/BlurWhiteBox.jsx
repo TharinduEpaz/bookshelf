@@ -12,7 +12,11 @@ import { Link } from "react-router-dom";
 import React from "react";
 import Search from "../Search";
 
+<<<<<<< HEAD
 function BlurWhiteBox({ title, image, mainButton,route,mainButton1,route1 }) {
+=======
+export function BlurWhiteBox({ title, image, mainButton,route,mainButton1,route1 }) {
+>>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
   return (
     <Box
       m={"auto"}

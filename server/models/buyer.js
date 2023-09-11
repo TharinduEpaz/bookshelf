@@ -32,6 +32,6 @@ const buyer = sequelize.define('buyer', {
     // Other model options go here
 })
 
-buyer.sync({  alter: true });
+// buyer.sync({  alter: true });
 
 module.exports = buyer;

@@ -31,6 +31,10 @@ const addRequest = async (req, res, next) => {
             email,
             description
         });
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 1d7fb02ac1782bbd8f69374ec69eea28b237b13d
         res.status(statusCodes.StatusCodes.CREATED).json(donation);
     } catch (error) {
         next(error);

@@ -2,43 +2,26 @@
 
 ###
 
-GET http://localhost:3000/api/v1/user/
+GET http://localhost:3000/api/v1/books/
 
 ###
+GET http://localhost:3000/api/v1/books/1
 
-POST http://localhost:3000/api/v1/register
-Content-Type: application/json
-
+###
+POST http://localhost:3000/api/v1/books/addBook
+```
 {
-    "firstName": "dayarathna",
-    "lastName": "epasingha",
-    "email": "dayarathna@gmail.com",
-    "password": "123456"
-}
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "description": "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
+    "price": 10.99,
+    "image": "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200
 
 ###
+PATCH http://localhost:3000/api/v1/books/1
 
-GET http://localhost:3000/api/v1/login
-Content-Type: application/json
-
-{
-    "email": "epazingha@gmail.com",
-    "password": "123456"
-}
+### 
+DELETE http://localhost:3000/api/v1/books/1
 
 ###
-
-GET http://localhost:3000/api/v1/users
-
-###
-
-GET http://localhost:3000/api/v1/users/5019b2ed-8e63-48e4-8f01-a08060ff7b4f
-
-###
-PATCH http://localhost:3000/api/v1/users/5019b2ed-8e63-48e4-8f01-a08060ff7b4f
-
-###
-GET http://localhost:3000/api/v1/users/showMe
-
-###
-PATCH http://localhost:3000/api/v1/users/updatePassword
+POST http://localhost:3000/api/v1/books/uploadImage

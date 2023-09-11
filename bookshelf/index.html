@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link href="https://fonts.cdnfonts.com/css/bricolage-grotesque" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta http equiv="Content-Security-Policy" content="connect-src, https://checkout.stripe.com; frame-src, https://checkout.stripe.com; script-src, https://checkout.stripe.com; img-src, https://*.stripe.com">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src https://connect-js.stripe.com https://js.stripe.com; frame-src https://connect-js.stripe.com https://js.stripe.com; style-src sha256-0hAheEzaMe6uXIKV4EehS9pu1am1lj/KnnzrOYqckXk= 'unsafe-inline'"> -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; frame-src http://localhost:5173 https:;"> -->
+   
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'; report-uri /csp-report-endpoint;"> -->
+
+
     <title>BookShelf</title>
   </head>
   <body>
@@ -11,3 +20,4 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+
