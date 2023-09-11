@@ -17,7 +17,7 @@ bookModel.belongsToMany(userSubscriptionModel, { through: bookSubscriptionModel 
 
 
 // userSubscriptionModel.sync({ alter: true });
-bookSubscriptionModel.sync({ alter: true });
+// bookSubscriptionModel.sync({ alter: true });
 
 
 
