@@ -118,9 +118,6 @@ const getReviewsByBookId = async (req, res, next) => {
     } 
 }
 
-
-
-
 module.exports = {
     addReview,
     getAllReviews,

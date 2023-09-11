@@ -60,7 +60,7 @@ import { FaArrowRight } from 'react-icons/fa'
         return;
       }
       try{
-        const response = await axios.post('http://localhost:3000/api/v1/ordes', {
+        const response = await axios.post('http://localhost:3000/api/v1/orders', {
           orderItems: cartData,
           totalPrice: totalPrice,
         },

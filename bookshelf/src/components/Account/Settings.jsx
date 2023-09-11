@@ -22,7 +22,41 @@ import {
 
 } from "@chakra-ui/react";
 
+import axios from "axios";
+
 function Settings() {
+  const [address,setAddress] = React.useState('');
+  const [postalCode,setPostalCode] = React.useState('');
+  const [city,setCity] = React.useState('');
+  const [phoneNumber,setPhoneNumber] = React.useState('');
+  const [province,setProvince] = React.useState('');
+
+  const handleShippingChange = async (e) => {
+    e.preventDefault();
+    try{
+    const response = await axios
+      .post("http://localhost:3000/api/v1/users/changeShippingDetails", {
+        address: address,
+        postalCode: postalCode,
+        city: city,
+        phoneNumber: phoneNumber,
+        province: province,
+      },
+      {
+        withCredentials: true,
+        });
+        console.log(response);
+    }
+    
+    catch(error){
+      console.log(error);
+    }
+    }
+
+
+      
+      
+
   return (
     <>
       <Box
@@ -93,7 +127,7 @@ function Settings() {
     <Card>
           
           <CardBody>
-            <form>
+            <form onSubmit={handleShippingChange}>
                 <FormControl>
                 
                 <Input placeholder="Current Password"  w={400} mt={5}/>
@@ -122,7 +156,7 @@ function Settings() {
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
-          Change Shipping Address
+          Add Shipping and Billing Details
         </Box>
         <AccordionIcon />
       </AccordionButton>
@@ -131,14 +165,28 @@ function Settings() {
     <Card>
           
           <CardBody>
-            <form>
+            <form onSubmit={handleShippingChange}>
                 <FormControl>
                 
-                <Input placeholder="Enter New Address"  w={800} mt={5}/>
+                <Input placeholder="Enter New Address"  w={'90%'} mt={5}
+                onChange={(e) => setAddress(e.target.value)}
+                />
                 </FormControl>
                 <FormControl>
                 
-                <Input placeholder="Enter New Postal Code"  w={400} mt={5}/>
+                <Input placeholder="Enter New Postal Code"  w={400} mt={5}
+                onChange={(e) => setPostalCode(e.target.value)}
+                />
+                <Input placeholder="Enter City"  w={400} mt={5}
+                onChange={(e) => setCity(e.target.value)}
+                />
+                <Input placeholder="Enter Province"  w={400} mt={5}
+                onChange={(e) => setProvince(e.target.value)}
+                /> 
+                <Input placeholder="Enter Phone Number"  w={400} mt={5}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+
                 </FormControl>
                
 

@@ -1,5 +1,6 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
+const buyerModel = require("../models/buyer");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -118,6 +119,12 @@ const register = async (req, res, next) => {
         sendMail(user.email, "Verify Email", `Please click this email to confirm your email: <a href="${url}">${url}</a>`);
       }
     )
+
+    //add to buyer table
+    const buyer = await buyerModel.create({
+      UserId: user.id,
+    });
+      
 
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
