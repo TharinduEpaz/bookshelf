@@ -9,8 +9,18 @@ const path = require("path");
 const { Op } = require("sequelize");
 const { log } = require("console");
 
-bookModel.hasMany(bookSubscriptionModel);
-bookSubscriptionModel.belongsTo(bookModel);
+
+//define the many to many relationship between books and subscriptions
+
+userSubscriptionModel.belongsToMany(bookModel, { through: bookSubscriptionModel });
+bookModel.belongsToMany(userSubscriptionModel, { through: bookSubscriptionModel });
+
+
+// userSubscriptionModel.sync({ alter: true });
+bookSubscriptionModel.sync({ alter: true });
+
+
+
 
 const getAllSubscriptions = async (req, res, next) => {
   try {
