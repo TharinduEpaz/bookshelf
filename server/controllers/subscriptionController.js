@@ -138,6 +138,9 @@ const addSubscriptionCompliant =async (req, res, next) => {
 // };
 
 
+
+//Subscription plans
+
 //Add subscription plans(Admin)
 const addSubscriptionPlan = async (req, res, next) => {
 	try {
@@ -165,6 +168,23 @@ const addSubscriptionPlan = async (req, res, next) => {
 };
 
 
+	//Delete subscription plans
+	const deleteSubscriptionPlan = async (req, res, next) => {
+		const { id } = req.params;
+		try {
+		  const plan = await subscriptionModel.findOne({ where: { id } });
+		  if (!plan) {
+			throw new CustomError.NotFoundError("No subscription plan found");
+		  }
+		  await plan.destroy();
+		  res.status(statusCodes.StatusCodes.OK).json({ message: "Subscription plan deleted" });
+		} catch (error) {
+		  next(error);
+		}
+		// res.send("Delete plan" + id);
+	  };
+
+
 
 module.exports = {
 	getAllSubscriptions,
@@ -175,5 +195,6 @@ module.exports = {
 	getMySubscriptionDetails,
 	updateMySubscription,
 	// deleteMySubscription,
-	addSubscriptionPlan
+	addSubscriptionPlan,
+	deleteSubscriptionPlan
 };
