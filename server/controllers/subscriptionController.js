@@ -253,52 +253,48 @@ const addBookSubscription = async (req, res, next) => {
 };
 
 const add_book_to_a_subscription_plan = async (req, res, next) => {
-  const userId = req.user.userId;
-  
-  try {
-    const { id } = req.body;
-    const bookId = id;
-    console.log(bookId, userId);
+	const userId = req.user.userId;
 
-    const subscription = await userSubscriptionModel.findOne({
-      where: {
-        userId: userId,
-      },
-    });
-    if(!subscription){
-      throw new CustomError.NotFoundError("No subscription found");
-    }
-    const book = await bookModel.findOne({
-      where: {
-        id: bookId,
-      },
+	try {
+		const { id } = req.body;
+		const bookId = id;
+		console.log(bookId, userId);
 
-    });
+		const subscription = await userSubscriptionModel.findOne({
+			where: {
+				userId: userId,
+			},
+		});
+		if (!subscription) {
+			throw new CustomError.NotFoundError("No subscription found");
+		}
 
-    if(!book){
-      throw new CustomError.NotFoundError("No book found in this name");
-    }
+		// Check if the user has already added 3 books to their subscription
+		const userBooksCount = await subscription.countBooks();
+		if (userBooksCount >= 3) {
+			throw new CustomError.BadRequestError(
+				"You can only add up to 3 books to your subscription."
+			);
+		}
 
-    //add book to subscription
-    const response = await subscription.addBook(book);
-    res.json(response);
-  }
-  
+		const book = await bookModel.findOne({
+			where: {
+				id: bookId,
+			},
+		});
 
-  
+		if (!book) {
+			throw new CustomError.NotFoundError("No book found with this ID");
+		}
 
-
-
-    // const bookExists = await bookSubscriptionModel.findOne({
-    //   where: {
-    //     [Op.and]: [{ id: id }, { userId: userId }],
-    //   },
-
-  
-  catch (error) {
-    next(error);
-  }
+		// Add the book to the subscription
+		const response = await subscription.addBook(book);
+		res.json(response);
+	} catch (error) {
+		next(error);
+	}
 };
+
 
 const checkSubscription = async (req, res, next) => {
   // const uId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
@@ -325,19 +321,7 @@ const checkSubscription = async (req, res, next) => {
 const get_books_in_subscription_plan = async (req, res, next) => {
 	try {
 		//get selectBooks with the users who selected them
-     const userId = req.user.userId;
-		// const selectBooks = await bookSubscriptionModel.findAll({
-		// 	where: {
-		// 		userId: userId,
-		// 	},
-		// 	include: [
-		// 		{
-		// 			model: bookModel,
-		// 			attributes: ["title", "price","author","averageRating","image"],
-		// 		},
-		// 	],
-		// });
-
+    const userId = req.user.userId;
     const books = await userSubscriptionModel.findAll({
       where: {
         userId: userId,
