@@ -14,9 +14,10 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure
+  CircularProgress,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 import { userContext } from "../../context/userContext";
 import { useContext } from "react";
@@ -33,8 +34,9 @@ export default function PasswordChange() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   //URLs
   const updatePasswordUrl = "http://localhost:3000/api/v1/users/updatePassword";
@@ -43,8 +45,8 @@ export default function PasswordChange() {
   const validatePassword = () => {
     let errors = "";
     if (newPassword !== confirmPassword) {
-        errors = "Passwords do not match";
-      }
+      errors = "Passwords do not match";
+    }
     if (confirmPassword === "") {
       errors = "Please enter confirm password";
     }
@@ -54,9 +56,10 @@ export default function PasswordChange() {
     if (currentPassword === "") {
       errors = "Please add current password";
     }
+    setShowSuccessAlert2(false);
     setPasswordErrors(errors);
     if (errors === "") {
-        onOpen();
+      onOpen();
     }
   };
 
@@ -64,32 +67,43 @@ export default function PasswordChange() {
   const updatePassword = async (e) => {
     e.preventDefault();
     try {
-        console.log(currentPassword);
-        const response = await axios.patch(
-          updatePasswordUrl,
-          {
-            oldPassword: currentPassword,
-            newPassword: newPassword,
+      setIsLoading(true);
+      const response = await axios.patch(
+        updatePasswordUrl,
+        {
+          oldPassword: currentPassword,
+          newPassword: newPassword,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setShowSuccessAlert2(true);
-        setPasswordError(false);
-        setPasswordErrors(false);
-        setCurretPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
+        }
+      );
+      console.log(response);
+      setIsLoading(false);
+      setShowSuccessAlert2(true);
+      setPasswordError(false);
+      setPasswordErrors(false);
+      setCurretPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
       setPasswordError(error.response.data.msg);
       setShowSuccessAlert2(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <Flex justifyContent={"center"} alignItems={"center"} h={"70vh"}>
+        <CircularProgress isIndeterminate color="blue.300" />
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -187,7 +201,7 @@ export default function PasswordChange() {
           </Flex>
         </FormControl>
         <FormControl>
-          <FormLabel fontWeight={"semibold"}>New Password</FormLabel>
+          <FormLabel fontWeight={"semibold"}>Confirm Password</FormLabel>
           <Flex alignItems={"center"}>
             <Input
               type={showConfirmPassword ? "text" : "password"}
@@ -241,7 +255,7 @@ export default function PasswordChange() {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Update Password
             </AlertDialogHeader>
 
@@ -253,11 +267,15 @@ export default function PasswordChange() {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='blue' onClick={(e) => {
-                updatePassword(e);
-                setShowSuccessAlert2(false);
-                onClose();
-              }} ml={3}>
+              <Button
+                colorScheme="blue"
+                onClick={(e) => {
+                  updatePassword(e);
+                  setShowSuccessAlert2(false);
+                  onClose();
+                }}
+                ml={3}
+              >
                 Update
               </Button>
             </AlertDialogFooter>

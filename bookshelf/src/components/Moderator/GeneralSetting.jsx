@@ -14,7 +14,8 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure
+  useDisclosure,
+  CircularProgress,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
@@ -34,9 +35,10 @@ export default function GeneralSetting() {
   const [email, setEmail] = useState("");
   const [validateErrors, setErrors] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLodaing] = useState(false);
   const [showSuccessAlert1, setShowSuccessAlert1] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   //URLs
   const updateUserUrl =
@@ -85,6 +87,7 @@ export default function GeneralSetting() {
   const updateGeneralDetails = async (e) => {
     e.preventDefault();
     try {
+      setIsLodaing(true);
       const response = await axios.patch(
         updateUserUrl,
         {
@@ -99,8 +102,11 @@ export default function GeneralSetting() {
           },
         }
       );
-      setShowSuccessAlert1(true);
       console.log(response);
+      setIsLodaing(false);
+      if (response.statusText === "OK") {
+        setShowSuccessAlert1(true);
+      }
     } catch (error) {
       console.error(error);
       setError(error.response.data.msg);
@@ -110,6 +116,14 @@ export default function GeneralSetting() {
   useEffect(() => {
     getUserDetails();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Flex justifyContent={"center"} alignItems={"center"} h={"70vh"}>
+        <CircularProgress isIndeterminate color="blue.300" />
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -133,7 +147,7 @@ export default function GeneralSetting() {
       )}
       <form onSubmit={updateGeneralDetails}>
         {/* First Name */}
-        <FormControl>
+        <FormControl mb={5}>
           <FormLabel fontWeight={"semibold"}>First Name</FormLabel>
           <Flex>
             <Input
@@ -179,7 +193,7 @@ export default function GeneralSetting() {
         </FormControl>
 
         {/* Last Name */}
-        <FormControl>
+        <FormControl mb={5}>
           <FormLabel fontWeight={"semibold"}>Last Name</FormLabel>
           <Flex>
             <Input
@@ -272,10 +286,14 @@ export default function GeneralSetting() {
         </FormControl>
 
         {/* Save Button */}
-        <Button colorScheme="blue" mt={5} onClick={() => {
-          validateForm();
-          setShowSuccessAlert1(false);
-        }}>
+        <Button
+          colorScheme="blue"
+          mt={5}
+          onClick={() => {
+            validateForm();
+            setShowSuccessAlert1(false);
+          }}
+        >
           Save Changes
         </Button>
       </form>
