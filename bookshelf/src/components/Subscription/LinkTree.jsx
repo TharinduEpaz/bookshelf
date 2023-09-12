@@ -10,11 +10,11 @@ const LinkTree = () => {
               separator={<BsChevronRight color="gray.500" />}
             >
               <BreadcrumbItem>
-                <BreadcrumbLink href="/subscriptions">Home</BreadcrumbLink>
+                <BreadcrumbLink href="#">Home</BreadcrumbLink>
               </BreadcrumbItem>
 
               <BreadcrumbItem>
-        <BreadcrumbLink href="/selectSubscription">Subscription</BreadcrumbLink>
+                <BreadcrumbLink href="#">Subscription</BreadcrumbLink>
               </BreadcrumbItem>
 
               <BreadcrumbItem isCurrentPage>

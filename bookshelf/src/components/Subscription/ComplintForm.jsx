@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     FormControl,
@@ -16,54 +16,42 @@ import {
     Alert,
     AlertIcon,
 } from '@chakra-ui/react';
-import axios from 'axios';
-import { userContext } from "../../context/userContext";
 
 function ComplaintForm() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [showAlert, setShowAlert] = useState(false);
-    const { user } = useContext(userContext);
+    const [formData, setFormData] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        complaint: '',
+    });
 
-    const [complaint, setComplaint] = useState('');
-
-    useEffect(() => {
-        if (user) {
-            setEmail(user.user.email);
-            setName(`${user.user.name}`);
-        }
-    }, [user]);
-
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-
-    const requestUrl = "http://localhost:3000/api/v1/subscriptions/subscriptionComplaint";
-
-    const addComplaint = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(requestUrl, {
-                email: email,
-                name: name,
-                complaint: complaint,
-            });
-
-            console.log(response.data);
-
-            setEmail('');
-            setName('');
-            setComplaint('');
+    const handleSubmit = () => {
+        if (formData.email && formData.firstName && formData.lastName && formData.complaint) {
             setShowAlert(true);
-
             setTimeout(() => {
                 setShowAlert(false);
                 onClose();
-            }, 4000);
-
-            console.log(response);
-        } catch (error) {
-            console.log(error.response);
+                setFormData({
+                    email: '',
+                    firstName: '',
+                    lastName: '',
+                    complaint: '',
+                });
+            }, 3000);
         }
-    }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const isError = formData.email === '' || formData.firstName === '' || formData.lastName === '' || formData.complaint === '';
 
     return (
         <div>
@@ -76,41 +64,44 @@ function ComplaintForm() {
                 <ModalContent>
                     <ModalHeader>Add a Complaint</ModalHeader>
                     <ModalCloseButton />
-                    <form onSubmit={addComplaint}>
-                        <ModalBody>
-                            {showAlert && (
-                                <Alert status='success'>
-                                    <AlertIcon />
-                                    Form submitted successfully!
-                                </Alert>
-                            )}
+                    <ModalBody>
+                        {showAlert && (
+                            <Alert status='success'>
+                                <AlertIcon />
+                                Form submitted successfully!
+                            </Alert>
+                        )}
 
-                            <FormControl isRequired>
-                                <FormLabel>Email</FormLabel>
-                                <Input type='email' value={email} readOnly />
-                            </FormControl>
+                        <FormControl isRequired>
+                            <FormLabel>Email</FormLabel>
+                            <Input type='email' name='email' value={formData.email} onChange={handleInputChange} />
+                        </FormControl>
 
-                            <FormControl isRequired>
-                                <FormLabel>Name</FormLabel>
-                                <Input value={name} readOnly />
-                            </FormControl>
+                        <FormControl isRequired>
+                            <FormLabel>First name</FormLabel>
+                            <Input name='firstName' value={formData.firstName} onChange={handleInputChange} />
+                        </FormControl>
 
-                            <FormControl isRequired>
-                                <FormLabel>Complaint</FormLabel>
-                                <Textarea name='complaint' onChange={(e) => setComplaint(e.target.value)} value={complaint} />
-                            </FormControl>
-                        </ModalBody>
+                        <FormControl isRequired>
+                            <FormLabel>Last name</FormLabel>
+                            <Input name='lastName' value={formData.lastName} onChange={handleInputChange} />
+                        </FormControl>
 
-                        <ModalFooter>
-                            <Button variant={'outline'} onClick={onClose} mr={200}>
-                                Close
-                            </Button>
+                        <FormControl isRequired>
+                            <FormLabel>Complaint</FormLabel>
+                            <Textarea name='complaint' value={formData.complaint} onChange={handleInputChange} />
+                        </FormControl>
+                    </ModalBody>
 
-                            <Button colorScheme='blue' mr={3} type='submit'>
-                                Submit
-                            </Button>
-                        </ModalFooter>
-                    </form>
+                    <ModalFooter>
+                        <Button variant={'outline'} onClick={onClose} mr={200}>
+                            Close
+                        </Button>
+
+                        <Button colorScheme='blue' mr={3} onClick={handleSubmit} disabled={isError}>
+                            Submit
+                        </Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </div>

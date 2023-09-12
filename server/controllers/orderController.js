@@ -13,15 +13,17 @@ orderModel.belongsTo(userModel);
 
 //create order
 const addOrder = async (req, res, next) => {
-    try {
-        const {
-            orderDate,
-            orderStatus,
-            totalPrice,
-            buyer_id
-        } = req.body;
+  try {
+    const UserId = req.user.userId;
+    //set order date to today
+    const orderDate = new Date();
+    const orderStatus = "pending";
+    const totalPrice = req.body.totalPrice;
+    const orderItems = req.body.orderItems;
+    const is_paid = false;
 
-        console.log("Order values:", orderDate, orderStatus, totalPrice, buyer_id);
+    // console.log("orderItems", orderItems);
+    // console.log("totalPrice", totalPrice);
 
     const order = await orderModel.create({
       orderDate,
@@ -149,4 +151,3 @@ module.exports = {
     getOrdersByUserId,
     cancelOrder,
 };
-

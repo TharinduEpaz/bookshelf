@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Grid,
@@ -9,27 +9,8 @@ import Search from "../../components/Sharing/Search";
 import Filter from "../../components/Sharing/Filter";
 import ShareBookDetails from "../../components/Sharing/ShareBookDetails";
 import { Link } from 'react-router-dom'
-import axios from "axios";
 
 function ShareBook() {
-
-  const [requestDetails, setRequestDetails] = useState({});
-
-
-  useEffect(() => {
-    const getRequestDetails = async () => {
-      try {
-       
-        const response = await axios.get(`http://localhost:3000/api/v1/bookSharing/requests`);
-        console.log(response.data);
-        setRequestDetails(response.data);
-       
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getRequestDetails();
-  }, []);
   const bookDetails = {
     book1: {
       id: '1',
@@ -80,17 +61,14 @@ function ShareBook() {
           rowSpan={8}
           colSpan={5}
         >
-          {Object.keys(requestDetails).map((item) => (
-            
+          {Object.keys(bookDetails).map((item) => (
             // <Link to={`/shareBook/${bookDetails[item].id}`}
             //   key={bookDetails[item].id}>
               <ShareBookDetails
-                bookName={requestDetails[item].bookName}
-                userName={requestDetails[item].userName}
-                details={requestDetails[item].details}
-                createdAt={requestDetails[item].createdAt}
+                name={bookDetails[item].title}
+                author={bookDetails[item].author}
                 
-                imageURL={requestDetails[item].image}
+                imageURL={bookDetails[item].image}
               />
           
             // </Link>

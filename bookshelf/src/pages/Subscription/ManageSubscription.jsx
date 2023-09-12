@@ -16,7 +16,7 @@ function ManageSubscription() {
             borderRadius="md"
             boxShadow="sm"
             bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
-             backdropFilter="blur(8px)"
+            backdropFilter="blur(8px)"
             p={10}
         >
             <Box border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
