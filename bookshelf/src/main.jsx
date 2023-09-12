@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import { extendTheme, CSSReset } from "@chakra-ui/react";
 import "@fontsource/montserrat/";
 import "@fontsource/dm-serif-display";
-import "@fontsource/space-grotesk";
+// import "@fontsource/space-grotesk";
 
 const theme = extendTheme({
   fonts: {

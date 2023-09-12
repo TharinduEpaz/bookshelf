@@ -65,10 +65,10 @@ function BookReder() {
 			const response = await axios.post(
 				"http://localhost:3000/api/v1/subscriptions/addSubscription",
 				{
-					userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
 					subscriptionType: "Book Reader"
 				},
 				{
+					withCredentials: true,
 					headers: {
 						'Content-Type': 'application/json'
 					}

@@ -64,10 +64,10 @@ function BookReder() {
 				const response = await axios.post(
 					"http://localhost:3000/api/v1/subscriptions/addSubscription",
 					{
-						userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
 						subscriptionType: "Book Reader"
 					}, 
 					{
+					withCredentials: true,
 					headers: {
 						'Content-Type': 'application/json'
 					}
@@ -96,10 +96,10 @@ function BookReder() {
 							{subscriptionType.length > 0 ? (
 								<>
 									<Text fontWeight="500" fontSize="3xl">
-										{subscriptionType[1].firstName}
+										{subscriptionType[2].firstName}
 									</Text>
 									<Text fontSize="4xl" fontWeight="900">
-										{subscriptionType[1].LastName}
+										{subscriptionType[2].LastName}
 									</Text>
 								</>
 							) : (
@@ -120,9 +120,9 @@ function BookReder() {
 							<Text as={"b"}>
 								{subscriptionType.length > 0 ? (
 									<>
-										{subscriptionType[1].book_count} book
+										{subscriptionType[2].book_count} {""}book
 										every for{" "}
-										{subscriptionType[1].time_period}
+										{subscriptionType[2].time_period}
 									</>
 								) : (
 									<Text> </Text>
@@ -171,8 +171,8 @@ function BookReder() {
 										Are you sure you want to Select{" "}
 										{subscriptionType.length > 0 ? (
 											<Text as={"b"} fontSize={20}>
-												{subscriptionType[1].firstName}{" "}
-												{subscriptionType[1].LastName}{" "}
+												{subscriptionType[2].firstName}{" "}
+												{subscriptionType[2].LastName}{" "}
 											</Text>
 										) : (
 											<Text> </Text>
