@@ -22,6 +22,6 @@ const userSubscription = sequelize.define(
 	}
 );
 
-userSubscription.sync({ force: true });
+// userSubscription.sync({ force: true });
 
 module.exports = userSubscription;
