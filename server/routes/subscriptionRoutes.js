@@ -16,9 +16,9 @@ router.route("/subscriptionComplaint").post(controller.addSubscriptionCompliant)
 router.route("/getMySubscription").get(authenticateUser ,controller.getMySubscriptionDetails);
 router.route("/updateMySubscription").patch(authenticateUser ,controller.updateMySubscription);
 router.route("/deleteMySubscription").delete(authenticateUser, controller.deleteMySubscription);
-router.route("/bookSubscription").post(authenticateUser,controller.addBookSubscription);
+router.route("/bookSubscription").post(authenticateUser,controller.add_book_to_a_subscription_plan);
 router.route("/checkSubscription").get(authenticateUser, controller.checkSubscription);
-router.route("/selectBooks").get(authenticateUser,controller.getSelectBooksByUserId);
+router.route("/selectBooks").get(authenticateUser,controller.get_books_in_subscription_plan);
 
 
 router.route("/:id").get(controller.getSingleBook);

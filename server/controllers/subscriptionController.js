@@ -2,25 +2,24 @@ const subscriptionModel = require("../models/subscription");
 const userSubscriptionModel = require("../models/userSubscription");
 const subscriptionComplaint = require("../models/subscriptionComplaint");
 const bookModel = require("../models/book");
-const bookSubscriptionModel = require("../models/bookSubscription");
+// const bookSubscriptionModel = require("../models/bookSubscription");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const { log } = require("console");
+const { sequelize } = require("../models");
 
 
 //define the many to many relationship between books and subscriptions
 
-userSubscriptionModel.belongsToMany(bookModel, { through: bookSubscriptionModel });
-bookModel.belongsToMany(userSubscriptionModel, { through: bookSubscriptionModel });
-
+userSubscriptionModel.belongsToMany(bookModel, {foreignKey:"userId", through: 'bookSubscription' });
+bookModel.belongsToMany(userSubscriptionModel, {foreignKey:"bookId", through: 'bookSubscription' });
 
 // userSubscriptionModel.sync({ alter: true });
+// bookModel.sync({ alter: true });
+// sequelize.sync();
 // bookSubscriptionModel.sync({ force: true });
-
-
-
 
 const getAllSubscriptions = async (req, res, next) => {
   try {
@@ -62,12 +61,9 @@ const addSubscriptionType = async (req, res, next) => {
         subscriptionType,
         userId,
       });
-
       return res.status(statusCodes.StatusCodes.CREATED).json(type);
     }
 
-   
-  
   } catch (error) {
     next(error);
   }
@@ -199,23 +195,107 @@ const getSingleBook = async (req, res, next) => {
 
 const addBookSubscription = async (req, res, next) => {
   const userId = req.user.userId;
+  console.log(userId);
   try {
     const { id } = req.body;
-    const bookExists = await bookSubscriptionModel.findOne({
+    const bookId = id;
+    console.log(bookId, userId);
+    // const bookExists = await bookSubscriptionModel.findOne({
+    //   where: {
+    //     [Op.and]: [{ id: id }, { userId: userId }],
+    //   },
+    // });
+    
+    // if () {
+    //   throw new Error("Book already exists");
+    // }
+
+    // const addBookSubscription = await bookSubscriptionModel.create({
+    //   id,
+    //   userId,
+    // });
+    // res.status(statusCodes.StatusCodes.CREATED).json(addBookSubscription);
+    // const response = await bookSubscriptionModel.addBook(bookId, userId)
+    const subscription = await userSubscriptionModel.findOne({
       where: {
-        [Op.and]: [{ id: id }, { userId: userId }],
+        userId: userId,
       },
     });
-    if (bookExists) {
-      throw new Error("Book already exists");
+    if(!subscription){
+      throw new CustomError.NotFoundError("No subscription found");
     }
 
-    const addBookSubscription = await bookSubscriptionModel.create({
-      id,
-      userId,
+    const book = await bookModel.findOne({
+      where: {
+        id: bookId,
+      },
+
     });
-    res.status(statusCodes.StatusCodes.CREATED).json(addBookSubscription);
+    // res.json(book);
+
+    if(!book){
+      throw new CustomError.NotFoundError("No book found");
+    }
+
+    //add book to subscription
+    const response = await subscription.addBook(book);
+
+
+    
+    res.json(response);
+    
+
+    // res.status(statusCodes.StatusCodes.CREATED).json(response);
+    
   } catch (error) {
+    next(error);
+  }
+};
+
+const add_book_to_a_subscription_plan = async (req, res, next) => {
+  const userId = req.user.userId;
+  
+  try {
+    const { id } = req.body;
+    const bookId = id;
+    console.log(bookId, userId);
+
+    const subscription = await userSubscriptionModel.findOne({
+      where: {
+        userId: userId,
+      },
+    });
+    if(!subscription){
+      throw new CustomError.NotFoundError("No subscription found");
+    }
+    const book = await bookModel.findOne({
+      where: {
+        id: bookId,
+      },
+
+    });
+
+    if(!book){
+      throw new CustomError.NotFoundError("No book found in this name");
+    }
+
+    //add book to subscription
+    const response = await subscription.addBook(book);
+    res.json(response);
+  }
+  
+
+  
+
+
+
+    // const bookExists = await bookSubscriptionModel.findOne({
+    //   where: {
+    //     [Op.and]: [{ id: id }, { userId: userId }],
+    //   },
+
+  
+  catch (error) {
     next(error);
   }
 };
@@ -242,23 +322,35 @@ const checkSubscription = async (req, res, next) => {
   }
 };
 
-const getSelectBooksByUserId = async (req, res, next) => {
+const get_books_in_subscription_plan = async (req, res, next) => {
 	try {
 		//get selectBooks with the users who selected them
      const userId = req.user.userId;
-		const selectBooks = await bookSubscriptionModel.findAll({
-			where: {
-				userId: userId,
-			},
-			include: [
-				{
-					model: bookModel,
-					attributes: ["title", "price","author","averageRating","image"],
-				},
-			],
-		});
+		// const selectBooks = await bookSubscriptionModel.findAll({
+		// 	where: {
+		// 		userId: userId,
+		// 	},
+		// 	include: [
+		// 		{
+		// 			model: bookModel,
+		// 			attributes: ["title", "price","author","averageRating","image"],
+		// 		},
+		// 	],
+		// });
 
-		res.json(selectBooks);
+    const books = await userSubscriptionModel.findAll({
+      where: {
+        userId: userId,
+      },
+      include: [
+        {
+          model: bookModel,
+          attributes: ["title", "price","author","averageRating","image"],
+        },
+      ],
+    });
+
+		res.json(books);
 	} catch (err) {
 		next(err);
 	}
@@ -276,5 +368,6 @@ module.exports = {
 	getSingleBook,
 	addBookSubscription,
 	checkSubscription,
-	getSelectBooksByUserId,
+  add_book_to_a_subscription_plan,
+  get_books_in_subscription_plan,
 };
