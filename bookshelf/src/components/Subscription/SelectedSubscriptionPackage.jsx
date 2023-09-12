@@ -39,7 +39,7 @@ function SelectedSubscriptionPackage() {
         getCurrentSubscription();
     }, []);
 
-    let currentSubscription = subscriptionDetails && subscriptionDetails.data[0].subscriptionType;
+    let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
     let currentSubscriptionIcon = "";
 
     if (currentSubscription === "Book Reader") {
