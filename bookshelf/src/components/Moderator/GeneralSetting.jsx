@@ -47,13 +47,16 @@ export default function GeneralSetting() {
   // Get User Details
   const getUserDetails = async () => {
     try {
+      setIsLodaing(true);
       const response = await fetch(updateUserUrl);
       const userData = await response.json();
       setUserData(userData);
       setFName(userData.firstName);
       setLName(userData.lastName);
       setEmail(userData.email);
+      setIsLodaing(false);
     } catch (error) {
+      setIsLodaing(false);
       console.error(error);
     }
   };
