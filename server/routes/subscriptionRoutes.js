@@ -19,6 +19,7 @@ router.route("/deleteMySubscription").delete(authenticateUser, controller.delete
 router.route("/bookSubscription").post(authenticateUser,controller.add_book_to_a_subscription_plan);
 router.route("/checkSubscription").get(authenticateUser, controller.checkSubscription);
 router.route("/selectBooks").get(authenticateUser,controller.get_books_in_subscription_plan);
+router.route("/removeBook").delete(authenticateUser,controller.delete_book_in_subscription_plan);
 
 
 router.route("/:id").get(controller.getSingleBook);

@@ -41,6 +41,8 @@ function SelectBookSubscription() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const id = useParams();
     const toast = useToast()
+    const [reloadPage, setReloadPage] = useState(false);
+
     // console.log(id);
 
     useEffect(() => {
@@ -77,19 +79,18 @@ function SelectBookSubscription() {
                     }
                 }
             );
-            return (
                 toast({
-                    title: 'Successfully Updated.',
+                    title: "Successfully added your book",
                     status: 'success',
                     duration: 4000,
                     isClosable: true,
                     position: 'top'
-                })
-            )
-
+                });
+                setReloadPage(true);
+        
 
         } catch (error) {
-            console.error(error.response.data.msg);
+            console.error(error);
             return (
                 toast({
                     title: error.response.data.msg,
@@ -101,6 +102,12 @@ function SelectBookSubscription() {
             )
         }
     }
+
+    useEffect(() => {
+        if (reloadPage) {
+            window.location.reload(); // Reload the page
+        }
+    }, [reloadPage]);
     return (
         <>
             <Box

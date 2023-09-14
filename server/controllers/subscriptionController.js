@@ -16,10 +16,6 @@ const { sequelize } = require("../models");
 userSubscriptionModel.belongsToMany(bookModel, {foreignKey:"userId", through: 'bookSubscription' });
 bookModel.belongsToMany(userSubscriptionModel, {foreignKey:"bookId", through: 'bookSubscription' });
 
-// userSubscriptionModel.sync({ alter: true });
-// bookModel.sync({ alter: true });
-// sequelize.sync();
-// bookSubscriptionModel.sync({ force: true });
 
 const getAllSubscriptions = async (req, res, next) => {
   try {
@@ -78,14 +74,6 @@ const getAllUserSubscriptions = async (req, res, next) => {
     next(error);
   }
 };
-// const getAllSubscriptionDetails = async (req, res, next) => {
-// 	try {
-// 		const details = (await subscriptionDetailsModel.findAll());
-// 		res.status(statusCodes.StatusCodes.OK).json(details);
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// };
 
 const getMySubscriptionDetails = async (req, res, next) => {
   const userId = req.user.userId;
@@ -269,6 +257,18 @@ const add_book_to_a_subscription_plan = async (req, res, next) => {
 			throw new CustomError.NotFoundError("No subscription found");
 		}
 
+		// Check if the user has already added this book to their subscription
+		const bookExists = await subscription.countBooks({
+			where: {
+				id: bookId,
+			},
+		});
+		if (bookExists > 0) {
+			throw new CustomError.BadRequestError(
+				"You already added this book"
+			);
+		}
+
 		// Check if the user has already added 3 books to their subscription
 		const userBooksCount = await subscription.countBooks();
 		if (userBooksCount >= 3) {
@@ -294,6 +294,7 @@ const add_book_to_a_subscription_plan = async (req, res, next) => {
 		next(error);
 	}
 };
+
 
 
 const checkSubscription = async (req, res, next) => {
@@ -340,6 +341,52 @@ const get_books_in_subscription_plan = async (req, res, next) => {
 	}
 };
 
+const delete_book_in_subscription_plan = async (req, res, next) => {
+  const userId = req.user.userId;
+
+  try {
+    // console.log(req.body);
+		const { id } = req.body;
+		const bookId = id;
+		console.log(bookId, userId);
+
+		const subscription = await userSubscriptionModel.findOne({
+			where: {
+				userId: userId,
+			},
+		});
+		if (!subscription) {
+			throw new CustomError.NotFoundError("No subscription found");
+		}
+
+		// Check if the user has already added 3 books to their subscription
+		const userBooksCount = await subscription.countBooks();
+		if (userBooksCount == 0) {
+			throw new CustomError.BadRequestError(
+				"There are no books to remove."
+			);
+		}
+
+		const book = await bookModel.findOne({
+			where: {
+				id: bookId,
+			},
+		});
+
+		if (!book) {
+			throw new CustomError.NotFoundError("No book found with this ID");
+		}
+
+		// Remove book from the subscription
+		const response = await subscription.removeBook(book);
+    const message = response ? "Successfully Removed" : "failed to remove book"
+		res.json(message);
+
+  } catch (error) {
+		next(error);
+  }
+};
+
 module.exports = {
 	getAllSubscriptions,
 	getAllUserSubscriptions,
@@ -352,6 +399,7 @@ module.exports = {
 	getSingleBook,
 	addBookSubscription,
 	checkSubscription,
-  add_book_to_a_subscription_plan,
-  get_books_in_subscription_plan,
+	add_book_to_a_subscription_plan,
+	get_books_in_subscription_plan,
+	delete_book_in_subscription_plan,
 };
