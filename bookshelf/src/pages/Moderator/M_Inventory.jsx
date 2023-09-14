@@ -10,11 +10,11 @@ import {
   Spacer,
   Text,
   StatGroup,
+  Spinner
 } from "@chakra-ui/react";
 import {
   BiBookOpen,
   BiErrorCircle,
-  BiPlus,
 } from "react-icons/bi";
 import { IoAddCircle } from "react-icons/io5";
 import StatCard from "../../components/Moderator/StatCard";
@@ -28,15 +28,17 @@ export default function Inventry() {
     "Book ID",
     "Book Name",
     "Author",
-    "Genre",
+    "ISBN",
     "Unit Price",
     "In-Stock",
   ];
 
   const [list, setBookList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getBooks = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/books");
       const jsonData = await response.json();
 
@@ -44,13 +46,15 @@ export default function Inventry() {
         id: book.id,
         title: book.title,
         author: book.author,
-        genre: book.genre,
+        genre: book.ISBN,
         unitPrice: book.price,
         inStock: book.stock,
       }));
 
       setBookList(filteredData);
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       console.error(err.message);
     }
   };
@@ -58,6 +62,25 @@ export default function Inventry() {
   useEffect(() => {
     getBooks();
   }, []);
+
+  if (isLoading) {
+    return (
+      <>
+      <Box mb={'100vh'}>
+        <Spinner
+          position={"absolute"}
+          top={"30%"}
+          left={"50%"}
+          size={"xl"}
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500" 
+        />
+        </Box>
+      </>
+    );
+  }
 
   return (
     <>
