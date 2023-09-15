@@ -2,11 +2,10 @@ const bookModel = require("../models/book");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
-const multer = require("multer");
+// const multer = require("multer");
 
 
 const addBook = async (req, res, next) => {
-
   try {
     const {
       title,
@@ -16,32 +15,29 @@ const addBook = async (req, res, next) => {
       description,
       averageRating,
       stock,
-      typesAvailable,
       genre,
       language,
       featuredCategory,
-      image,
 
     } = req.body;
+    
+    if (!title || !price || !author || !ISBN || !description || !genre) {
+      throw new CustomError.BadRequestError("Please provide all required details");
+    }
 
-    console.log(req.body)
-
-
-    // const book = await bookModel.create({
-    //   title,
-    //   price,
-    //   author,
-    //   ISBN,
-    //   description,
-    //   averageRating,
-    //   stock,
-    //   typesAvailable,
-    //   genre,
-    //   language,
-    //   featuredCategory,
-    //   image: upload(imagePath),
-    // });
-    // res.status(statusCodes.StatusCodes.CREATED).json(book);
+    const book = await bookModel.create({
+      title,
+      price,
+      author,
+      ISBN,
+      description,
+      averageRating,
+      stock,
+      genre,
+      language,
+      featuredCategory,
+    });
+    res.status(statusCodes.StatusCodes.CREATED).json(book);
   } catch (error) {
     next(error);
   }

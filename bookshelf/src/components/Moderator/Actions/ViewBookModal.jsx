@@ -15,14 +15,15 @@ import {
   Image,
   Heading,
   Spinner,
+  Flex,
 } from "@chakra-ui/react";
 import { BiSolidDetail } from "react-icons/bi";
-import { BsStar } from "react-icons/bs";
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { useBooksContext } from "../../../context/booksContext";
 import { userContext } from "../../../context/userContext";
 import { useContext, useEffect } from "react";
 
-export default function AddBookModal(id) {
+export default function ViewBookModal(id) {
   const { isLoading, fetchSingleBook, currentBook } = useBooksContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useContext(userContext);
@@ -89,7 +90,39 @@ export default function AddBookModal(id) {
                   <Heading size="xl">{currentBook.title}</Heading>
                   <p>by author</p>
                   <Heading size="md">Rs. {currentBook.author}</Heading>
-                  <BsStar color={"gold"} />
+                  <Flex>
+                  {Array(5)
+                  .fill("")
+                  .map((_, i) => {
+                    const roundedRating =
+                      Math.round(currentBook.averageRating * 2) / 2;
+                    if (roundedRating - i >= 1) {
+                      return (
+                        <BsStarFill
+                          color={"gold"}
+                          key={i}
+                          style={{ marginLeft: "1" }}
+                        />
+                      );
+                    }
+                    if (roundedRating - i === 0.5) {
+                      return (
+                        <BsStarHalf
+                          key={i}
+                          color={"gold"}
+                          style={{ marginLeft: "1" }}
+                        />
+                      );
+                    }
+                    return (
+                      <BsStar
+                        key={i}
+                        style={{ marginLeft: "1" }}
+                        color={"gold"}
+                      />
+                    );
+                  })}
+                  </Flex>
                   <p>{currentBook.description}</p>
                   <HStack gap={50}>
                     <VStack alignItems={"flex-start"} gap={3}>

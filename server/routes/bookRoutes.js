@@ -13,7 +13,7 @@ const controller = require('../controllers/bookController')
 
 router.route('/').get(controller.getAllBooks);
 
-router.route('/').post(imageUpload, controller.addBook);
+router.route('/').post(controller.addBook);
 
 router.route('/uploadImage').post(controller.uploadImage);
 
