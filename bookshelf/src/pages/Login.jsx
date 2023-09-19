@@ -11,19 +11,14 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Spinner,
   Alert,
   AlertIcon,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
   CircularProgress,
   
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import axios from "axios";
 import {userContext} from "../context/userContext"
-
+import axiosInstance from "../utils/axiosInstance";
 export default function SimpleCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +35,7 @@ export default function SimpleCard() {
     e.preventDefault();
     
     try {
-      const response = await axios.post(loginUrl, {
+      const response = await axiosInstance.post('/login', {
         email: email,
         password: password
       },{

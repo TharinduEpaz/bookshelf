@@ -4,6 +4,7 @@ const orderBooksModel = require("../models/orderBooks");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
+const { Op } = require("sequelize");
 
 const addBook = async (req, res, next) => {
   try {
@@ -21,6 +22,7 @@ const addBook = async (req, res, next) => {
       featuredCategory,
 
     } = req.body;
+    console.log('function reached');
     
     if (!title || !price || !author || !ISBN || !description || !typesAvailable || !genre) {
       throw new CustomError.BadRequestError("Please provide all required details");
@@ -198,6 +200,37 @@ const increaseStock = async (req, res, next) => {
   }
 }
 
+const getBookNames = async (req, res, next) => {
+  try {
+    
+    const books = await bookModel.findAll({
+      attributes: ['id','title']
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const searchBooks = async (req, res, next) => {
+  try {
+    const { title } = req.body;
+    const books = await bookModel.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${title}%`
+        }
+      }
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+
 
 
 module.exports = {
@@ -207,5 +240,9 @@ module.exports = {
   updateBook,
   deleteBook,
   uploadImage,
-  getBestSellingBooks
+  getBestSellingBooks,
+  decreaseStock,
+  increaseStock,
+  getBookNames,
+  searchBooks,
 };

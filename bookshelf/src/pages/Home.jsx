@@ -14,7 +14,6 @@ import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
 import {motion, AnimatePresence} from 'framer-motion'
 import Search from "../components/Search";
-import { Search2Icon } from "@chakra-ui/icons";
 
 function Home() {
   const itemBoxDetails = {
@@ -123,30 +122,11 @@ function Home() {
       />
       </motion.div> */}
 
-      <Box 
-      m={"auto"}
-        mt={2}
-        w="80%"
-        borderRadius="2xl"
-        boxShadow="sm"
-        background={"rgba(255, 255, 255,0.2)"}
-        // bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
-        // filter="blur(8px)"
-        backdropFilter="blur(8px)"
-        p={5}
-        display={'flex'}
-        // justifyContent={'center'}
-        alignItems={'center'}
-        gap={5}
-        
-        >
-      <Input type="text" w={'50%'} fontWeight={'extrabold'} placeholder='Search thousands of books' borderColor={'blue.400'}/>
-      <IconButton icon={<Search2Icon />} color="blue.300" ml={0} borderRadius={10} w={100} />
-      </Box>
+      <Search />
      
       <AnimatePresence mode="wait">
         {activeComponent === 1 && (
-          console.log(activeComponent),
+          
           <motion.div
             key="component1"
             initial={{ opacity: 0 }}
@@ -164,7 +144,7 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 2 && (
-          console.log(activeComponent),
+          
           <motion.div
             key="component2"
             initial={{ opacity: 0 }}
@@ -179,7 +159,7 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 3 && (
-          console.log(activeComponent),
+          
           <motion.div
             key="component3"
             initial={{ opacity: 0 }}
@@ -194,7 +174,7 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 4 && (
-          console.log(activeComponent),
+         
           <motion.div
             key="component4"
             initial={{ opacity: 0 }}
