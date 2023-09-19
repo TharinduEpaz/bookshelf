@@ -64,7 +64,7 @@ export default function AdminUsersTable({
               <Td key={index}>{headerItem}</Td>
             ))
             }
-             <Td colSpan={3}>Action</Td>
+             <Td colSpan={4}>Action</Td>
         </Tr>
       </Thead>
 
