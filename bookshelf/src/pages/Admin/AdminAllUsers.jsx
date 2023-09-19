@@ -212,15 +212,43 @@ async function getAllUsers(role) {
   
   //Report generation
   const pdfUserDetails = (user) => {
-    var doc = new jsPDF('landscape', 'px', 'a4');
-    doc.text(60, 60, 'User Details');
-    doc.text(60, 80, `User ID: ${user.id}`);
-    doc.text(60, 100, `First Name: ${user.firstName}`);
-    doc.text(60, 120, `Last Name: ${user.lastName}`);
-    doc.text(60, 140, `Email: ${user.email}`);
-    doc.text(60, 160, `User Type: ${user.role}`);
+    const doc = new jsPDF('portrait', 'px', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+// Background Color
+    doc.setFillColor(220, 220, 255); // Light blue background
+    doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Fill the entire page with the background color
+
+    doc.setFontSize(16);
+    doc.setTextColor(30, 30, 30);
+  
+    // Title
+    doc.text(30, 30, 'User Details');
+    
+    // x and y positions for content
+    let y = 60;
+    let x = 100;
+  
+    // User details
+    doc.setFontSize(12);
+    doc.setTextColor(30, 30, 30);
+    doc.text(30, y, `User ID: ${user.id}`);
+    y += 20;
+    doc.text(30, y, `First Name: ${user.firstName}`);
+    y += 20;
+    doc.text(30, y, `Last Name: ${user.lastName}`);
+    y += 20;
+    doc.text(30, y, `Email: ${user.email}`);
+    y += 20;
+    doc.text(30, y, `User Type: ${user.role}`);
+  
+    
+    doc.setLineWidth(1);
+    doc.rect(20, 50, 370, y - 20); // Border around content
     doc.save('User_details.pdf');
   };
+
   
 
   return (
