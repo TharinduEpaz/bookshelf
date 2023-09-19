@@ -16,12 +16,14 @@ import {
 } from "@chakra-ui/react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
+
 export default function AdminUsersTable({
   list,
   columnNames,
   deleteUser,
   updateUser,
   setSelectedUser,
+  pdfUserDetails,
 }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(5); // Set initial items per page to 2
@@ -47,7 +49,7 @@ export default function AdminUsersTable({
     setCurrentPage(1); // Reset to the first page when changing items per page
   };
 
-
+  
   return (
     
     <TableContainer>
@@ -93,6 +95,12 @@ export default function AdminUsersTable({
     <Td>
       <Button colorScheme="blue" size="sm" onClick={() => setSelectedUser(Obj)}>
         View
+      </Button>
+    </Td>
+
+    <Td>
+      <Button colorScheme="blue" size="sm" onClick={() => pdfUserDetails(Obj)}>
+        Download
       </Button>
     </Td>
 

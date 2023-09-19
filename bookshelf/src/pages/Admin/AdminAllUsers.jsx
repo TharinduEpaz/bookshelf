@@ -2,6 +2,7 @@ import React from 'react'
 import { useDisclosure } from '@chakra-ui/react'; 
 import SearchBar from '../../components/Admin/SearchBar';
 import { Alert, AlertIcon } from '@chakra-ui/react';
+import jsPDF from 'jspdf';
 
 
 import { 
@@ -208,6 +209,20 @@ async function getAllUsers(role) {
 
   */
 
+  
+  //Report generation
+  const pdfUserDetails = (user) => {
+    var doc = new jsPDF('landscape', 'px', 'a4');
+    doc.text(60, 60, 'User Details');
+    doc.text(60, 80, `User ID: ${user.id}`);
+    doc.text(60, 100, `First Name: ${user.firstName}`);
+    doc.text(60, 120, `Last Name: ${user.lastName}`);
+    doc.text(60, 140, `Email: ${user.email}`);
+    doc.text(60, 160, `User Type: ${user.role}`);
+    doc.save('User_details.pdf');
+  };
+  
+
   return (
     
     <Box
@@ -268,6 +283,7 @@ async function getAllUsers(role) {
   deleteUser={handleDeleteModalOpen}
   setSelectedUser={setSelectedUser}
   updateUser={handleUpdateModalOpen} // Make sure this is passed correctly
+  pdfUserDetails={pdfUserDetails}
 />
 
 
@@ -374,6 +390,9 @@ async function getAllUsers(role) {
         </ModalContent>
       </Modal>
     )}
+
+
+{/* <Button onClick={pdfGenerate}>Download</Button> */}
 
 
               </Box>

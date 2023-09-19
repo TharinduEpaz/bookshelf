@@ -40,10 +40,10 @@ const book = sequelize.define('book', {
 
     //types means paperback, hardcover, etc
 
-    typesAvailable: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false
-    },
+    // typesAvailable: {
+    //     type: DataTypes.ARRAY(DataTypes.STRING),
+    //     allowNull: false
+    // },
 
     //genres means fiction, non-fiction, etc
     
