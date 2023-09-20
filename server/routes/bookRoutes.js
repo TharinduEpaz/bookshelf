@@ -23,6 +23,8 @@ router.route('/:id', ).patch(controller.updateBook);
 
 router.route('/:id', ).delete(controller.deleteBook);
 
+router.route('/count').get(controller.getBookCount);
+
 
 
 module.exports = router;

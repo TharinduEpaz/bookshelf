@@ -20,7 +20,7 @@ const addBook = async (req, res, next) => {
       featuredCategory,
 
     } = req.body;
-    
+
     if (!title || !price || !author || !ISBN || !description || !genre) {
       throw new CustomError.BadRequestError("Please provide all required details");
     }
@@ -165,11 +165,24 @@ const uploadImage = async (req, res, next) => {
   }
 };
 
+//count Books
+
+const getBookCount = async (req, res, next) => {
+  try {
+    const bookCount = (await bookModel.count());
+    res.json(bookCount);
+  } catch (error) {
+    next(error);
+  }
+  // res.send("Get all books");
+};
+
 module.exports = {
   addBook,
   getAllBooks,
   getSingleBook,
   updateBook,
   deleteBook,
-  uploadImage
+  uploadImage,
+  getBookCount
 };
