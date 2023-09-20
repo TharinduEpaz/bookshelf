@@ -1,8 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
-const allBooksUrl = "http://localhost:3000/api/v1/books/";
-const singleBookUrl = "http://localhost:3000/api/v1/books/";
-const searchBooksUrl = "http://localhost:3000/api/v1/books/searchBooks";
+
 const booksContext = createContext();
 
 const initialState = {
@@ -82,13 +80,31 @@ export const BooksProvider = ({ children }) => {
     }
   };
 
+
+  const fetchFilteredBooks = async (genre) => {
+    try {
+      dispatch({ type: "FETCH_BOOKS_BEGIN" });
+      const response = await axiosInstance.post(
+        '/filterBooks',
+        {
+          genre: genre,
+        }
+      );
+      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     fetchBooks();
   }, [initialState]);
 
   return (
     <booksContext.Provider
-      value={{ ...state, fetchSingleBook, fetchSearchedBooks }}
+      value={{ ...state, fetchSingleBook, fetchSearchedBooks,fetchFilteredBooks }}
     >
       {children}
     </booksContext.Provider>

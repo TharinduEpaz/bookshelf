@@ -228,6 +228,23 @@ const searchBooks = async (req, res, next) => {
   }
 }
 
+const filterBooks = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const books = await bookModel.findAll({
+      where: {
+        genre: {
+          [Op.like]: `%${category}%`
+        }
+      }
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 
 
 
@@ -245,4 +262,5 @@ module.exports = {
   increaseStock,
   getBookNames,
   searchBooks,
+  filterBooks,
 };

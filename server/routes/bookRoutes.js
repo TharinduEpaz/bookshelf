@@ -15,6 +15,8 @@ router.route('/searchBooks').post(controller.searchBooks);
 
 router.route('/getBookNames').get(controller.getBookNames);
 
+router.route('/filter/:category').get(controller.filterBooks);
+
 router.get('/:id', controller.getSingleBook);
 
 router.route('/:id', ).patch(controller.updateBook);
