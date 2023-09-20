@@ -88,7 +88,7 @@ export default function ViewBookModal(id) {
                     <strong>ID</strong> : {currentBook.id}
                   </p>
                   <Heading size="xl">{currentBook.title}</Heading>
-                  <p>by author</p>
+                  <p>by</p>
                   <Heading size="md">Rs. {currentBook.author}</Heading>
                   <Flex>
                   {Array(5)

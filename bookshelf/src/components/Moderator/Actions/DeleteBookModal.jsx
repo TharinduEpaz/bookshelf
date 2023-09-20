@@ -10,7 +10,8 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
-  useToast
+  useToast,
+  Spinner
 } from "@chakra-ui/react";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
@@ -23,7 +24,7 @@ export default function DeleteBookModal(id) {
   const deleteBook = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.delete(`http://localhost:5000/api/books/${id.id}`);
+      const response = await axios.delete(`http://localhost:3000/api/v1/books/${id.id}`);
       setIsLoading(false);
       if(response.status === 200){
         toast({
