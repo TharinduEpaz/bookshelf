@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Grid,
@@ -18,9 +18,11 @@ import {
     TabList,
     TabPanels,
     Tab,
-    TabPanel
+    TabPanel,
+    useDisclosure
 } from "@chakra-ui/react";
 
+import { useToast } from '@chakra-ui/react'
 import Search from "../../components/Shop/Search";
 import LinkTree from "../../components/Subscription/LinkTree";
 import RadioCard from "../../components/Shop/RadioSet";
@@ -28,17 +30,84 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiSolidSelectMultiple} from "react-icons/bi";
 import SimpleReview from "../../components/Shop/SimpleReview";
 import AboutAuthor from "../../components/Shop/AboutAuthor";
+import { useParams } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
 
 function SelectBookSubscription() {
-    const productDetails = {
-        name: "Song og Ice and Fire",
-        author: "George R.R. Martin",
-        price: 1990.0,
-        rating: 5,
-        variants: ["hardcover", "paperback"],
-        description:
-            "A Game of Thrones is the first novel in A Song of Ice and Fire, a series of fantasy novels by the American author George R. R. Martin. It was first published on August 1, 1996. The novel won the 1997 Locus Award and was nominated for both the 1997 Nebula Award and the 1997 World Fantasy Award.",
-    };
+    const [book,setBook] =useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [getBook, setGetBook] = useState([]);
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const id = useParams();
+    const toast = useToast()
+    const [reloadPage, setReloadPage] = useState(false);
+
+    // console.log(id);
+
+    useEffect(() => {
+        const getBook = async (id) => {
+            try {
+              
+                // console.log(id.id);
+                const bookId = id.id;
+                const response = await axios.get('http://localhost:3000/api/v1/subscriptions/' + bookId);
+                setBook(response.data);
+                // console.log(response.data);
+              
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getBook(id);
+    }, []);
+
+    const addBookSubscription = async(id)=>{
+        try {
+            const bookId = id.id;
+            console.log(bookId);
+            const response = await axios.post(
+                "http://localhost:3000/api/v1/subscriptions/bookSubscription",
+                {
+                    id: bookId,
+                    
+                },
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+                toast({
+                    title: "Successfully added your book",
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                });
+                setReloadPage(true);
+        
+
+        } catch (error) {
+            console.error(error);
+            return (
+                toast({
+                    title: error.response.data.msg,
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                })
+            )
+        }
+    }
+
+    useEffect(() => {
+        if (reloadPage) {
+            window.location.reload(); // Reload the page
+        }
+    }, [reloadPage]);
     return (
         <>
             <Box
@@ -86,7 +155,7 @@ function SelectBookSubscription() {
                             alignItems={"start"}
                         >
                             <Image
-                                src="https://dev.lareviewofbooks.org/wp-content/uploads/2014/04/GameofThronesCover.jpg"
+                                src={book.image}
                                 alt="Dan Abramov"
                                 borderRadius={"md"}
                                 maxH={400}
@@ -100,14 +169,14 @@ function SelectBookSubscription() {
                             <Badge colorScheme="red">Out Of Stock</Badge>
                             <Badge colorScheme="purple">New</Badge>
                         </Stack>
-                        <Heading>{productDetails.name}</Heading>
+                        <Heading>{book.title}</Heading>
 
                         <Box display="flex" alignItems={"center"} mt={4}>
                             {Array(5)
                                 .fill("")
                                 .map((_, i) => {
                                     const roundedRating =
-                                        Math.round(productDetails.rating * 2) / 2;
+                                        Math.round(book.averageRating* 2) / 2;
                                     if (roundedRating - i >= 1) {
                                         return (
                                             <BsStarFill
@@ -140,12 +209,12 @@ function SelectBookSubscription() {
                                 fontFamily={"montserrat"}
                                 fontWeight={"light"}
                             >
-                                By {productDetails.author}
+                                By {book.author}
                             </Heading>
                         </Box>
                         {/* varients as two buttons */}
                         <Box mt={10} fontWeight={'bold'}>
-                            <RadioCard options={productDetails.variants}  />
+                            {/* <RadioCard options={productDetails.variants}  /> */}
                         </Box>
                         <Box mt={10}>
                             <Heading
@@ -157,7 +226,7 @@ function SelectBookSubscription() {
                                 as={'del'}
 
                             >
-                                Rs. {productDetails.price}
+                                Rs. {book.price}
                             </Heading>
                             <Heading
                                 ml={5}
@@ -168,21 +237,26 @@ function SelectBookSubscription() {
                                 as={'b'}
 
                             >
-                                Rs. {productDetails.price -1690}
+                                Rs. {book.price -book.price*0.4}
                             </Heading>
 
                             <Box display={'flex'} alignItems={'center'} gap={10} mt={10}>
                                 {/* <Button w={200} colorScheme="purple" borderRadius={15}>Add To Cart</Button> */}
-                                <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
+                                {/* <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' variant='solid' borderRadius={10} w={200}>
                                     Select Book
-                                </Button>
+                                </Button> */}
+                                <RouterLink to={'/selectPackage/details'} onClick={() => addBookSubscription(id)}>
+                                    <Button leftIcon={<BiSolidSelectMultiple />} colorScheme='blue' ml={3}>
+                                        Select Book
+                                    </Button>
+                                </RouterLink>
 
                             </Box>
 
                             <Divider mt={5} mb={5} color={'black.600'} borderWidth={1} borderColor={'blue.200'} />
 
                             <Text>
-                                {productDetails.description}
+                                {book.description}
                             </Text>
                         </Box>
                     </GridItem>

@@ -65,10 +65,10 @@ function BookReder() {
 			const response = await axios.post(
 				"http://localhost:3000/api/v1/subscriptions/addSubscription",
 				{
-					userId: "d384f58e-ee9a-48eb-8c96-141e66f6af60",
-					subscriptionType: "Book Reader"
+					subscriptionType: "Book Worm"
 				},
 				{
+					withCredentials: true,
 					headers: {
 						'Content-Type': 'application/json'
 					}
@@ -184,8 +184,8 @@ function BookReder() {
 									<Button ref={cancelRef} onClick={onClose}>
 										No
 									</Button>
-									<RouterLink to={'/selectBookWorm'}>
-										<Button colorScheme='purple' ml={3}>
+									<RouterLink to={'/selectPackage'}>
+										<Button colorScheme='purple' ml={3} onClick={addSubscriptionUser}>
 											Yes
 										</Button>
 									</RouterLink>

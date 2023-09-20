@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import BookDetails from "../../components/Subscription/BookDetails";
-import SelectReaderIcon from "../../components/Subscription/SelectReaderIcon";
+import SelectLoverIcon from '../../components/Subscription/SelectLoverIcon';
+import SelectReaderIcon from './SelectReaderIcon';
+import SelectWormIcon from './SelectWormIcon';
 import {
     Box,
     Button,
@@ -10,16 +12,50 @@ import {
 } from "@chakra-ui/react";
 
 import { BsFillCalendar2DateFill } from "react-icons/bs";
+import axios from "axios";
 
 function SelectReader() {
+    const [subscriptionType, setSubscriptionType] = useState([]);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+    
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
+                );
+                setSubscriptionDetails(response);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getCurrentSubscription();
+    }, []);
+
+    let currentSubscription = subscriptionDetails && subscriptionDetails.data[0].subscriptionType;
+    let currentSubscriptionIcon = "he";
+
+    if (currentSubscription === "Book Reader") {
+        currentSubscriptionIcon = <SelectReaderIcon />;
+    } else if (currentSubscription === "Book Worm") {
+        currentSubscriptionIcon = <SelectWormIcon />;
+    } else if (currentSubscription === "Book Lover") {
+        currentSubscriptionIcon = <SelectLoverIcon />;
+    }
+
     return (
         <Grid>
             <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} py={7} px={12}>
 
-                <Text fontSize={'21'} color={'#204974'} as={'b'}>
-                    Current Subscription
-                </Text>
-                <SelectReaderIcon/>
+                <Box>
+                    <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                        Current Subscription
+                    </Text>
+                    {currentSubscriptionIcon}
+                </Box>
 
             </GridItem>
 

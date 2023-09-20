@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import BookDetails from "../../components/Subscription/BookDetails";
 import SelectLoverIcon from '../../components/Subscription/SelectLoverIcon';
 import SelectReaderIcon from './SelectReaderIcon';
@@ -16,12 +16,12 @@ import { BsFillCalendar2DateFill } from "react-icons/bs";
 import { Outlet } from 'react-router-dom';
 import axios from "axios";
 
-function SelectLover() {
+function SelectedSubscriptionPackage() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
 
 
-    
+
     useEffect(() => {
         const getCurrentSubscription = async () => {
             try {
@@ -39,10 +39,10 @@ function SelectLover() {
         getCurrentSubscription();
     }, []);
 
-    let currentSubscription = subscriptionDetails && subscriptionDetails.data[0].subscriptionType;
+    let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
     let currentSubscriptionIcon = "";
 
-    if(currentSubscription === "Book Reader") {
+    if (currentSubscription === "Book Reader") {
         currentSubscriptionIcon = <SelectReaderIcon />;
     } else if (currentSubscription === "Book Worm") {
         currentSubscriptionIcon = <SelectWormIcon />;
@@ -95,4 +95,4 @@ function SelectLover() {
     )
 }
 
-export default SelectLover
+export default SelectedSubscriptionPackage

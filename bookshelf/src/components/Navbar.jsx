@@ -168,13 +168,16 @@ function Navbar() {
                 {user.user.role !== "admin" &&
                 user.user.role !== "moderator" ? (
                   <>
+                    <RouterLink to="selectPackage">
+                      <MenuItem>User Subscription</MenuItem>
+                    </RouterLink>
                     <RouterLink to="/account">
                       <MenuItem>Account</MenuItem>
                     </RouterLink>
 
                     <RouterLink to="account/orders">
                       <MenuItem>Orders</MenuItem>
-                    </RouterLink>
+                    </RouterLink>                        
                   </>
                 ) : (
                   <>
