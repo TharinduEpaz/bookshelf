@@ -9,6 +9,7 @@ import {
   Text,
   StatGroup,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import { BiBookOpen } from "react-icons/bi";
 import StatCard from "../../components/Moderator/StatCard";
@@ -25,9 +26,11 @@ export default function Orders() {
   ];
 
   const [list, setOrderList] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const getOrders = async () => {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/orders");
       const jsonData = await response.json();
 
@@ -37,11 +40,12 @@ export default function Orders() {
         orderDate: order.orderDate,
         // items: order.orderItems,
         totalPrice: order.totalPrice,
-        isPaid: order.is_paid ? ("Yes") : ("No"),
+        isPaid: order.is_paid ? "Yes" : "No",
         status: order.orderStatus,
       }));
 
       setOrderList(filteredData);
+      setLoading(false);
       console.log(filteredData);
     } catch (err) {
       console.error(err.message);
@@ -51,20 +55,38 @@ export default function Orders() {
   const [count, setCount] = useState(0);
   const getCount = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/orders/count")
-      const jsonData = await response.json()
+      const response = await fetch("http://localhost:3000/api/v1/orders/count");
+      const jsonData = await response.json();
       setCount(jsonData);
       console.log(jsonData);
-
     } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   useEffect(() => {
     getOrders();
     getCount();
   }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <Box mb={"100vh"}>
+          <Spinner
+            position={"absolute"}
+            top={"30%"}
+            left={"50%"}
+            size={"xl"}
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+          />
+        </Box>
+      </>
+    );
+  }
 
   return (
     <>
