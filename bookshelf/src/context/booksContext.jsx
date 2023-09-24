@@ -8,6 +8,7 @@ const initialState = {
   isLoading: false,
   error: null,
   currentBook: null,
+  booksCount: null,
 };
 
 const bookReducer = (state, action) => {
@@ -30,22 +31,46 @@ const bookReducer = (state, action) => {
         isLoading: false,
         currentBook: action.payload,
       };
+    
   }
 };
 
 export const BooksProvider = ({ children }) => {
   const [state, dispatch] = useReducer(bookReducer, initialState);
 
-  const fetchBooks = async () => {
+  async function fetchBooks(page = 1) {
     try {
       dispatch({ type: "FETCH_BOOKS_BEGIN" });
-      const response = await axiosInstance.get('/books');
-      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data });
+      const response = await axiosInstance.get(`books/paginated?page=${page}&limit=12`);
+      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data.result });
       // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const fetchAllBooks = async () => {
+    try {
+      dispatch({ type: "FETCH_BOOKS_BEGIN" });
+      const response = await axiosInstance.get('books');
+      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data });
+      // console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchBooksCount = async () => {
+    try {
+      const response = await axiosInstance.get('books');
+      console.log(response);
+      return response.data.length;
+      
+      // console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const fetchSingleBook = async (id) => {
     try {
@@ -96,6 +121,8 @@ export const BooksProvider = ({ children }) => {
       console.log(error);
     }
   };
+  
+    
 
 
   useEffect(() => {
@@ -104,7 +131,7 @@ export const BooksProvider = ({ children }) => {
 
   return (
     <booksContext.Provider
-      value={{ ...state, fetchSingleBook, fetchSearchedBooks,fetchFilteredBooks }}
+      value={{ ...state, fetchSingleBook, fetchSearchedBooks,fetchFilteredBooks,fetchBooksCount,fetchBooks }}
     >
       {children}
     </booksContext.Provider>

@@ -54,12 +54,14 @@ import { Link } from 'react-router-dom';
       <Flex  alignItems="center" justifyContent="center">
       
         <Box
-          bg={useColorModeValue('white', 'gray.800')}
-         maxW={'180px'}
-         maxH={'380px'}
+          bg={useColorModeValue('rgba(2,2,2,0)', 'gray.800')}
+          
+         maxW={'200px'}
+         h={'400px'}
           borderWidth="1px"
           rounded="lg"
-         
+          shadow={'sm'}
+        
           position="relative">
           {data.isNew && (
             <Circle
@@ -76,7 +78,8 @@ import { Link } from 'react-router-dom';
             alt={`Picture of ${name}`}
             roundedTop="lg"
             boxSize={'200px'}
-            objectFit='cover'
+            objectFit='scale-down'
+            
            
           />
   
