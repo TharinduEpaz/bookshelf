@@ -31,7 +31,7 @@ import { BiSolidSelectMultiple} from "react-icons/bi";
 import SimpleReview from "../../components/Shop/SimpleReview";
 import AboutAuthor from "../../components/Shop/AboutAuthor";
 import { useParams } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SelectBookSubscription() {
