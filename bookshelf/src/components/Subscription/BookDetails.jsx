@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Flex, Box, Button, Text, Grid, GridItem, Checkbox, Skeleton } from '@chakra-ui/react';
+import { Flex, Box, Button, Text, Grid, GridItem, Checkbox, Skeleton, Spinner, Alert } from '@chakra-ui/react';
 import BookCard from '../Subscription/BookCard';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 import { Link as RouterLink } from "react-router-dom";
@@ -40,71 +40,43 @@ function bookDetails() {
         setBookDetails(updatedBookDetails);
     };
 
+
+    if(isLoading){
+        return (
+             <Spinner size="xl" colorScheme='blue' />
+        )
+    }
+
     return (
         <div>
             <Flex flexWrap="wrap" gap={20} p={15} flexDirection={'row'}>
-                {console.log(bookDetails)}
-                {Object.keys(bookDetails).length ===0 ? (
-                    <>
+                {console.log(bookDetails.length)}
 
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                        <Text>
-                            hhhhh
-                        </Text>
-                        <RouterLink to="/selectPackage/selectBook">
-                            <Box marginLeft={45}>
-                                <BsFillPlusCircleFill size={25} />
-                            </Box>
-                            <Button marginTop={2} colorScheme="black" variant={'outline'} borderRadius={15}>
-                                Select Books
-                            </Button>
-                        </RouterLink>
-                        {/* <Text fontSize={18} as={'b'} marginTop={5} ml={2}>No books have been selected for subscription</Text>
-                        <RouterLink to="/selectPackage/selectBook">
-                            <Box marginLeft={43} color={'black'}>
-                                <BsFillPlusCircleFill size={25} />
-                            </Box>
-                            <Button marginTop={2} colorScheme="red" variant={'outline'} borderRadius={15}>
-                                Select Books
-                            </Button>
-                        </RouterLink> */}
-                    </>
+                {bookDetails.length > 0 ? (
+                    
+                    bookDetails.map((book, index) => (
+                        <div key={index}>
+                            <BookCard
+                                id={book.bookSubscription.bookId}
+                                name={book.title}
+                                author={book.author}
+                                price={book.price}
+                                rating={book.averageRating}
+                                imageURL={book.image}
+                                link={`/selectBook/${book.bookSubscription.bookId}`}
+                                handleRemoveBook={handleRemoveBook}
+                            />
+                        </div>
+                    )) 
                 ) : (
-                    <>
-                        <Flex flexWrap="wrap" gap={20} p={15} flexDirection={'column'}>
-                            
-                            {bookDetails.map((user, index) => (
-                                <Flex key={index} gap={10}>
-                                    {user.books.map((book, bookIndex) => (
-                                        <div key={bookIndex}>
-                                            <BookCard
-                                                id={book.bookSubscription.bookId}
-                                                name={book.title}
-                                                author={book.author}
-                                                price={book.price}
-                                                rating={book.averageRating}
-                                                imageURL={book.image}
-                                                link={`/selectBook/${book.bookSubscription.bookId}`}
-                                            />
-                                        </div>
-                                    ))}
-                                </Flex>
-                            ))}
-                        </Flex>
-                        <Box marginTop={160}>
-                            <RouterLink to="/selectPackage/selectBook">
-                                <Box marginLeft={45}>
-                                    <BsFillPlusCircleFill size={25} />
-                                </Box>
-                                <Button marginTop={2} colorScheme="black" variant={'outline'} borderRadius={15}>
-                                    Select Books
-                                </Button>
-                            </RouterLink>
-                        </Box>
-                    </>
+                  
+                  
+                        <Text fontSize={20} color={'red.400'}>No books selected</Text> 
+                   
                 )}
+    
+
+              
             </Flex>
             <Text textColor={'#204974'} fontSize={17}>
                 NOTE : Books will be delivered in selected order. You should pay the selected amount each month to receive the order
