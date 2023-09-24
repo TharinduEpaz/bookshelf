@@ -25,10 +25,10 @@ const order = sequelize.define(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		buyer_id: {
-			type: DataTypes.UUID,
-			allowNull: false,
-		},
+		// buyer_id: {
+		// 	type: DataTypes.UUID,
+		// 	allowNull: false,
+		// },
 	},
 	{
 		// Other model options go here

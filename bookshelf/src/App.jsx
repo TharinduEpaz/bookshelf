@@ -72,6 +72,8 @@ import SelectLover from "./components/Subscription/SelectLover";
 import SelectReader from "./components/Subscription/SelectReader"
 import SelectWorm from "./components/Subscription/SelectWorm"
 
+
+// Import Admin Pages
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminNotifications from "./pages/Admin/AdminNotifications";
 import AdminUserMgt from "./pages/Admin/AdminUserMgt";
@@ -84,6 +86,8 @@ import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminBookSharing from "./pages/Admin/AdminBookSharing";
 import AdminComplaints from "./pages/Admin/AdminComplaints";
 import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
+import AdminReports from "./pages/Admin/AdminReports";
+
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -220,6 +224,7 @@ function App() {
           <Route exact path="/admincomplaints" element={<AdminComplaints />}></Route>
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
+          <Route exact path="/adminreports" element={<AdminReports />}></Route>
 
           {/* Moderator Routes */}
           

@@ -31,7 +31,7 @@ export default function AdminOrders() {
     "Date",
     "Total Price (Rs.)",
     "Status",
-    "Buyer Id",
+    //"Buyer Id",
   ];
 
 
@@ -47,7 +47,7 @@ export default function AdminOrders() {
         orderDate: new Date(order.orderDate).toLocaleDateString(),
         totalPrice: order.totalPrice.toLocaleString(),
         orderStatus: order.orderStatus,
-        buyer_id: order.buyer_id
+        //buyer_id: order.buyer_id
       }));
       
       setOrderList(filteredData);
