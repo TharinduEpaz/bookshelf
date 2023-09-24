@@ -3,6 +3,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import SearchBar from '../../components/Admin/SearchBar';
 import { Alert, AlertIcon } from '@chakra-ui/react';
 import jsPDF from 'jspdf';
+import "jspdf-autotable";
 
 
 import { 
@@ -211,13 +212,15 @@ async function getAllUsers(role) {
 
   
   //Report generation
+
+  //Single User Report
   const pdfUserDetails = (user) => {
     const doc = new jsPDF('portrait', 'px', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 
 // Background Color
-    doc.setFillColor(220, 220, 255); // Light blue background
+    doc.setFillColor(229, 255, 255); // Light blue background
     doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Fill the entire page with the background color
 
     doc.setFontSize(16);
@@ -248,6 +251,68 @@ async function getAllUsers(role) {
     doc.rect(20, 50, 370, y - 20); // Border around content
     doc.save('User_details.pdf');
   };
+
+
+
+  // All User Details Report
+  const generateTablePDF = () => {
+  const doc = new jsPDF();
+  const totalPagesExp = "{total_pages_count_string}";
+
+  const columnsData = ["User No", "First Name", "Last Name", "Email", "User Type"];
+
+  let userNumber = 1; // Initialize the user number to 1
+
+  doc.autoTable({
+    head: [columnsData], // The header row
+    body: list.map((user) => [userNumber++, user.firstName, user.lastName, user.email, user.role]), // The data rows with sequential user numbers
+    startY: 20, // Y-position to start the table
+    styles: {
+      // Style the table
+      font: "helvetica",
+      fontStyle: "bold",
+      fontSize: 10,
+      cellPadding: 5,
+      fillColor: [124, 195, 206], // Light blue background color
+    },
+    columnStyles: {
+      0: { cellWidth: 20 }, // Adjust the width of the "User Number" column
+    },
+
+    didDrawPage: function (data) {
+      // Add page number at the bottom
+      doc.text(
+        "Page " + data.pageCount,
+        data.settings.margin.left,
+        doc.internal.pageSize.height - 10
+      );
+      doc.setFontSize(10);
+    },
+
+    addPageContent: function (data) {
+      // Add total pages count to the header
+      doc.text(
+        "Page " + data.pageCount,
+        data.settings.margin.left,
+        doc.internal.pageSize.height - 10
+      );
+      // doc.text("Total Pages: " + totalPagesExp, 100, 10);
+    },
+  });
+
+  // Calculate total pages
+  const totalPages = doc.internal.getNumberOfPages();
+  // Set the total pages count on each page
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(10);
+    doc.text(180, 10, `Page ${i} of ${totalPages}`);
+  }
+
+  // Save the PDF with a name
+  doc.save("AllUserDetails.pdf");
+};
+
 
   
 
@@ -421,6 +486,15 @@ async function getAllUsers(role) {
 
 
 {/* <Button onClick={pdfGenerate}>Download</Button> */}
+
+      <Button 
+        mt={18}
+        ml={550}
+        colorScheme="blue" 
+        onClick={generateTablePDF}
+        >
+          Generate User Details
+      </Button>
 
 
               </Box>
