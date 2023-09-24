@@ -18,10 +18,10 @@ import SearchPanel from "../../components/Moderator/SearchPanel";
 export default function Orders() {
   const columns = [
     "Order ID",
-    "Customer ID",
     "Order date",
-    "Order type",
     "Total price",
+    "Is paid",
+    "Status",
   ];
 
   const [list, setOrderList] = useState([]);
@@ -33,33 +33,37 @@ export default function Orders() {
 
       const filteredData = jsonData.map((order) => ({
         id: order.id,
-        buyerId: order.buyer_id,
+        // buyerId: order.buyer_id,
         orderDate: order.orderDate,
-        orderType: order.orderType,
+        // items: order.orderItems,
         totalPrice: order.totalPrice,
+        isPaid: order.is_paid ? ("Yes") : ("No"),
         status: order.orderStatus,
       }));
 
       setOrderList(filteredData);
+      console.log(filteredData);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  // const [count, setCount] = useState(0);
-  // const getCount = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3000/api/v1/orders/count")
-  //     const jsonData = await response.json()
-  //     setCount(jsonData[0].count);
+  const [count, setCount] = useState(0);
+  const getCount = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/orders/count")
+      const jsonData = await response.json()
+      setCount(jsonData);
+      console.log(jsonData);
 
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // }
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
   useEffect(() => {
     getOrders();
+    getCount();
   }, []);
 
   return (
@@ -92,7 +96,7 @@ export default function Orders() {
                 </Select>
               </Flex>
               <StatGroup gap={100}>
-                <StatCard lable="All Orders" value={"100"} />
+                <StatCard lable="All Orders" value={count} />
                 <StatCard
                   lable="Pending"
                   value="20"

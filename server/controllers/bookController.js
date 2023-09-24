@@ -166,7 +166,6 @@ const uploadImage = async (req, res, next) => {
 };
 
 //count Books
-
 const getBookCount = async (req, res, next) => {
   try {
     const bookCount = (await bookModel.count());
@@ -174,7 +173,6 @@ const getBookCount = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  // res.send("Get all books");
 };
 
 module.exports = {
