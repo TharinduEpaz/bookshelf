@@ -17,10 +17,11 @@ function bookDetails() {
             try {
                 setIsLoading(true);
                 const response = await axios.get("http://localhost:3000/api/v1/subscriptions/selectBooks", { withCredentials: true });
-                setBookDetails(response.data);
+                // console.log(response.data[0].books);
+                setBookDetails(response.data[0].books);
                 response.data.forEach((user) => {
                     user.books.forEach((book) => {
-                        console.log("Book Title:", book.title);
+                        // console.log("Book Title:", book.title);
                     });
                 });
                 setIsLoading(false);
@@ -42,13 +43,24 @@ function bookDetails() {
     return (
         <div>
             <Flex flexWrap="wrap" gap={20} p={15} flexDirection={'row'}>
-                {Object.keys(bookDetails).length === 0 ? (
+                {console.log(bookDetails)}
+                {Object.keys(bookDetails).length ===0 ? (
                     <>
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
-                      
 
+                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
+                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
+                        {isLoading && <Skeleton> <BookCard /></Skeleton>}
+                        <Text>
+                            hhhhh
+                        </Text>
+                        <RouterLink to="/selectPackage/selectBook">
+                            <Box marginLeft={45}>
+                                <BsFillPlusCircleFill size={25} />
+                            </Box>
+                            <Button marginTop={2} colorScheme="black" variant={'outline'} borderRadius={15}>
+                                Select Books
+                            </Button>
+                        </RouterLink>
                         {/* <Text fontSize={18} as={'b'} marginTop={5} ml={2}>No books have been selected for subscription</Text>
                         <RouterLink to="/selectPackage/selectBook">
                             <Box marginLeft={43} color={'black'}>
@@ -100,8 +112,12 @@ function bookDetails() {
 
             <Grid templateRows={'repeat(2,1fr)'} templateColumns={'repeat(7,1fr)'} gap={'15px'} marginTop={10} marginLeft={18}>
                 <GridItem rowSpan={1} colSpan={5} textColor={'#204974'} fontSize={20} as={'b'}>
-                    {/* {bookDetails[firstBookName]?.title || 'There are no books for subscription'} */}
+                   
                 </GridItem>
+                {/* {console.log(bookDetails && bookDetails[0].books)} */}
+
+        
+                {/* {console.log(bookDetails[0].books[title] && bookDetails[0].books[title])} */}
 
                 <GridItem justifyContent={'center'} rowSpan={1} colSpan={2} textColor={'#204974'} fontSize={20} as={'b'} ml={175}>
                     {/* Rs {bookDetails[firstBookName]?.price || '0.00'} */}

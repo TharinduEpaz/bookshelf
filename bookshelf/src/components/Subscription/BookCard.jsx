@@ -73,16 +73,13 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
         try {
             const bookId =id;
             console.log(bookId);
-            const response = await axios.delete(
+            const response = await axios.post(
                 'http://localhost:3000/api/v1/subscriptions/removeBook',
                 {
                     id: bookId
                 },
                 {
-                    withCredentials:true,
-                    headers: {
-                        'Authorization': 'Bearer '
-                    }
+                    withCredentials: true
                 }
             );
             
