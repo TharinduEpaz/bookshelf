@@ -1,14 +1,26 @@
 import React from 'react'
 import AdminSidebar from "../../components/Admin/AdminSidebar";
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
 
 import {
     Box, 
     Button, 
     Flex,
-    Text
+    Text,
+    Stack,
+    Center
 } from '@chakra-ui/react'
 
 export default function AdminReports() {
+
+
+
+
+
+
+
+    
   return (
     
     <Box
@@ -55,14 +67,20 @@ export default function AdminReports() {
 
     <Box>
 
-    <Text fontSize="lg" fontWeight={"bold"}>
+    <Text mb={10} align={'center'} fontSize="lg" fontWeight={"bold"}>
                   Select Report Type
                 </Text>
 
-        <Button>
-            User Details
-        </Button>
+                <Stack spacing={4}>
 
+                <Button ml={300} mr={300} colorScheme='blue'>User Details</Button>
+                <Button ml={300} mr={300} colorScheme='blue'>Order Details</Button>
+                <Button ml={300} mr={300} colorScheme='blue'>Inventory Details</Button>
+                <Button ml={300} mr={300} colorScheme='blue'>Donations</Button>
+                <Button ml={300} mr={300} colorScheme='blue'>Subscriptions</Button>
+                <Button ml={300} mr={300} colorScheme='blue'>Book Sharing</Button>
+
+                </Stack>
     </Box>
 
  </Box>
