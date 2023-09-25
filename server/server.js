@@ -31,6 +31,7 @@ const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const sharingRoutes = require("./routes/sharingRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const donationRoutes = require("./routes/donationRoutes");
+const notificationsRoutes = require("./routes/notificationsRoutes");
 
 
 
@@ -48,6 +49,7 @@ app.use('/api/v1/subscriptions/', subscriptionRoutes);
 app.use('/api/v1/bookSharing/', sharingRoutes);
 app.use('/api/v1/orders/', orderRoutes);
 app.use('/api/v1/donations/', donationRoutes);
+app.use('/api/v1/notifications/', notificationsRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

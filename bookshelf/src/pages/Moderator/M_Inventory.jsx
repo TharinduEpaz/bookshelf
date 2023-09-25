@@ -10,18 +10,16 @@ import {
   Spacer,
   Text,
   StatGroup,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
-import {
-  BiBookOpen,
-  BiErrorCircle,
-} from "react-icons/bi";
+import { BiBookOpen, BiErrorCircle } from "react-icons/bi";
 import { IoAddCircle } from "react-icons/io5";
 import StatCard from "../../components/Moderator/StatCard";
 import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
 import SearchPanel from "../../components/Moderator/SearchPanel";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 export default function Inventry() {
   const columns = [
@@ -35,6 +33,7 @@ export default function Inventry() {
 
   const [list, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const componentRef = useRef();
 
   const getBooks = async () => {
     try {
@@ -63,20 +62,24 @@ export default function Inventry() {
     getBooks();
   }, []);
 
+  const generatePDF = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   if (isLoading) {
     return (
       <>
-      <Box mb={'100vh'}>
-        <Spinner
-          position={"absolute"}
-          top={"30%"}
-          left={"50%"}
-          size={"xl"}
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500" 
-        />
+        <Box mb={"100vh"}>
+          <Spinner
+            position={"absolute"}
+            top={"30%"}
+            left={"50%"}
+            size={"xl"}
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+          />
         </Box>
       </>
     );
@@ -147,11 +150,17 @@ export default function Inventry() {
         <Spacer mt={10} />
 
         <Box>
+          <Button onClick={generatePDF}>Generate PDF</Button>
           <SearchPanel name="Inventory Items" filter="inventory" />
 
           <Spacer mt={5} />
-
-          <DataTable list={list} columnNames={columns} actions={"inventory"}/>
+          <Box ref={componentRef}>
+            <DataTable
+              list={list}
+              columnNames={columns}
+              actions={"inventory"}
+            />
+          </Box>
         </Box>
       </Box>
     </>

@@ -15,6 +15,8 @@ router.route('/').get(controller.getAllBooks);
 
 router.route('/').post(controller.addBook);
 
+router.route('/count').get(controller.getBookCount);
+
 router.route('/uploadImage').post(controller.uploadImage);
 
 router.get('/:id', controller.getSingleBook);
@@ -22,8 +24,6 @@ router.get('/:id', controller.getSingleBook);
 router.route('/:id', ).patch(controller.updateBook);
 
 router.route('/:id', ).delete(controller.deleteBook);
-
-router.route('/count').get(controller.getBookCount);
 
 
 

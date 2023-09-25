@@ -1,5 +1,6 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
+const adminNotification = require("../models/adminNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -102,6 +103,13 @@ const register = async (req, res, next) => {
       message: "Please Confirm your email address to activate your account to access our all features. Check your email inbox or spam folder.",
       cause: "email verification",
     });
+
+    //send notification to admin
+    adminNotification.create({
+      userId: user.id,
+      type: "New user Registered",
+      message: `${user.firstName} ${user.lastName} has registered.`
+    })
 
     //send email to user to confirm email
 

@@ -37,7 +37,7 @@ export default function Orders() {
       const filteredData = jsonData.map((order) => ({
         id: order.id,
         // buyerId: order.buyer_id,
-        orderDate: order.orderDate,
+        orderDate: new Date(order.orderDate).toLocaleDateString(),
         // items: order.orderItems,
         totalPrice: order.totalPrice,
         isPaid: order.is_paid ? "Yes" : "No",
