@@ -4,6 +4,9 @@ const orderBooksModel = require("../models/orderBooks");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
+const { Op } = require("sequelize");
+const book = require("../models/book");
+const { log } = require("console");
 
 const addBook = async (req, res, next) => {
   try {
@@ -21,6 +24,7 @@ const addBook = async (req, res, next) => {
       featuredCategory,
 
     } = req.body;
+    console.log('function reached');
     
     if (!title || !price || !author || !ISBN || !description || !typesAvailable || !genre) {
       throw new CustomError.BadRequestError("Please provide all required details");
@@ -198,6 +202,119 @@ const increaseStock = async (req, res, next) => {
   }
 }
 
+const getBookNames = async (req, res, next) => {
+  try {
+    
+    const books = await bookModel.findAll({
+      attributes: ['id','title']
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const searchBooks = async (req, res, next) => {
+  try {
+    const { title } = req.body;
+    const books = await bookModel.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${title}%`
+        }
+      }
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const filterBooks = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const books = await bookModel.findAll({
+      where: {
+        genre: {
+          [Op.like]: `%${category}%`
+        }
+      }
+    });
+    res.json(books);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const getPaginatedBooks = async (req,res,next) => {
+
+        //pagination
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+
+        console.log(page, limit);
+
+        //filters
+        const price = req.query.price || false;
+        const rating = parseInt(req.query.rating) || false;
+        const genre = req.query.genre || false;
+        const language = req.query.language || false;
+        const stock =  parseInt(req.query.stock) || false;
+
+        console.log(price, rating, genre, language, stock);
+
+        const startIndex = (page - 1) * limit
+
+        const results = {}
+
+        const filters = {
+          averageRating: rating,
+          genre: genre,
+          language: language,
+        };
+
+        if (stock) {
+          filters.stock = {
+            [Op.gt]: 0
+          }
+        }
+
+        if(stock == -1){
+          filters.stock = {
+            [Op.eq]: 0
+          }
+        }
+
+        for (const key in filters) {
+          if (filters[key] == 0 || filters[key] == 'null' || filters[key] == undefined) {
+            delete filters[key];
+          }
+        }
+
+        if(price != 0){
+          results.result = await bookModel.findAll({
+            where: filters,
+            offset: startIndex,
+            limit: limit,
+            order: [['price', price]] // Assuming 'price' is either 'ASC', 'DESC', or false
+          });
+        }
+        else{
+          results.result = await bookModel.findAll({
+            where: filters,
+            offset: startIndex,
+            limit: limit,
+          });
+
+        }
+
+        res.json(results)
+}
+
+
+
+
+
 
 
 module.exports = {
@@ -207,5 +324,11 @@ module.exports = {
   updateBook,
   deleteBook,
   uploadImage,
-  getBestSellingBooks
+  getBestSellingBooks,
+  decreaseStock,
+  increaseStock,
+  getBookNames,
+  searchBooks,
+  filterBooks,
+  getPaginatedBooks,
 };

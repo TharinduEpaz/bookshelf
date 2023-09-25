@@ -15,20 +15,13 @@ import {
   Link,
   Alert,  
   AlertIcon,
-  SkeletonCircle,
-  SkeletonText,
-  Spinner,
   CircularProgress,
-
-  
-
-
-
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
 import { Fa500Px } from 'react-icons/fa';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,15 +31,14 @@ export default function SignupCard() {
   const [password,setPassword] = useState('');
   const [error,setError] = useState('');
   const [isLoading,setIsLoading] = useState(false);
-
-  const regUrl = 'http://localhost:3000/api/v1/register';
+  const navigate = useNavigate();
 
   const register = async (e) => {
      e.preventDefault();
      try {
       setIsLoading(true);
     
-      const response = await axios.post(regUrl,{ firstName : firstName, lastName : lastName, email : email, password : password});
+      const response = await axiosInstance.post('/register',{ firstName : firstName, lastName : lastName, email : email, password : password});
       console.log(response.data);
       
       setEmail('');
@@ -55,7 +47,9 @@ export default function SignupCard() {
       setLastName('');
       setIsLoading(false);
 
-      window.location.href = "/login";
+      // window.location.href = "/login";
+      navigate('/login');
+
       
      } catch (error) {
       setError(error.response.data.msg);  
