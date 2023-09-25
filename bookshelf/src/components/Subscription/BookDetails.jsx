@@ -9,7 +9,8 @@ import {
     GridItem,
     Checkbox,
     Spinner,
-    Heading
+    Heading,
+    Icon
 } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import BookCard from "../Subscription/BookCard";
@@ -22,27 +23,30 @@ function bookDetails() {
     const [isLoading, setIsLoading] = useState(false);
     let count = 0;
 
+    const getBooks = async () => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(
+                "http://localhost:3000/api/v1/subscriptions/selectBooks",
+                { withCredentials: true }
+            );
+            // console.log(response.data[0].books);
+
+            setBookDetails(response.data[0].books);
+
+
+            setIsLoading(false);
+
+        } catch (error) {
+            console.log(error);
+            console.log("ss");
+        }
+    };
+
     useEffect(() => {
-        const getBooks = async () => {
-            try {
-                setIsLoading(true);
-                const response = await axios.get(
-                    "http://localhost:3000/api/v1/subscriptions/selectBooks",
-                    { withCredentials: true }
-                );
-                // console.log(response.data[0].books);
-
-                setBookDetails(response.data[0].books);
-
-
-                setIsLoading(false);
-                ;
-            } catch (error) {
-                console.log(error);
-                console.log("ss");
-            }
-        };
+    
         getBooks();
+    
     }, []);
 
     const handleRemoveBook = (key) => {
@@ -95,6 +99,8 @@ function bookDetails() {
                                         colorScheme="black"
                                         variant={"outline"}
                                         borderRadius={15}
+                                        // getBooks = {getBooks}
+                                        
                                     >
                                         Select Books
                                     </Button>
@@ -103,9 +109,7 @@ function bookDetails() {
                         </Card>
                     )
                 }
-
-
-
+                
                 {bookDetails.length === 0 && (
                     <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50 }}>
                         <CardHeader>
@@ -136,36 +140,29 @@ function bookDetails() {
                 selected amount each month to receive the order.
             </Text>
 
-            <Grid
-                templateRows={"repeat(2,1fr)"}
-                templateColumns={"repeat(7,1fr)"}
-                gap={"15px"}
-                marginTop={10}
-                marginLeft={18}
-            >
-                <GridItem
-                    rowSpan={1}
-                    colSpan={5}
-                    textColor={"#204974"}
-                    fontSize={20}
-                    as={"b"}
-                ></GridItem>
+            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(7,1fr)"} gap={"15px"} marginTop={10} marginLeft={18} >
+                <GridItem rowSpan={1} colSpan={5} textColor={"#204974"} fontSize={20} as={"b"}>
+                    <Icon viewBox='0 0 200 200' mt={-1}>
+                        <path
+                            fill='currentColor'
+                            d='M 100, 100 m -85, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+                        />
+                    </Icon>
+                    <span >
+                        {bookDetails?.[0]?.title || 'No selected book for subscription'}
+                    </span>
+                </GridItem>
 
-                <GridItem
-                    justifyContent={"center"}
-                    rowSpan={1}
-                    colSpan={2}
-                    textColor={"#204974"}
-                    fontSize={20}
-                    as={"b"}
-                    ml={175}
-                >
-                    {/* Rs {bookDetails[firstBookName]?.price || '0.00'} */}
+                <GridItem justifyContent={"center"} rowSpan={1} colSpan={2} textColor={"#204974"} fontSize={20} as={"b"}ml={175} >
+                    <span >
+                        Rs {bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.9 || '0'}.00
+                    </span>
+                   
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={6} textColor={"#204974"}>
                     <Checkbox>
-                        <Text fontSize={17}>I agree to the terms and conditions</Text>
+                        <Text  fontSize={17}>I agree to the terms and conditions</Text>
                     </Checkbox>
                 </GridItem>
                 <GridItem rowSpan={1} colSpan={1}>

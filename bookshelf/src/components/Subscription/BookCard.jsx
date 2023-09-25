@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate} from "react-router-dom";
 import { AiTwotoneEye } from 'react-icons/ai';
 import { MdRemoveCircleOutline } from 'react-icons/md';
 import axios from "axios";
@@ -66,11 +66,15 @@ function Rating({ rating }) {
 
 function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove, link }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [book, setBook] = useState({});
     const cancelRef = useRef();
-    const toast = useToast()
+    const toast = useToast();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const removeBookSubscription = async(id)=>{
         try {
+            setIsLoading(true)
             const bookId =id;
             console.log(bookId);
             const response = await axios.post(
@@ -82,16 +86,17 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                     withCredentials: true
                 }
             );
-            
-            return (
+
+            setIsLoading(false)
                 toast({
                     title: 'Successfully Removed',
                     status: 'success',
                     duration: 4000,
                     isClosable: true,
                     position: 'top'
-                })
-            )
+                });
+            navigate(0);
+            
         } catch (error) {
             console.log(error.response.data)
             return (
@@ -105,7 +110,7 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
             )
         }
     }
-
+   
     const handleDelete = () => {
         onRemove(bookKey);
         onClose();
@@ -198,11 +203,11 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Remove Subscription
+                            Remove Book From Subscription
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            Are you sure want to remove this subscription?
+                            Are you sure want to remove this book from your subscription?
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
@@ -210,7 +215,8 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                                 Cancel
                             </Button>
                             <Button colorScheme='red'
-                                onClick={() => removeBookSubscription(id)} ml={3}>
+                                onClick={() => {removeBookSubscription(id); onClose();}
+                                } ml={3}>
                                 Remove
                             </Button>
                         </AlertDialogFooter>
