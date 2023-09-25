@@ -1,5 +1,6 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
+const buyerModel = require("../models/buyer");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -119,6 +120,12 @@ const register = async (req, res, next) => {
       }
     )
 
+    //add to buyer table
+    const buyer = await buyerModel.create({
+      UserId: user.id,
+    });
+      
+
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
     //delete created user if exists
@@ -155,7 +162,6 @@ const verifyEmail = async (req, res, next) => {
         id: result.user
       }
     });
-    
 
     await notification.destroy({
       where: {
@@ -173,10 +179,7 @@ const verifyEmail = async (req, res, next) => {
   }
 }
 
-
-
 module.exports = {
-
   register,
   login,
   logout,

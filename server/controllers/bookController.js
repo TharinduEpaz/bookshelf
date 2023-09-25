@@ -1,4 +1,6 @@
 const bookModel = require("../models/book");
+const orderModel = require("../models/order");
+const orderBooksModel = require("../models/orderBooks");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -140,6 +142,64 @@ const uploadImage = async (req, res, next) => {
   }
 };
 
+const getBestSellingBooks = async (req, res, next) => {
+  try {
+  const bestSellingBooks = await orderModel.findAll({
+    attributes: ['book_id', [sequelize.fn('COUNT', sequelize.col('book_id')), 'count']],
+    group: ['book_id'],
+    order: [[sequelize.fn('COUNT', sequelize.col('book_id')), 'DESC']],
+    limit: 10,
+    include: [{
+      model: bookModel,
+      attributes: ['title', 'author', 'price', 'ISBN', 'description', 'averageRating', 'stock', 'typesAvailable', 'genre', 'language', 'featuredCategory']
+    }]
+  });
+  res.json(bestSellingBooks);
+  } catch (error) {
+    next(error);
+  }
+  // res.send("Get all books");
+};
+
+const decreaseStock = async (req, res, next) => {
+  try {
+
+    const id = req.body.bookId;
+    const { quantity } = req.body.amount || 1;
+
+    const book = await bookModel.findOne({ where: { id } });
+    
+    if (!book) {
+      throw new CustomError.NotFoundError("No book found");
+    }
+    book.stock = book.stock - quantity;
+    await book.save();
+    res.status(statusCodes.StatusCodes.OK).json(book);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const increaseStock = async (req, res, next) => {
+  try {
+
+    const  id  = req.body.bookId;
+    const { quantity } = req.body.amount || 1;
+
+    const book = await bookModel.findOne({ where: { id } });
+    if (!book) {
+      throw new CustomError.NotFoundError("No book found");
+    }
+    book.stock = book.stock + quantity;
+    await book.save();
+    res.status(statusCodes.StatusCodes.OK).json(book);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
 module.exports = {
   addBook,
   getAllBooks,
@@ -147,4 +207,5 @@ module.exports = {
   updateBook,
   deleteBook,
   uploadImage,
+  getBestSellingBooks
 };

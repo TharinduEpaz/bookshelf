@@ -12,11 +12,12 @@ function HomeItemBox({ header, bgColor, icon }) {
   return (
     <Card
       w={180}
+      zoom={0.8}
       borderRadius={10}
       bgColor={bgColor}
       transition={"all 0.5s ease-out"}
       
-      _hover={{ boxShadow: "xl", width:200, transition: "all 0.5s ease-out" }}
+      _hover={{ boxShadow: "xl", zoom:'1', transition: "all 0.1s ease-in-out" }}
     >
       <CardHeader>{icon}</CardHeader>
       <CardBody>

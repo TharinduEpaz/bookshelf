@@ -15,7 +15,6 @@ function SelectWormIcon() {
                 );
                 setSubscriptionType(response.data);
                 setLoading(false);
-                console.log(response.data);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
                 setLoading(false);

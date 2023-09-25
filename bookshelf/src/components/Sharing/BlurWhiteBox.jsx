@@ -17,7 +17,7 @@ import {
     return (
       <Box
         m={"auto"}
-        mt={10}
+        mt={2}
         w="80%"
         h="40vh"
         borderRadius="2xl"
@@ -66,7 +66,7 @@ import {
                     <Button ml={5} pl={10} pr={10} colorScheme="purple" w={130} borderRadius={100}>Post Request</Button>
                 </RouterLink>
           
-             <Search />
+             {/* <Search /> */}
              
           </GridItem>
           

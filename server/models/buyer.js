@@ -3,35 +3,32 @@ const { DataTypes } = require("sequelize");
 
 const buyer = sequelize.define('buyer', {
     // Model attributes are defined here
-    id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: sequelize.UUIDV4
-    },
+  
     address: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     province: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     city: {
         type: DataTypes.STRING,
-        defaultValue: false,
+        defaultValue: true,
     },
     zipCode: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     phoneNumber: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
 }, {
     // Other model options go here
 })
 
 // buyer.sync({  alter: true });
+
 
 module.exports = buyer;
