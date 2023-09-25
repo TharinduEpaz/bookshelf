@@ -32,7 +32,7 @@ import { Link } from 'react-router-dom';
             if (roundedRating - i >= 1) {
               return (
                 <BsStarFill
-                color={'gold'}
+                color={'#D69E2E'}
                   key={i}
                   style={{ marginLeft: '1' }}
                   
@@ -40,9 +40,9 @@ import { Link } from 'react-router-dom';
               );
             }
             if (roundedRating - i === 0.5) {
-              return <BsStarHalf key={i} color={'gold'} style={{ marginLeft: '1' }} />;
+              return <BsStarHalf key={i} color={'#D69E2E'} style={{ marginLeft: '1' }} />;
             }
-            return <BsStar key={i} style={{ marginLeft: '1' }} color={'gold'} />;
+            return <BsStar key={i} style={{ marginLeft: '1' }} color={'#D69E2E'} />;
           })}
         
       </Box>

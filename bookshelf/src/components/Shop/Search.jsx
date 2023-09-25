@@ -47,12 +47,10 @@ function Search() {
         
         w="80%"
         borderRadius="2xl"
-    
-       
+
         // bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
         // filter="blur(8px)"
-        
-      
+
         display={"flex"}
         // justifyContent={'center'}
         alignItems={"center"}

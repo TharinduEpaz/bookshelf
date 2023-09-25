@@ -6,6 +6,7 @@ const CustomError = require("../errors");
 const path = require("path");
 const { Op } = require("sequelize");
 const book = require("../models/book");
+const { log } = require("console");
 
 const addBook = async (req, res, next) => {
   try {
@@ -251,15 +252,18 @@ const getPaginatedBooks = async (req,res,next) => {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
 
+        console.log(page, limit);
+
         //filters
         const price = req.query.price || false;
-        const rating = req.query.rating || false;
+        const rating = parseInt(req.query.rating) || false;
         const genre = req.query.genre || false;
         const language = req.query.language || false;
-        const stock = req.query.stock || false;
+        const stock =  parseInt(req.query.stock) || false;
+
+        console.log(price, rating, genre, language, stock);
 
         const startIndex = (page - 1) * limit
-        const endIndex = page * limit
 
         const results = {}
 
@@ -275,20 +279,34 @@ const getPaginatedBooks = async (req,res,next) => {
           }
         }
 
+        if(stock == -1){
+          filters.stock = {
+            [Op.eq]: 0
+          }
+        }
+
         for (const key in filters) {
-          if (filters[key] === false) {
+          if (filters[key] == 0 || filters[key] == 'null' || filters[key] == undefined) {
             delete filters[key];
           }
         }
 
-        results.result = await bookModel.findAll({
-          where: filters,
-          offset: startIndex,
-          limit: limit,
-          
-          // order: [['price', price === false ? 'ASC' : price]] // Assuming 'price' is either 'ASC', 'DESC', or false
-        });
+        if(price != 0){
+          results.result = await bookModel.findAll({
+            where: filters,
+            offset: startIndex,
+            limit: limit,
+            order: [['price', price]] // Assuming 'price' is either 'ASC', 'DESC', or false
+          });
+        }
+        else{
+          results.result = await bookModel.findAll({
+            where: filters,
+            offset: startIndex,
+            limit: limit,
+          });
 
+        }
 
         res.json(results)
 }

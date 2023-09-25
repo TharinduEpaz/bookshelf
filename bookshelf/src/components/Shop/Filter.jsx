@@ -3,14 +3,10 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 
-function Filter() {
+function Filter(props) {
 
-  const [price,setPrice] = React.useState("")
-  const [rating,setRating] = React.useState("")
-  const [stock,setStock] = React.useState("")
-  const [sort,setSort] = React.useState("") 
+  const { setPrice, setRating, setStock, setSort } = props;
 
-  console.log(price);
 
 
 
@@ -25,8 +21,8 @@ function Filter() {
         borderColor={"blue.200"}
         onChange={(e) => setPrice(e.target.value)}
       >
-        <option value="ASC">Min to Max</option>
-        <option value="DESC">Max to Min</option>
+        <option value="ASC">Low to High</option>
+        <option value="DESC">High to Low</option>
       </Select>
       <Select
         placeholder="Rating"
@@ -51,7 +47,7 @@ function Filter() {
         onChange={(e) => setStock(e.target.value)}
       >
         <option value="1">In Stock</option>
-        <option value="0">Out of Stock</option>
+        <option value="-1">Out of Stock</option>
       </Select>
 
       <Spacer></Spacer>

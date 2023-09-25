@@ -94,7 +94,7 @@ function Home() {
       const interval = setInterval(() => {
         setActiveComponent((prevComponent) => (prevComponent % 4) + 1);
         
-      }, 9000); // Change component every 5 seconds
+      }, 100000); // Change component every 5 seconds
 
      
   
@@ -216,7 +216,7 @@ function Home() {
         w="80%"
         borderRadius="2xl"
         boxShadow="sm"
-        bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
+        bgGradient="linear(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4))"
         // filter="blur(8px)"
         backdropFilter="blur(8px)"
         p={10}

@@ -23,41 +23,32 @@ function Shop() {
   // const [bookDetails, setBookDetails] = useState({});
   // const [isLoading, setIsLoading] = useState(false);
 
-  const { books, isLoading, fetchBooksCount,fetchBooks } = useBooksContext();
-  
+  const {
+    books,
+    isLoading,
+    fetchBooksCount,
+    fetchBooks,
+    setPrice,
+    setRating,
+    setStock,
+    setSort,
+  } = useBooksContext();
+
   const [noOfPages, setNoOfPages] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);  
+  const [currentPage, setCurrentPage] = useState(1);
+
+  //filters
+
   console.log(currentPage);
 
   const loadCount = async () => {
-    
     const count = await fetchBooksCount();
     setNoOfPages(Math.ceil(count / 12));
-  
   };
-  
+
   useEffect(() => {
     loadCount();
-  }
-  , [books]);
-  
-
-  
-  // useEffect(() => {
-  //   const getBooks = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get(`http://localhost:3000/api/v1/books`);
-  //       console.log(response.data);
-  //       setBookDetails(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getBooks();
-  // }, []);
-
+  }, [books]);
 
   return (
     <>
@@ -83,7 +74,12 @@ function Shop() {
             <Search />
           </GridItem>
           <GridItem rowSpan={1} colSpan={5} p={2}>
-            <Filter />
+            <Filter
+              setPrice={setPrice}
+              setRating={setRating}
+              setStock={setStock}
+              setSort={setSort}
+            />
           </GridItem>
           <GridItem
             rowSpan={8}
@@ -101,7 +97,7 @@ function Shop() {
             borderColor={"blue.200"}
             rounded={"md"}
           >
-            <Flex flexWrap={"wrap"} gap={5} p={5} justify={'flex-start'}>
+            <Flex flexWrap={"wrap"} gap={5} p={5} justify={"flex-start"}>
               {isLoading &&
                 Array.from({ length: 12 }).map((_, index) => (
                   <Skeleton key={index} borderRadius={10} speed={1.5}>
@@ -116,11 +112,16 @@ function Shop() {
                     author={books[item].author}
                     price={books[item].price}
                     imageURL={books[item].image}
-                    rating={books[item].rating}
+                    rating={books[item].averageRating}
                     id={books[item].id}
                   />
                 </Link>
               ))}
+
+              {books.length === 0 && (
+                <Text fontSize={"2xl"} mb={'80vh'}>Sorry, No books found for your search</Text>
+              )}
+              
             </Flex>
             <HStack
               justifyContent={"center"}
@@ -128,10 +129,9 @@ function Shop() {
               mt={10}
               mb={10}
               p={2}
-              ml={'auto'}
-            
+              ml={"auto"}
             >
-            {/* pagination */}
+              {/* pagination */}
               {/* <Box
                 bg={"blue.400"}
                 color={"white"}
@@ -148,44 +148,28 @@ function Shop() {
               <Box>10</Box> */}
 
               {currentPage >= 4 && <Button>...</Button>}
-              
-              {noOfPages && Array.from({ length: noOfPages  }).map((_, index) => (
-                index <= currentPage + 3 && index >= currentPage - 3 ? 
 
-                <Button
-                  key={index}
-              
-                  colorScheme="purple"
-                  borderRadius={"md"}
-                  p={2}
-                  px={4}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    fetchBooks(index + 1);
-                    setCurrentPage(index + 1);
-                    
-                  }}
-                >
-                
-                  { index + 1 }
-
-                </Button>
-                :
-               
-               null
-
-            
-
-              ))
-              
-              
-              }
+              {noOfPages &&
+                Array.from({ length: noOfPages }).map((_, index) =>
+                  index <= currentPage + 3 && index >= currentPage - 3 ? (
+                    <Button
+                      key={index}
+                      colorScheme="purple"
+                      borderRadius={"md"}
+                      p={2}
+                      px={4}
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        fetchBooks(index + 1);
+                        setCurrentPage(index + 1);
+                      }}
+                    >
+                      {index + 1}
+                    </Button>
+                  ) : null
+                )}
 
               {currentPage <= noOfPages - 4 && <Button>...</Button>}
-              
-
-              
-             
             </HStack>
           </GridItem>
         </Grid>
