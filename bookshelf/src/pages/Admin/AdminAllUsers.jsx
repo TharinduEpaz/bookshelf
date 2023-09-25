@@ -310,7 +310,7 @@ async function getAllUsers(role) {
   }
 
   // Save the PDF with a name
-  doc.save("AllUserDetails.pdf");
+  doc.save("All_User_Details.pdf");
 };
 
 
