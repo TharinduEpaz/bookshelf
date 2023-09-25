@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import { extendTheme, CSSReset } from "@chakra-ui/react";
 import "@fontsource/montserrat/";
 import "@fontsource/dm-serif-display";
-import "@fontsource/space-grotesk";
+// import "@fontsource/space-grotesk";
 
 const theme = extendTheme({
   fonts: {
@@ -14,7 +14,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgGradient:"linear(to-b,blue.100 0%, blue.200 25%, blue.300 50%)",
+        bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))",
         paddingTop: "70px",
 
       },

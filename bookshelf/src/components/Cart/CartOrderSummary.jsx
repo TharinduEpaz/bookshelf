@@ -48,7 +48,9 @@ import {
         </Stack>
         
         <Link to="/checkout">
-  
+        <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
+          Checkout
+        </Button>
         </Link>
       </Stack>
     )

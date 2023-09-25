@@ -16,7 +16,7 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
   return (
     <Box
       m={"auto"}
-      mt={2}
+      mt={10}
       w="80%"
       h="40vh"
       borderRadius="2xl"
@@ -61,7 +61,7 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
         <Link to={route}>
            <Button ml={5} colorScheme="purple" pl={10} pr={10} borderRadius={100}>{mainButton}</Button> 
             </Link>
-           {/* <Search /> */}
+           <Search />
            
         </GridItem>
         

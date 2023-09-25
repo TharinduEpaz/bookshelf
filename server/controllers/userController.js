@@ -1,20 +1,5 @@
 const userModel = require("../models/user");
 const notificationModel = require("../models/userNotifications");
-const orderModel = require("../models/order");
-const subscriptionModel = require("../models/subscription");
-const buyerModel = require("../models/buyer");
-
-//relationship between user and buyer
-
-userModel.hasOne(buyerModel)
-buyerModel.belongsTo(userModel)
-
-// buyerModel.sync({force:true})
-
-
-/////////////////////////////
-
-
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -148,70 +133,6 @@ const addUser = async (req, res, next) => {
   }
 };
 
-const userDashboard = async (req, res, next) => {
-  try {
-    const { userId } = req.user;
-
-    //get orders count
-    const ordersCount = await orderModel.count({
-      where: {
-        UserId: userId,
-      },
-    });
-
-    //get shipping address
-    const buyerDetails = await buyerModel.findOne({
-      where: {
-        UserId: userId,
-      },
-    });
-
-    res.json({ ordersCount : ordersCount, buyerDetails: buyerDetails });
-
-  } catch (error) {
-    next(error);
-  }
-};
-
-const changeShippingDetails = async (req, res, next) => {
-  try {
-    const { userId } = req.user;
-    const { address, city, zipCode, phone, province } = req.body;
-    const buyer = await buyerModel.findOne({
-      where: {
-        UserId: userId,
-      },
-    });
-
-    if(!buyer){
-      throw new CustomError.NotFoundError("No buyer found");
-    }
-    //update buyer with the details
-    const updatedBuyer = await buyer.update({
-      address: address,
-      city: city,
-      zipCode: zipCode,
-      phoneNumber: phone,
-      province: province
-    }, {
-      where: {
-        UserId: userId
-      }
-    }); 
-      
-
-    res.status(statusCodes.StatusCodes.OK).json(updatedBuyer);
-
-  }
-  catch (error) {
-    next(error);
-  }
-}
-
-
-
-
-
 module.exports = {
   getAllUsers,
   getSingeUser,
@@ -221,7 +142,5 @@ module.exports = {
   getNotifications,
   deleteUser,
   addUser,
-  updateUser,
-  userDashboard,
-  changeShippingDetails,
+  updateUser
 };

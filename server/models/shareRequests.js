@@ -7,6 +7,11 @@ const shareRequest = sequelize.define('shareRequest', {
         primaryKey: true,
         defaultValue: sequelize.UUIDV4
     },
+    userName: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+
     bookName: {
         type: DataTypes.STRING,
         allowNull: false

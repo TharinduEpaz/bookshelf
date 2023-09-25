@@ -5,7 +5,7 @@ import {BlurWhiteBox as SubscriptionBox} from "../components/Subscription/BlureW
 import {BlurWhiteBox as SharingBox} from "../components/Sharing/BlurWhiteBox";
 
 import HomeItemBox from "../components/Home/HomeItemBox";
-import { Box, Center, Divider, Flex, Heading, IconButton, Input } from "@chakra-ui/react";
+import { Box, Center, Divider, Flex, Heading } from "@chakra-ui/react";
 import bookgirl from "../assets/bookgirl.png";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
@@ -13,8 +13,6 @@ import { ImBooks } from "react-icons/im";
 import BookCard from "../components/Home/BookCard";
 import Features from "../components/Home/Features";
 import {motion, AnimatePresence} from 'framer-motion'
-import Search from "../components/Search";
-import { Search2Icon } from "@chakra-ui/icons";
 
 function Home() {
   const itemBoxDetails = {
@@ -94,10 +92,7 @@ function Home() {
     useEffect(() => {
       const interval = setInterval(() => {
         setActiveComponent((prevComponent) => (prevComponent % 4) + 1);
-        
-      }, 9000); // Change component every 5 seconds
-
-     
+      }, 5000); // Change component every 5 seconds
   
       return () => clearInterval(interval);
     }, []);
@@ -123,38 +118,14 @@ function Home() {
       />
       </motion.div> */}
 
-      <Box 
-      m={"auto"}
-        mt={2}
-        w="80%"
-        borderRadius="2xl"
-        boxShadow="sm"
-        background={"rgba(255, 255, 255,0.2)"}
-        // bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
-        // filter="blur(8px)"
-        backdropFilter="blur(8px)"
-        p={5}
-        display={'flex'}
-        // justifyContent={'center'}
-        alignItems={'center'}
-        gap={5}
-        
-        >
-      <Input type="text" w={'50%'} fontWeight={'extrabold'} placeholder='Search thousands of books' borderColor={'blue.400'}/>
-      <IconButton icon={<Search2Icon />} color="blue.300" ml={0} borderRadius={10} w={100} />
-      </Box>
-     
       <AnimatePresence mode="wait">
         {activeComponent === 1 && (
-          console.log(activeComponent),
           <motion.div
             key="component1"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
-
             <BlurWhiteBox
                 title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
         image={homeImage}
@@ -164,13 +135,11 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 2 && (
-          console.log(activeComponent),
           <motion.div
             key="component2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
             <SubscriptionBox 
               title="Indulge in your literary cravings with our carefully curated subscriptions,"
@@ -179,13 +148,11 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 3 && (
-          console.log(activeComponent),
           <motion.div
             key="component3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
             <SharingBox 
                title="Connecting Readers, One Swap at a Time"
@@ -194,13 +161,11 @@ function Home() {
           </motion.div>
         )}
         {activeComponent === 4 && (
-          console.log(activeComponent),
           <motion.div
             key="component4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={1}
           >
             <DonationBox 
               title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."
@@ -219,6 +184,7 @@ function Home() {
 
 
 
+
       <motion.div
          initial={{ opacity: 0, }}
       animate={{ opacity: 1}}
@@ -232,7 +198,7 @@ function Home() {
       
       <Box
         m={"auto"}
-        mt={2}
+        mt={10}
         w="80%"
         borderRadius="2xl"
         boxShadow="sm"
