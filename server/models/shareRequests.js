@@ -11,6 +11,10 @@ const shareRequest = sequelize.define('shareRequest', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    userName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     image: {
         type: DataTypes.STRING,
         allowNull: true
@@ -20,8 +24,8 @@ const shareRequest = sequelize.define('shareRequest', {
         allowNull: false
     },
     listOfBooks: {
-        // type: DataTypes.ARRAY(DataTypes.STRING),
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        // type: DataTypes.STRING,
         allowNull: false
     },
     userId: {
