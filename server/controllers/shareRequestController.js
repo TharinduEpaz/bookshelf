@@ -71,7 +71,24 @@ const postShareRequestImage = async (req, res, next) => {
     //     next(error);
     //   }
     }
+
+
+    const getShareRequestNames = async (req, res, next) => {
+        try{
+            const shareRequests = await shareRequestModel.findAll({
+                attributes: ['bookName']
+            });
+            res.status(statusCodes.StatusCodes.OK).json(shareRequests)
+        }
+        catch(error){
+            next(error)
+        }
+    }
+
+
+
 module.exports = {
     getAllShareRequests,
-    postShareRequest
+    postShareRequest,
+    getShareRequestNames,
 }

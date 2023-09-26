@@ -21,6 +21,10 @@ import axios from "axios";
 function ShareBook() {
   const [requestDetails, setRequestDetails] = useState({});
   const [selectedRequest, setSelectedRequest] = useState(null); // State to track the selected request
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredRequestDetails, setFilteredRequestDetails] =
+    React.useState(requestDetails);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
@@ -32,6 +36,7 @@ function ShareBook() {
         );
         console.log(response.data);
         setRequestDetails(response.data);
+        setFilteredRequestDetails(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -59,14 +64,18 @@ function ShareBook() {
         h={"100%"}
       >
         <GridItem rowSpan={1} colSpan={5}>
-          <Search />
+          <Search
+            requestDetails={requestDetails}
+            isLoading={isLoading}
+            setFilteredRequestDetails={setFilteredRequestDetails}
+          />
         </GridItem>
         <GridItem rowSpan={1} colSpan={5} p={2}>
           <Filter />
         </GridItem>
 
         <GridItem rowSpan={8} colSpan={5}>
-          {Object.keys(requestDetails).map((item) => {
+          {Object.keys(filteredRequestDetails).map((item) => {
             const createdAt = new Date(requestDetails[item].createdAt);
             const formattedDate = createdAt.toISOString().split("T")[0]; // Extract and format the date
             return (
@@ -102,7 +111,14 @@ function ShareBook() {
               {selectedRequest && (
                 <Stack spacing={4}>
                   <div>
-                    <img src={selectedRequest.image ? (selectedRequest.image) : ("http://localhost:3000/uploads/default.jpeg")} alt="" />
+                    <img
+                      src={
+                        selectedRequest.image
+                          ? selectedRequest.image
+                          : "http://localhost:3000/uploads/default.jpeg"
+                      }
+                      alt=""
+                    />
                   </div>
                   <div>
                     <strong>BookName:</strong> {selectedRequest.bookName}
@@ -110,9 +126,22 @@ function ShareBook() {
                   <div>
                     <strong>UserName:</strong> {selectedRequest.userName}
                   </div>
-                  
                   <div>
                     <strong>Details:</strong> {selectedRequest.details}
+                  </div>
+                  <div>
+                    <strong>List of Books:</strong>
+                    <ul>
+                      
+                    {console.log(selectedRequest.listOfBooks)}
+                      {/* {selectedRequest.listOfBooks &&  (
+                        selectedRequest.listOfBooks.map((book, index) => (
+                          <li key={index}>{book} </li>
+                          
+                        ))
+                        
+                      )} */}
+                    </ul>
                   </div>
                 </Stack>
               )}
