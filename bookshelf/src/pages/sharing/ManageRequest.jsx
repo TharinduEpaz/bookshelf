@@ -20,9 +20,11 @@ import axios from "axios";
 import { useContext } from "react";
 import { userContext } from "../../context/userContext";
 
+
 function ManageRequest() {
   const { user, setUser } = useContext(userContext);
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [currentId, setCurrentId] = useState(0);
   const cancelRef = React.useRef()
 
   const [requestDetails, setRequestDetails] = useState({});
@@ -34,7 +36,8 @@ function ManageRequest() {
         const response = await axios.get(
           `http://localhost:3000/api/v1/bookSharing/requests`
         );
-        console.log(response.data);
+        console.log(response.data[0].id);
+        
         setRequestDetails(response.data);
         console.log(requestDetails);
 
@@ -47,6 +50,18 @@ function ManageRequest() {
     };
     getRequestDetails();
   }, [user]); // Include user in dependency array
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/v1/bookSharing/deleteBooks/${id}`,{
+        withCredentials:true
+      })
+      console.log(response)
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <TableContainer
@@ -80,7 +95,12 @@ function ManageRequest() {
                 >
                   Edit
                 </Button>
-                <Button onClick={onOpen}
+                <Button onClick = {
+                  () => {
+                    onOpen()
+                    setCurrentId(requestDetails[item].id)
+                  }
+                }
                   marginLeft={"5"}
                   colorScheme="red"
                   variant={"outline"}
@@ -116,7 +136,14 @@ function ManageRequest() {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={onClose} ml={3}>
+              
+
+              <Button colorScheme='red' onClick = {
+                () => {
+                  onClose()
+                  handleDelete(currentId);
+                }
+              } ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>

@@ -85,10 +85,32 @@ const postShareRequestImage = async (req, res, next) => {
         }
     }
 
+const delete_books= async(req,res,next) =>{
+   
+    const id  = req.params.id;
+    console.log(id)
+  try {
+    const deletedBook = await shareRequestModel.destroy({
+      where: { id: id },
+    });
+
+    if (deletedBook) {
+      return res.status(statusCodes.StatusCodes.OK).json({ message: 'Book deleted successfully' });
+    } else {
+      return res.status(statusCodes.StatusCodes.OK).json({ message: 'Book not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    console.error('Error deleting book:', error);
+    return res.status(statusCodes.StatusCodes.OK).json({ message: 'Internal server error' });
+  }
+}
+
 
 
 module.exports = {
     getAllShareRequests,
     postShareRequest,
     getShareRequestNames,
+    delete_books
 }
