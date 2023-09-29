@@ -68,18 +68,22 @@ import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
 import ManageSubscription from "./pages/Subscription/ManageSubscription";
 import SelectedSubscriptionPackage from "./components/Subscription/SelectedSubscriptionPackage";
 
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminNotifications from "./pages/AdminNotifications";
-import AdminUserMgt from "./pages/AdminUserMgt";
-import AdminShop from "./pages/AdminShop";
-import AdminInventory from "./pages/AdminInventory";
-import AdminDonations from "./pages/AdminDonations";
-import AdminSubscriptions from "./pages/AdminSubscriptions";
-import AdminSettings from "./pages/AdminSettings";
-import AdminOrders from "./pages/AdminOrders";
-import AdminBookSharing from "./pages/AdminBookSharing";
-import AdminComplaints from "./pages/AdminComplaints";
-import AdminAddNewBook from "./pages/AdminAddNewBook";
+
+// Import Admin Pages
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminNotifications from "./pages/Admin/AdminNotifications";
+import AdminUserMgt from "./pages/Admin/AdminUserMgt";
+import AdminShop from "./pages/Admin/AdminShop";
+import AdminInventory from "./pages/Admin/AdminInventory";
+import AdminDonations from "./pages/Admin/AdminDonations";
+import AdminSubscriptions from "./pages/Admin/AdminSubscriptions";
+import AdminSettings from "./pages/Admin/AdminSettings";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import AdminBookSharing from "./pages/Admin/AdminBookSharing";
+import AdminComplaints from "./pages/Admin/AdminComplaints";
+import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
+import AdminReports from "./pages/Admin/AdminReports";
+
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -215,6 +219,7 @@ function App() {
           <Route exact path="/admincomplaints" element={<AdminComplaints />}></Route>
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
+          <Route exact path="/adminreports" element={<AdminReports />}></Route>
 
           {/* Moderator Routes */}
           

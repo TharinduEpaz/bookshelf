@@ -387,6 +387,54 @@ const delete_book_in_subscription_plan = async (req, res, next) => {
   }
 };
 
+
+//Subscription plans
+
+//Add subscription plans(Admin)
+const addSubscriptionPlan = async (req, res, next) => {
+	try {
+		const {
+            firstName,
+			LastName,
+			book_count,
+			time_period,
+			discount
+		} = req.body;
+
+		
+		const plan = await subscriptionModel.create({
+			firstName,
+			LastName,
+			book_count,
+			time_period,
+			discount
+		});
+		res.status(statusCodes.StatusCodes.CREATED).json(plan);
+	} catch (error) {
+		next(error);
+	}
+	// res.send("");
+};
+
+
+	//Delete subscription plans
+	const deleteSubscriptionPlan = async (req, res, next) => {
+		const { id } = req.params;
+		try {
+		  const plan = await subscriptionModel.findOne({ where: { id } });
+		  if (!plan) {
+			throw new CustomError.NotFoundError("No subscription plan found");
+		  }
+		  await plan.destroy();
+		  res.status(statusCodes.StatusCodes.OK).json({ message: "Subscription plan deleted" });
+		} catch (error) {
+		  next(error);
+		}
+		// res.send("Delete plan" + id);
+	  };
+
+
+
 module.exports = {
 	getAllSubscriptions,
 	getAllUserSubscriptions,
@@ -396,6 +444,8 @@ module.exports = {
 	getMySubscriptionDetails,
 	updateMySubscription,
 	deleteMySubscription,
+	addSubscriptionPlan,
+	deleteSubscriptionPlan
 	getSingleBook,
 	addBookSubscription,
 	checkSubscription,
