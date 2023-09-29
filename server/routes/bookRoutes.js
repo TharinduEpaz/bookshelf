@@ -27,8 +27,6 @@ router.route('/:id', ).patch(controller.updateBook);
 
 router.route('/:id', ).delete(controller.deleteBook);
 
-router.route('/bestSelling').get(controller.getBestSellingBooks);
-
 
 
 

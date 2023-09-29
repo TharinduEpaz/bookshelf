@@ -1,6 +1,5 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
-const buyerModel = require("../models/buyer");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -172,6 +171,7 @@ const verifyEmail = async (req, res, next) => {
         id: result.user
       }
     });
+    
 
     await notification.destroy({
       where: {
@@ -190,7 +190,10 @@ const verifyEmail = async (req, res, next) => {
   }
 }
 
+
+
 module.exports = {
+
   register,
   login,
   logout,

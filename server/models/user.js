@@ -2,8 +2,6 @@
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 const validator = require('validator');
-// const review = require('./reviews.js');
-// const order = require('./order.js');
 
 const User = sequelize.define('User', {
   // Model attributes are defined here 
@@ -58,13 +56,7 @@ const User = sequelize.define('User', {
 })
 
 
-
-// User.sync({  force: true });
-
-
-
-// User.hasMany(order)
-// order.belongsTo(User)
+// User.sync({  alter: true });
 
 
 

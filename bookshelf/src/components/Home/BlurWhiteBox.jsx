@@ -19,7 +19,7 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
   return (
     <Box
       m={"auto"}
-      mt={2}
+      mt={10}
       w="80%"
       h="50vh"
       borderRadius="2xl"

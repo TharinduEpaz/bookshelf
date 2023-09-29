@@ -1,6 +1,4 @@
 const bookModel = require("../models/book");
-const orderModel = require("../models/order");
-const orderBooksModel = require("../models/orderBooks");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");

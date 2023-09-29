@@ -26,6 +26,11 @@ const subscription = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
+		discount: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		}
+
 	},
 	{}
 );

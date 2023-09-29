@@ -24,6 +24,7 @@ app.use(cors({
 }));
 
 
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const bookRoutes = require("./routes/bookRoutes");
@@ -34,7 +35,6 @@ const donationRoutes = require("./routes/donationRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 
 
-
 //routes
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -43,13 +43,17 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/v1/', authRoutes);
+
 app.use('/api/v1/users/', userRoutes);
 app.use('/api/v1/books/', bookRoutes);
 app.use('/api/v1/subscriptions/', subscriptionRoutes);
 app.use('/api/v1/bookSharing/', sharingRoutes);
+
 app.use('/api/v1/orders/', orderRoutes);
 app.use('/api/v1/donations/', donationRoutes);
 app.use('/api/v1/reviews/', reviewRoutes);
+
+
 
 //middleware for error handling
 app.use(notFoundMIddleware);
