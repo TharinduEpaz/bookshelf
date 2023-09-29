@@ -5,5 +5,6 @@ const router = Router();
 const controller = require('../controllers/notificationController')
 
 router.route('/').get(controller.getNotifications); // get all notifications
+router.route('/:id').patch(controller.updateNotificationStatus); // update notification status
 
 module.exports = router;

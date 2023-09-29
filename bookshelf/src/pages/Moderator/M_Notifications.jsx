@@ -67,6 +67,8 @@ export default function Notifications() {
                     text={notification.type}
                     time={new Date(notification.createdAt).toLocaleDateString()}
                     description={notification.message}
+                    status={notification.status}
+                    id={notification.id}
                   />
                 </Box>
               ))}
