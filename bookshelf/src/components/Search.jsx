@@ -43,62 +43,74 @@ function Search() {
   return (
     <>
       <Box
-        m={"auto"}
-        mt={2}
-        w="80%"
+      
+        mt={5}
+        mb={5}
+        w={'80%'}
         borderRadius="2xl"
-        boxShadow="sm"
-        background={"rgba(255, 255, 255,0.2)"}
-        // bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
+      
+        background={"rgba(255, 255, 255,0)"}
+        bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
         // filter="blur(8px)"
         backdropFilter="blur(8px)"
-        p={5}
+        p={2}
+        pl={5}
+        pb={5}
         display={"flex"}
-        // justifyContent={'center'}
         alignItems={"center"}
+        
+      
+        
         gap={5}
       >
         <Input
           type="text"
-          w={"50%"}
+          w={"90%"}
           fontWeight={"extrabold"}
           placeholder="Search thousands of books"
-          borderColor={"blue.400"}
+          borderColor={"blue.100"}
           onChange={(e) => handleChange(e.target.value)}
+          variant={'flushed'}
+          h={'50px'}
         />
         <IconButton
           icon={<Search2Icon />}
-          color="blue.300"
+          color="blue.400"
           ml={0}
-          borderRadius={10}
+          borderRadius={5}
           w={100}
+          h={'50px'}
+          bg={'none'}
         />
       </Box>
       <Box
-        m={"auto"}
+        // m={"auto"}
         mt={0}
-        w="40%"
+        w="30%"
         boxShadow="sm"
-        background={"rgba(255, 255, 255,0.7)"}
+        background={"rgba(255, 255, 255, 0.7)"}
         borderRadius={10}
         // bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
         // filter="blur(8px)"
         backdropFilter="blur(8px)"
         p={5}
-        zIndex={10}
-        position={"absolute"}
-        left={"10%"}
+        // position={"absolute"}
+        left={"6%"}
         // justifyContent={'center'}
+        zIndex={'9999'}
         alignItems={"center"}
         gap={5}
         display={input.length > 0 ? "" : "none"}
       >
+
         {filteredItems.slice(0, 10).map((result) => (
+
           <Box
             fontSize={20}
             fontWeight={"medium"}
             onClick={() => navigate(`/shop/${result.id}`)}
             cursor={"pointer"}
+            zIndex={'9999'}
           >
             {result.title}
           </Box>

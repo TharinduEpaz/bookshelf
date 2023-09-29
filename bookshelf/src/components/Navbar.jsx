@@ -36,6 +36,7 @@ import {
 } from "react-icons/ai";
 
 import { BsFillCartFill } from "react-icons/bs";
+import Search from "./Search";
 
 const navLinks = [
   { name: "Shop", path: "/shop" },
@@ -87,32 +88,40 @@ function Navbar() {
       backdropFilter="blur(8px)"
       top={0}
     >
-      <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
+      <Flex h={16} alignItems="center" justifyContent={'space-between'} mx="auto">
         <RouterLink to="/">
           <Heading size={"md"}>BookShelf</Heading>
         </RouterLink>
         <HStack
           spacing={8}
           alignItems="center"
-          bg={useColorModeValue("blue.100", "gray.800")}
-          p={1}
+          bg={useColorModeValue("blue.200", "gray.800")}
+          p={2}
           pl={10}
           pr={10}
-          borderRadius={50}
+          borderRadius={10}
           boxShadow={"base"}
           display={{ base: "none", md: "flex" }}
         >
           <HStack
             as="nav"
-            spacing={6}
+            spacing={10}
             display={{ base: "none", md: "flex" }}
             alignItems="center"
+            fontWeight={'bold'}
           >
             {navLinks.map((link, index) => (
               <NavLink key={index} {...link} onClose={onClose} />
             ))}
+            
+
+            
           </HStack>
+         
         </HStack>
+        
+
+        
 
         {!user ? (
           <ButtonGroup>

@@ -97,6 +97,11 @@ import Moderator from "./pages/Moderator/Moderator";
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import BestSellers from "./pages/BestSellers";
+import Romance from "./pages/Romance";
+import Collections from "./pages/Collections";
+import SelfHelp from "./pages/SelfHelp";
+import Fiction from "./pages/Fiction";
 // import StripeCheckout from "./pages/StripeCheckout";
 
 
@@ -143,6 +148,13 @@ function App() {
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
             <Route exact path="/checkout" element={<Checkout />}></Route>
+            <Route exact path="/bestSellers" element={<BestSellers />}></Route>
+            <Route exact path="/romance" element={<Romance />}></Route>
+            <Route exact path="/collections" element={<Collections />}></Route>
+            <Route exact path="/selfHelp" element={<SelfHelp />}></Route>
+            <Route exact path="/Fiction" element={<Fiction />}></Route>
+        
+
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
 
 

@@ -77,6 +77,7 @@ const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
+ 
     //validate the data
     if (!user) {
       throw new Error("Invalid Data");
@@ -121,9 +122,17 @@ const register = async (req, res, next) => {
     )
 
     //add to buyer table
-    const buyer = await buyerModel.create({
+    await buyerModel.create({
+
       UserId: user.id,
+      address: req.body.address,
+      city: req.body.city,
+      province: req.body.province,
+      zipCode: req.body.postalCode,
+      phoneNumber: req.body.phone,
+
     });
+
       
 
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
@@ -154,6 +163,7 @@ const verifyEmail = async (req, res, next) => {
     }
 
     const result = jwt.verify(token, process.env.EMAIL_SECRET);
+    console.log(result);
    
     await userModel.update({
       emailVerified: true
@@ -172,6 +182,7 @@ const verifyEmail = async (req, res, next) => {
     });
 
     res.status(statusCodes.StatusCodes.OK).send("Email Verified");
+    window.location.href = "/login";
   }
   catch(error) {
     console.log(error);
