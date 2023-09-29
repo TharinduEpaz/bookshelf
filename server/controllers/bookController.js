@@ -22,12 +22,21 @@ const addBook = async (req, res, next) => {
       genre,
       language,
       featuredCategory,
-
     } = req.body;
-    console.log('function reached');
-    
-    if (!title || !price || !author || !ISBN || !description || !typesAvailable || !genre) {
-      throw new CustomError.BadRequestError("Please provide all required details");
+    console.log("function reached");
+
+    if (
+      !title ||
+      !price ||
+      !author ||
+      !ISBN ||
+      !description ||
+      !typesAvailable ||
+      !genre
+    ) {
+      throw new CustomError.BadRequestError(
+        "Please provide all required details"
+      );
     }
 
     const book = await bookModel.create({
@@ -52,7 +61,7 @@ const addBook = async (req, res, next) => {
 
 const getAllBooks = async (req, res, next) => {
   try {
-    const books = (await bookModel.findAll());
+    const books = await bookModel.findAll();
     res.json(books);
   } catch (error) {
     next(error);
@@ -105,7 +114,7 @@ const deleteBook = async (req, res, next) => {
 };
 
 const uploadImage = async (req, res, next) => {
-//   console.log(req.files);
+  //   console.log(req.files);
   try {
     const { id } = req.params;
 
@@ -148,17 +157,34 @@ const uploadImage = async (req, res, next) => {
 
 const getBestSellingBooks = async (req, res, next) => {
   try {
-  const bestSellingBooks = await orderModel.findAll({
-    attributes: ['book_id', [sequelize.fn('COUNT', sequelize.col('book_id')), 'count']],
-    group: ['book_id'],
-    order: [[sequelize.fn('COUNT', sequelize.col('book_id')), 'DESC']],
-    limit: 10,
-    include: [{
-      model: bookModel,
-      attributes: ['title', 'author', 'price', 'ISBN', 'description', 'averageRating', 'stock', 'typesAvailable', 'genre', 'language', 'featuredCategory']
-    }]
-  });
-  res.json(bestSellingBooks);
+    const bestSellingBooks = await orderModel.findAll({
+      attributes: [
+        "book_id",
+        [sequelize.fn("COUNT", sequelize.col("book_id")), "count"],
+      ],
+      group: ["book_id"],
+      order: [[sequelize.fn("COUNT", sequelize.col("book_id")), "DESC"]],
+      limit: 10,
+      include: [
+        {
+          model: bookModel,
+          attributes: [
+            "title",
+            "author",
+            "price",
+            "ISBN",
+            "description",
+            "averageRating",
+            "stock",
+            "typesAvailable",
+            "genre",
+            "language",
+            "featuredCategory",
+          ],
+        },
+      ],
+    });
+    res.json(bestSellingBooks);
   } catch (error) {
     next(error);
   }
@@ -167,12 +193,11 @@ const getBestSellingBooks = async (req, res, next) => {
 
 const decreaseStock = async (req, res, next) => {
   try {
-
     const id = req.body.bookId;
     const { quantity } = req.body.amount || 1;
 
     const book = await bookModel.findOne({ where: { id } });
-    
+
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -182,12 +207,11 @@ const decreaseStock = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 const increaseStock = async (req, res, next) => {
   try {
-
-    const  id  = req.body.bookId;
+    const id = req.body.bookId;
     const { quantity } = req.body.amount || 1;
 
     const book = await bookModel.findOne({ where: { id } });
@@ -200,19 +224,18 @@ const increaseStock = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 const getBookNames = async (req, res, next) => {
   try {
-    
     const books = await bookModel.findAll({
-      attributes: ['id','title']
+      attributes: ["id", "title"],
     });
     res.json(books);
   } catch (error) {
     next(error);
   }
-}
+};
 
 const searchBooks = async (req, res, next) => {
   try {
@@ -220,100 +243,111 @@ const searchBooks = async (req, res, next) => {
     const books = await bookModel.findAll({
       where: {
         title: {
-          [Op.like]: `%${title}%`
-        }
-      }
+          [Op.like]: `%${title}%`,
+        },
+      },
     });
     res.json(books);
   } catch (error) {
     next(error);
   }
-}
+};
 
 const filterBooks = async (req, res, next) => {
   try {
     const { category } = req.params;
+
+    if(category == 'New'){
+      const books = await bookModel.findAll({
+        order: [["createdAt", "DESC"]],
+        limit: 10,
+      });
+      console.log(books);
+      res.json(books);
+    }
+
+
     const books = await bookModel.findAll({
       where: {
         genre: {
-          [Op.like]: `%${category}%`
-        }
-      }
+          [Op.like]: `%${category}%`,
+        },
+      },
     });
+    console.log(books);
     res.json(books);
+    
   } catch (error) {
     next(error);
   }
-}
+};
 
-const getPaginatedBooks = async (req,res,next) => {
+const getPaginatedBooks = async (req, res, next) => {
+  //pagination
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
 
-        //pagination
-        const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
+  console.log(page, limit);
 
-        console.log(page, limit);
+  //filters
 
-        //filters
-        const price = req.query.price || false;
-        const rating = parseInt(req.query.rating) || false;
-        const genre = req.query.genre || false;
-        const language = req.query.language || false;
-        const stock =  parseInt(req.query.stock) || false;
+  const price = req.query.price || false;
+  const rating = parseInt(req.query.rating) || false;
+  const genre = req.query.genre || false;
+  const language = req.query.language || false;
+  const stock = parseInt(req.query.stock) || false;
 
-        console.log(price, rating, genre, language, stock);
+  console.log(price, rating, genre, language, stock);
 
-        const startIndex = (page - 1) * limit
+  const startIndex = (page - 1) * limit;
 
-        const results = {}
+  const results = {};
 
-        const filters = {
-          averageRating: rating,
-          genre: genre,
-          language: language,
-        };
+  const filters = {
+    averageRating: rating,
+    genre: genre,
+    language: language,
+  };
 
-        if (stock) {
-          filters.stock = {
-            [Op.gt]: 0
-          }
-        }
+  if (stock) {
+    filters.stock = {
+      [Op.gt]: 0,
+    };
+  }
 
-        if(stock == -1){
-          filters.stock = {
-            [Op.eq]: 0
-          }
-        }
+  if (stock == -1) {
+    filters.stock = {
+      [Op.eq]: 0,
+    };
+  }
 
-        for (const key in filters) {
-          if (filters[key] == 0 || filters[key] == 'null' || filters[key] == undefined) {
-            delete filters[key];
-          }
-        }
+  for (const key in filters) {
+    if (
+      filters[key] == 0 ||
+      filters[key] == "null" ||
+      filters[key] == undefined
+    ) {
+      delete filters[key];
+    }
+  }
 
-        if(price != 0){
-          results.result = await bookModel.findAll({
-            where: filters,
-            offset: startIndex,
-            limit: limit,
-            order: [['price', price]] // Assuming 'price' is either 'ASC', 'DESC', or false
-          });
-        }
-        else{
-          results.result = await bookModel.findAll({
-            where: filters,
-            offset: startIndex,
-            limit: limit,
-          });
+  if (price != 0) {
+    results.result = await bookModel.findAll({
+      where: filters,
+      offset: startIndex,
+      limit: limit,
+      order: [["price", price]], // Assuming 'price' is either 'ASC', 'DESC', or false
+    });
+  } else {
+    results.result = await bookModel.findAll({
+      where: filters,
+      offset: startIndex,
+      limit: limit,
+    });
+  }
 
-        }
-
-        res.json(results)
-}
-
-
-
-
+  res.json(results);
+};
 
 
 

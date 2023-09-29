@@ -51,7 +51,7 @@ export const BooksProvider = ({ children }) => {
       const response = await axiosInstance.get(
         `books/paginated?page=${page}&limit=12&price=${price}&rating=${rating}&stock=${stock}&sort=${sort}&genre=${genre}&language=${language}`
       );
-      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data.result });
+      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data.result});
       // console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -127,6 +127,17 @@ export const BooksProvider = ({ children }) => {
     }
   };
 
+  const getNewArrivals = async () => {
+    try {
+      dispatch({ type: "FETCH_BOOKS_BEGIN" });
+      const response = await axiosInstance.get("books/filter/New");
+      dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: response.data });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchBooks();
   }, [initialState,price,rating,stock,sort,genre,language]);
@@ -148,6 +159,7 @@ export const BooksProvider = ({ children }) => {
         setSort,
         genre,
         language,
+        getNewArrivals,
       }}
     >
       {children}

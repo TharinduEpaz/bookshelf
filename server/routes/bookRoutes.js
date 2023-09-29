@@ -19,6 +19,8 @@ router.route('/getBookNames').get(controller.getBookNames);
 
 router.route('/paginated').get(controller.getPaginatedBooks);
 
+router.route('/filter/:category').get(controller.filterBooks);
+
 router.get('/:id', controller.getSingleBook);
 
 router.route('/:id', ).patch(controller.updateBook);

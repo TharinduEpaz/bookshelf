@@ -29,13 +29,13 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
       backdropFilter="blur(8px)"
       p={4}
       
+      
     >
       <Grid
-        h="35vh"
+        h="100%"
         templateRows="repeat(5, 1fr)"
         templateColumns="repeat(5, 1fr)"
         gap={4}
-        
         // overflow={'hidden'}
       >
         <GridItem rowSpan={3} colSpan={3}>
@@ -51,14 +51,10 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
             {title}
           </Heading> */}
 
-
-    
-
-
 <Text
   bgGradient='linear(to-br, #2A4365, #3182CE)'
   bgClip='text'
-  fontSize='7xl'
+  fontSize={{lg:'5xl',md:'xl', sm:'xl'}}
   fontWeight='bold'
   fontFamily={'bricolage grotesque'}
   position={'absolute'}
@@ -85,14 +81,12 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
             
           />
         </GridItem>
-        <GridItem rowSpan={2} colSpan={3}  alignItems={'top'} display={'flex'}>
+        <GridItem rowSpan={2} colSpan={3} pt={'2%'} pl={'8%'}>
         {/* <Link to={route}>
            <Button ml={5} colorScheme="purple" pl={10} pr={10} borderRadius={100}>{mainButton}</Button> 
             </Link> */}
-           {/* <Search /> */}
-           <Card>
-            
-           </Card>
+           <Search/>
+          
            
         </GridItem>
         
