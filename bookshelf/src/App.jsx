@@ -238,9 +238,7 @@ function App() {
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
           </Route>
-         
-
-              </Routes>
+        </Routes>
           <Footer />
           
           </CartProvider>
