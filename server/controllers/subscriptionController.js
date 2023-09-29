@@ -445,7 +445,7 @@ module.exports = {
 	updateMySubscription,
 	deleteMySubscription,
 	addSubscriptionPlan,
-	deleteSubscriptionPlan
+	deleteSubscriptionPlan,
 	getSingleBook,
 	addBookSubscription,
 	checkSubscription,
