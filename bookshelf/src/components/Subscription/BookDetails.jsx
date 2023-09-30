@@ -19,9 +19,47 @@ import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
 function bookDetails() {
+
+    const [subscriptionType, setSubscriptionType] = useState([]);
     const [bookDetails, setBookDetails] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+
     let count = 0;
+    useEffect(() => {
+        const getSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions",
+                    {
+                        withCredentials: true
+                    }
+                )
+
+                setSubscriptionType(response.data);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getSubscription();
+    }, []);
+
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
+                );
+                setSubscriptionDetails(response);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getCurrentSubscription();
+    }, []);
 
     const getBooks = async () => {
         try {
@@ -30,11 +68,7 @@ function bookDetails() {
                 "http://localhost:3000/api/v1/subscriptions/selectBooks",
                 { withCredentials: true }
             );
-            // console.log(response.data[0].books);
-
-            setBookDetails(response.data[0].books);
-
-
+            setBookDetails(response.data[0].books)
             setIsLoading(false);
 
         } catch (error) {
@@ -57,6 +91,19 @@ function bookDetails() {
 
     if (isLoading) {
         return <Spinner size="xl" colorScheme="blue" />;
+    }
+
+    let currentSubscription = subscriptionDetails && subscriptionDetails.data[0].subscriptionType;
+    let subscriptionAmount = ""
+    
+    if (currentSubscription === "Book Reader") {
+        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.3;
+    } 
+    else if (currentSubscription === "Book Worm") {
+        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.6;
+    } 
+    else if (currentSubscription === "Book Lover") {
+        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.4;
     }
 
     return (
@@ -140,8 +187,12 @@ function bookDetails() {
                 selected amount each month to receive the order.
             </Text>
 
-            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(7,1fr)"} gap={"15px"} marginTop={10} marginLeft={18} >
-                <GridItem rowSpan={1} colSpan={5} textColor={"#204974"} fontSize={20} as={"b"}>
+
+            
+
+            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(8,1fr)"} gap={"15px"} marginTop={10} marginLeft={18} >
+                
+                <GridItem rowSpan={1} colSpan={2} textColor={"#204974"} fontSize={20} as={"b"}>
                     <Icon viewBox='0 0 200 200' mt={-1}>
                         <path
                             fill='currentColor'
@@ -153,9 +204,9 @@ function bookDetails() {
                     </span>
                 </GridItem>
 
-                <GridItem justifyContent={"center"} rowSpan={1} colSpan={2} textColor={"#204974"} fontSize={20} as={"b"}ml={175} >
-                    <span >
-                        Rs {bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.9 || '0'}.00
+                <GridItem justifyContent={"center"} rowSpan={1} colSpan={6} textColor={"#204974"} fontSize={20} as={"b"} ml={500}>
+                    <span>
+                        Rs { subscriptionAmount||'0'}.00
                     </span>
                    
                 </GridItem>
