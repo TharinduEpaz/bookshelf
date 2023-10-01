@@ -1,4 +1,5 @@
-    import {
+import React, { useEffect, useState } from "react";
+import {
     Flex,
     Circle,
     Box,
@@ -16,7 +17,11 @@
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-
+import { Link as RouterLink, useNavigate} from "react-router-dom";
+import { AiTwotoneEye } from 'react-icons/ai';
+import { MdRemoveCircleOutline } from 'react-icons/md';
+import axios from "axios";
+import { useToast } from '@chakra-ui/react'
 
 const data = {
     isNew: true,
@@ -30,7 +35,7 @@ const data = {
 
 
 
-function Rating({ rating}) {
+function Rating({ rating }) {
     return (
         <Box display="flex" alignItems="center" justifyContent={'center'}>
             {Array(5)
@@ -58,11 +63,54 @@ function Rating({ rating}) {
 }
 
 
-    
-function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelRef = useRef();
 
+function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove, link }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [book, setBook] = useState({});
+    const cancelRef = useRef();
+    const toast = useToast();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const removeBookSubscription = async(id)=>{
+        try {
+            setIsLoading(true)
+            const bookId =id;
+            console.log(bookId);
+            const response = await axios.post(
+                'http://localhost:3000/api/v1/subscriptions/removeBook',
+                {
+                    id: bookId
+                },
+                {
+                    withCredentials: true
+                }
+            );
+
+            setIsLoading(false)
+                toast({
+                    title: 'Successfully Removed',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                });
+            navigate(0);
+            
+        } catch (error) {
+            console.log(error.response.data)
+            return (
+                toast({
+                    title: "cant",
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top'
+                })
+            )
+        }
+    }
+   
     const handleDelete = () => {
         onRemove(bookKey);
         onClose();
@@ -73,7 +121,7 @@ function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) 
             <Box
                 bg={useColorModeValue('white', 'gray.800')}
                 maxW={'200px'}
-                maxH={'380px'}
+                h={'380px'}
                 borderWidth="1px"
                 rounded="lg"
 
@@ -122,43 +170,59 @@ function BookCard({ bookKey, name, author, price, imageURL, rating, onRemove }) 
                     </Flex>
                 </Box>
             </Box>
-            
+
             {/* popup message */}
 
-            <Button marginTop={8}
-                colorScheme="red"
-                variant={'outline'}
-                borderRadius={15} onClick={onOpen}>
-                    Remove
-                </Button>
+            <Flex mt={5} gap={9}>
+                <RouterLink to={link}>
+                    <Button
+                        colorScheme="blue"
+                        // variant={'outline'}
+                        borderRadius={15} onClick={onOpen}>
+                        view
+                    </Button>
+                </RouterLink>
 
-                <AlertDialog
-                    isOpen={isOpen}
-                    leastDestructiveRef={cancelRef}
-                    onClose={onClose}
-                >
-                    <AlertDialogOverlay>
-                        <AlertDialogContent>
-                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                                Remove Subscription
-                            </AlertDialogHeader>
+                <RouterLink >
 
-                            <AlertDialogBody>
-                                Are you sure want to remove this subscription?
-                            </AlertDialogBody>
+                    <Button
+                        colorScheme="red"
+                        variant={'outline'}
+                        borderRadius={15} 
+                        onClick={onOpen}>
+                        Remove
+                    </Button>
+                </RouterLink>
+            </Flex>
 
-                            <AlertDialogFooter>
-                                <Button ref={cancelRef} onClick={onClose}>
-                                    Cancel
-                                </Button>
-                                <Button colorScheme='red'
-                                onClick={() => onRemove(bookKey)} ml={3}>
-                                    Remove
-                                </Button>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialogOverlay>
-                </AlertDialog>
+            <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Remove Book From Subscription
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                            Are you sure want to remove this book from your subscription?
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme='red'
+                                onClick={() => {removeBookSubscription(id); onClose();}
+                                } ml={3}>
+                                Remove
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
         </Flex>
     );
 }

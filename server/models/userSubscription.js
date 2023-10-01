@@ -6,14 +6,11 @@ const userSubscription = sequelize.define(
 	"userSubscription",
 	{
 		// Model attributes are defined here
-		id: {
-			type: DataTypes.UUID,
-			primaryKey: true,
-			defaultValue: DataTypes.UUIDV4,
-		},
+		
 		userId: {
 			type: DataTypes.UUID,
 			allowNull: false,
+			primaryKey: true,
 		},
 		subscriptionType: {
 			type: DataTypes.STRING,
@@ -25,6 +22,6 @@ const userSubscription = sequelize.define(
 	}
 );
 
-// userSubscription.sync({ alter: true });
+// userSubscription.sync({ force: true });
 
 module.exports = userSubscription;

@@ -7,7 +7,8 @@ import {
     Text,
     InputGroup,
     Input,
-    InputRightElement
+    InputRightElement,
+    Button
 } from "@chakra-ui/react";
 
 import { BiSearchAlt } from "react-icons/bi";
@@ -28,6 +29,7 @@ export default function SearchPanel({name, filter}) {
         <Text fontSize="lg" fontWeight={"bold"}>
           {name}
         </Text>
+        {/* <Button onClick={() => (window.print())}>Print</Button> */}
 
         <Spacer />
 

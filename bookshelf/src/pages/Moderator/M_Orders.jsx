@@ -9,6 +9,7 @@ import {
   Text,
   StatGroup,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import { BiBookOpen } from "react-icons/bi";
 import StatCard from "../../components/Moderator/StatCard";
@@ -18,49 +19,74 @@ import SearchPanel from "../../components/Moderator/SearchPanel";
 export default function Orders() {
   const columns = [
     "Order ID",
-    "Customer ID",
     "Order date",
-    "Order type",
     "Total price",
+    "Is paid",
+    "Status",
   ];
 
   const [list, setOrderList] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const getOrders = async () => {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/orders");
       const jsonData = await response.json();
 
       const filteredData = jsonData.map((order) => ({
         id: order.id,
-        buyerId: order.buyer_id,
-        orderDate: order.orderDate,
-        orderType: order.orderType,
+        // buyerId: order.buyer_id,
+        orderDate: new Date(order.orderDate).toLocaleDateString(),
+        // items: order.orderItems,
         totalPrice: order.totalPrice,
+        isPaid: order.is_paid ? "Yes" : "No",
         status: order.orderStatus,
       }));
 
       setOrderList(filteredData);
+      setLoading(false);
+      console.log(filteredData);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  // const [count, setCount] = useState(0);
-  // const getCount = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3000/api/v1/orders/count")
-  //     const jsonData = await response.json()
-  //     setCount(jsonData[0].count);
-
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // }
+  const [count, setCount] = useState(0);
+  const getCount = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/orders/count");
+      const jsonData = await response.json();
+      setCount(jsonData);
+      console.log(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   useEffect(() => {
     getOrders();
+    getCount();
   }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <Box mb={"100vh"}>
+          <Spinner
+            position={"absolute"}
+            top={"30%"}
+            left={"50%"}
+            size={"xl"}
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+          />
+        </Box>
+      </>
+    );
+  }
 
   return (
     <>
@@ -92,7 +118,7 @@ export default function Orders() {
                 </Select>
               </Flex>
               <StatGroup gap={100}>
-                <StatCard lable="All Orders" value={"100"} />
+                <StatCard lable="All Orders" value={count} />
                 <StatCard
                   lable="Pending"
                   value="20"

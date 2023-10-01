@@ -5,64 +5,65 @@ import {
     Text,
     Textarea,
     Input,
-    InputGroup,
-    InputRightElement,
     Button,
     useColorModeValue,
+    UnorderedList,
+    Flex,
+    ListItem,
+    IconButton,
 } from '@chakra-ui/react';
-import { MdAddBox, MdDelete } from 'react-icons/md';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 import axios from 'axios'
-
+import { RxCross2 } from 'react-icons/rx';
 
 function ShareRequest({ title, image }) {
-    const [bookList, setBookList] = useState(['']); // Initial state with one input field
-    const[bookName,setBookName] = useState('');
-  const[details,setDetails] = useState('');
-  const [listOfBooks,setListofBooks] = useState('');
-  const userId ="1302e961-a3a8-4c5d-a635-f1d6495c63df"
+    const [bookName, setBookName] = useState('');
+    const [userName, setUserName] = useState('');
+    const [details, setDetails] = useState('');
+    const [listOfBooks, setListOfBooks] = useState([]);
+    const [newBook, setNewBook] = useState('');
 
-  const requestUrl ="http://localhost:3000/api/v1/bookSharing/requests"
-  const ShareRequest = async (e) => {
-    e.preventDefault();
-    try {
-   
-     const response = await axios.post(requestUrl,{ bookName : bookName, details : details, listOfBooks : listOfBooks, userId: userId});
-     console.log(response.data);
+    const handleInputChange = (event) => {
+        setNewBook(event.target.value);
+    };
 
-     setBookName('');
-     setDetails('');
-     setListofBooks('');
-     console.log(response);
+    const handleAddButtonClick = () => {
+        if (newBook.trim() !== '') {
+            setListOfBooks([...listOfBooks, newBook]);
+            setNewBook('');
+        }
+    };
 
-    } catch (error) {
-    
-   console.log(error.response);
-    }
- 
- }
+    const handleRemoveButtonClick = (index) => {
+        const updatedList = [...listOfBooks];
+        updatedList.splice(index, 1);
+        setListOfBooks(updatedList);
+    };
 
+    const userId = "1302e961-a3a8-4c5d-a635-f1d6495c63df";
+    const requestUrl = "http://localhost:3000/api/v1/bookSharing/requests";
 
+    const ShareRequest = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(requestUrl, {
+                bookName: bookName,
+                userName: userName,
+                details: details,
+                listOfBooks: listOfBooks,
+                userId: userId
+            });
+            console.log(response.data);
 
-    // const handleInputChange = (index, value) => {
-    //     const updatedList = [...bookList];
-    //     updatedList[index] = value;
-    //     setBookList(updatedList);
-    // };
-
-    // const handleAddInput = () => {
-    //     setBookList([...bookList, '']); // Add an empty input field to the list
-    // };
-
-    // const handleDeleteInput = (index) => {
-    //     const updatedList = [...bookList];
-    //     updatedList.splice(index, 1); // Remove the input field at the specified index
-    //     setBookList(updatedList);
-    // };
-
-    // const handleClick = () => {
-    //     alert('Clicked');
-    // };
+            setBookName('');
+            setUserName('');
+            setDetails('');
+            setListOfBooks([]);
+            console.log(response);
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
 
     return (
         <Box bgColor={'white'} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} padding={10}>
@@ -83,66 +84,68 @@ function ShareRequest({ title, image }) {
                     Post a Book to Share
                 </Heading>
                 <form onSubmit={ShareRequest}>
-                <Text mb="8px">Name of the book:</Text>
-               
-                <Input type="text" size="sm" marginBottom={5} 
-                    onChange={(e)=>{setBookName(e.target.value)}}
-                    value={bookName}
-                />
+                    <Text mb="8px">Name of the book:</Text>
+                    <Input
+                        type="text"
+                        size="sm"
+                        marginBottom={5}
+                        onChange={(e) => { setBookName(e.target.value) }}
+                        value={bookName}
+                    />
 
-                <Text mb="8px">Picture of the book:</Text>
-                <Input type="file" size="m" marginBottom={5} width={250} />
+                    <Text mb="8px">Full Name:</Text>
+                    <Input
+                        type="text"
+                        size="sm"
+                        marginBottom={5}
+                        onChange={(e) => { setUserName(e.target.value) }}
+                        value={userName}
+                    />
 
-                <Text mb="8px">Details:</Text>
-                <Textarea type="text-area" size="sm" marginBottom={5}
-                    onChange={(e)=>{setDetails(e.target.value)}}
-                    value={details}
-                />
+                    <Text mb="8px">Picture of the book:</Text>
+                    <Input
+                        type="file"
+                        size="m"
+                        marginBottom={5}
+                        width={250}
+                    />
 
-                <Text mb="8px">List of books you would like to have:</Text>
-                {/* {bookList.map((book, index) => (
-                    <InputGroup key={index} border={10} marginBottom={5}>
+                    <Text mb="8px">Details:</Text>
+                    <Textarea
+                        type="text-area"
+                        size="sm"
+                        marginBottom={5}
+                        onChange={(e) => { setDetails(e.target.value) }}
+                        value={details}
+                    />
+
+                    <Text mb="8px">List of books you would like to have:</Text>
+                    <UnorderedList fontWeight={'bold'} mb={10} mt={10}>
+                        {listOfBooks.map((book, index) => (
+                            <ListItem key={index}>
+                                {book}
+                                <IconButton variant={'ghost'} ml={5} size={'sm'} onClick={() => handleRemoveButtonClick(index)} icon={<RxCross2 />}>Remove</IconButton>
+                            </ListItem>
+                        ))}
+                    </UnorderedList>
+
+                    <Flex alignItems={'center'} gap={10}>
                         <Input
                             type="text"
                             size="sm"
-                            value={book}
-                            onChange={(e) => handleInputChange(index, e.target.value)}
+                            value={newBook}
+                            onChange={handleInputChange}
+                            variant={'filled'}
+                            borderRadius={10}
+                            h={10}
                         />
-                        {index === bookList.length - 1 ? (
-                            <InputRightElement h="full">
-                                <Button variant={''} size={''} marginTop={0.5} marginLeft={2} onClick={handleAddInput}>
-                                    <MdAddBox size={35} />
-                                </Button>
-                            </InputRightElement>
-                        ) : (
-                            <InputRightElement h="full">
-                                <Button
-                                    variant={''}
-                                    size={''}
-                                    marginTop={0.5}
-                                    marginLeft={2}
-                                    onClick={() => handleDeleteInput(index)}
-                                >
-                                    <MdDelete size={32} />
-                                </Button>
-                            </InputRightElement>
-                        )}
-                    </InputGroup>
-                ))} */}
+                        <Button onClick={handleAddButtonClick} colorScheme='gray' borderRadius={10} >Add</Button>
+                    </Flex>
 
-                        <Input
-                            type="text"
-                            size="sm"
-            
-                            onChange={(e) => setBookList(e.target.value)}
-                            value = {bookList}
-                        />
-
-                <Box marginTop={10}>
-                <Button colorScheme="red" marginLeft={12}  variant={'outline'}  >cancel</Button>
-                <Button colorScheme="purple" marginLeft={620} type='submit'>Post Request</Button>
-                </Box>
-          
+                    <Box marginTop={10}>
+                        <Button colorScheme="red" marginLeft={12} variant={'outline'} >cancel</Button>
+                        <Button type="submit" colorScheme="purple" marginLeft={620}>Post Request</Button>
+                    </Box>
                 </form>
             </Box>
         </Box>

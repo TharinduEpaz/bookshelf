@@ -62,15 +62,11 @@ const Blur = (props) => {
 import g from "./assets/g.png";
 import Subscription from "./pages/Subscription/SubscriptionHome";
 import SelectSubscription from "./pages/Subscription/SelectSubscription";
-import SelectBookLover from "./pages/Subscription/SelectBookLover";
-import SelectBookReader from "./pages/Subscription/SelectBookReader";
-import SelectBookWorm from "./pages/Subscription/SelectBookWorm";
+import SelectPackage from "./pages/Subscription/SelectPackage";
 import SelectBook from "./pages/Subscription/SelectBook";
 import SelectBookSubscription from "./pages/Subscription/SelectBookSubscription"
 import ManageSubscription from "./pages/Subscription/ManageSubscription";
-import SelectLover from "./components/Subscription/SelectLover";
-import SelectReader from "./components/Subscription/SelectReader"
-import SelectWorm from "./components/Subscription/SelectWorm"
+import SelectedSubscriptionPackage from "./components/Subscription/SelectedSubscriptionPackage";
 
 
 // Import Admin Pages
@@ -105,6 +101,12 @@ import Moderator from "./pages/Moderator/Moderator";
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import BestSellers from "./pages/BestSellers";
+import Romance from "./pages/Romance";
+import Collections from "./pages/Collections";
+import SelfHelp from "./pages/SelfHelp";
+import Fiction from "./pages/Fiction";
+// import StripeCheckout from "./pages/StripeCheckout";
 
 
 function App() {
@@ -150,6 +152,14 @@ function App() {
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
             <Route exact path="/checkout" element={<Checkout />}></Route>
+            <Route exact path="/bestSellers" element={<BestSellers />}></Route>
+            <Route exact path="/romance" element={<Romance />}></Route>
+            <Route exact path="/collections" element={<Collections />}></Route>
+            <Route exact path="/selfHelp" element={<SelfHelp />}></Route>
+            <Route exact path="/Fiction" element={<Fiction />}></Route>
+        
+
+            {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
 
 
             <Route element={<PrivateRoutes />}>
@@ -163,37 +173,22 @@ function App() {
           </Route>
           </Route>
 
+
             <Route exact path="/subscriptions" element={<Subscription />}></Route>
             <Route exact path="/selectSubscription" element={<SelectSubscription />}></Route>
             <Route exact path="selectBook" element={<SelectBook />} ></Route>
-            <Route exact path="/selectBookReader" element={<SelectBookReader />}></Route>
-            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}></Route>
+            <Route exact path="/selectPackage" element={<SelectPackage />}></Route>
             <Route exact path="/selectBook/:id" element={<SelectBookSubscription />}></Route>
          
 
-            <Route exact path="/selectBookLover" element={<SelectBookLover />}>
-              <Route index element={<SelectLover />} />
-              <Route path="details" element={<SelectLover />} />
+            <Route exact path="/selectPackage" element={<SelectPackage />}>
+                  <Route index element={<SelectedSubscriptionPackage />} />
+                  <Route path="details" element={<SelectedSubscriptionPackage />} />
               <Route path="selectBook" element={<SelectBook />} />
               <Route path="manageSubscription" element={<ManageSubscription />} />
               <Route path="chat" element={<Chat />} />
             </Route>
 
-            <Route exact path="/selectBookReader" element={<SelectBookReader />}>
-              <Route index element={<SelectReader />} />
-              <Route path="details" element={<SelectReader />} />
-              <Route path="selectBook" element={<SelectBook />} />
-              <Route path="manageSubscription" element={<ManageSubscription />} />
-              <Route path="chat" element={<Chat />} />
-            </Route>
-
-            <Route exact path="/selectBookWorm" element={<SelectBookWorm />}>
-              <Route index element={<SelectWorm />} />
-              <Route path="details" element={<SelectWorm />} />
-              <Route path="selectBook" element={<SelectBook />} />
-              <Route path="manageSubscription" element={<ManageSubscription />} />
-              <Route path="chat" element={<Chat />} />
-            </Route>
 
 
           <Route exact path="/sharing" element={<SharingHome />}></Route>
@@ -243,9 +238,7 @@ function App() {
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
           </Route>
-         
-
-              </Routes>
+        </Routes>
           <Footer />
           
           </CartProvider>

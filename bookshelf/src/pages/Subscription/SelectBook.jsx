@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 function SelectBook() {
- 
-
   const [bookDetails, setBookDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
