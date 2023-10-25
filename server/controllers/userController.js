@@ -208,6 +208,32 @@ const changeShippingDetails = async (req, res, next) => {
   }
 }
 
+const getBuyerDetails = async (req, res, next) => {
+  try {
+    const { userId } = req.user;
+    const buyer = await buyerModel.findOne({
+      where: {
+        UserId: userId,
+      },
+      include: {
+        model: userModel,
+        attributes: ['firstName','lastName','email']
+      }
+
+    });
+
+    if(!buyer){
+      throw new CustomError.NotFoundError("No buyer found");
+    }
+
+    res.status(statusCodes.StatusCodes.OK).json(buyer);
+
+  }
+  catch (error) {
+    next(error);
+  }
+}
+
 
 
 
@@ -224,4 +250,5 @@ module.exports = {
   updateUser,
   userDashboard,
   changeShippingDetails,
+  getBuyerDetails,
 };
