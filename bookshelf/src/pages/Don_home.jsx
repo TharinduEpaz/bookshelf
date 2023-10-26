@@ -113,7 +113,7 @@ function Shop() {
       <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
       <Flex flexWrap={'wrap'} gap={10} p={10}>
       {Object.keys(bookDetails).map((item) => (
-            <Link key={item} to={`/DonationDetails/${item}`}>
+            <Link key={item} to={`/donate/${item}`}>
             <DonationCard
               name={bookDetails[item].title}
               price={bookDetails[item].price}

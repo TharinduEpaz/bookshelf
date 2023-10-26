@@ -99,6 +99,7 @@ import AdddNewBook from "./pages/Moderator/M_AddNewBook";
 import Moderator from "./pages/Moderator/Moderator";
 
 import Donation from "./pages/Donation"
+import Donation_Reg from "./pages/Donation_Reg"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
 import DonationDetails from "./pages/DonationDetails";
@@ -145,7 +146,9 @@ function App() {
             <Route exact path="/register" element={<Register />}></Route>
             <Route exact path="/shop" element={<Shop />}></Route>
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+            <Route exact path="/donate/:id" element={<DonationDetails />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
+            <Route exact path="/checkout" element={<Checkout />}></Route>
             <Route exact path="/checkout" element={<Checkout />}></Route>
 
 
@@ -205,8 +208,9 @@ function App() {
 
           <Route exact path="/donation" element={<Donation />}></Route>
           <Route exact path="/Don_home" element={<Don_home />}></Route>
+          <Route exact path="/Donation_Reg" element={<Donation_Reg/>}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
-          <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route>
+          {/* <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route> */}
 
           <Route element={<PrivateRoutes />}>
 

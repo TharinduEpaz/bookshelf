@@ -33,7 +33,9 @@ import Summaries from "../components/Shop/Summaries";
 import SimpleReview from "../components/Shop/SimpleReview";
 import AboutAuthor from "../components/Shop/AboutAuthor";
 
-function ProductPage() {
+function DonationDetails(
+  {name, price, needsfor,imageURL}
+) {
   const productDetails = {
     name: "Song og Ice and Fire",
     author: "George R.R. Martin",
@@ -90,7 +92,7 @@ function ProductPage() {
               alignItems={"start"}
             >
               <Image
-                src="https://dev.lareviewofbooks.org/wp-content/uploads/2014/04/GameofThronesCover.jpg"
+                src={imageURL}
                 alt="Dan Abramov"
                 borderRadius={"md"}
                 maxH={400}
@@ -144,7 +146,7 @@ function ProductPage() {
                 fontFamily={"montserrat"}
                 fontWeight={"light"}
               >
-                By {productDetails.author}
+                By {name}
               </Heading>
             </Box>
             {/* varients as two buttons */}
@@ -229,4 +231,4 @@ function HookUsage() {
   )
 }
 
-export default ProductPage;
+export default DonationDetails;
