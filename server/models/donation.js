@@ -12,6 +12,10 @@ const donationRequest = sequelize.define('donationRequest', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  orgType: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   orgRegisteredNumber: {
     type: DataTypes.STRING,
     allowNull: true,

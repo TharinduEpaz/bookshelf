@@ -12,6 +12,7 @@ const addRequest = async (req, res, next) => {
     try {
         const {
             orgName,
+            orgType,
             orgRegisteredNumber,
             orgTelephone,
             orgAddress,
@@ -24,12 +25,13 @@ const addRequest = async (req, res, next) => {
             description
         } = req.body;
 
-        if (!orgName || !orgRegisteredNumber || !orgTelephone || !orgAddress || !orgEmail || !contactPersonName || !contactPersonPhone || !contactPersonEmail || !contactPersonPhone || !contactPersonNIC || !description) {
+        if (!orgName || !orgType || !orgRegisteredNumber || !orgTelephone || !orgAddress || !orgEmail || !contactPersonName || !contactPersonPhone || !contactPersonEmail || !contactPersonPhone || !contactPersonNIC || !description) {
             return next(new CustomError(statusCodes.BAD_REQUEST, "Missing required fields"));
         }
 
         const donation = await donationModel.create({
             orgName,
+            orgType,
             orgRegisteredNumber,
             orgTelephone,
             orgAddress,
