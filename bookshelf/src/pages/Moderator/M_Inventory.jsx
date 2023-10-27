@@ -19,7 +19,7 @@ import DataTable from "../../components/Moderator/DataTable";
 import { Link } from "react-router-dom";
 import SearchPanel from "../../components/Moderator/SearchPanel";
 import { useEffect, useState, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
+import axios from "axios";
 
 export default function Inventry() {
   const columns = [
@@ -34,6 +34,33 @@ export default function Inventry() {
   const [list, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const componentRef = useRef();
+
+  //get books count
+  const [booksCount, setBooksCount] = useState(0);
+
+  const getBookCount = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get("http://localhost:3000/api/v1/books/count");
+      setBooksCount(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get In Stock books count
+  const [inStockCount, setInStockCount] = useState(0);
+  const getInStockCount = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get("http://localhost:3000/api/v1/books/inStockCount");
+      setInStockCount(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   const getBooks = async () => {
     try {
@@ -58,13 +85,26 @@ export default function Inventry() {
     }
   };
 
-  useEffect(() => {
-    getBooks();
-  }, []);
+  const SearchedData = (data) => {
+    console.log(data)
+    const filteredData = data.map((book) => ({
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      genre: book.ISBN,
+      unitPrice: book.price,
+      inStock: book.stock,
+    }));
+    setBookList(filteredData);
+  }
+  console.log(SearchedData);
 
-  const generatePDF = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  useEffect(() => {
+    // getBooks();
+    {SearchedData ? getBooks() : null}
+    getBookCount();
+    getInStockCount();
+  }, []);
 
   if (isLoading) {
     return (
@@ -114,44 +154,37 @@ export default function Inventry() {
           >
             <CardBody>
               <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
-              <StatGroup gap={200}>
-                <StatCard lable="All Books" value="500" />
-                <StatCard
-                  lable="Active"
-                  value="480"
-                  type="increase"
-                  percentage="80"
-                />
+              <StatGroup gap={70}>
+                <StatCard lable="All Books" value={booksCount} />
+                <StatCard lable="In Stock" value={inStockCount} color="green" />
+                <StatCard lable="Out of Stock" value={booksCount - inStockCount} color="red" />
               </StatGroup>
             </CardBody>
           </Card>
-          <Card
+          {/* <Card
             mt={5}
             p={5}
             pl={10}
             pr={10}
             boxShadow="sm"
             borderRadius="md"
-            bgColor={"#EDF2F7"}
+            bgColor={"green.100"}
             w={"fit-content"}
           >
             <CardBody>
               <Icon as={BiErrorCircle} boxSize={8} color={"#E53E3E"} />
               <StatCard
-                lable="Low Stock Alert"
-                value="10"
-                type="decrease"
-                percentage="5.05"
+                lable="In Stock"
+                value={inStockCount}
               />
             </CardBody>
-          </Card>
+          </Card> */}
         </Flex>
 
         <Spacer mt={10} />
 
         <Box>
-          <Button onClick={generatePDF}>Generate PDF</Button>
-          <SearchPanel name="Inventory Items" filter="inventory" />
+          <SearchPanel name="Inventory Items" filter="inventory" setChildValue={SearchedData}/>
 
           <Spacer mt={5} />
           <Box ref={componentRef}>

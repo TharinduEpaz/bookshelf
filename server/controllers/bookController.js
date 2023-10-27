@@ -176,10 +176,26 @@ const uploadImage = async (req, res, next) => {
   }
 };
 
-//count Books
+//count All Books
 const getBookCount = async (req, res, next) => {
   try {
     const bookCount = (await bookModel.count());
+    res.json(bookCount);
+  } catch (error) {
+    next(error);
+  }
+};
+
+//count In Stock Books
+const getInStockBookCount = async (req, res, next) => {
+  try {
+    const bookCount = (await bookModel.count({
+      where: {
+        stock: {
+          [Op.gt]: 0,
+        },
+      },
+    }));
     res.json(bookCount);
   } catch (error) {
     next(error);
@@ -396,6 +412,7 @@ module.exports = {
   searchBooks,
   filterBooks,
   getPaginatedBooks,
-  getBookCount
+  getBookCount,
+  getInStockBookCount
 };
   

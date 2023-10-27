@@ -12,6 +12,8 @@ router.route('/').post(controller.addBook);
 
 router.route('/count').get(controller.getBookCount);
 
+router.route('/inStockCount').get(controller.getInStockBookCount);
+
 router.route('/uploadImage').post(controller.uploadImage);
 
 router.route('/searchBooks').post(controller.searchBooks);
