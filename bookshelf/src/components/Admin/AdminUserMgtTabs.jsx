@@ -6,8 +6,8 @@ import {
     Tab, 
     TabPanel 
 } from '@chakra-ui/react'
-import AdminAllUsers from '../../pages/AdminAllUsers'
-import AdminAddModerator from '../../pages/AdminAddModerator'
+import AdminAllUsers from '../../pages/Admin/AdminAllUsers'
+import AdminAddModerator from '../../pages/Admin/AdminAddModerator'
 
 export default function AdminUserMgtTabs() {
   return (

@@ -15,15 +15,13 @@ router.patch('/updatePassword',authenticateUser, controller.updateUserPassword);
 router.patch('/:id', controller.updateUser);
 router.get('/getNotifications/:id', controller.getNotifications);
 
-router.get('/dashboard',authenticateUser, controller.userDashboard);
-
-
 
 router.route('/').post(controller.addUser);
 //router.route('/').post(authenticateUser,authPermissions('admin'), controller.addUser);
 
 router.get('/', controller.getAllUsers);
 
+router.route('/:id', ).delete(controller.deleteUser);
 
 
 module.exports = router;

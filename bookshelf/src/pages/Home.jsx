@@ -109,7 +109,6 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
             <BlurWhiteBox
               title="Find Your Next Literary Escape Browse, Click, and Get Lost in Stories!"
@@ -125,7 +124,6 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
             <SubscriptionBox
               title="Indulge in your literary cravings with our carefully curated subscriptions,"
@@ -139,7 +137,6 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={0.5}
           >
             <SharingBox
               title="Connecting Readers, One Swap at a Time"
@@ -153,7 +150,6 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            duration={1}
           >
             <DonationBox
               title="With love and kindness, we join renowned charities in Sri Lanka, gifting books to those in need."

@@ -1,6 +1,6 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
-const buyerModel = require("../models/buyer");
+const adminNotification = require("../models/adminNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -105,6 +105,13 @@ const register = async (req, res, next) => {
       cause: "email verification",
     });
 
+    //send notification to admin
+    adminNotification.create({
+      userId: user.id,
+      type: "New user Registered",
+      message: `${user.firstName} ${user.lastName} has registered.`
+    })
+
     //send email to user to confirm email
 
     jwt.sign(
@@ -172,6 +179,7 @@ const verifyEmail = async (req, res, next) => {
         id: result.user
       }
     });
+    
 
     await notification.destroy({
       where: {
@@ -190,7 +198,10 @@ const verifyEmail = async (req, res, next) => {
   }
 }
 
+
+
 module.exports = {
+
   register,
   login,
   logout,

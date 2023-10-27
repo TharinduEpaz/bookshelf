@@ -6,8 +6,9 @@ import ProductPage from "./ProductPage";
 import Register from "./Register";
 import Shop from "./Shop";
 import Checkout from "./Checkout";
+import PaymentSuccess from "./PaymentSuccess";
+import PaymentError from "./PaymentError";
 
 
-
-export {Account, Cart, Home, Login, ProductPage, Register, Shop, Checkout};
+export {Account, Cart, Home, Login, ProductPage, Register, Shop, Checkout,PaymentError,PaymentSuccess};
 

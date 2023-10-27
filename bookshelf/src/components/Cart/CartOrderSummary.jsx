@@ -1,4 +1,5 @@
 import {
+  Alert,
     Button,
     Flex,
     Heading,
@@ -11,6 +12,7 @@ import {
   import { Link } from 'react-router-dom'
 
   import { useCartContext } from "../../context/cartContext";
+import Paybutton from '../../pages/Paybutton';
   const OrderSummaryItem = (props) => {
     const { label, value, children } = props
     return (
@@ -47,9 +49,11 @@ import {
           </Flex>
         </Stack>
         
-        <Link to="/checkout">
-  
-        </Link>
+        
+      
+        <Paybutton />
+        
+          <Alert >Free Shipping for orders above 5000 LKR</Alert>
       </Stack>
     )
   }

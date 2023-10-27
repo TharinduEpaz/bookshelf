@@ -1,20 +1,5 @@
 const userModel = require("../models/user");
 const notificationModel = require("../models/userNotifications");
-const orderModel = require("../models/order");
-const subscriptionModel = require("../models/subscription");
-const buyerModel = require("../models/buyer");
-
-//relationship between user and buyer
-
-userModel.hasOne(buyerModel)
-buyerModel.belongsTo(userModel)
-
-// buyerModel.sync({force:true})
-
-
-/////////////////////////////
-
-
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
