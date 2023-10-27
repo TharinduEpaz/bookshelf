@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const {authenticateUser,authPermissions} = require('../middleware/authUser')
+const express = require('express')
 
 const router = Router();
 
@@ -10,8 +11,8 @@ router.route('/').get(controller.getAllOrders); // get all orders
 router.route('/count').get(controller.countOrders); // count orders
 router.route('/').post(controller.addOrder); // add order
 router.route('/create-payment-intent').post(checkoutController.checkout); // create order
-router.route('/checkout/config').get(checkoutController.config); // create order
 router.route('/checkout/create-payment-intent').post(checkoutController.createPayment); // create order
+// router.route('/webhook', express.raw({type: 'application/json'})).post(checkoutController.webhook); // create order
 
 
 module.exports = router;

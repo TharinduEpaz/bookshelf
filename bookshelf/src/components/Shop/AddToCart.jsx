@@ -3,7 +3,8 @@ import { Button,useToast } from "@chakra-ui/react";
 import { BsCart } from "react-icons/bs";
 import { useCartContext } from "../../context/cartContext";
  import { userContext } from "../../context/userContext";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate,useNavigate } from "react-router-dom";
+
 
 
 function AddToCart(props) {
@@ -11,11 +12,12 @@ function AddToCart(props) {
     const {amount,bookId,title,price,image,stock} = props;
     const {user} = useContext(userContext);
     const toast = useToast();
+    const navigate = useNavigate();
+
 
     
   return (
     <>
-    
       <Button
         leftIcon={<BsCart />}
         colorScheme="blue"
@@ -23,6 +25,16 @@ function AddToCart(props) {
         borderRadius={10}
         w={200}
         onClick={() => {
+
+        if(!user){
+          return toast({
+        title: "Please Login first to place orders",
+        position: "top",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+        }
           
       if(cartItems.find((item) => item.id === bookId)){
         return toast({

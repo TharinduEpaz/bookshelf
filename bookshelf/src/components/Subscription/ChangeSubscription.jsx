@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Box, 
-    SimpleGrid, 
-    Button, 
-    Text, 
+    Box,
+    SimpleGrid,
+    Button,
+    Text,
     AlertDialog,
     AlertDialogBody,
     AlertDialogFooter,
@@ -44,7 +44,7 @@ export default function ChangeSubscription() {
                         withCredentials: true
                     }
                 )
-                
+
                 setSubscriptionType(response.data);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
@@ -80,9 +80,9 @@ export default function ChangeSubscription() {
     };
 
     const handleSelectSubscription = async (subscription) => {
-        
+
         try {
-            const selectedSubscription = "Book" + " "+ subscription
+            const selectedSubscription = "Book" + " " + subscription
             console.log(subscription);
             const response = await axios.patch(
                 "http://localhost:3000/api/v1/subscriptions/updateMySubscription",
@@ -98,24 +98,23 @@ export default function ChangeSubscription() {
 
             // Perform any necessary actions after the subscription is updated
 
-            setShowOtherSubscriptionPopup(false);
-            
-            return(
-                toast({
-                    title: 'Successfully Updated.',
-                    status: 'success',
-                    duration: 4000,
-                    isClosable: true,
-                    position:'top'
-                })
-            )
-            setReloadPage(true);
 
+            setShowOtherSubscriptionPopup(false);
+            // setReloadPage(true);
+            toast({
+                title: 'Successfully Updated.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top'
+            });
+            setReloadPage(true);
+            
         } catch (error) {
             console.error("Error updating subscription:", error);
         }
-    };
 
+    };
     
     useEffect(() => {
         if (reloadPage) {
@@ -130,12 +129,12 @@ export default function ChangeSubscription() {
         currentSubscriptionIcon = <SelectReaderIcon />;
     } else if (currentSubscription === "Book Worm") {
         currentSubscriptionIcon = <SelectWormIcon />;
-    } else if (currentSubscription === "Book Lover"){
+    } else if (currentSubscription === "Book Lover") {
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
-    else{
-        currentSubscriptionIcon= <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
-    }
+    // else{
+    //     currentSubscriptionIcon= <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
+    // }
 
     let otherSubscriptionIcon1 = null;
     let otherSubscriptionIcon2 = null;
@@ -149,8 +148,6 @@ export default function ChangeSubscription() {
     let otherSubscription2TimePeriod = null;
     let otherSubscription1Discount = null;
     let otherSubscription2Discount = null;
-    let otherSubscriptionManage1 = null;
-    let otherSubscriptionManage2 = null;
 
     if (currentSubscription === "Book Lover" && subscriptionType.length >= 2) {
         otherSubscriptionIcon1 = <SelectWormIcon />;
@@ -159,7 +156,7 @@ export default function ChangeSubscription() {
         otherSubscription1TimePeriod = subscriptionType[0].time_period;
         otherSubscription1Discount = subscriptionType[0].discount;
         otherSubscription1Id = subscriptionType[0].id;
-        otherSubscriptionManage1 = '/selectBookWorm/manageSubscription';
+        
 
         otherSubscriptionIcon2 = <SelectReaderIcon />;
         otherSubscription2 = subscriptionType[2].LastName;
@@ -167,7 +164,6 @@ export default function ChangeSubscription() {
         otherSubscription2TimePeriod = subscriptionType[2].time_period;
         otherSubscription2Discount = subscriptionType[2].discount;
         otherSubscription2Id = subscriptionType[2].id;
-        otherSubscriptionManage2 = '/selectBookReader/manageSubscription';
     }
     else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
         otherSubscriptionIcon1 = <SelectReaderIcon />;
@@ -176,7 +172,7 @@ export default function ChangeSubscription() {
         otherSubscription1TimePeriod = subscriptionType[2].time_period;
         otherSubscription1Discount = subscriptionType[2].discount;
         otherSubscription1Id = subscriptionType[2].id;
-        otherSubscriptionManage1 = '/selectBookReader/manageSubscription';
+        
 
 
         otherSubscriptionIcon2 = <SelectLoverIcon />;
@@ -185,8 +181,7 @@ export default function ChangeSubscription() {
         otherSubscription2TimePeriod = subscriptionType[1].time_period;
         otherSubscription2Discount = subscriptionType[1].discount;
         otherSubscription2Id = subscriptionType[1].id;
-        otherSubscriptionManage2 = '/selectBookLover/manageSubscription';
-    } 
+    }
     else if (currentSubscription === "Book Reader" && subscriptionType.length >= 2) {
         otherSubscriptionIcon1 = <SelectLoverIcon />;
         otherSubscription1 = subscriptionType[1].LastName;
@@ -194,7 +189,7 @@ export default function ChangeSubscription() {
         otherSubscription1TimePeriod = subscriptionType[1].time_period;
         otherSubscription1Discount = subscriptionType[1].discount;
         otherSubscription1Id = subscriptionType[1].id;
-        otherSubscriptionManage1 = '/selectBookLover/manageSubscription';
+        
 
         otherSubscriptionIcon2 = <SelectWormIcon />;
         otherSubscription2 = subscriptionType[0].LastName;
@@ -202,14 +197,13 @@ export default function ChangeSubscription() {
         otherSubscription2TimePeriod = subscriptionType[0].time_period;
         otherSubscription2Discount = subscriptionType[0].discount;
         otherSubscription2Id = subscriptionType[0].id;
-        otherSubscriptionManage2 = '/selectBookWorm/manageSubscription';
     }
 
     return (
         <Box p={4}>
-            
+
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-                
+
                 <Box>
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
@@ -280,22 +274,26 @@ export default function ChangeSubscription() {
                                                     </UnorderedList>
                                                 </CardBody>
                                                 <CardFooter align={'center'}>
-                                                    <RouterLink to={otherSubscriptionManage1}>
+                                                    {/* <RouterLink to={otherSubscriptionManage1}> */}
                                                         <Button
-                                                            bg={'blue.200'}
+                                                            bg={'orange.200'}
                                                             borderRadius={10}
                                                             pl={10}
                                                             pr={10}
-                                                            onClick={() => handleSelectSubscription(otherSubscription1)}
+                                                            onClick={() => {
+                                                                handleSelectSubscription(otherSubscription1)
+                                                                navigate('/selectPackage/manageSubscription');
+                                                            }
+                                                            }
                                                         >
                                                             Select
                                                         </Button>
-                                                    </RouterLink>
+                                                    {/* </RouterLink> */}
                                                 </CardFooter>
                                             </Flex>
                                         </Card>
                                     </GridItem>
-                                   
+
                                     <GridItem rowSpan={1} colSpan={2}>
                                         <Card align='center' borderRadius={'10px'} border={'2px solid '} borderColor={'#FFED01'}>
                                             <Flex flexDirection='column' width='100%'>
@@ -320,17 +318,21 @@ export default function ChangeSubscription() {
                                                     </UnorderedList>
                                                 </CardBody>
                                                 <CardFooter>
-                                                    <RouterLink to={otherSubscriptionManage2}>
+                                                    {/* <RouterLink to={otherSubscriptionManage2}> */}
                                                         <Button
                                                             bg={'orange.200'}
                                                             borderRadius={10}
                                                             pl={10}
                                                             pr={10}
-                                                            onClick={() => handleSelectSubscription(otherSubscription2)}
+                                                            onClick={() => {
+                                                                handleSelectSubscription(otherSubscription2)
+                                                                navigate('/selectPackage/manageSubscription');
+                                                            }
+                                                        }
                                                         >
                                                             Select
                                                         </Button>
-                                                    </RouterLink>
+                                                    {/* </RouterLink> */}
                                                 </CardFooter>
                                             </Flex>
                                         </Card>

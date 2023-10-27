@@ -217,7 +217,7 @@ function BookReder() {
 										<Button ref={cancelRef} onClick={onClose}>
 											No
 										</Button>
-										<RouterLink to={'/selectBookLover'} onClick={addSubscriptionUser}>
+										<RouterLink to={'/selectPackage'} onClick={addSubscriptionUser}>
 											<Button colorScheme='purple' ml={3}>
 												Yes
 											</Button>

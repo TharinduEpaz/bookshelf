@@ -65,7 +65,7 @@ export default function AdminSubscriptionPlans({ planList, planColumnNames }) {
                 <Td 
                     bg={"#ffffff"}
                     borderRadius={5}
-                    m={5}
+                    m={1}
                     key={index2}
                 >
                     {value}
