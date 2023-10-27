@@ -1,76 +1,71 @@
 const orderModel = require("../models/order");
+const bookModel = require("../models/book");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
 const { log } = require("console");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: "2022-08-01",
-  });
+  apiVersion: "2022-08-01",
+});
 
 //create order
 const addOrder = async (req, res, next) => {
-	try {
-		const { orderDate, orderStatus, totalPrice} = req.body;
-		const buyer_id = req.user.id;
-		
-		console.log(
-			"Order values:",
-			orderDate,
-			orderStatus,
-			totalPrice,
-			buyer_id
-		);
+  try {
+    const { orderDate, orderStatus, totalPrice } = req.body;
+    const buyer_id = req.user.id;
 
-		const order = await orderModel.create({
-			orderDate,
-			orderStatus,
-			totalPrice,
-			buyer_id,
-		});
+    console.log("Order values:", orderDate, orderStatus, totalPrice, buyer_id);
 
-		console.log("Created order:", order);
+    const order = await orderModel.create({
+      orderDate,
+      orderStatus,
+      totalPrice,
+      buyer_id,
+    });
 
-		res.status(statusCodes.StatusCodes.CREATED).json(order);
-	} catch (error) {
-		console.error("Error adding order:", error);
-		next(error);
-	}
+    console.log("Created order:", order);
+
+    res.status(statusCodes.StatusCodes.CREATED).json(order);
+  } catch (error) {
+    console.error("Error adding order:", error);
+    next(error);
+  }
 };
 
 //get all orders
 const getAllOrders = async (req, res, next) => {
-	try {
-		const orders = await orderModel.findAll();
-		res.json(orders);
-	} catch (err) {
-		next(err);
-	}
+  try {
+    const orders = await orderModel.findAll();
+    res.json(orders);
+  } catch (err) {
+    next(err);
+  }
 };
 
 //count orders
 const countOrders = async (req, res, next) => {
-	try {
-		const orderCount = await orderModel.count();
-		res.json(orderCount);
-	} catch (err) {
-		next(err);
-	}
+  try {
+    const orderCount = await orderModel.count();
+    res.json(orderCount);
+  } catch (err) {
+    next(err);
+  }
 };
 
 //create order
 const createOrder = async (req, res, next) => {
-	try {
-		const { orderDate, orderStatus, totalPrice, buyer_id } = req.body;
-		const order = await orderModel.create({
-			totalPrice,
-			buyer_id,
-			orderDate,
-		});
-		res.status(statusCodes.StatusCodes.CREATED).json(order);
-	} catch (err) {
-		next(err);
-	}
+  try {
+    const { orderDate, orderStatus, totalPrice, buyer_id } = req.body;
+    const order = await orderModel.create({
+      totalPrice,
+      buyer_id,
+      orderDate,
+    });
+    res.status(statusCodes.StatusCodes.CREATED).json(order);
+  } catch (err) {
+    next(err);
+  }
 };
 
 // {
@@ -164,9 +159,7 @@ const createOrder = async (req, res, next) => {
 // 	url: null
 //   }
 
-
 //customer object ===>>
-
 
 // {
 // 	id: 'cus_OtYQSPSuLPs7h9',
@@ -201,41 +194,58 @@ const createOrder = async (req, res, next) => {
 // 	test_clock: null
 //   }
 
-const create_order_by_webhook_data =  async (data) => {
+const create_order_by_webhook_data = async (data) => {
+  //action that should be done in the create order function
+  // 1. add the order to the order table
+  // 2. decrease the stock from the books table
 
-	//action that should be done in the create order function
-	// 1. add the order to the order table
-	// 2. decrease the stock from the books table
+  // console.log(customer);
 
-	
-	// console.log(customer);
+  try {
+    const currentDate = new Date();
+    const customer = await stripe.customers.retrieve(data.customer);
+    const order = await orderModel.create({
+      orderDate: currentDate,
+      orderStatus: "paid",
+      totalPrice: data.amount_subtotal / 100,
+      user_id: customer.metadata.userId,
+      isPaid: true,
+      orderItems: JSON.parse(customer.metadata.cartItems),
+      address: data.customer_details.address,
+      phone: data.customer_details.phone,
+    });
 
-	try {
-		const currentDate = new Date()
-		const customer = await stripe.customers.retrieve(data.customer);
-		const order = await orderModel.create(
-			{
-			orderDate: currentDate,
-			orderStatus:'paid',
-			totalPrice: data.amount_subtotal / 100,
-			user_id:customer.metadata.userId,
-			isPaid:true,
-			orderItems: JSON.parse(customer.metadata.cartItems),
-			}
-		)
-	} catch (error) {
-		console.log(error);
-		
-	}
+    await reduceStock(customer.metadata.cartItems);
+  } catch (error) {
+    console.log(error);
+  }
 
-	// console.log(data);
-}
+  // console.log(data);
+};
+
+const reduceStock = async (cartItems) => {
+  const items = JSON.parse(cartItems);
+
+  console.log(items);
+
+  items.forEach( async (item) => {
+
+	await bookModel.update({ stock: item.stock - item.amount }, {
+		where: {
+		  id:item.id,
+		},
+	  })
+ 
+
+  });
+
+ 
+};
 
 module.exports = {
-	addOrder,
-	getAllOrders,
-	countOrders,
-	createOrder,
-	create_order_by_webhook_data,
-
+  addOrder,
+  getAllOrders,
+  countOrders,
+  createOrder,
+  create_order_by_webhook_data,
 };

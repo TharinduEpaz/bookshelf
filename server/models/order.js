@@ -38,12 +38,23 @@ const order = sequelize.define(
 			type: DataTypes.JSON,
 			allowNull: true,
 		},
+		address : {
+			type:DataTypes.JSON,
+			allowNull:true,
+
+		},
+		phone:{
+			type:DataTypes.STRING,
+			allowNull:true,
+			
+		}
+
 		
 	},
 	{
 		// Other model options go here
 	}
 );
-// order.sync({ alter: true })
+// order.sync({ force: true })
 
 module.exports = order;
