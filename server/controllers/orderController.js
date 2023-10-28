@@ -205,7 +205,7 @@ const create_order_by_webhook_data = async (data) => {
     const customer = await stripe.customers.retrieve(data.customer);
     const order = await orderModel.create({
       orderDate: currentDate,
-      orderStatus: "paid",
+      orderStatus: "pending",
       totalPrice: data.amount_subtotal / 100,
       user_id: customer.metadata.userId,
       isPaid: true,

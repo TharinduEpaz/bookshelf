@@ -69,6 +69,7 @@ const ratingSummary = [
   { id: 5, rating: 1, percentage: "55%" },
 ];
 
+
 const SimpleReview = ({ bookId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -79,15 +80,17 @@ const SimpleReview = ({ bookId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [reviews,setReviews] = useState(null)
+  const [averageRating,setAverageRating] = useState(0);
+
   const toast = useToast();
 
   useEffect(() => {
     async function getReviews() {
       try {
         const response = await axiosInstance.get(`reviews/${bookId}`);
-        // console.log(response);
+        console.log(response);
         setReviews(response.data)
-        // console.log(reviews);
+        console.log(reviews);
       } catch (error) {
         console.log(error);
       }
@@ -116,6 +119,10 @@ const SimpleReview = ({ bookId }) => {
         }
       );
 
+    
+ 
+
+  
       setRating(0);
       setReview("");
       setIsLoading(false);
@@ -145,6 +152,17 @@ const SimpleReview = ({ bookId }) => {
 
     onClose();
   };
+
+  function getPercentageForRating(data, targetRating) {
+    if (data.length === 0) {
+      return 0; // If there are no ratings, the percentage is 0.
+    }
+  
+    const matchingRatings = data.filter(item => item.rating === targetRating);
+    const percentage = (matchingRatings.length / data.length) * 100;
+    return percentage;
+  }
+
 
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
@@ -179,7 +197,7 @@ const SimpleReview = ({ bookId }) => {
               </Text>
             </HStack>
             <Text fontWeight="bold" fontSize="md">
-              1355 ratings
+              { reviews && reviews.length} Ratings
             </Text>
           </Box>
 
@@ -197,7 +215,7 @@ const SimpleReview = ({ bookId }) => {
                       rounded="md"
                     >
                       <Box
-                        w={data.percentage}
+                        w={reviews && getPercentageForRating(reviews,data.rating).toString() }
                         h={3}
                         bg="yellow.400"
                         rounded="md"
@@ -205,7 +223,7 @@ const SimpleReview = ({ bookId }) => {
                     </Box>
                   </Box>
                   <Text fontWeight="bold" fontSize="md">
-                    {data.percentage}
+                    {reviews && getPercentageForRating(reviews,data.rating)} %
                   </Text>
                 </HStack>
               );

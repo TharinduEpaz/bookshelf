@@ -169,11 +169,13 @@ function App() {
             <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
+
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+            
           </Route>
           </Route>
 

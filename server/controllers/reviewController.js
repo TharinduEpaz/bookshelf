@@ -55,16 +55,17 @@ const getAllReviews = async (req, res, next) => {
 }
 
 const getReviewsByBook = async (req,res,next) => {
-    const id = req.params;
+    const id = req.params.id;
     try {
 
         const reviews = await reviewModel.findAll({
             where:{
             bookId:id
-            }
-        },{
+            },
             include: userModel
-        });
+        }
+            
+        );
         console.log(reviews);    
         res.json(reviews);
     
@@ -93,5 +94,7 @@ const deleteReview = async (req, res, next) => {
 module.exports = {
     addReview,
     getAllReviews,
-    deleteReview
+    deleteReview,
+    getReviewsByBook,
+
 }
