@@ -39,11 +39,11 @@ import { BsFillCartFill } from "react-icons/bs";
 import Search from "./Search";
 
 const navLinks = [
-  { name: "New Books", path: "#" },
-  { name: "Best Sellers", path: "#" },
+  { name: "Shop", path: "/shop" },
+  { name: "Best Sellers", path: "/bestsellers" },
   { name: "Donations", path: "/donation" },
   { name: "Subscriptions", path: "/subscriptions" },
-  { name: "Share a Book", path: "/sharing" },
+  { name: "Book Exchange", path: "/sharing" },
 ];
 
 function Navbar() {

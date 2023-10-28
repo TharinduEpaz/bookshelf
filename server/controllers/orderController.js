@@ -198,7 +198,6 @@ const create_order_by_webhook_data = async (data) => {
   //action that should be done in the create order function
   // 1. add the order to the order table
   // 2. decrease the stock from the books table
-
   // console.log(customer);
 
   try {
@@ -228,18 +227,16 @@ const reduceStock = async (cartItems) => {
 
   console.log(items);
 
-  items.forEach( async (item) => {
-
-	await bookModel.update({ stock: item.stock - item.amount }, {
-		where: {
-		  id:item.id,
-		},
-	  })
- 
-
+  items.forEach(async (item) => {
+    await bookModel.update(
+      { stock: item.stock - item.amount },
+      {
+        where: {
+          id: item.id,
+        },
+      }
+    );
   });
-
- 
 };
 
 module.exports = {
