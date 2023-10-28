@@ -68,9 +68,21 @@ const createOrder = async (req, res, next) => {
 	}
 };
 
+//get order by id
+const getOrder = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const order = await orderModel.findByPk(id);
+		res.json(order);
+	} catch (err) {
+		next(err);
+	}
+};
+
 module.exports = {
 	addOrder,
 	getAllOrders,
 	countOrders,
 	createOrder,
+	getOrder
 };

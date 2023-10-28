@@ -151,7 +151,7 @@ export default function Orders() {
 
           <Spacer mt={5} />
 
-          <DataTable list={list} columnNames={columns} />
+          <DataTable list={list} columnNames={columns} actions={"order"}/>
         </Box>
       </Box>
     </>

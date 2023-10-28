@@ -19,6 +19,7 @@ import {
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 import Inventory_Main from "./Actions/Inventory_Main";
+import Order_Main from "./Actions/order_Main";
 
 export default function DataTable({ list, columnNames, actions }) {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Set initial items per page to 2
@@ -76,6 +77,7 @@ export default function DataTable({ list, columnNames, actions }) {
                   </Badge>
                 </Td> */}
                 {actions === "inventory" && <Inventory_Main id={Obj.id}/>}
+                {actions === "order" && <Order_Main id={Obj.id}/>}
               </Tr>
             ))
           )}
