@@ -21,6 +21,11 @@ router.route("/checkSubscription").get(authenticateUser, controller.checkSubscri
 router.route("/selectBooks").get(authenticateUser,controller.get_books_in_subscription_plan);
 router.route("/removeBook").post(authenticateUser,controller.delete_book_in_subscription_plan);
 
+router.route('/').post(controller.addSubscriptionPlan);
+
+router.route('/:id', ).delete(controller.deleteSubscriptionPlan);
+
+
 
 router.route("/:id").get(controller.getSingleBook);
 

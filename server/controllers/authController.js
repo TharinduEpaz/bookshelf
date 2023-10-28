@@ -1,5 +1,6 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
+const adminNotification = require("../models/adminNotifications");
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -76,6 +77,7 @@ const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
+ 
     //validate the data
     if (!user) {
       throw new Error("Invalid Data");
@@ -103,6 +105,13 @@ const register = async (req, res, next) => {
       cause: "email verification",
     });
 
+    //send notification to admin
+    adminNotification.create({
+      userId: user.id,
+      type: "New user Registered",
+      message: `${user.firstName} ${user.lastName} has registered.`
+    })
+
     //send email to user to confirm email
 
     jwt.sign(
@@ -118,6 +127,20 @@ const register = async (req, res, next) => {
         sendMail(user.email, "Verify Email", `Please click this email to confirm your email: <a href="${url}">${url}</a>`);
       }
     )
+
+    //add to buyer table
+    await buyerModel.create({
+
+      UserId: user.id,
+      address: req.body.address,
+      city: req.body.city,
+      province: req.body.province,
+      zipCode: req.body.postalCode,
+      phoneNumber: req.body.phone,
+
+    });
+
+      
 
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
@@ -147,6 +170,7 @@ const verifyEmail = async (req, res, next) => {
     }
 
     const result = jwt.verify(token, process.env.EMAIL_SECRET);
+    console.log(result);
    
     await userModel.update({
       emailVerified: true
@@ -166,6 +190,7 @@ const verifyEmail = async (req, res, next) => {
     });
 
     res.status(statusCodes.StatusCodes.OK).send("Email Verified");
+    window.location.href = "/login";
   }
   catch(error) {
     console.log(error);

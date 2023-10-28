@@ -33,6 +33,8 @@ const sharingRoutes = require("./routes/sharingRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const donationRoutes = require("./routes/donationRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const notificationsRoutes = require("./routes/notificationsRoutes");
+
 
 
 //routes
@@ -54,6 +56,7 @@ app.use('/api/v1/donations/', donationRoutes);
 app.use('/api/v1/reviews/', reviewRoutes);
 
 
+app.use('/api/v1/notifications/', notificationsRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);

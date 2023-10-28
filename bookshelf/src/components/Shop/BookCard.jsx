@@ -32,7 +32,7 @@ import { Link } from 'react-router-dom';
             if (roundedRating - i >= 1) {
               return (
                 <BsStarFill
-                color={'gold'}
+                color={'#D69E2E'}
                   key={i}
                   style={{ marginLeft: '1' }}
                   
@@ -40,9 +40,9 @@ import { Link } from 'react-router-dom';
               );
             }
             if (roundedRating - i === 0.5) {
-              return <BsStarHalf key={i} color={'gold'} style={{ marginLeft: '1' }} />;
+              return <BsStarHalf key={i} color={'#D69E2E'} style={{ marginLeft: '1' }} />;
             }
-            return <BsStar key={i} style={{ marginLeft: '1' }} color={'gold'} />;
+            return <BsStar key={i} style={{ marginLeft: '1' }} color={'#D69E2E'} />;
           })}
         
       </Box>
@@ -54,12 +54,14 @@ import { Link } from 'react-router-dom';
       <Flex  alignItems="center" justifyContent="center">
       
         <Box
-          bg={useColorModeValue('white', 'gray.800')}
-         maxW={'180px'}
-         maxH={'380px'}
+          bg={useColorModeValue('rgba(2,2,2,0)', 'gray.800')}
+          
+         maxW={'200px'}
+         h={'400px'}
           borderWidth="1px"
           rounded="lg"
-         
+          shadow={'sm'}
+        
           position="relative">
           {data.isNew && (
             <Circle
@@ -76,7 +78,8 @@ import { Link } from 'react-router-dom';
             alt={`Picture of ${name}`}
             roundedTop="lg"
             boxSize={'200px'}
-            objectFit='cover'
+            objectFit='scale-down'
+            
            
           />
   

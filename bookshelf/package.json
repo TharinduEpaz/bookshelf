@@ -27,8 +27,10 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
+    "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.14.1",
-    "react-stripe-checkout": "^2.6.3"
+    "react-stripe-checkout": "^2.6.3",
+    "react-to-print": "^2.14.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

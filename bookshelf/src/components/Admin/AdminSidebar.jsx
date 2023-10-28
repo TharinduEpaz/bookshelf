@@ -23,6 +23,8 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiShareAlt } from "react-icons/bi";
 import { PiWarningOctagonBold } from "react-icons/pi";
 import { FiSettings } from "react-icons/fi";
+import { BiSolidReport } from "react-icons/bi";
+
 
 const sidebarLinks = [
   {
@@ -81,6 +83,12 @@ const sidebarLinks = [
   },
   {
     id:10,
+    url:'/adminreports',
+    text:'Reports',
+    icon:<BiSolidReport/>
+  },
+  {
+    id:11,
     url:'/adminsettings',
     text:'Settings',
     icon:<FiSettings/>
