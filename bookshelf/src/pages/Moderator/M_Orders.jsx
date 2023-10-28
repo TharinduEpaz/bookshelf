@@ -20,6 +20,7 @@ export default function Orders() {
   const columns = [
     "Order ID",
     "Order date",
+    "Buyer ID",
     "Total price",
     "Is paid",
     "Status",
@@ -35,12 +36,12 @@ export default function Orders() {
       const jsonData = await response.json();
 
       const filteredData = jsonData.map((order) => ({
-        // id: order.id,
-        // buyerId: order.buyer_id,
+        id: order.id,
         orderDate: new Date(order.orderDate).toLocaleDateString(),
+        buyerId: order.user_id,
         // items: order.orderItems,
         totalPrice: order.totalPrice,
-        isPaid: order.is_paid ? "Yes" : "No",
+        isPaid: order.isPaid ? "Yes" : "No",
         status: order.orderStatus,
       }));
 

@@ -7,7 +7,6 @@ import {
   StatGroup,
   Text,
   Spacer,
-  Link,
   Button,
   Tabs,
   TabList,
@@ -20,6 +19,7 @@ import StatCard from "../../components/Moderator/StatCard";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
 import DataTable from "../../components/Moderator/DataTable";
 import SearchPanel from "../../components/Moderator/SearchPanel";
+import { Link } from "react-router-dom";
 
 export default function Donations() {
   const org_columns = [
@@ -75,11 +75,11 @@ export default function Donations() {
       <Box p={10}>
         <Flex>
           <Text fontSize="lg" fontWeight={"bold"}>
-            Inventry Summory
+            Donations
           </Text>
           <Spacer />
-          <Link to="/moderator/addNewBook">
-            <Button colorScheme="blue" size={"sm"}>
+          <Link to="/moderator/addDonationPack">
+            <Button colorScheme="blue" size={"sm"} >
               <Icon as={BiPlus} />
               <Text ml={2}>Add a New Donation Pack</Text>
             </Button>

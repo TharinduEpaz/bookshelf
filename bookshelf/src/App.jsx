@@ -97,6 +97,7 @@ import BookSharing from "./pages/Moderator/M_BookSharing";
 import Setting from "./pages/Moderator/M_Settings";
 import AdddNewBook from "./pages/Moderator/M_AddNewBook";
 import Moderator from "./pages/Moderator/Moderator";
+import AddDonationPack from "./pages/Moderator/M_AddDonationPack";
 
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
@@ -237,6 +238,7 @@ function App() {
             <Route path="booksharing" element={<BookSharing />} />
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
+            <Route path="addDonationPack" element={<AddDonationPack />} />
           </Route>
         </Routes>
           <Footer />
