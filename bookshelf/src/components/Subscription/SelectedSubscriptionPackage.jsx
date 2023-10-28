@@ -9,7 +9,7 @@ import {
     Grid,
     GridItem,
     Text,
-
+    DatePicker, // Import the DatePicker component
 } from "@chakra-ui/react";
 
 import { BsFillCalendar2DateFill } from "react-icons/bs";
@@ -19,8 +19,8 @@ import axios from "axios";
 function SelectedSubscriptionPackage() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
-
-
+    const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
         const getCurrentSubscription = async () => {
@@ -49,9 +49,15 @@ function SelectedSubscriptionPackage() {
     } else if (currentSubscription === "Book Lover") {
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
-    // else {
-    //     currentSubscriptionIcon = <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
-    // }
+
+    const handleDateClick = () => {
+        setDatePickerOpen(true);
+    }
+
+    const handleDateSelect = (date) => {
+        setSelectedDate(date);
+        setDatePickerOpen(false);
+    }
 
     return (
         <Grid>
@@ -62,27 +68,30 @@ function SelectedSubscriptionPackage() {
                     </Text>
                     {currentSubscriptionIcon}
                 </Box>
-
             </GridItem>
 
             <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} py={7} px={12} marginTop={5}>
                 <Text fontSize={'21'} color={'#204974'} as={'b'}>
                     Next Delivery
                 </Text>
-                <Button bg={'white'} variant={'outline'} borderRadius={15} marginLeft={10} w={'auto'}>
+                <Button
+                    bg={'white'}
+                    variant={'outline'}
+                    borderRadius={15}
+                    marginLeft={10}
+                    w={'auto'}
+                    onClick={handleDateClick}
+                >
                     <strong>Extended Date</strong>
                 </Button>
+                {isDatePickerOpen && (
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={(date) => handleDateSelect(date)}
+                        dateFormat="yyyy-MM-dd"
+                    />
+                )}
 
-                <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(10,1fr)'} marginTop={10} >
-                    <GridItem marginTop={'3px'}>
-                        <BsFillCalendar2DateFill size={'25px'} />
-                    </GridItem>
-                    <GridItem colSpan={3}>
-                        <Text as={'b'} fontSize={'22'}>
-                            2023-08-25
-                        </Text>
-                    </GridItem>
-                </Grid>
                 <Box marginTop={10}>
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Book Details
@@ -91,8 +100,7 @@ function SelectedSubscriptionPackage() {
                 <BookDetails />
             </GridItem>
         </Grid>
-
     )
 }
 
-export default SelectedSubscriptionPackage
+export default SelectedSubscriptionPackage;
