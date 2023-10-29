@@ -1,5 +1,6 @@
 const orderModel = require("../models/order");
 const bookModel = require("../models/book");
+const subscriptionOrderModel = require('../models/subscriptionOrder')
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -203,8 +204,10 @@ const create_order_by_webhook_data = async (data) => {
   try {
     const currentDate = new Date();
     const customer = await stripe.customers.retrieve(data.customer);
-    const order = await orderModel.create({
-      orderDate: currentDate,
+
+    if (customer.metadata.subscription == 1) {
+      const subscriptionOrder = await subscriptionOrderModel.create({
+        orderDate: currentDate,
       orderStatus: "pending",
       totalPrice: data.amount_subtotal / 100,
       user_id: customer.metadata.userId,
@@ -212,9 +215,28 @@ const create_order_by_webhook_data = async (data) => {
       orderItems: JSON.parse(customer.metadata.cartItems),
       address: data.customer_details.address,
       phone: data.customer_details.phone,
-    });
 
-    await reduceStock(customer.metadata.cartItems);
+      }
+      )
+    }
+    else{
+      const order = await orderModel.create({
+        orderDate: currentDate,
+        orderStatus: "pending",
+        totalPrice: data.amount_subtotal / 100,
+        user_id: customer.metadata.userId,
+        isPaid: true,
+        orderItems: JSON.parse(customer.metadata.cartItems),
+        address: data.customer_details.address,
+        phone: data.customer_details.phone,
+      });
+
+    }
+
+
+ 
+
+    // await reduceStock(customer.metadata.cartItems);
   } catch (error) {
     console.log(error);
   }

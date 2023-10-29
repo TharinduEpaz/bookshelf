@@ -11,6 +11,9 @@ const checkout = async (req, res,next) => {
 
   const email = req.body.user.email;
   const userId = (req.body.user);
+  const totalPrice = req.body.total;
+  const subscription = req.body.subscription || 0;
+  console.log(totalPrice);
   console.log(userId);
 
   let shipping = req.body.cart.length * 200 * 100;
@@ -29,22 +32,44 @@ const checkout = async (req, res,next) => {
       userId: userId,
       email: email,
       cartItems: JSON.stringify(req.body.cart),
+      subscription: subscription,
     }
   })
+  
+  let line_items;
 
-  const line_items = req.body.cart.map((item)=>{
-    return{
-      price_data: {
-        currency: 'lkr',
-        product_data: {
-          name: item.title,
+  if (subscription){
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: totalPrice * 100,
         },
-        unit_amount: item.price * 100,
-      },
-      quantity: item.amount,
-    }
-  })
+        quantity: 1,
+      }
+    })
+  }
+  else{
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.amount ,
+      }
+    })
+  
 
+  }
+
+  
   try{
   const session = await stripe.checkout.sessions.create({
     shipping_options: [
@@ -79,7 +104,6 @@ const checkout = async (req, res,next) => {
       enabled:true
     },
   });
-
 
   res.send({url:session.url})
 }
