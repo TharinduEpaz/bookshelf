@@ -13,6 +13,9 @@ router.route('/create-payment-intent').post(checkoutController.checkout); // cre
 router.route('/checkout/config').get(checkoutController.config); // create order
 router.route('/checkout/create-payment-intent').post(checkoutController.createPayment); // create order
 router.route('/:id').get(controller.getOrder); // get order by id
+router.route('/:id').put(controller.updateOrderStatus); // update order by id
+router.route('/:id').delete(controller.deleteOrder); // delete order by id
+router.route('/countPending').get(controller.countPendingOrders); // count pending orders
 
 
 module.exports = router;

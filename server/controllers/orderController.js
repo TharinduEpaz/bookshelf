@@ -79,10 +79,58 @@ const getOrder = async (req, res, next) => {
 	}
 };
 
+//delete order
+const deleteOrder = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const order = await orderModel.destroy({ where: { id } });
+		res.status(statusCodes.StatusCodes.NO_CONTENT).json(order);
+	} catch (err) {
+		next(err);
+	}
+};
+
+//update Order Status
+const updateOrderStatus = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const { orderStatus } = req.body;
+
+		const order = await orderModel.findByPk(id);
+
+		if (!order) {
+			throw new CustomError.NotFoundError(
+				`Order with id ${id} was not found!`
+			);
+		}
+
+		const updatedOrder = await order.update({ orderStatus });
+
+		res.json(updatedOrder);
+	} catch (err) {
+		next(err);
+	}
+};
+
+//count pending orders
+const countPendingOrders = async (req, res, next) => {
+	try {
+		const pendingOrders = await orderModel.count({
+			where: { orderStatus: "pending" },
+		});
+		res.json(pendingOrders);
+	} catch (err) {
+		next(err);
+	}
+};
+
 module.exports = {
 	addOrder,
 	getAllOrders,
 	countOrders,
 	createOrder,
-	getOrder
+	getOrder,
+	deleteOrder,
+	updateOrderStatus,
+	countPendingOrders,
 };
