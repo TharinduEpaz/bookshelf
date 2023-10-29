@@ -20,38 +20,38 @@ const postShareRequest = async (req, res, next) => {
     // const userId = req.user.userId;
     console.log(userId);
 
-    if (!req.files) {
-      throw new CustomError.BadRequestError("No file uploaded");
-    }
-    const bookImage = req.files.image;
+    // if (!req.files) {
+    //   throw new CustomError.BadRequestError("No file uploaded");
+    // }
+    // const bookImage = req.files.image;
 
-    if (!bookImage.mimetype.startsWith("image")) {
-      throw new CustomError.BadRequestError("Please upload an image file");
-    }
+    // if (!bookImage.mimetype.startsWith("image")) {
+    //   throw new CustomError.BadRequestError("Please upload an image file");
+    // }
 
-    const maxSize = 1024 * 1024 * 5;
+    // const maxSize = 1024 * 1024 * 5;
 
-    if (bookImage.size > maxSize) {
-      throw new CustomError.BadRequestError(
-        "Please upload an image less than 5MB"
-      );
-    }
+    // if (bookImage.size > maxSize) {
+    //   throw new CustomError.BadRequestError(
+    //     "Please upload an image less than 5MB"
+    //   );
+    // }
 
-    //randomize file name
-    bookImage.name = `image_${Math.floor(Math.random() * 10000000)}${
-      path.parse(bookImage.name).ext
-    }`;
+    // //randomize file name
+    // bookImage.name = `image_${Math.floor(Math.random() * 10000000)}${
+    //   path.parse(bookImage.name).ext
+    // }`;
 
-    const imagePath = path.join(
-      __dirname,
-      `../public/uploads/${bookImage.name}`
-    );
+    // const imagePath = path.join(
+    //   __dirname,
+    //   `../public/uploads/${bookImage.name}`
+    // );
 
-    await bookImage.mv(imagePath);
+    // await bookImage.mv(imagePath);
 
-    res
-      .status(statusCodes.StatusCodes.OK)
-      .json({ message: "Image uploaded", image: `/uploads/${bookImage.name}` });
+    // res
+    //   .status(statusCodes.StatusCodes.OK)
+    //   .json({ message: "Image uploaded", image: `/uploads/${bookImage.name}` });
 
     const shareRequest = await shareRequestModel.create({
       bookName,
@@ -59,7 +59,7 @@ const postShareRequest = async (req, res, next) => {
       details,
       listOfBooks,
       userId,
-      imagePath
+      // imagePath
     });
     res.status(statusCodes.StatusCodes.CREATED).json(shareRequest);
     // res.send("Add share request");

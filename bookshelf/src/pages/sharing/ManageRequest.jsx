@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Thead,
@@ -15,11 +15,13 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
+  Toast,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
 import { userContext } from "../../context/userContext";
-
+import { useNavigate } from "react-router-dom";
 
 function ManageRequest() {
   const { user, setUser } = useContext(userContext);
@@ -29,6 +31,9 @@ function ManageRequest() {
 
   const [requestDetails, setRequestDetails] = useState({});
   const [userEmail, setUserEmail] = useState(""); // State to store user email
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [reloadPage, setReloadPage] = useState(false);
 
   useEffect(() => {
     const getRequestDetails = async () => {
@@ -59,11 +64,26 @@ function ManageRequest() {
         withCredentials:true
       })
       console.log(response)
+
+      toast({
+        title: 'Successfully Revoked.',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+    
+    });
+    setReloadPage(true);
     } 
     catch (error) {
       console.log(error)
     }
   }
+  useEffect(() => {
+    if (reloadPage) {
+        window.location.reload(); // Reload the page
+    }
+}, [reloadPage]);
 
   return (
     <TableContainer
@@ -142,8 +162,9 @@ function ManageRequest() {
 
               <Button colorScheme='red' onClick = {
                 () => {
-                  onClose()
+                  onClose();
                   handleDelete(currentId);
+                  navigate ('/postRequest/ManageRequest');
                 }
               } ml={3}>
                 Delete

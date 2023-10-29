@@ -18,7 +18,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
-import ManageRequest from "./pages/sharing/ManageRequest"
+import ManageRequest from "./pages/Sharing/ManageRequest";
 
 import {
   Account,
