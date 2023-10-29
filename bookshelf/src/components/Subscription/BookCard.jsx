@@ -98,13 +98,13 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
     function getBookPrice(price, currentSubscription) {
         switch (currentSubscription) {
             case 'Book Lover':
-                return price * 60 / 100
-                break;
-            case 'Book Reader':
                 return price * 70 / 100
                 break;
+            case 'Book Reader':
+                return price * 80 / 100
+                break;
             case 'Book Worm':
-                return price * 50 / 100
+                return price * 60 / 100
                 break;
             default:
                 return price;

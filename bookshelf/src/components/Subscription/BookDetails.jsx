@@ -97,13 +97,13 @@ function bookDetails() {
     let subscriptionAmount = ""
     
     if (currentSubscription === "Book Reader") {
-        subscriptionAmount = bookDetails?.[0]?.price * 70/100;
+        subscriptionAmount = bookDetails?.[0]?.price * 80/100;
     } 
     else if (currentSubscription === "Book Worm") {
-        subscriptionAmount = bookDetails?.[0]?.price * 50/100;
+        subscriptionAmount = bookDetails?.[0]?.price * 60/100;
     } 
     else if (currentSubscription === "Book Lover") {
-        subscriptionAmount = bookDetails?.[0]?.price * 60/100;
+        subscriptionAmount = bookDetails?.[0]?.price * 70/100;
     }
 
     return (
