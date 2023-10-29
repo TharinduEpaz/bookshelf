@@ -39,7 +39,7 @@ function ManageRequest() {
         console.log(response.data[0].id);
         
         setRequestDetails(response.data);
-        console.log(requestDetails);
+        // console.log(requestDetails);
 
         // Set the user email to the state
         setUserEmail(user.email);
@@ -52,8 +52,10 @@ function ManageRequest() {
   }, [user]); // Include user in dependency array
 
   const handleDelete = async (id) => {
+    
     try {
-      const response = await axios.post(`http://localhost:3000/api/v1/bookSharing/deleteBooks/${id}`,{
+      console.log(id)
+      const response = await axios.delete(`http://localhost:3000/api/v1/bookSharing/deleteBooks/${id}`,{
         withCredentials:true
       })
       console.log(response)
@@ -123,7 +125,7 @@ function ManageRequest() {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent>  
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
               Delete Customer
             </AlertDialogHeader>
