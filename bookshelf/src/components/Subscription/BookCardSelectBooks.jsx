@@ -78,10 +78,10 @@ function BookCard({ name,  price, imageURL, id }) {
     function getBookPrice(price, currentSubscription) {
         switch (currentSubscription) {
             case 'Book Lover':
-                return price * 70 / 100
+                return price * 60 / 100
                 break;
             case 'Book Reader':
-                return price * 60 / 100
+                return price * 70 / 100
                 break;
             case 'Book Worm':
                 return price * 50 / 100
