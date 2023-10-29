@@ -274,6 +274,19 @@ const get_orders_by_user = async (req,res,next) => {
     next(error);
   }
 }
+const get_subscription_orders_by_user = async (req,res,next) => {
+  const id = req.user.userId;
+  try {
+    const orders = await subscriptionOrderModel.findAll({
+      where:{
+        user_id:id
+      }
+    })
+    res.json(orders)
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   addOrder,
@@ -282,4 +295,6 @@ module.exports = {
   createOrder,
   create_order_by_webhook_data,
   get_orders_by_user,
+  get_subscription_orders_by_user,
+
 };
