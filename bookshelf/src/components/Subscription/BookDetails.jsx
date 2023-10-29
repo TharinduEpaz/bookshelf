@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import BookCard from "../Subscription/BookCard";
-import { BsFillPlusCircleFill } from "react-icons/bs";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
@@ -103,7 +103,7 @@ function bookDetails() {
         subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.6;
     } 
     else if (currentSubscription === "Book Lover") {
-        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.4;
+        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.5;
     }
 
     return (
@@ -138,6 +138,7 @@ function bookDetails() {
                                 <Heading size='md' fontSize={20} color={"blue.400"}> Add Books </Heading>
                             </CardHeader>
                             <CardBody>
+                            <BsFillArrowDownCircleFill  size={75}/>
                             </CardBody>
                             <CardFooter>
                                 <RouterLink to="/selectPackage/selectBook">

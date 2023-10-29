@@ -7,6 +7,7 @@ import {
     useColorModeValue,
     Heading,
     Button,
+    Text,
     AlertDialog,
     AlertDialogBody,
     AlertDialogFooter,
@@ -71,6 +72,45 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
     const toast = useToast();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+
+    const [subscriptionType, setSubscriptionType] = useState([]);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
+                );
+                setSubscriptionDetails(response);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getCurrentSubscription();
+    }, []);
+
+    let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
+
+    function getBookPrice(price, currentSubscription) {
+        switch (currentSubscription) {
+            case 'Book Lover':
+                return price * 70 / 100
+                break;
+            case 'Book Reader':
+                return price * 60 / 100
+                break;
+            case 'Book Worm':
+                return price * 50 / 100
+                break;
+            default:
+                return price;
+                break;
+        }
+    }
 
     const removeBookSubscription = async(id)=>{
         try {
@@ -162,9 +202,15 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                     <Flex alignContent="center" direction={'column'} mt={2}>
                         <Rating rating={rating} />
                         <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                            <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'}>
+                            {/* <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'}>
                                 Rs. {price}
-                            </Box>
+                            </Box> */}
+                            <Text as={'del'}   fontSize={16}>
+                                Rs.{price}
+                            </Text>
+                            <Text as={'b'} color={'red'} fontSize={19} marginLeft={3}>
+                                Rs.{getBookPrice(price, currentSubscription)}
+                            </Text>
 
                         </Box>
                     </Flex>
@@ -186,7 +232,7 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                 <RouterLink >
 
                     <Button
-                        colorScheme="red"
+                        colorScheme="black"
                         variant={'outline'}
                         borderRadius={15} 
                         onClick={onOpen}>
