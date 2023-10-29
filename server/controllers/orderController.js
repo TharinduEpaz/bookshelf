@@ -239,10 +239,25 @@ const reduceStock = async (cartItems) => {
   });
 };
 
+const get_orders_by_user = async (req,res,next) => {
+  const id = req.user.userId;
+  try {
+    const orders = await orderModel.findAll({
+      where:{
+        user_id:id
+      }
+    })
+    res.json(orders)
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   addOrder,
   getAllOrders,
   countOrders,
   createOrder,
   create_order_by_webhook_data,
+  get_orders_by_user,
 };
