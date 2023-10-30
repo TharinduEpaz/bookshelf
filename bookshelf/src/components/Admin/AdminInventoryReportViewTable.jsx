@@ -11,14 +11,14 @@ import {
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 
-export default function AdminOrderReportViewTable({
+export default function AdminInventoryReportViewTable({
   list,
   columnNames,
   search
 }) {
 
   const filteredList = list.filter((item) => {
-    return search && item.totalPrice && search.toLocaleString() === '' || item.totalPrice.toLocaleString().includes(search);
+    return search && item.title && search.toLowerCase() === '' || item.title.toLowerCase().includes(search);
   });
   
 

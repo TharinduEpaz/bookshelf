@@ -1,45 +1,35 @@
 import React from "react";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+import {FaSearch} from 'react-icons/fa'
+
 
 import {
   Box,
   Button,
-  Card,
-  CardBody,
   Flex,
-  Grid,
-  GridItem,
-  Icon,
   Spacer,
   Text,
-  StatGroup,
-  Select
+  Select,
+  IconButton,
+  Input,
+  InputGroup,
+  FormControl
 } from "@chakra-ui/react";
 
-import {
-  BiBookOpen,
-  BiErrorCircle,
-  BiFilterAlt,
-  BiPlus,
-  BiSearchAlt,
-} from "react-icons/bi";
 
-import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminStatCard from "../../components/Admin/AdminStatCard";
 import { Link } from "react-router-dom";
-import AdminDtataTable from "../../components/Admin/AdminDtataTable";
+import AdminInventoryReportViewTable from "../../components/Admin/AdminInventoryReportViewTable";
 import { useEffect, useState } from "react";
-
-//import SearchPanel from "../../components/Moderator/SearchPanel";
-
 
 
 export default function AdminInventoryReports() {
 
+  const [search, setSearch] = useState('');
+
   const columns = [
     // "Book ID",
-    "Book Name",
+    "Title",
     "Author",
     "Genre",
     "Unit Price",
@@ -54,6 +44,7 @@ export default function AdminInventoryReports() {
 
   const [list, setBookList] = useState([]);
 
+  //Get all books
   const getBooks = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/v1/books")
@@ -85,39 +76,44 @@ export default function AdminInventoryReports() {
 
 
 
+  //Report generation
 
-  // All Inventory Details Report
-  const generateTablePDF = () => {
+  // Search Inventory Details Report
+  const generateSearchPDF = () => {
     const doc = new jsPDF();
     const totalPagesExp = "{total_pages_count_string}";
-  
+
     const columnsData = [
     "", 
-    "Book Name", 
+    "Title", 
     "Author", 
     "Genre", 
     "Unit Price", 
     //"In-Stock" , 
-    "ISBN",
+    //"ISBN",
     //"Description",
-    //"Average Rating",
+    "Average Rating",
     "Language",
     "Featured Category"];
   
     let bookNumber = 1; // Initialize the book number to 1
   
+    //Filter by title
+    const filteredList = list.filter((book) => 
+      book.title.toLowerCase().includes(search.toLowerCase()));
+
     doc.autoTable({
       head: [columnsData], // The header row
-      body: list.map((book) => [
+      body: filteredList.map((book) => [
         bookNumber++, 
         book.title, 
         book.author, 
         book.genre, 
         `Rs.${book.unitPrice.toFixed(2)}`, 
         //book.stock,
-        book.ISBN,
+        //book.ISBN,
         //book.description,
-        //book.averageRating,
+        book.averageRating,
         book.language,
         book.featuredCategory 
       ]), // The data rows with sequential book numbers
@@ -171,10 +167,6 @@ export default function AdminInventoryReports() {
   
 
 
-
-
-
-
   return (
     
     <Box
@@ -222,9 +214,31 @@ export default function AdminInventoryReports() {
 
           <Box p={10}>
 
-          <Text fontSize="lg" fontWeight={"bold"} mb={10} mt={2} align={"center"}>
+          <Text fontSize="lg" fontWeight={"bold"} mb={5} mt={2} align={"center"}>
               Inventory Reports
             </Text>
+
+
+    <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search User"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
+
              
 
           <Flex gap={3} alignItems={'center'}>
@@ -315,7 +329,7 @@ export default function AdminInventoryReports() {
         ml={10}
         mt={5}
         colorScheme="blue" 
-        //onClick={generateTablePDF}
+        onClick={generateSearchPDF}
         >
           Generate Inventory Details
       </Button>
@@ -332,7 +346,11 @@ export default function AdminInventoryReports() {
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
+                <AdminInventoryReportViewTable 
+                  list={list} 
+                  columnNames={columns} 
+                  search={search}
+                  />
               </Box>
             </Box>
 

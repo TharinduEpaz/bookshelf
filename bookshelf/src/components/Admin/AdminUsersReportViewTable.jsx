@@ -7,12 +7,6 @@ import {
   Td,
   Tbody,
   Checkbox,
-  Select,
-  HStack,
-  Button,
-  Text,
-  Icon,
-  Spacer,
 } from "@chakra-ui/react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
