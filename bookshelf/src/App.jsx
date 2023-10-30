@@ -89,6 +89,7 @@ import AdminSubscriptionReports from "./pages/Admin/AdminSubscriptionReports";
 import AdminDonationReport from "./pages/Admin/AdminDonationReport";
 import AdminSharingReports from "./pages/Admin/AdminSharingReports";
 import AdminOrderReport from "./pages/Admin/AdminOrderReport";
+import AdminUsersReportViewTable from "./components/Admin/AdminUsersReportViewTable";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -231,6 +232,7 @@ function App() {
           <Route exact path="/admindonationreport" element={<AdminDonationReport />}></Route>
           <Route exact path="/adminsharingreport" element={<AdminSharingReports />}></Route>
           <Route exact path="/adminorderreport" element={<AdminOrderReport />}></Route>
+          <Route exact path="/adminusersreportviewtable" element={<AdminUsersReportViewTable />}></Route>
 
 
       

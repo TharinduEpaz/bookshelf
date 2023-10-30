@@ -4,6 +4,7 @@ import SearchBar from '../../components/Admin/SearchBar';
 import { Alert, AlertIcon } from '@chakra-ui/react';
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+import {FaSearch} from 'react-icons/fa'
 
 
 import { 
@@ -22,15 +23,19 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Input 
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from '@chakra-ui/react'
 import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminUsersTable from '../../components/Admin/AdminUsersTable';
+import AdminUsersReportViewTable from '../../components/Admin/AdminUsersReportViewTable';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
 export default function AdminUserReport() {
 
+  const [search, setSearch] = useState('');
   
   const columns = [
     "User ID",
@@ -42,132 +47,9 @@ export default function AdminUserReport() {
 
   const [list, setUsersList] = useState([]);
   const [selectedRole, setSelectedRole] = useState('All');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showUpdateSuccessAlert, setShowUpdateSuccessAlert] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [deleteUserId, setDeleteUserId] = useState(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-  const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [updatedUserData, setUpdatedUserData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    role: '',
-  });
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleCloseModal = () => {
-    setSelectedUser(null);
-  };
-
-  //Edit modal
-  const handleUpdateModalOpen = (user) => {
-    setUpdatedUserData(user);
-    setUpdateModalOpen(true);
-    onOpen();
-  };
   
-  const handleUpdateModalClose = () => {
-    setUpdateModalOpen(false);
-    setUpdatedUserData({
-      id: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '',
-    });
-    onClose();
-  };
-
-
-  //Edit user
-  const handleUpdate = async () => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/api/v1/users/${updatedUserData.id}`,
-        updatedUserData
-      );
+ 
   
-      if (response.status === 200) {
-        // index of the updated user in the list
-        const userIndex = list.findIndex(user => user.id === updatedUserData.id);
-        
-        if (userIndex !== -1) {
-          // Create a new array with the updated user data
-          const updatedList = [...list];
-          updatedList[userIndex] = { ...updatedUserData }; // Make sure to spread the object
-          setUsersList(updatedList);
-          setShowUpdateSuccessAlert(true);
-          handleUpdateModalClose();
-        }
-      } else {
-        console.error('Failed to update user:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Failed to update user', error);
-    }
-  };
-  
-  
-  
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  
-
-  //Delete modal
-  const handleDeleteModalOpen = (userId) => {
-    setDeleteUserId(userId);
-    setDeleteModalOpen(true);
-  };
-  
-  const handleDeleteModalClose = () => {
-    setDeleteUserId(null);
-    setDeleteModalOpen(false);
-  };
-  
-
-  //Delete user
-  const deleteUser = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
-        method: "DELETE"
-      });
-  
-      if (response.ok) {
-        console.log('User deleted successfully');
-        setShowSuccessAlert(true);
-        getAllUsers(selectedRole); 
-        handleDeleteModalClose(); // Close the delete modal
-      } else {
-        console.error('Failed to delete user');
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-  
-
-
-  const handleDelete = async () => {
-    try {
-      await deleteUser(deleteUserId);
-    } catch (error) {
-      console.error('Failed to delete user', error);
-    }
-  };
-
-
-
-
-
  //Get all users
 async function getAllUsers(role) {
   try {
@@ -201,87 +83,38 @@ async function getAllUsers(role) {
     getAllUsers(selectedRole); 
   }, [selectedRole]);
 
-/*
-  const toggleModal = (userId) => {
-    setUserModals((prevModals) => ({
-      ...prevModals,
-      [userId]: !prevModals[userId]
-    }));
-  };
 
-  */
 
-  
   //Report generation
 
-  //Single User Report
-  const pdfUserDetails = (user) => {
-    const doc = new jsPDF('portrait', 'px', 'a4');
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-
-// Background Color
-    doc.setFillColor(229, 255, 255); // Light blue background
-    doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Fill the entire page with the background color
-
-    doc.setFontSize(16);
-    doc.setTextColor(30, 30, 30);
-  
-    // Title
-    doc.text(30, 30, 'User Details');
-    
-    // x and y positions for content
-    let y = 60;
-    let x = 100;
-  
-    // User details
-    doc.setFontSize(12);
-    doc.setTextColor(30, 30, 30);
-    doc.text(30, y, `User ID: ${user.id}`);
-    y += 20;
-    doc.text(30, y, `First Name: ${user.firstName}`);
-    y += 20;
-    doc.text(30, y, `Last Name: ${user.lastName}`);
-    y += 20;
-    doc.text(30, y, `Email: ${user.email}`);
-    y += 20;
-    doc.text(30, y, `User Type: ${user.role}`);
-  
-    
-    doc.setLineWidth(1);
-    doc.rect(20, 50, 370, y - 20); // Border around content
-    doc.save('User_details.pdf');
-  };
-
-
-
-  // All User Details Report
-  const generateTablePDF = () => {
+  // Search User Details Report
+ const generateSearchPDF = () => {
   const doc = new jsPDF();
   const totalPagesExp = "{total_pages_count_string}";
 
   const columnsData = ["User No", "First Name", "Last Name", "Email", "User Type"];
 
-  let userNumber = 1; // Initialize the user number to 1
+  let userNumber = 1;
+
+  //Filter by first name
+  const filteredList = list.filter((user) => user.firstName.toLowerCase().includes(search.toLowerCase()));
 
   doc.autoTable({
-    head: [columnsData], // The header row
-    body: list.map((user) => [userNumber++, user.firstName, user.lastName, user.email, user.role]), // The data rows with sequential user numbers
-    startY: 20, // Y-position to start the table
+    head: [columnsData],
+    body: filteredList.map((user) => [userNumber++, user.firstName, user.lastName, user.email, user.role]),
+    startY: 20,
     styles: {
-      // Style the table
       font: "helvetica",
       fontStyle: "bold",
       fontSize: 10,
       cellPadding: 5,
-      fillColor: [124, 195, 206], // Light blue background color
+      fillColor: [124, 195, 206],
     },
     columnStyles: {
-      0: { cellWidth: 20 }, // Adjust the width of the "User Number" column
+      0: { cellWidth: 20 },
     },
 
     didDrawPage: function (data) {
-      // Add page number at the bottom
       doc.text(
         "Page " + data.pageCount,
         data.settings.margin.left,
@@ -291,28 +124,24 @@ async function getAllUsers(role) {
     },
 
     addPageContent: function (data) {
-      // Add total pages count to the header
       doc.text(
         "Page " + data.pageCount,
         data.settings.margin.left,
         doc.internal.pageSize.height - 10
       );
-      // doc.text("Total Pages: " + totalPagesExp, 100, 10);
     },
   });
 
-  // Calculate total pages
   const totalPages = doc.internal.getNumberOfPages();
-  // Set the total pages count on each page
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setFontSize(10);
     doc.text(180, 10, `Page ${i} of ${totalPages}`);
   }
 
-  // Save the PDF with a name
-  doc.save("All_User_Details.pdf");
+  doc.save("User_Details.pdf");
 };
+
 
 
   
@@ -364,10 +193,28 @@ async function getAllUsers(role) {
  <Box p={10}>
              
 
-             <Flex gap={3} alignItems={'center'}>
+ <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search User"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
-   
-    
+    <Flex gap={3} alignItems={'center'}>
+
     <Text width={200} mt={5} ml={20}>Select By</Text>
 
           <Select 
@@ -428,14 +275,16 @@ async function getAllUsers(role) {
           </Select>
 
 
-          <Button 
-        ml={200}
-        mt={5}
-        colorScheme="blue" 
-        //onClick={generateTablePDF}
-        >
-          Generate User Details
-      </Button>
+          <Button
+            ml={100}
+            mt={5}
+            colorScheme="blue"
+            onClick={generateSearchPDF} 
+          >
+            Generate User Details
+          </Button>
+
+  
 
 
           </Flex>
@@ -447,13 +296,10 @@ async function getAllUsers(role) {
 
                 <Spacer mt={5} />
 
-                <AdminUsersTable
+                <AdminUsersReportViewTable
   list={list}
   columnNames={columns}
-  deleteUser={handleDeleteModalOpen}
-  setSelectedUser={setSelectedUser}
-  updateUser={handleUpdateModalOpen} // Make sure this is passed correctly
-  pdfUserDetails={pdfUserDetails}
+  search={search}
 />
 
 
