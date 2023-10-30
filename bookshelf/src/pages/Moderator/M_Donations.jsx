@@ -13,6 +13,8 @@ import {
   Tab,
   TabPanel,
   TabPanels,
+  Heading,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import StatCard from "../../components/Moderator/StatCard";
@@ -61,8 +63,13 @@ export default function Donations() {
 
   //URLs**************************
   //get donations Request URL
-  const getDonationRequestsURL = "http://localhost:3000/api/v1/donations"
+  const getDonationRequestsURL = "http://localhost:3000/api/v1/donations";
+  const allRequestsURL = "http://localhost:3000/api/v1/donations/request/countAll";
+  const pendingRequestsURL = "http://localhost:3000/api/v1/donations/request/countPending";
+  const rejectedRequestsURL = "http://localhost:3000/api/v1/donations/request/countRejected";
+  const acceptedRequestsURL = "http://localhost:3000/api/v1/donations/request/countAccepted";
 
+  //get donations Request
   const getDonationRequests = async () => {
     try {
       const response = await axios.get(getDonationRequestsURL);
@@ -85,8 +92,57 @@ export default function Donations() {
     }
   }
 
+  //get all requests count
+  const [allRequestsCount, setAllRequestsCount] = useState(0);
+  const getAllRequestsCount = async () => {
+    try {
+      const response = await axios.get(allRequestsURL);
+      setAllRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get pending requests count
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+  const getPendingRequestsCount = async () => {
+    try {
+      const response = await axios.get(pendingRequestsURL);
+      setPendingRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get rejected requests count
+  const [rejectedRequestsCount, setRejectedRequestsCount] = useState(0);
+  const getRejectedRequestsCount = async () => {
+    try {
+      const response = await axios.get(rejectedRequestsURL);
+      setRejectedRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get accepted requests count
+  const [acceptedRequestsCount, setAcceptedRequestsCount] = useState(0);
+  const getAcceptedRequestsCount = async () => {
+    try {
+      const response = await axios.get(acceptedRequestsURL);
+      setAcceptedRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+
   useEffect(() => {
     getDonationRequests();
+    getAllRequestsCount();
+    getPendingRequestsCount();
+    getRejectedRequestsCount();
+    getAcceptedRequestsCount();
   }, []);
 
   return (
@@ -117,11 +173,15 @@ export default function Donations() {
             w={"fit-content"}
           >
             <CardBody>
+              <HStack mb={3}>
               <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
+              <Heading size="md">Registration Requests</Heading>
+              </HStack>
               <StatGroup gap={50}>
-                <StatCard lable="Organizations" value="100" />
-                <StatCard lable="Pending Requests" value="10" />
-                <StatCard color={"red"} lable="Rejected Requests" value="0" />
+                <StatCard lable="All" value={allRequestsCount} />
+                <StatCard lable="Pending" value={pendingRequestsCount} />
+                <StatCard color='green' lable="Accepted" value={acceptedRequestsCount} />
+                <StatCard color={"red"} lable="Rejected" value={rejectedRequestsCount} />
               </StatGroup>
             </CardBody>
           </Card>

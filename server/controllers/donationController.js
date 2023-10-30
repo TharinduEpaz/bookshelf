@@ -97,10 +97,69 @@ const getAllRequests = async (req, res, next) => {
         // res.send("Update request");
     };
 
+    //count all requests
+    const countAllRequests = async (req, res, next) => {
+        try {
+        const count = await donationModel.count();
+        res.json(count);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Count all requests");
+    };
+
+    //count pending requests
+    const countPendingRequests = async (req, res, next) => {
+        try {
+        const count = await donationModel.count({
+            where: {
+            approval: "Pending",
+            },
+        });
+        res.json(count);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Count pending requests");
+    };
+
+    //count accepted requests
+    const countAcceptedRequests = async (req, res, next) => {
+        try {
+        const count = await donationModel.count({
+            where: {
+            approval: "Accepted",
+            },
+        });
+        res.json(count);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Count accepted requests");
+    };
+
+    //count rejected requests
+    const countRejectedRequests = async (req, res, next) => {
+        try {
+        const count = await donationModel.count({
+            where: {
+            approval: "Rejected",
+            },
+        });
+        res.json(count);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Count rejected requests");
+    };
 
 module.exports = {
     addRequest,
     getAllRequests,
     getRequestByRegNumber,
     updateRequest,
+    countAllRequests,
+    countPendingRequests,
+    countAcceptedRequests,
+    countRejectedRequests
 }
