@@ -39,6 +39,7 @@ const donationRoutes = require("./routes/donationRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const notificationsRoutes = require("./routes/notificationsRoutes");
 const orderController = require("./controllers/orderController");
+const subscriptionController = require("./controllers/subscriptionController");
 
 //routes
 app.get("/", (req, res) => {
@@ -66,19 +67,23 @@ app.post(
     switch (event.type) {
       case "checkout.session.completed":
         const checkoutSessionCompleted = event.data.object;
-
+        const customer =  stripe.customers.retrieve(checkoutSessionCompleted.customer);
         console.log(checkoutSessionCompleted);
 
         if (checkoutSessionCompleted.client_reference_id === "extention 1") {
           console.log("Subscription will extend by 1 week");
+          subscriptionController.extends_date(1,'966f1f28-9b84-496d-81be-8ca6729f3b3d')
         } else if (
           checkoutSessionCompleted.client_reference_id === "extention 2"
+          
         ) {
           console.log("Subscription will extend by 2 week");
+          subscriptionController.extends_date(2,'966f1f28-9b84-496d-81be-8ca6729f3b3d')
         } else if (
           checkoutSessionCompleted.client_reference_id === "extention 4"
         ) {
           console.log("Subscription will extend by 4 week");
+          subscriptionController.extends_date(4,'966f1f28-9b84-496d-81be-8ca6729f3b3d')
         } else {
           orderController.create_order_by_webhook_data(
             checkoutSessionCompleted

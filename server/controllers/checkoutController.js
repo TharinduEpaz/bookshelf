@@ -171,7 +171,7 @@ const extendDate = async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
 		payment_method_types: ["card"],
 		mode: "payment",
-		client_reference_id: "extention 2", // You can use this to store metadata
+		client_reference_id: "extention 1", // You can use this to store metadata
 		line_items: [
 			{
 				price_data: {

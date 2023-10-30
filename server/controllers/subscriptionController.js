@@ -431,9 +431,9 @@ const deleteSubscriptionPlan = async (req, res, next) => {
 	// res.send("Delete plan" + id);
 };
 
-const extends_date = async (req, res, next) => {
-	const userId = req.user.userId;
-	const weeksToAdd = req.body.weeks; // Extract the number of weeks from the request
+const extends_date = async (week,id) => {
+	const userId = id;
+	const weeksToAdd = week; // Extract the number of weeks from the request
 
 	try {
 		// Find the user's subscription
@@ -476,7 +476,7 @@ const extends_date = async (req, res, next) => {
 			newOrderDate: newOrderDate, // You can include the new orderDate in the response if needed
 		});
 	} catch (error) {
-		next(error);
+		console.log(error);
 	}
 };
 
