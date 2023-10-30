@@ -210,7 +210,7 @@ export default function ChangeSubscription() {
                     </Text>
                     {currentSubscriptionIcon}
                 </Box>
-                <Button onClick={onOpen}>Change Subscription</Button>
+                <Button marginTop={24} mr={100} colorScheme='blue' onClick={onOpen}> Change Subscription </Button>
                 <AlertDialog
                     motionPreset='slideInBottom'
                     leastDestructiveRef={cancelRef}
@@ -228,10 +228,10 @@ export default function ChangeSubscription() {
                             </Text>
                         </AlertDialogBody>
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
+                            <Button ref={cancelRef} onClick={onClose} colorScheme='red'>
                                 No
                             </Button>
-                            <Button colorScheme='purple' ml={3} onClick={() => handleYesClick(0)}>
+                            <Button ml={3} onClick={() => handleYesClick(0)} colorScheme='blue'>
                                 Yes
                             </Button>
                         </AlertDialogFooter>

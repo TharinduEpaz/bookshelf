@@ -86,7 +86,7 @@ function Search() {
       <Box
         // m={"auto"}
         mt={0}
-        w="30%"
+        w='70%'
         boxShadow="sm"
         background={"rgba(255, 255, 255, 0.7)"}
         borderRadius={10}
@@ -100,7 +100,7 @@ function Search() {
         zIndex={'9999'}
         alignItems={"center"}
         gap={5}
-        display={input.length > 0 ? "" : "none"}
+        display={input.length > 0 ? "block" : "none"}
       >
 
         {filteredItems.slice(0, 10).map((result) => (
@@ -110,7 +110,6 @@ function Search() {
             fontWeight={"medium"}
             onClick={() => navigate(`/shop/${result.id}`)}
             cursor={"pointer"}
-            zIndex={'9999'}
           >
             {result.title}
           </Box>

@@ -42,6 +42,46 @@ function SelectBookSubscription() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
+    const [subscriptionType, setSubscriptionType] = useState([]);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
+                );
+                setSubscriptionDetails(response);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getCurrentSubscription();
+    }, []);
+
+    let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
+
+    function getBookPrice(price, currentSubscription) {
+        switch (currentSubscription) {
+            case 'Book Lover':
+                return price * 70 / 100
+                break;
+            case 'Book Reader':
+                return price * 80 / 100
+                break;
+            case 'Book Worm':
+                return price * 60 / 100
+                break;
+            default:
+                return price;
+                break;
+        }
+    }
+
+
     useEffect(() => {
         getBook(id);
     }, []);
@@ -179,6 +219,7 @@ function SelectBookSubscription() {
                                             />
                                         );
                                     }
+                                    
                                     return (
                                         <BsStar
                                             key={i}
@@ -200,23 +241,28 @@ function SelectBookSubscription() {
                         < Box mt={10}>
                             <Heading
                                 ml={2}
-                                size={"lg"}
+                                fontSize={24}
                                 fontFamily={"montserrat"}
-                                fontWeight={'bold'}
-                                color={'#0A3BBA'}
+                                // fontWeight={'bold'}
+                                // color={'#0A3BBA'}
                                 as={'del'}
                             >
-                                Rs. {book.price}
+                                
+                                    Rs.{book.price}
+                                
                             </Heading>
                             <Heading
                                 ml={5}
                                 size={"lg"}
                                 fontFamily={"montserrat"}
                                 fontWeight={'bold'}
-                                color={'#0A3BBA'}
+                                color={'red'}
                                 as={'b'}
                             >
-                                Rs. {book.price - book.price * 0.4}
+                                
+                                
+                                    Rs.{getBookPrice(book.price, currentSubscription)}
+                                
                             </Heading>
 
                             <Box display={'flex'} alignItems={'center'} gap={10} mt={10}>
