@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 import {
   Container,
@@ -28,115 +27,159 @@ import {
   AlertIcon,
   ButtonGroup,
   useToast,
-  Spinner
-} from '@chakra-ui/react';
-import StarRating from './StarRating';
-import axios from 'axios';
+  Spinner,
+} from "@chakra-ui/react";
+import StarRating from "./StarRating";
+import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 const reviewData = [
   {
     avatarSrc:
-      'https://s.gravatar.com/avatar/4f9135f54df98fe894a9f9979d600a87?s=80',
+      "https://s.gravatar.com/avatar/4f9135f54df98fe894a9f9979d600a87?s=80",
     review: `What a wonderful little cottage! More spacious and adorable than the What a wonderful little cottage! More spacious and adorable than the
       pictures show. We never met our hosts and...`,
     stars: 3,
-    userName: 'Ahmad',
-    dateTime: '2 months ago'
+    userName: "Ahmad",
+    dateTime: "2 months ago",
   },
   {
-    avatarSrc: '',
+    avatarSrc: "",
     review: `What a wonderful little cottage! More spacious and adorable than the
       pictures show. We never met our hosts, but we felt welcomed and...`,
     stars: 4,
-    userName: 'Ali',
-    dateTime: '1 months ago'
+    userName: "Ali",
+    dateTime: "1 months ago",
   },
   {
-    avatarSrc: '',
+    avatarSrc: "",
     review: `What a wonderful little cottage! More spacious and adorable than the
       pictures show. We never met our hosts, but we felt welcomed and...`,
     stars: 2,
-    userName: 'Zac',
-    dateTime: '4 months ago'
-  }
+    userName: "Zac",
+    dateTime: "4 months ago",
+  },
 ];
 
 const ratingSummary = [
-  { id: 1, rating: 5, percentage: '80%' },
-  { id: 2, rating: 4, percentage: '65%' },
-  { id: 3, rating: 3, percentage: '35%' },
-  { id: 4, rating: 2, percentage: '75%' },
-  { id: 5, rating: 1, percentage: '55%' }
+  { id: 1, rating: 5, percentage: "80%" },
+  { id: 2, rating: 4, percentage: "65%" },
+  { id: 3, rating: 3, percentage: "35%" },
+  { id: 4, rating: 2, percentage: "75%" },
+  { id: 5, rating: 1, percentage: "55%" },
 ];
 
-const SimpleReview = ({bookId}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const initialRef = React.useRef(null)
-  const finalRef = React.useRef(null)
+const SimpleReview = ({ bookId }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
   const [rating, setRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [review, setReview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [reviews,setReviews] = useState(null)
+  const [averageRating,setAverageRating] = useState(0);
+
   const toast = useToast();
+
+  useEffect(() => {
+    async function getReviews() {
+      try {
+        const response = await axiosInstance.get(`reviews/${bookId}`);
+        console.log(response);
+        setReviews(response.data)
+        console.log(reviews);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getReviews();
+  }, []);
 
   const rate = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    const reviewUrl = 'http://localhost:3000/api/v1/reviews'
+    const reviewUrl = "http://localhost:3000/api/v1/reviews";
     try {
-      const response = await axios.post(reviewUrl, {
-        rating: rating,
-        review: review,
-        bookId: bookId
-      },{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json'
-    }});
+      const response = await axiosInstance.post(
+        "reviews",
+        {
+          rating: rating,
+          review: review,
+          bookId: bookId,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    setRating(0);
-    setReview('');
-    setIsLoading(false);
-
-    onClose();
     
-    return toast({
-      title: "Review added successfully",
-      position: "top",
-      status: "success",
-      duration: 4000,
-      isClosable: true,
-    });
+ 
 
+  
+      setRating(0);
+      setReview("");
+      setIsLoading(false);
 
+      onClose();
+
+      return toast({
+        title: "Review added successfully",
+        position: "top",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
     } catch (error) {
+      // console.error(error.response.data.message);
+      setError(error.response.data.message);
+      setIsLoading(false);
 
-    // console.error(error.response.data.message);
-    setError(error.response.data.message)
-    setIsLoading(false);
-    
-    return toast({
-      title: 'Sorry something went wrong please try again later',
-      position: "top",
-      status: "error",
-      duration: 4000,
-      isClosable: true,
-    });
+      return toast({
+        title: "Sorry something went wrong please try again later",
+        position: "top",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
     }
 
     onClose();
-    
+  };
+
+  function getPercentageForRating(data, targetRating) {
+    if (data.length === 0) {
+      return 0; // If there are no ratings, the percentage is 0.
+    }
+  
+    const matchingRatings = data.filter(item => item.rating === targetRating);
+    const percentage = (matchingRatings.length / data.length) * 100;
+    return percentage;
   }
+
 
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Box mb={8}>
-      <Flex justify={'space-between'}>
-        <Heading as="h3" size="lg" fontWeight="bold" textAlign="left" mb={3}>
-          Audience rating summary
-        </Heading>
-        <Button colorScheme='blue' variant={'outline'} borderRadius={100} onClick={onOpen}> Write Review </Button>
+        <Flex justify={"space-between"}>
+          <Heading as="h3" size="lg" fontWeight="bold" textAlign="left" mb={3}>
+            Audience rating summary
+          </Heading>
+          <Button
+            colorScheme="blue"
+            variant={"outline"}
+            borderRadius={100}
+            onClick={onOpen}
+          >
+            {" "}
+            Write Review{" "}
+          </Button>
         </Flex>
         <Stack spacing={3}>
           <Box>
@@ -154,7 +197,7 @@ const SimpleReview = ({bookId}) => {
               </Text>
             </HStack>
             <Text fontWeight="bold" fontSize="md">
-              1355 ratings
+              { reviews && reviews.length} Ratings
             </Text>
           </Box>
 
@@ -165,14 +208,14 @@ const SimpleReview = ({bookId}) => {
                   <Text fontWeight="bold" fontSize="md">
                     {data.rating}
                   </Text>
-                  <Box w={{ base: '100%', md: '70%' }}>
+                  <Box w={{ base: "100%", md: "70%" }}>
                     <Box
                       w="100%"
-                      bg={useColorModeValue('gray.300', 'gray.600')}
+                      bg={useColorModeValue("gray.300", "gray.600")}
                       rounded="md"
                     >
                       <Box
-                        w={data.percentage}
+                        w={reviews && getPercentageForRating(reviews,data.rating).toString() }
                         h={3}
                         bg="yellow.400"
                         rounded="md"
@@ -180,7 +223,7 @@ const SimpleReview = ({bookId}) => {
                     </Box>
                   </Box>
                   <Text fontWeight="bold" fontSize="md">
-                    {data.percentage}
+                    {reviews && getPercentageForRating(reviews,data.rating)} %
                   </Text>
                 </HStack>
               );
@@ -190,31 +233,43 @@ const SimpleReview = ({bookId}) => {
       </Box>
 
       <Box>
+
+
+
+
+
+
         <Heading as="h3" size="lg" fontWeight="bold" textAlign="left" mb={4}>
           Audience reviews
         </Heading>
         <Stack direction="column" spacing={5}>
-          {reviewData.map((review, index) => {
+        
+          {reviews && reviews.map((review, index) => {
             return (
               <Box key={index} maxW="2xl">
                 <HStack spacing={3} mb={2}>
-                  <Avatar size="md" name={review.userName} src={review.avatarSrc} />
+                  <Avatar
+                    size="md"
+                    // name={review.userName}
+                    name="rer"
+                    // src={review.avatarSrc}
+                  />
                   <Stack direction="column" spacing={2}>
                     <Text fontWeight="bold" fontSize="md">
-                      {review.userName}
+                      {review.User.firstName}
                     </Text>
                     <Flex alignItems="center" justify="start">
-                      {Array.from(Array(review.stars).keys()).map((id) => {
+                      {Array.from(Array(review.rating).keys()).map((id) => {
                         return <Star key={id} fillColor="#EACA4E" />;
                       })}
-                      {Array.from(Array(5 - review.stars).keys()).map((id) => {
+                      {Array.from(Array(5 - review.rating).keys()).map((id) => {
                         return <Star key={id} fillColor="#e2e8f0" />;
                       })}
                     </Flex>
                   </Stack>
                 </HStack>
                 <Text
-                  color={useColorModeValue('gray.700', 'gray.400')}
+                  color={useColorModeValue("gray.700", "gray.400")}
                   fontSize="0.87rem"
                   textAlign="left"
                   lineHeight="1.375"
@@ -228,64 +283,53 @@ const SimpleReview = ({bookId}) => {
         </Stack>
       </Box>
 
-     
-
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
       >
-      
-        
-            
         <ModalOverlay />
-      
+
         <ModalContent>
-        <ModalHeader>
-        {/* <Alert status='error' fontSize={15} w={'90%'}>
+          <ModalHeader>
+            {/* <Alert status='error' fontSize={15} w={'90%'}>
     <AlertIcon />
     You Have to buy this book before writing a review
   </Alert> */}
-  {
-    error && <Alert status='error' fontSize={15} w={'90%'}>
-    <AlertIcon />
-    {error}
-  </Alert>
-  }
-  </ModalHeader>
+            {error && (
+              <Alert status="error" fontSize={15} w={"90%"}>
+                <AlertIcon />
+                {error}
+              </Alert>
+            )}
+          </ModalHeader>
           <ModalHeader>Write a Review</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-          <Text mb={2}>Rate this book</Text>
-          <form onSubmit={rate}>
-          <StarRating rating={rating} setRating={setRating} />
+            <Text mb={2}>Rate this book</Text>
+            <form onSubmit={rate}>
+              <StarRating rating={rating} setRating={setRating} />
 
-            <FormControl mt={4}>
-              <FormLabel>Your Review</FormLabel>
-              <Textarea placeholder='write review here' onChange={(e)=>setReview(e.target.value) }/>
-            </FormControl>
-            <ButtonGroup mt={5}>
-            <Button colorScheme='blue' mr={3} type='submit'>
-              Submit
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-
-            </ButtonGroup>
-            
+              <FormControl mt={4}>
+                <FormLabel>Your Review</FormLabel>
+                <Textarea
+                  placeholder="write review here"
+                  onChange={(e) => setReview(e.target.value)}
+                />
+              </FormControl>
+              <ButtonGroup mt={5}>
+                <Button colorScheme="blue" mr={3} type="submit">
+                  Submit
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </ButtonGroup>
             </form>
-      
           </ModalBody>
 
-          <ModalFooter>
-            
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
-      
-
-
-
     </Container>
   );
 };
@@ -294,10 +338,10 @@ const Star = ({ fillColor }) => {
   return (
     <svg
       style={{
-        width: '1rem',
-        height: '1rem',
+        width: "1rem",
+        height: "1rem",
         fill: fillColor,
-        marginRight: '0.25rem'
+        marginRight: "0.25rem",
       }}
       viewBox="0 0 1000 1000"
       xmlns="http://www.w3.org/2000/svg"

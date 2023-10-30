@@ -29,6 +29,8 @@ import {
   Register,
   Shop,
   Checkout,
+  PaymentSuccess,
+  PaymentError,
 } from "./pages";
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
@@ -157,6 +159,8 @@ function App() {
             <Route exact path="/collections" element={<Collections />}></Route>
             <Route exact path="/selfHelp" element={<SelfHelp />}></Route>
             <Route exact path="/Fiction" element={<Fiction />}></Route>
+            <Route exact path="/paymentsuccess" element={<PaymentSuccess/>} />
+            <Route exact path="/paymenterror" element={<PaymentError/>} />
         
 
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
@@ -165,11 +169,13 @@ function App() {
             <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
+
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+            
           </Route>
           </Route>
 

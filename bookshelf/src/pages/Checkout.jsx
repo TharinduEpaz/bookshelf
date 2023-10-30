@@ -22,7 +22,7 @@ import { useCartContext } from "../context/cartContext";
 import { RxCross2 } from "react-icons/rx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "./Paybutton.jsx";
 
 const Checkout = () => {
   const [firstName, setFirstName] = useState("");

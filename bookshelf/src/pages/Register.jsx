@@ -194,8 +194,10 @@ export default function SignupCard() {
                   <Box>
                     <FormControl id="phone" isRequired>
                       <FormLabel>Phone</FormLabel>
-                      <Input type="text"  
+                      <Input type="tel"  
                       value={phone}
+                      pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+                      title="Please enter a valid phone number in 10 digits without spaces"
                       onChange={(e) => setPhone(e.target.value)}
                       />
                     </FormControl>

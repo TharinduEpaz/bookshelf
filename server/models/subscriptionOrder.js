@@ -1,8 +1,8 @@
 const sequelize = require("./index.js").sequelize;
 const { DataTypes } = require("sequelize");
 
-const order = sequelize.define(
-	"order",
+const subscriptionOrder = sequelize.define(
+	"subscriptionOrder",
 	{
 		// Model attributes are defined here
 		id: {
@@ -55,6 +55,6 @@ const order = sequelize.define(
 		// Other model options go here
 	}
 );
-// order.sync({ force: true })
+// subscriptionOrder.sync({ force: true })
 
-module.exports = order;
+module.exports = subscriptionOrder;

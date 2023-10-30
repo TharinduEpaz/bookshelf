@@ -111,7 +111,7 @@ function Dashboard() {
       >
         <Card>
           <CardHeader>
-            <Heading size="md"> Orders </Heading>
+            <Heading size="md"> 5 Orders </Heading>
           </CardHeader>
           <CardBody>
             <Text>
@@ -119,33 +119,34 @@ function Dashboard() {
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+           
           </CardFooter>
         </Card>
         <Card>
           <CardHeader>
-            <Heading size="md"> Customer dashboard</Heading>
+            <Heading size="md"> Subscription Status</Heading>
           </CardHeader>
           <CardBody>
             <Text>
-              View a summary of all your customers over the last month.
+              No Subscription
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+            <Button variant={'link'} colorScheme="purple">Go to subscriptions</Button>
           </CardFooter>
         </Card>
         <Card>
           <CardHeader>
-            <Heading size="md"> Customer dashboard</Heading>
+            <Heading size="md"> Exchange Requests</Heading>
           </CardHeader>
           <CardBody>
             <Text>
-              View a summary of all your customers over the last month.
+              Total of 5 Requests Posted
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+            <Button variant={'link'} colorScheme="purple" mr={50}>Post Request</Button>
+            <Button variant={'link'} colorScheme="purple">Manage</Button>
           </CardFooter>
         </Card>
       </SimpleGrid>

@@ -1,23 +1,116 @@
 require("dotenv").config();
+const YOUR_DOMAIN = 'http://localhost:5173';
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
+
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",
 });
 
-const checkout = async (req, res, next) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
+const checkout = async (req, res,next) => {
+
+  const email = req.body.user.email;
+  const userId = (req.body.user);
+  const totalPrice = req.body.total;
+  const subscription = req.body.subscription || 0;
+  console.log(totalPrice);
+  console.log(userId);
+
+  let shipping = req.body.cart.length * 200 * 100;
+  let total = 0;
+
+  req.body.cart.map((item)=>{
+    total += item.price * item.amount * 100
+  })
+
+  if(total > 500000){
+    shipping = 0;
+  }
+
+  const customer = await stripe.customers.create({
+    metadata:{
+      userId: userId,
+      email: email,
+      cartItems: JSON.stringify(req.body.cart),
+      subscription: subscription,
+    }
+  })
+  
+  let line_items;
+
+  if (subscription){
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: totalPrice * 100,
+        },
         quantity: 1,
+      }
+    })
+  }
+  else{
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.amount ,
+      }
+    })
+  
+
+  }
+
+  
+  try{
+  const session = await stripe.checkout.sessions.create({
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: {
+            amount: shipping,
+            currency: 'lkr',
+          },
+          display_name: 'shipping',
+          delivery_estimate: {
+            minimum: {
+              unit: 'business_day',
+              value: 5,
+            },
+            maximum: {
+              unit: 'business_day',
+              value: 7,
+            },
+          },
+        },
       },
+      
     ],
+    line_items: line_items,
     mode: 'payment',
-    success_url: `${YOUR_DOMAIN}`,
-    cancel_url: `${YOUR_DOMAIN}`,
+    success_url: 'http://localhost:5173/paymentsuccess',
+    cancel_url: 'http://localhost:5173/cart',
+    customer:customer.id,
+    phone_number_collection:{
+      enabled:true
+    },
   });
-  res.redirect(303, session.url);
+
+  res.send({url:session.url})
+}
+catch(error){
+  next(error)
+}
+
 };
 
 const config = async (req, res, next) => {
@@ -55,7 +148,7 @@ const createPayment = async (req, res, next) => {
 module.exports = {
     checkout,
     config,
-    createPayment
+    createPayment,
 }
 
 
