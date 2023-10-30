@@ -263,11 +263,10 @@ const Paybutton = (props) => {
       }
     };
 
-  
     return (
       <Button onClick={handleSubmit} colorScheme="purple">
       {isLoading && <Spinner/>}
-        Pay Now
+       pay now
       </Button>
     )
   };

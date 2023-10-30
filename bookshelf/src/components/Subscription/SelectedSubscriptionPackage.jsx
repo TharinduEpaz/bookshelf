@@ -16,13 +16,19 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,
     AlertDialogCloseButton,
-    useDisclosure
+    useDisclosure,
+    Spinner,
 
 } from "@chakra-ui/react";
 
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 import { Outlet } from 'react-router-dom';
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
+import { useContext } from "react";
+import { userContext } from "../../context/userContext";
+import { Link as RouterLink } from "react-router-dom";
+
 
 function SelectedSubscriptionPackage() {
     const [subscriptionType, setSubscriptionType] = useState([]);
@@ -101,6 +107,9 @@ function SelectedSubscriptionPackage() {
                             {/* <Button ref={cancelRef} onClick={onClose}>
                                 No
                             </Button> */}
+                            <RouterLink to="#">
+                                <W1Button  totalPrice= {250} />
+                            </RouterLink>
                             <Button colorScheme='red' ml={3}>
                                 1 week
                             </Button><Button colorScheme='red' ml={3}>
@@ -135,4 +144,40 @@ function SelectedSubscriptionPackage() {
     )
 }
 
+
+const W1Button = (props) => {
+    const { user } = useContext(userContext);
+    const cartItems = Array(props.items)
+    console.log(cartItems);
+    const totalPrice = props.totalPrice
+    const [isLoading, setIsLoading] = useState(false)
+
+    console.log(totalPrice);
+
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axiosInstance.post('/orders/extenddate', {
+               amount: 20000,
+               extension: 2 
+               
+        
+            });
+            console.log(response);
+            window.location.href = response.data.url;
+            setIsLoading(false)
+
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    };
+
+    return (
+        <Button onClick={handleSubmit} colorScheme="purple">
+            {isLoading && <Spinner />}
+            1 week
+        </Button>
+    )
+};
 export default SelectedSubscriptionPackage

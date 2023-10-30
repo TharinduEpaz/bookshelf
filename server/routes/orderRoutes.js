@@ -14,5 +14,6 @@ router.route('/create-payment-intent').post(checkoutController.checkout); // cre
 router.route('/checkout/create-payment-intent').post(checkoutController.createPayment); // create order
 router.route('/getmyorders').get(authenticateUser,controller.get_orders_by_user)
 router.route('/getmysubscriptionorders').get(authenticateUser,controller.get_subscription_orders_by_user)
+router.route("/extenddate").post(authenticateUser, checkoutController.extendDate);
 
 module.exports = router;

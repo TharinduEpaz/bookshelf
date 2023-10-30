@@ -143,12 +143,60 @@ const createPayment = async (req, res, next) => {
   }
 }
 
+const extendDate = async (req, res, next) => {
+	const amount = req.body.amount;
+  console.log(amount)
+	const extension = req.body.extension;
+  console.log(extension);
+
+	try {
+		// const paymentIntent = await stripe.paymentIntents.create({
+		// 	amount: amount,
+		// 	currency: "lkr",
+		// 	payment_method_types: ["card"],
+		// 	metadata: {
+		// 		order_id: 123,
+		// 		order_type: "extension",
+		// 		extension_time: extension,
+		// 	},
+		// });
+
+    const session = await stripe.checkout.sessions.create({
+		payment_method_types: ["card"],
+		mode: "payment",
+		client_reference_id: "extention 1", // You can use this to store metadata
+		line_items: [
+			{
+				price_data: {
+					currency: "lkr",
+					product_data: {
+						name: "Total Amount", // You can name this as you like
+					},
+					unit_amount: 20000, // The total amount in cents (e.g., $10.99)
+				},
+				quantity: 1, // Set quantity to 1 for the total amount
+			},
+		],
+
+		// Other parameters as needed
+		success_url: "http://localhost:5173/paymentsuccess",
+		cancel_url: "http://localhost:5173/cart",
+	});
+
+
+     res.send({ url: session.url });
+
+	} catch (error) {
+		next(error);
+	}
+};
 
 
 module.exports = {
     checkout,
     config,
     createPayment,
+    extendDate
 }
 
 
