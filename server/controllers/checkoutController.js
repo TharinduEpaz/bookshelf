@@ -148,6 +148,7 @@ const extendDate = async (req, res, next) => {
   console.log(amount)
 	const extension = req.body.extension;
   console.log(extension);
+  const userId = req.user.userId;
 
 	try {
 		// const paymentIntent = await stripe.paymentIntents.create({
@@ -160,11 +161,17 @@ const extendDate = async (req, res, next) => {
 		// 		extension_time: extension,
 		// 	},
 		// });
+    const customer = await stripe.customers.create({
+      metadata:{
+        userId: userId,
+        extension: '1',
+      }
+    })
 
     const session = await stripe.checkout.sessions.create({
 		payment_method_types: ["card"],
 		mode: "payment",
-		client_reference_id: "extention 1", // You can use this to store metadata
+		client_reference_id: "extention 2", // You can use this to store metadata
 		line_items: [
 			{
 				price_data: {
@@ -176,7 +183,9 @@ const extendDate = async (req, res, next) => {
 				},
 				quantity: 1, // Set quantity to 1 for the total amount
 			},
+      
 		],
+    customer:customer.id,
 
 		// Other parameters as needed
 		success_url: "http://localhost:5173/paymentsuccess",
