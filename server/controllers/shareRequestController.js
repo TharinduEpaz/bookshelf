@@ -23,8 +23,9 @@ const postShareRequest = async (req, res, next) => {
     listOfBooks = Array(listOfBooks)
     // const userId = req.user.userId;
     console.log(userId);
-    
+
     const image = req.files;
+    console.log(image);
 
     const shareRequest = await shareRequestModel.create({
       bookName,
