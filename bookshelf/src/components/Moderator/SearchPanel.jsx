@@ -18,11 +18,15 @@ import BookSharingFilter from "./Filters/BookSharingFilter";
 import InventorySearch from "./SearchBars/InventorySearch";
 import OrdersSearch from "./SearchBars/OrderSearch";
 
-export default function SearchPanel({ name, filter, setChildValue }) {
+export default function SearchPanel({ name, filter, setChildValue, setOrderSearchValue }) {
 
-  const filteredData = (data) => {
-    console.log(data);
-    setChildValue(data);
+  // const filteredData = (data) => {
+  //   console.log(data);
+  //   setChildValue(data);
+  // }
+
+  const value = (data) => {
+    setOrderSearchValue(data);
   }
 
   return (
@@ -37,8 +41,8 @@ export default function SearchPanel({ name, filter, setChildValue }) {
 
         <Flex gap={2}>
           {/* Search Bar */}
-          {filter === "inventory" && <InventorySearch setPassValue={filteredData}/>}
-          {filter === "orders" && <OrdersSearch />}
+          {filter === "inventory" && <InventorySearch setPassValue={value}/>}
+          {filter === "orders" && <OrdersSearch setPassValue={value} />}
           {/* {filter === "organizations" && <OrganizationsSearch />}
           {filter === "donations" && <DonationsSearch />}
           {filter === "book_sharing" && <BookSharingSearch />} */}

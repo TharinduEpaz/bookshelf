@@ -10,6 +10,7 @@ import {
   StatGroup,
   Select,
   Spinner,
+  filter,
 } from "@chakra-ui/react";
 import { BiBookOpen } from "react-icons/bi";
 import StatCard from "../../components/Moderator/StatCard";
@@ -28,30 +29,42 @@ export default function Orders() {
 
   const [list, setOrderList] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [results, setResults] = useState([]);
 
   const getOrders = async () => {
     try {
       setLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/orders");
       const jsonData = await response.json();
-
-      const filteredData = jsonData.map((order) => ({
-        id: order.id,
-        orderDate: new Date(order.orderDate).toLocaleDateString(),
-        buyerId: order.user_id,
-        // items: order.orderItems,
-        totalPrice: order.totalPrice,
-        isPaid: order.isPaid ? "Yes" : "No",
-        status: order.orderStatus,
-      }));
-
-      setOrderList(filteredData);
+      setResults(jsonData);
       setLoading(false);
-      console.log(filteredData);
     } catch (err) {
       console.error(err.message);
     }
   };
+
+  const searchValue = (data) => {
+    const filteredData = results.filter((order) => {
+      return (
+        order.id.toLowerCase().includes(data.toLowerCase())
+      );
+    });
+    setList(filteredData);
+  }
+
+  //set Filtered list
+  const setList = (data) => {
+    const filterData = data.map((order) => ({
+      id: order.id,
+      orderDate: new Date(order.orderDate).toLocaleDateString(),
+      buyerId: order.user_id,
+      // items: order.orderItems,
+      totalPrice: order.totalPrice,
+      isPaid: order.isPaid ? "Yes" : "No",
+      status: order.orderStatus,
+    }));
+    setOrderList(filterData);
+  }
 
   const [count, setCount] = useState(0);
   const getCount = async () => {
@@ -147,7 +160,7 @@ export default function Orders() {
         <Spacer mt={10} />
 
         <Box>
-          <SearchPanel name={"Customer Orders"} filter={"orders"} />
+          <SearchPanel name={"Customer Orders"} filter={"orders"} setOrderSearchValue={searchValue} />
 
           <Spacer mt={5} />
 

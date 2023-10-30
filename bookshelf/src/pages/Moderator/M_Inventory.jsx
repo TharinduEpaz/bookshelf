@@ -34,6 +34,7 @@ export default function Inventry() {
   const [list, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const componentRef = useRef();
+  const [results, setResults] = useState([]);
 
   //get books count
   const [booksCount, setBooksCount] = useState(0);
@@ -67,17 +68,7 @@ export default function Inventry() {
       setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/books");
       const jsonData = await response.json();
-
-      const filteredData = jsonData.map((book) => ({
-        id: book.id,
-        title: book.title,
-        author: book.author,
-        genre: book.ISBN,
-        unitPrice: book.price,
-        inStock: book.stock,
-      }));
-
-      setBookList(filteredData);
+      setResults(jsonData);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -85,9 +76,21 @@ export default function Inventry() {
     }
   };
 
-  const SearchedData = (data) => {
-    console.log(data)
-    const filteredData = data.map((book) => ({
+  const searchValue = (data) => {
+    console.log(data);
+    const filteredData = results.filter((book) => {
+      return (
+        book.id.toLowerCase().includes(data.toLowerCase()) ||
+        book.title.toLowerCase().includes(data.toLowerCase()) ||
+        book.author.toLowerCase().includes(data.toLowerCase())
+      );
+    });
+    setList(filteredData);
+  }
+
+  //set Filtered list
+  const setList = (data) => {
+    const filterData = data.map((book) => ({
       id: book.id,
       title: book.title,
       author: book.author,
@@ -95,13 +98,12 @@ export default function Inventry() {
       unitPrice: book.price,
       inStock: book.stock,
     }));
-    setBookList(filteredData);
+    setBookList(filterData);
   }
-  console.log(SearchedData);
+
 
   useEffect(() => {
-    // getBooks();
-    {SearchedData ? getBooks() : null}
+    getBooks();
     getBookCount();
     getInStockCount();
   }, []);
@@ -161,30 +163,12 @@ export default function Inventry() {
               </StatGroup>
             </CardBody>
           </Card>
-          {/* <Card
-            mt={5}
-            p={5}
-            pl={10}
-            pr={10}
-            boxShadow="sm"
-            borderRadius="md"
-            bgColor={"green.100"}
-            w={"fit-content"}
-          >
-            <CardBody>
-              <Icon as={BiErrorCircle} boxSize={8} color={"#E53E3E"} />
-              <StatCard
-                lable="In Stock"
-                value={inStockCount}
-              />
-            </CardBody>
-          </Card> */}
         </Flex>
 
         <Spacer mt={10} />
 
         <Box>
-          <SearchPanel name="Inventory Items" filter="inventory" setChildValue={SearchedData}/>
+          <SearchPanel name="Inventory Items" filter="inventory" setOrderSearchValue={searchValue}/>
 
           <Spacer mt={5} />
           <Box ref={componentRef}>

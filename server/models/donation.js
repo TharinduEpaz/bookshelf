@@ -8,33 +8,58 @@ const donationRequest = sequelize.define('donationRequest', {
     defaultValue: DataTypes.UUIDV4, // Add this line to generate UUIDs
     allowNull: false,
   },
-  fullName: {
+  orgName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  nic: {
+  orgType: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  address: {
+  orgRegisteredNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  contactNumber: {
+  orgTelephone: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  email: {
+  orgAddress: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  orgEmail: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true, // Make sure emails are unique
   },
+  orgConfirmationDocument: {
+    defaultValue: "uploads/documents/default.pdf",
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  contactPersonName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  contactPersonPhone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  contactPersonEmail: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  contactPersonNIC: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   description: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
 }, {
-  // You can define more options here if needed
+
 });
 
 // Define associations if you have any, e.g., donationRequest.belongsTo(...)
@@ -48,5 +73,7 @@ const donationRequest = sequelize.define('donationRequest', {
 //     console.error('Error syncing donationRequest model:', error);
 //   }
 // })();
+
+//donationRequest.sync({  alter: true });
 
 module.exports = donationRequest;
