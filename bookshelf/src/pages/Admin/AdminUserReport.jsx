@@ -340,11 +340,35 @@ async function getAllUsers(role) {
          
     <div>
 
-    <Flex gap={10} alignItems={'center'}>
+    <Box
+      borderColor={'rgba(0, 0, 0, 0.20)'}
+      borderWidth={'0.5px'}
+      borderRadius={'10px'}
+      h="100%"
+      w="95%"
+      ml={35}
+      mt={1}
+      mb={40}
+    >
+
+  <Flex
+      gap={5}
+      alignItems={"center"}
+      justifyContent={"center"}
+      w={"100%"} 
+      flexWrap={"wrap"}
+    >  
+
+ </Flex>
+
+ <Box p={10}>
+             
+
+             <Flex gap={3} alignItems={'center'}>
 
    
     
-    <Text>Select By</Text>
+    <Text width={200} mt={5} ml={20}>Select By</Text>
 
           <Select 
             placeholder='First Name' 
@@ -404,6 +428,14 @@ async function getAllUsers(role) {
           </Select>
 
 
+          <Button 
+        ml={200}
+        mt={5}
+        colorScheme="blue" 
+        //onClick={generateTablePDF}
+        >
+          Generate User Details
+      </Button>
 
 
           </Flex>
@@ -425,125 +457,13 @@ async function getAllUsers(role) {
 />
 
 
-              {showSuccessAlert && (
-                <Alert status="success" mt={4}>
-                <AlertIcon />
-                User deleted successfully!
-                </Alert>
-                )}
-
-              {showUpdateSuccessAlert && (
-                <Alert status="success" mt={4}>
-                <AlertIcon />
-                User updated successfully!
-                </Alert>
-                )}
-
-
-
-
-      {/* View modal */}
-      {selectedUser && (
-        <Modal isOpen={!!selectedUser} onClose={handleCloseModal}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>User Details</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {/* Render user details here */}
-              <p>ID: {selectedUser.id}</p>
-              <p>First Name: {selectedUser.firstName}</p>
-              <p>Last Name: {selectedUser.lastName}</p>
-              <p>Email: {selectedUser.email}</p>
-              <p>User Type: {selectedUser.role}</p>
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" onClick={handleCloseModal}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
-
-
-  {/* Update modal */}
-  {updatedUserData && (
-    <Modal isOpen={isOpen || updateModalOpen} onClose={handleUpdateModalClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Update User</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Input
-            name="firstName"
-            placeholder="First Name"
-            value={updatedUserData.firstName}
-            onChange={handleInputChange}
-          />
-          <Input
-            name="lastName"
-            placeholder="Last Name"
-            value={updatedUserData.lastName}
-            onChange={handleInputChange}
-          />
-          <Input
-            name="email"
-            placeholder="Email"
-            value={updatedUserData.email}
-            onChange={handleInputChange}
-          />
-          
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" onClick={handleUpdate}>
-            Update
-          </Button>
-          <Button variant="ghost" onClick={handleUpdateModalClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  )}
-
-{/* Delete modal */}
-{deleteUserId && (
-      <Modal isOpen={deleteModalOpen} onClose={handleDeleteModalClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirm Delete</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            Are you sure you want to delete this user?
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="red" onClick={handleDelete}>
-              Delete
-            </Button>
-            <Button variant="ghost" onClick={handleDeleteModalClose}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    )}
-
-
-{/* <Button onClick={pdfGenerate}>Download</Button> */}
-
-      <Button 
-        mt={18}
-        ml={550}
-        colorScheme="blue" 
-        onClick={generateTablePDF}
-        >
-          Generate User Details
-      </Button>
+            </Box>
 
 
               </Box>
 
+
+              </Box>
               </div>
 
       </Box>

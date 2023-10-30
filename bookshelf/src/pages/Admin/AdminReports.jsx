@@ -78,7 +78,7 @@ export default function AdminReports() {
                 <Button ml={300}  colorScheme='blue'>User Details</Button>
                 </Link>
                 
-                <Link to="/admininventoryreports">
+                <Link to="/adminorderreport">
                 <Button ml={300} colorScheme='blue'>Order Details</Button>
                 </Link>
 
@@ -86,15 +86,15 @@ export default function AdminReports() {
                 <Button ml={300}  colorScheme='blue'>Inventory Details</Button>
                 </Link>
 
-                <Link to="/admininventoryreports">
+                <Link to="/admindonationreport">
                 <Button ml={300} colorScheme='blue'>Donations</Button>
                 </Link>
 
-                <Link to="/admininventoryreports">
+                <Link to="/adminsubscriptionreports">
                 <Button ml={300}  colorScheme='blue'>Subscriptions</Button>
                 </Link>
 
-                <Link to="/admininventoryreports">
+                <Link to="/adminsharingreport">
                 <Button ml={300} colorScheme='blue'>Book Sharing</Button>
                 </Link>
 

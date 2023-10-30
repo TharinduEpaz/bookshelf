@@ -85,6 +85,10 @@ import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
 import AdminReports from "./pages/Admin/AdminReports";
 import AdminInventoryReports from "./pages/Admin/AdminInventoryReports";
 import AdminUserReport from "./pages/Admin/AdminUserReport";
+import AdminSubscriptionReports from "./pages/Admin/AdminSubscriptionReports";
+import AdminDonationReport from "./pages/Admin/AdminDonationReport";
+import AdminSharingReports from "./pages/Admin/AdminSharingReports";
+import AdminOrderReport from "./pages/Admin/AdminOrderReport";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -223,6 +227,11 @@ function App() {
           <Route exact path="/adminreports" element={<AdminReports />}></Route>
           <Route exact path="/admininventoryreports" element={<AdminInventoryReports />}></Route>
           <Route exact path="/adminuserreport" element={<AdminUserReport />}></Route>
+          <Route exact path="/adminsubscriptionreports" element={<AdminSubscriptionReports />}></Route>
+          <Route exact path="/admindonationreport" element={<AdminDonationReport />}></Route>
+          <Route exact path="/adminsharingreport" element={<AdminSharingReports />}></Route>
+          <Route exact path="/adminorderreport" element={<AdminOrderReport />}></Route>
+
 
       
           {/* Moderator Routes */}

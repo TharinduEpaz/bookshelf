@@ -178,23 +178,25 @@ export default function AdminInventoryReports() {
   return (
     
     <Box
-    m={"auto"}
-    mt={10}
-    w="80%"
-    h="100%"
-    minH={800}
-    borderRadius="6px"
-    bg='rgba(255, 255, 255, 0.90)'
-    boxShadow="sm"
-    bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
-    // filter="blur(8px)"
-    backdropFilter="blur(14.5px)"
-    p={4}
+        m={"auto"}
+        mt={10}
+        w="100%"
+        h="100%"
+        minH={800}
+        borderColor={'rgba(0, 0, 0, 0.20)'}
+        borderWidth={'0.5px'}
+        borderRadius="6px"
+        bg='rgba(255, 255, 255, 0.90)'
+        boxShadow="sm"
+        bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(14.5px)"
+        p={8}
+        alignItems={"Center"}
+        justifyContent={"Center"}
+    >
 
-  >
 
-
-  <AdminSidebar />
 
   <div>
   <Box
@@ -202,8 +204,8 @@ export default function AdminInventoryReports() {
       borderWidth={'0.5px'}
       borderRadius={'10px'}
       h="100%"
-      w="76%"
-      ml={270}
+      w="95%"
+      ml={35}
       mt={1}
       mb={40}
     >
@@ -219,12 +221,16 @@ export default function AdminInventoryReports() {
  </Flex>
 
           <Box p={10}>
+
+          <Text fontSize="lg" fontWeight={"bold"} mb={10} mt={2} align={"center"}>
+              Inventory Reports
+            </Text>
              
 
           <Flex gap={3} alignItems={'center'}>
 
 
-          <Text>Select By</Text>
+          <Text width={200} mt={5} ml={10}>Select By</Text>
 
           <Select 
             placeholder='All' 
@@ -305,6 +311,16 @@ export default function AdminInventoryReports() {
 
           </Select>
 
+          <Button 
+        ml={10}
+        mt={5}
+        colorScheme="blue" 
+        //onClick={generateTablePDF}
+        >
+          Generate Inventory Details
+      </Button>
+
+
 
       </Flex>
 
@@ -320,17 +336,6 @@ export default function AdminInventoryReports() {
               </Box>
             </Box>
 
-
-
-            <Button 
-        mt={18}
-        ml={620}
-        mb={20}
-        colorScheme="blue" 
-        onClick={generateTablePDF}
-        >
-          Generate Inventory Details
-      </Button>
 
 
  </Box>
