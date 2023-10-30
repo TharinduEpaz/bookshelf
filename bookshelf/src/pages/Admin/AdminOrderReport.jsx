@@ -1,33 +1,28 @@
 import React from 'react'
-import AdminSidebar from "../../components/Admin/AdminSidebar";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+import {FaSearch} from 'react-icons/fa'
 
 import {
     Box, 
     Flex,
-    Card,
-    CardBody,
-    Icon,
     Spacer,
     Text,
-    StatGroup,
     Select,
-    Button
+    Button,
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from '@chakra-ui/react'
 
-import {
-  BiBookOpen,
-} from "react-icons/bi";
 
-//import { Link } from "react-router-dom";
-//import DateFilter from "../../components/Moderator/DateFilter";
-//import SearchPanel from "../../components/Moderator/SearchPanel";
-import AdminStatCard from '../../components/Admin/AdminStatCard';
-import AdminDtataTable from '../../components/Admin/AdminDtataTable';
+import AdminOrderReportViewTable from '../../components/Admin/AdminOrderReportViewTable';
 import { useEffect, useState } from "react";
 
 export default function AdminOrderReport() {
+
+  const [search, setSearch] = useState('');
 
   const columns = [
     "Order ID",
@@ -65,6 +60,65 @@ export default function AdminOrderReport() {
 
 
 
+    //Report generation
+
+  // Search Order Details Report
+ const generateSearchPDF = () => {
+  const doc = new jsPDF();
+  const totalPagesExp = "{total_pages_count_string}";
+
+  const columnsData = ["Order No", "Date", "Total Price (Rs.)", "Status"];
+
+  let orderNumber = 1;
+
+  //Filter by first name
+  const filteredList = list.filter((order) => order.totalPrice.toLocaleString().includes(search.toLocaleString()));
+
+  doc.autoTable({
+    head: [columnsData],
+    body: filteredList.map((order) => [orderNumber++, order.orderDate, order.totalPrice, order.orderStatus]),
+    startY: 20,
+    styles: {
+      font: "helvetica",
+      fontStyle: "bold",
+      fontSize: 10,
+      cellPadding: 5,
+      fillColor: [124, 195, 206],
+    },
+    columnStyles: {
+      0: { cellWidth: 30 },
+    },
+
+    didDrawPage: function (data) {
+      doc.text(
+        "Page " + data.pageCount,
+        data.settings.margin.left,
+        doc.internal.pageSize.height - 10
+      );
+      doc.setFontSize(10);
+    },
+
+    addPageContent: function (data) {
+      doc.text(
+        "Page " + data.pageCount,
+        data.settings.margin.left,
+        doc.internal.pageSize.height - 10
+      );
+    },
+  });
+
+  const totalPages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(10);
+    doc.text(180, 10, `Page ${i} of ${totalPages}`);
+  }
+
+  doc.save("Order_Details.pdf");
+};
+
+
+
 
 
   
@@ -94,6 +148,7 @@ export default function AdminOrderReport() {
 
 
   <div>
+
   <Box
       borderColor={'rgba(0, 0, 0, 0.20)'}
       borderWidth={'0.5px'}
@@ -117,9 +172,30 @@ export default function AdminOrderReport() {
 
           <Box p={10}>
              
-          <Text fontSize="lg" fontWeight={"bold"} mb={10} mt={2} align={"center"}>
+          <Text fontSize="lg" fontWeight={"bold"} mb={5} mt={2} align={"center"}>
               Order Reports
             </Text>
+
+
+    <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search By Price"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
 
           <Flex gap={3} alignItems={'center'}>
@@ -151,7 +227,7 @@ export default function AdminOrderReport() {
         ml={600}
         mt={5}
         colorScheme="blue" 
-        //onClick={generateTablePDF}
+        onClick={generateSearchPDF}
         >
           Generate Order Details
       </Button>
@@ -165,7 +241,11 @@ export default function AdminOrderReport() {
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
+                <AdminOrderReportViewTable 
+                  list={list} 
+                  columnNames={columns} 
+                  search={search}
+                  />
 
 
 

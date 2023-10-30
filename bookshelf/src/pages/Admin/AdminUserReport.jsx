@@ -1,7 +1,5 @@
 import React from 'react'
 import { useDisclosure } from '@chakra-ui/react'; 
-import SearchBar from '../../components/Admin/SearchBar';
-import { Alert, AlertIcon } from '@chakra-ui/react';
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
 import {FaSearch} from 'react-icons/fa'
@@ -14,15 +12,7 @@ import {
     Spacer,
     Text,
     Box,
-    Center,
     Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     IconButton,
     Input,
     InputGroup,
@@ -191,6 +181,10 @@ async function getAllUsers(role) {
  </Flex>
 
  <Box p={10}>
+
+            <Text fontSize="lg" fontWeight={"bold"} mb={5} mt={2} align={"center"}>
+              User Reports
+            </Text>
              
 
  <FormControl ml={10} mb={5}>
