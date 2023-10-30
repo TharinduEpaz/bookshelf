@@ -14,36 +14,23 @@ import {
   TabPanel,
   TabPanels,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StatCard from "../../components/Moderator/StatCard";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
 import DataTable from "../../components/Moderator/DataTable";
 import SearchPanel from "../../components/Moderator/SearchPanel";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Donations() {
   const org_columns = [
-    "ID",
-    "Name",
-    "Registered Date",
-    "email",
-    "Contact Number",
-  ];
-  const org_list = [
-    {
-      id: "n00001",
-      name: "ke/kehelwaththa M.V",
-      Date: "01.08.2023",
-      email: "kehelwaththamv@gmail.com",
-      contact_number: "0355689562",
-    },
-    {
-      id: "n00002",
-      name: "St. Joseph's College",
-      Date: "01.08.2023",
-      email: "josephscollege@gmail.com",
-      contact_number: "0111111111",
-    },
+    "Org. Registered No.",
+    "Org. Name",
+    "Org. Type",
+    "Org. Email",
+    "Contact Person Name",
+    "Contact Person Email",
+    "Status"
   ];
 
   const don_columns = [
@@ -69,6 +56,38 @@ export default function Donations() {
       org: "josephscollege@gmail.com",
     },
   ];
+
+  const [req_list, setReqList] = useState([]);
+
+  //URLs**************************
+  //get donations Request URL
+  const getDonationRequestsURL = "http://localhost:3000/api/v1/donations"
+
+  const getDonationRequests = async () => {
+    try {
+      const response = await axios.get(getDonationRequestsURL);
+      const jsonData = await response.data;
+
+      const mapData = jsonData.map((request) => ({
+        id: request.orgRegisteredNumber,
+        name: request.orgName,
+        type: request.orgType,
+        orgEmail: request.orgEmail,
+        cPerson: request.contactPersonName,
+        cPersonEmail: request.contactPersonEmail,
+        status: request.approval,
+      }));
+      setReqList(mapData);
+      console.log(mapData);
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getDonationRequests();
+  }, []);
 
   return (
     <>
@@ -131,14 +150,14 @@ export default function Donations() {
         <Box>
           <Tabs>
             <TabList>
-              <Tab>Oraganizations</Tab>
+              <Tab>Organaization Registration Requests</Tab>
               <Tab>Donations</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <SearchPanel name="Organizations" filter="organizations" />
+                <SearchPanel name="Organaization Registration Requests" filter="organizations" />
                 <Spacer mt={5} />
-                <DataTable list={org_list} columnNames={org_columns} />
+                <DataTable list={req_list} columnNames={org_columns} actions={"donReq"}/>
               </TabPanel>
               <TabPanel>
                 <SearchPanel name="Donations" filter="donations" />

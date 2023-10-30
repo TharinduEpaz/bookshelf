@@ -50,8 +50,57 @@ const getAllRequests = async (req, res, next) => {
     // res.send("Get all requests");
   };
 
+  //get request by reg number
+    const getRequestByRegNumber = async (req, res, next) => {
+        try {
+        const { regNumber } = req.params;
+        const donation = await donationModel.findOne({
+            where: {
+                orgRegisteredNumber: regNumber,
+            },
+        });
+        if (!donation) {
+            return next(
+            new CustomError(
+                statusCodes.StatusCodes.NOT_FOUND,
+                "Donation request not found"
+            )
+            );
+        }
+        res.json(donation);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Get request by reg number");
+    };
+
+    //update request
+    const updateRequest = async (req, res, next) => {
+        try {
+        const { id } = req.params;
+        const { approval } = req.body;
+
+        const donation = await donationModel.findByPk(id);
+
+        if (!donation) {
+            throw new CustomError.NotFoundError(
+            `Donation request with id ${id} was not found!`
+            );
+        }
+
+        const updatedDonation = await donation.update({ approval });
+
+        res.json(updatedDonation);
+        } catch (error) {
+        next(error);
+        }
+        // res.send("Update request");
+    };
+
 
 module.exports = {
     addRequest,
-    getAllRequests
+    getAllRequests,
+    getRequestByRegNumber,
+    updateRequest,
 }

@@ -58,6 +58,11 @@ const donationRequest = sequelize.define('donationRequest', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  approval: {
+    type: DataTypes.STRING,
+    defaultValue: "Pending",
+  }
+
 }, {
 
 });
@@ -74,6 +79,6 @@ const donationRequest = sequelize.define('donationRequest', {
 //   }
 // })();
 
-//donationRequest.sync({  alter: true });
+// donationRequest.sync({  alter: true });
 
 module.exports = donationRequest;
