@@ -432,9 +432,8 @@ const deleteSubscriptionPlan = async (req, res, next) => {
 };
 
 const extends_date = async (req, res, next) => {
-	const userId = req.user.userId; // Assuming you can extract userId from the request
-  console.log(userId);
-	const daysToAdd = 7; // You can change this value as needed
+	const userId = req.user.userId;
+	const weeksToAdd = req.body.weeks; // Extract the number of weeks from the request
 
 	try {
 		// Find the user's subscription
@@ -449,10 +448,10 @@ const extends_date = async (req, res, next) => {
 			throw new CustomError.NotFoundError("Subscription not found");
 		}
 
-		// Calculate the new orderDate by adding daysToAdd to the existing orderDate
+		// Calculate the new orderDate by adding weeksToAdd to the existing orderDate
 		const existingOrderDate = new Date(subscription.orderDate);
 		const newOrderDate = new Date(
-			existingOrderDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000
+			existingOrderDate.getTime() + weeksToAdd * 7 * 24 * 60 * 60 * 1000
 		);
 
 		// Update the subscription with the new orderDate
@@ -480,6 +479,7 @@ const extends_date = async (req, res, next) => {
 		next(error);
 	}
 };
+
 
 
 module.exports = {
