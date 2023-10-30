@@ -238,9 +238,9 @@ export default function AdminSubscriptionReports() {
   //onChange={(e) => setSelectedRole(e.target.value)} 
   //value={selectedRole}
  >
-    <option value='buyer'>Author</option>
-    <option value='moderator'>Genre</option>
-    <option value='moderator'>Category</option>
+    <option value='buyer'>Subscription Plan</option>
+    <option value='moderator'>Book</option>
+    <option value='moderator'>Status</option>
 
 </Select>
 
