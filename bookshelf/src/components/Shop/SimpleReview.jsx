@@ -245,6 +245,7 @@ const SimpleReview = ({ bookId }) => {
         <Stack direction="column" spacing={5}>
         
           {reviews && reviews.map((review, index) => {
+            
             return (
               <Box key={index} maxW="2xl">
                 <HStack spacing={3} mb={2}>

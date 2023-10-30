@@ -35,6 +35,7 @@ import {
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
 
+
 import { PrivateRoutes } from "./utils/privateRoutes";
 
 // import {Account, Cart, Home, Login, ProductPage, Register, Shop} from "./pages";

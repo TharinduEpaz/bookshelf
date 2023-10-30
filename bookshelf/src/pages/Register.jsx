@@ -22,6 +22,7 @@ import { useState } from "react";
 import { Fa500Px } from "react-icons/fa";
 import axiosInstance from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -211,15 +212,18 @@ export default function SignupCard() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    pattern="^(?=.*\d)(?=.*[A-Z]).{8,12}$"
+                    title="Password must be 8-12 characters, include at least one uppercase letter and one digit."
                   />
                   <InputRightElement h={"full"}>
                     <Button
+                      size={''}
                       variant={"ghost"}
                       onClick={() =>
                         setShowPassword((showPassword) => !showPassword)
                       }
                     >
-                      {showPassword ? <Fa500Px /> : <Fa500Px />}
+                      {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>

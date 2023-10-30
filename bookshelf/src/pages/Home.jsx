@@ -206,7 +206,7 @@ function Home() {
             
           >
             {Object.keys(itemBoxDetails).map((item) => (
-              <Link to={itemBoxDetails[item].link}>
+              <Link to={itemBoxDetails[item].link} key={item}>
                 <HomeItemBox
                   key={item}
                   header={itemBoxDetails[item].header}
@@ -235,7 +235,7 @@ function Home() {
             mt={10}
             flexWrap={{ base: "wrap", md: "wrap", lg: "wrap" }}
           >
-            {books.map((book) => (
+            {books.map((book,index) => (
               
               <BookCard
                 key={book.id}
