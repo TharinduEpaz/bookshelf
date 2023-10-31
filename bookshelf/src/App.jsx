@@ -92,6 +92,7 @@ import AdminOrderReport from "./pages/Admin/AdminOrderReport";
 import AdminUsersReportViewTable from "./components/Admin/AdminUsersReportViewTable";
 import AdminOrderReportViewTable from "./components/Admin/AdminOrderReportViewTable";
 import AdminInventoryReportViewTable from "./components/Admin/AdminInventoryReportViewTable";
+import AdminSharingReportViewTable from "./components/Admin/AdminSharingReportViewTable";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -237,6 +238,7 @@ function App() {
           <Route exact path="/adminusersreportviewtable" element={<AdminUsersReportViewTable />}></Route>
           <Route exact path="/adminorderreportviewtable" element={<AdminOrderReportViewTable />}></Route>
           <Route exact path="/admininventoryreportviewtable" element={<AdminInventoryReportViewTable />}></Route>
+          <Route exact path="/adminsharingreportviewtable" element={<AdminSharingReportViewTable />}></Route>
 
 
       

@@ -1,86 +1,154 @@
 import React from 'react'
-import AdminSidebar from "../../components/Admin/AdminSidebar";
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
+import {FaSearch} from 'react-icons/fa'
 
 import {
     Box, 
     Flex,
-    Card,
-    CardBody,
-    Icon,
     Spacer,
     Text,
-    StatGroup,
     Select,
-    Button
+    Button,
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from '@chakra-ui/react'
 
 import {
   BiBookOpen,
 } from "react-icons/bi";
 
-//import { Link } from "react-router-dom";
-//import DateFilter from "../../components/Moderator/DateFilter";
-//import SearchPanel from "../../components/Moderator/SearchPanel";
-import AdminStatCard from '../../components/Admin/AdminStatCard';
-import AdminDtataTable from '../../components/Admin/AdminDtataTable';
+import AdminSharingReportViewTable from '../../components/Admin/AdminSharingReportViewTable';
 import { useEffect, useState } from "react";
 
 export default function AdminSharingReports() {
 
+  const [search, setSearch] = useState('');
 
   const columns = [
     "Sharing ID",
-    "Date",
+    "Customer Name",
     "Customer Id",
     "Book",
-    "Status",
+    //"Image",
+    "Details",
+    "Sharing List",
   ];
 
-  const list = [
-    {
-      id: "s0001",
-      date: "2023-05-10",
-      cid: "c0001",
-      book: "Anne",
-      status: "Shared"
-    },
-    {
-      id: "s0002",
-      date: "2023-03-14",
-      cid: "c0005",
-      book: "Sherlock Holmes",
-      status: "Shared"
-    },
-    {
-      id: "s0003",
-      date: "2022-11-10",
-      cid: "c0003",
-      book: "Marry",
-      status: "Shared"
-    },
-    {
-      id: "s0004",
-      date: "2023-01-10",
-      cid: "c0009",
-      book: "Jane ",
-      status: "Shared"
-    },
-    {
-      id: "s0005",
-      date: "2023-05-10",
-      cid: "c0010",
-      book: "Hali",
-      status: "Shared"
-    },
-    {
-      id: "s0006",
-      date: "2023-07-24",
-      cid: "c0081",
-      book: "Oliver Twist",
-      status: "Shared"
-    },
+  const [list, setSharingList] = useState([]);
+
+  //Get all sharing
+  const getSharing = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/bookSharing")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((share) => ({
+        id: share.id,
+        userName: share.userName,
+        userId: share.userId,
+        bookName: share.bookName,
+        //image: share.image,
+        details: share.details,
+        listOfBooks: share.listOfBooks
+        // listOfBooks: share.listOfBooks.map(book => book.slice(1, -1)).join(',')
+      }));
+      setSharingList(filteredData);
+
+    } catch (error) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getSharing();
+  },
+  [])
+
+
+    //Report Generation
+
+    // All Sharing Details Report
+  const generateSearchPDF = () => {
+    const doc = new jsPDF();
+    const totalPagesExp = "{total_pages_count_string}";
   
+    const columnsData = [
+    "", 
+    "Customer Name",
+    "Customer Id",
+    "Book",
+    //"Image",
+    "Details",
+    "Sharing List",
   ];
+  
+    let sharingNumber = 1; // Initialize the sharing number to 1
+  
+    //Filter by Customer Name
+    const filteredList = list.filter((sharing) => 
+      sharing.userName.toLowerCase().includes(search.toLowerCase()));
+
+    doc.autoTable({
+      head: [columnsData], // The header row
+      body: filteredList.map((sharing) => [
+        sharingNumber++, 
+        sharing.userName,
+        sharing.userId,
+        sharing.bookName,
+        sharing.details,
+        sharing.listOfBooks
+      ]), // The data rows with sequential sharing numbers
+      
+      startY: 20, // Y-position to start the table
+      styles: {
+        // Style the table
+        font: "helvetica",
+        fontStyle: "bold",
+        fontSize: 8,
+        cellPadding: 3,
+        fillColor: [124, 195, 206], // Light blue background color
+      },
+      columnStyles: {
+        0: { cellWidth: 8 }, 
+      },
+  
+      didDrawPage: function (data) {
+        // Add page number at the bottom
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        doc.setFontSize(10);
+      },
+  
+      addPageContent: function (data) {
+        // Add total pages count to the header
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        // doc.text("Total Pages: " + totalPagesExp, 100, 10);
+      },
+    });
+  
+    // Calculate total pages
+    const totalPages = doc.internal.getNumberOfPages();
+    // Set the total pages count on each page
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text(180, 10, `Page ${i} of ${totalPages}`);
+    }
+  
+    // Save the PDF with a name
+    doc.save("Book_Sharing_Details.pdf");
+  };
+
 
 
  
@@ -136,6 +204,27 @@ export default function AdminSharingReports() {
             </Text>
 
 
+  <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search User"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
+
+
           <Flex gap={3} alignItems={'center'}>
 
 
@@ -165,7 +254,7 @@ export default function AdminSharingReports() {
         ml={500}
         mt={5}
         colorScheme="blue" 
-        //onClick={generateTablePDF}
+        onClick={generateSearchPDF}
         >
           Generate Book Sharing Details
       </Button>
@@ -177,11 +266,14 @@ export default function AdminSharingReports() {
               <Spacer mt={10} />
 
               <Box>
-                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
+                <AdminSharingReportViewTable 
+                  list={list} 
+                  columnNames={columns} 
+                  search={search}
+                  />
 
 
 
