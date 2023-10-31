@@ -203,11 +203,13 @@ const create_order_by_webhook_data = async (data) => {
 
   try {
     const currentDate = new Date();
+    const deliveryDate = new Date(currentDate);
+    deliveryDate.setDate(currentDate.getDate() + 5);
     const customer = await stripe.customers.retrieve(data.customer);
 
     if (customer.metadata.subscription == 1) {
       const subscriptionOrder = await subscriptionOrderModel.create({
-        orderDate: currentDate,
+      orderDate: deliveryDate,
       orderStatus: "pending",
       totalPrice: data.amount_subtotal / 100,
       user_id: customer.metadata.userId,
@@ -221,7 +223,7 @@ const create_order_by_webhook_data = async (data) => {
     }
     else{
       const order = await orderModel.create({
-        orderDate: currentDate,
+        orderDate: deliveryDate,
         orderStatus: "pending",
         totalPrice: data.amount_subtotal / 100,
         user_id: customer.metadata.userId,

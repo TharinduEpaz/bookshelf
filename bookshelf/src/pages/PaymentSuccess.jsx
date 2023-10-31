@@ -1,9 +1,15 @@
 import { Box, Text, Icon, Button, ButtonGroup } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
 const PaymentSuccess = () => {
+
+  useEffect(()=>{
+   localStorage.removeItem("cartItems")
+  },[])
+
   return (
     <Box
       height="80vh"
