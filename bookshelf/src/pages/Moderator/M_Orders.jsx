@@ -43,13 +43,25 @@ export default function Orders() {
     }
   };
 
+  //search bar data
+  const [searchData, setSerachData] = useState([]);
   const searchValue = (data) => {
     const filteredData = results.filter((order) => {
       return (
         order.id.toLowerCase().includes(data.toLowerCase())
       );
     });
-    setList(filteredData);
+    setSerachData(filteredData);
+  }
+
+  //filter data
+  
+  const filterValue = (data) => {
+    const filteredData = results.filter((order) => {
+      return (
+        order.orderStatus.toLowerCase().includes(data.toLowerCase())
+      );
+    });
   }
 
   //set Filtered list
@@ -65,6 +77,15 @@ export default function Orders() {
     }));
     setOrderList(filterData);
   }
+
+  useEffect(() => {
+    if (searchData.length > 0) {
+      setList(searchData);
+    } else {
+      setList(results);
+    }
+  }, [searchData, results]);
+  
 
   //get orders count
   const [count, setCount] = useState(0);
@@ -169,7 +190,7 @@ export default function Orders() {
         <Spacer mt={10} />
 
         <Box>
-          <SearchPanel name={"Customer Orders"} filter={"orders"} setOrderSearchValue={searchValue} />
+          <SearchPanel name={"Customer Orders"} filter={"orders"} setOrderSearchValue={searchValue}  setChildValue={filterValue}/>
 
           <Spacer mt={5} />
 
