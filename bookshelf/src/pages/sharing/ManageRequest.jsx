@@ -110,13 +110,13 @@ function ManageRequest() {
               <Td>{requestDetails[item].details}</Td>
 
               <Td colSpan={2} align="center">
-                <Button
+                {/* <Button
                   colorScheme="purple"
                   variant={"outline"}
                   borderRadius={15}
                 >
                   Edit
-                </Button>
+                </Button> */}
                 <Button onClick = {
                   () => {
                     onOpen()
