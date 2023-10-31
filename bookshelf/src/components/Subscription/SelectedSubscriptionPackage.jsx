@@ -95,7 +95,7 @@ function SelectedSubscriptionPackage() {
 
     return (
         <Grid>
-            <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} py={7} px={12}>
+            <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} bg={'white'} py={7} px={12}>
                 <Box>
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
@@ -106,7 +106,7 @@ function SelectedSubscriptionPackage() {
 
             </GridItem>
 
-            <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} py={7} px={12} marginTop={5}>
+            <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} bg={'white'} py={7} px={12} marginTop={5}>
                 <Text fontSize={'21'} color={'#204974'} as={'b'}>
                     Next Delivery
                 </Text>

@@ -27,6 +27,11 @@ function bookDetails() {
     const [bookDetails, setBookDetails] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+    const[isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+    const handleCheckboxChange = (e) => {
+        setIsCheckboxChecked(e.target.checked);
+    };
 
     let count = 0;
     useEffect(() => {
@@ -217,13 +222,14 @@ function bookDetails() {
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={6} textColor={"#204974"}>
-                    <Checkbox>
-                        <Text  fontSize={17}>I agree to the terms and conditions</Text>
+                    <Checkbox colorScheme="blue" isChecked={isCheckboxChecked} onChange={handleCheckboxChange}>
+                        <Text fontSize={17}>I agree to the terms and conditions</Text>
                     </Checkbox>
                 </GridItem>
+
                 <GridItem rowSpan={1} colSpan={1}>
                     <RouterLink to="#">
-                        <Paybutton items={bookDetails[0]} totalPrice={subscriptionAmount}/>
+                        <Paybutton items={bookDetails[0]} totalPrice={subscriptionAmount} isDisabled={!isCheckboxChecked} />
                     </RouterLink>
                 </GridItem>
             </Grid>
