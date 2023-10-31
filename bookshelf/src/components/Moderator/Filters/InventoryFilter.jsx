@@ -22,7 +22,20 @@ import {
 
 import { BiFilterAlt } from "react-icons/bi";
 
-export default function InventoryFilter() {
+export default function InventoryFilter(props) {
+  const submitFilterData = (event) => {
+    event.preventDefault();
+    const data = {
+      inStock: event.target.inStock.checked,
+      outOfStock: event.target.outOfStock.checked,
+      genre: event.target.genre.value,
+      amountFrom: event.target.amountFrom.value,
+      amountTo: event.target.amountTo.value,
+    };
+
+    // Call the parent's submitFilterData function and pass the filter data
+    props.submitFilterData(data);
+  };
   return (
     <>
       <Menu>
@@ -43,49 +56,51 @@ export default function InventoryFilter() {
             Filter
           </Text>
           <Stack>
-            <FormControl>
-              <FormLabel>Status</FormLabel>
-              <HStack pl={5}>
-                <Checkbox>Published</Checkbox>
-                <Spacer />
-                <Checkbox>Unpublished</Checkbox>
-              </HStack>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Genre</FormLabel>
-              <Select pl={5}>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Amount</FormLabel>
-              <HStack pl={5}>
-                <Stack>
-                  <FormLabel>From</FormLabel>
-                  <NumberInput>
-                    <NumberInputField placeholder="0.00" />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Stack>
-                <Stack>
-                  <FormLabel>To</FormLabel>
-                  <NumberInput>
-                    <NumberInputField placeholder="0.00" />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Stack>
-              </HStack>
-            </FormControl>
-            <Button colorScheme="blue" borderRadius={10}>
-              Filter
-            </Button>
+            <form onSubmit={submitFilterData}>
+              <FormControl>
+                <FormLabel>Status</FormLabel>
+                <HStack pl={5}>
+                  <Checkbox>In Stock</Checkbox>
+                  <Spacer />
+                  <Checkbox>Out of Stock</Checkbox>
+                </HStack>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Genre</FormLabel>
+                <Select pl={5}>
+                  <option value="option1">Option 1</option>
+                  <option value="option2">Option 2</option>
+                </Select>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Amount</FormLabel>
+                <HStack pl={5}>
+                  <Stack>
+                    <FormLabel>From</FormLabel>
+                    <NumberInput>
+                      <NumberInputField placeholder="0.00" />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </Stack>
+                  <Stack>
+                    <FormLabel>To</FormLabel>
+                    <NumberInput>
+                      <NumberInputField placeholder="0.00" />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </Stack>
+                </HStack>
+              </FormControl>
+              <Button colorScheme="blue" borderRadius={10} type="submit">
+                Filter
+              </Button>
+            </form>
           </Stack>
         </MenuList>
       </Menu>
