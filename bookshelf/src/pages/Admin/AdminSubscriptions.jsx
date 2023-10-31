@@ -3,12 +3,8 @@ import jsPDF from 'jspdf';
 import "jspdf-autotable";
 
 import {
-  Box,
-  Card,
-  CardBody,
+  Box, 
   Flex,
-  Icon,
-  StatGroup,
   Text,
   Spacer,
   Button,
@@ -28,19 +24,15 @@ import { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { Alert, AlertIcon } from "@chakra-ui/react";
 import axios from "axios";
-
-
-import { BiBookOpen } from "react-icons/bi";
-
-import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminStatCard from "../../components/Admin/AdminStatCard";
-import AdminDtataTable from "../../components/Admin/AdminDtataTable";
+import SearchBar from '../../components/Admin/SearchBar';
 import AdminSubscriptionPlans from "../../components/Admin/AdminSubscriptionPlans";
 
-export default function AdminSubscriptions() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // Subscription plans
+export default function AdminSubscriptions() {
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  
+     // Subscription plans
   const planColumnNames = [
     "Subscription",
     " Plans ",
@@ -120,161 +112,40 @@ export default function AdminSubscriptions() {
   };
 
 
-
-
-
-
-  // Subscriptions
-  const columns = [
-    "Customer Id",
-    "Subscription plan",
-    "Book",
-    "Tracking ID",
-    "Actions",
-  ];
-
-  const list = [
-    {
-      id: "c0001",
-      plan: "Book Reader",
-      book: "Anne",
-      tracking_id: "10",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0002",
-      plan: "Book Lover",
-      book: "Village By The Sea",
-      tracking_id: "15",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0003",
-      plan: "Book Worm",
-      book: "Mary",
-      tracking_id: "30",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0004",
-      plan: "Book Lover",
-      book: "Anne",
-      tracking_id: "20",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0005",
-      plan: "Book Lover",
-      book: "Sheli",
-      tracking_id: "17",
-      actions: "In-Progress",
-    },
-  ];
-
   return (
+
     <Box
-      m={"auto"}
-      mt={10}
-      w="80%"
-      h="100%"
-      minH={800}
-      borderRadius="6px"
-      bg="rgba(255, 255, 255, 0.90)"
-      boxShadow="sm"
-      bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
-      backdropFilter="blur(14.5px)"
-      p={4}
+        m={"auto"}
+        mt={10}
+        w="100%"
+        h="100%"
+        minH={800}
+        borderColor={'rgba(0, 0, 0, 0.20)'}
+        borderWidth={'0.5px'}
+        borderRadius="6px"
+        bg='rgba(255, 255, 255, 0.90)'
+        boxShadow="sm"
+        bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
+        // filter="blur(8px)"
+        backdropFilter="blur(14.5px)"
+        p={8}
+        alignItems={"Center"}
+        justifyContent={"Center"}
     >
-      <AdminSidebar />
 
-      <div>
-        <Box
-          borderColor={"rgba(0, 0, 0, 0.20)"}
-          borderWidth={"0.5px"}
-          borderRadius={"10px"}
-          h="100%"
-          w="76%"
-          ml={270}
-          mt={1}
-          p={5}
-          mb={40}
-        >
-          <Flex
-            gap={5}
-            alignItems={"center"}
-            justifyContent={"center"}
-            w={"100%"}
-            flexWrap={"wrap"}
-          ></Flex>
 
-          <Box p={10}>
-            <Flex>
-              <Text fontSize="lg" fontWeight={"bold"}>
-                Subscriptions Summary
-              </Text>
-              <Spacer />
-            </Flex>
+    <Flex gap={10} alignItems={'center'}>
 
-            <Flex gap={5}>
-              <Card
-                mt={10}
-                p={2}
-                pl={5}
-                pr={5}
-                boxShadow="sm"
-                borderRadius="md"
-                bgColor={"#EDF2F7"}
-                w={"fit-content"}
-              >
-                <CardBody>
-                  <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
-                  <StatGroup gap={50}>
-                    <AdminStatCard
-                      lable="All Subscriptions"
-                      value="200"
-                      type="increase"
-                      percentage="23.36"
-                    />
-                  </StatGroup>
-                </CardBody>
-              </Card>
-
-              <Card
-                mt={10}
-                p={2}
-                pl={2}
-                pr={2}
-                boxShadow="sm"
-                borderRadius="md"
-                bgColor={"#EDF2F7"}
-                w={"fit-content"}
-              >
-                <CardBody>
-                  <Flex justifyContent={"space-between"}>
-                    <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
-                    <Select width={"100px"} ml={10}>
-                      <option value="option1">All</option>
-                      <option value="option2">This week</option>
-                      <option value="option3">This Month</option>
-                    </Select>
-                  </Flex>
-                  <StatGroup gap={50}>
-                    <AdminStatCard
-                      lable="New Subscriptions"
-                      value="40"
-                      type="increase"
-                      percentage="23.36"
-                    />
-                  </StatGroup>
-                </CardBody>
-              </Card>
-            </Flex>
+    <SearchBar/>
+     
+    </Flex>
+    
+      
+           
+              <Spacer mt={5} />
+              
 
             {/* Table1: Subscription Plans Details Table */}
-            <Text fontSize="lg" fontWeight={"bold"} mb={2} mt={10}>
-              Subscription Plans Details
-            </Text>
-
 
             {error && (
               <Alert status="error">
@@ -292,7 +163,7 @@ export default function AdminSubscriptions() {
 
 
        
-            <Button onClick={onOpen} ml={380} mt={2} mb={5} colorScheme="blue">
+            <Button onClick={onOpen} ml={450} mt={2} mb={5} colorScheme="blue">
               + Add New Subscription Plan
             </Button>
 
@@ -365,7 +236,7 @@ export default function AdminSubscriptions() {
                   variant='solid' 
                   mt={10} 
                   mr={5} 
-                  ml={10} 
+                  ml={5} 
                   mb={10}>
                   Save
                   </Button>
@@ -382,18 +253,17 @@ export default function AdminSubscriptions() {
             </Modal>
             
 
-          
-
-
-                        <Box
+            <Box
+              ml={0}
               mt={0}
               p={2}
               pl={5}
               pr={5}
+              mb={100}
               boxShadow="sm"
               borderRadius="md"
               bgColor={"#EDF2F7"}
-              w={"fit-content"}
+              w={"100%"}
             >
               <AdminSubscriptionPlans
                 planList={planList}
@@ -401,21 +271,16 @@ export default function AdminSubscriptions() {
               />
             </Box>
 
-            <Spacer mt={10} />
 
-            {/* Table2: Subscription Details Table */}
-            <Text fontSize="lg" fontWeight={"bold"} mb={2} mt={10}>
-              Subscription Details
-            </Text>
 
-            <Box>
-              {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
-              <Spacer mt={5} />
-              <AdminDtataTable list={list} columnNames={columns} />
+
             </Box>
-          </Box>
-        </Box>
-      </div>
-    </Box>
+         
+      
+    
+
+
+
+   
   );
 }
