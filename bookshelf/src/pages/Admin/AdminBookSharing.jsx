@@ -12,7 +12,8 @@ import {
     Spacer,
     Text,
     StatGroup,
-    Select
+    Select,
+    Button
 } from '@chakra-ui/react'
 
 import {
@@ -65,6 +66,84 @@ export default function AdminBookSharing() {
     getSharing();
   },
   [])
+
+
+    //Report Generation
+
+    // All Sharing Details Report
+  const generateTablePDF = () => {
+    const doc = new jsPDF();
+    const totalPagesExp = "{total_pages_count_string}";
+  
+    const columnsData = [
+    "", 
+    "Customer Name",
+    "Customer Id",
+    "Book",
+    //"Image",
+    "Details",
+    "Sharing List",
+  ];
+  
+    let sharingNumber = 1; // Initialize the sharing number to 1
+  
+    doc.autoTable({
+      head: [columnsData], // The header row
+      body: list.map((sharing) => [
+        sharingNumber++, 
+        sharing.userName,
+        sharing.userId,
+        sharing.bookName,
+        sharing.details,
+        sharing.listOfBooks
+      ]), // The data rows with sequential sharing numbers
+      
+      startY: 20, // Y-position to start the table
+      styles: {
+        // Style the table
+        font: "helvetica",
+        fontStyle: "bold",
+        fontSize: 8,
+        cellPadding: 3,
+        fillColor: [124, 195, 206], // Light blue background color
+      },
+      columnStyles: {
+        0: { cellWidth: 8 }, 
+      },
+  
+      didDrawPage: function (data) {
+        // Add page number at the bottom
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        doc.setFontSize(10);
+      },
+  
+      addPageContent: function (data) {
+        // Add total pages count to the header
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        // doc.text("Total Pages: " + totalPagesExp, 100, 10);
+      },
+    });
+  
+    // Calculate total pages
+    const totalPages = doc.internal.getNumberOfPages();
+    // Set the total pages count on each page
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text(180, 10, `Page ${i} of ${totalPages}`);
+    }
+  
+    // Save the PDF with a name
+    doc.save("Book_Sharing_Details.pdf");
+  };
 
 
 
@@ -179,10 +258,18 @@ export default function AdminBookSharing() {
                 </Text>
                 <AdminDtataTable list={list} columnNames={columns} />
 
-
-
               </Box>
             </Box>
+
+      <Button 
+        mt={18}
+        ml={520}
+        mb={20}
+        colorScheme="blue" 
+        onClick={generateTablePDF}
+        >
+          Generate Book Sharing Details
+      </Button>
 
 
  </Box>
