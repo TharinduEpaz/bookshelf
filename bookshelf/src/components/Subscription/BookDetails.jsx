@@ -74,8 +74,6 @@ function bookDetails() {
             console.log(response);
             setBookDetails(response.data[0].books)
             setIsLoading(false);
-            
-
         } catch (error) {
             console.log(error);
             console.log("ss");
@@ -238,7 +236,7 @@ function bookDetails() {
 const Paybutton = (props) => {
     const { user } = useContext(userContext);
     const cartItems = Array(props.items)
-    console.log(cartItems);
+    // console.log(cartItems);
     const totalPrice = props.totalPrice
     const [isLoading,setIsLoading] = useState(false)
 

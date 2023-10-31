@@ -151,20 +151,10 @@ const extendDate = async (req, res, next) => {
   const userId = req.user.userId;
 
 	try {
-		// const paymentIntent = await stripe.paymentIntents.create({
-		// 	amount: amount,
-		// 	currency: "lkr",
-		// 	payment_method_types: ["card"],
-		// 	metadata: {
-		// 		order_id: 123,
-		// 		order_type: "extension",
-		// 		extension_time: extension,
-		// 	},
-		// });
     const customer = await stripe.customers.create({
       metadata:{
         userId: userId,
-        extension: '1',
+        extension: extension,
       }
     })
 
@@ -179,7 +169,7 @@ const extendDate = async (req, res, next) => {
 					product_data: {
 						name: "Total Amount", // You can name this as you like
 					},
-					unit_amount: 20000, // The total amount in cents (e.g., $10.99)
+					unit_amount: amount*100, // The total amount in cents (e.g., $10.99)
 				},
 				quantity: 1, // Set quantity to 1 for the total amount
 			},

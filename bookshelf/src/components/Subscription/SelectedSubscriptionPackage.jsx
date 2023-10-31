@@ -17,7 +17,7 @@ import {
     AlertDialogOverlay,
     AlertDialogCloseButton,
     useDisclosure,
-    Spinner,
+    Spinner
 
 } from "@chakra-ui/react";
 
@@ -33,13 +33,18 @@ import { Link as RouterLink } from "react-router-dom";
 function SelectedSubscriptionPackage() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+    const [extendDate, setExtendDate] = useState("");
+    const [orderDate, setOrderDate] = useState(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [isLoading, setIsLoading] = useState(false);
     const cancelRef = React.useRef()
 
+   
 
     useEffect(() => {
         const getCurrentSubscription = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions/getMySubscription",
                     {
@@ -47,12 +52,35 @@ function SelectedSubscriptionPackage() {
                     }
                 );
                 setSubscriptionDetails(response);
+                //console.log("hel");
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
         };
         getCurrentSubscription();
+
+        const getOrderDate = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getOrderDate",
+                    {
+                        withCredentials: true
+                    }
+                );
+                
+                setOrderDate(response);
+                console.log(response.data.orderDate);
+                response && setExtendDate(response.data.orderDate);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getOrderDate();
     }, []);
+
 
     let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
     let currentSubscriptionIcon = "";
@@ -64,9 +92,6 @@ function SelectedSubscriptionPackage() {
     } else if (currentSubscription === "Book Lover") {
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
-    // else {
-    //     currentSubscriptionIcon = <Text color={'red'} fontSize={20} marginTop={5} ml={5}>No subscriptions</Text>
-    // }
 
     return (
         <Grid>
@@ -75,6 +100,7 @@ function SelectedSubscriptionPackage() {
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
                     </Text>
+                    {isLoading && <Spinner />}
                     {currentSubscriptionIcon}
                 </Box>
 
@@ -104,20 +130,17 @@ function SelectedSubscriptionPackage() {
                             Are you sure you want to exchange your delivery date?
                         </AlertDialogBody>
                         <AlertDialogFooter>
-                            {/* <Button ref={cancelRef} onClick={onClose}>
-                                No
-                            </Button> */}
-                            <RouterLink to="#">
-                                <W1Button  totalPrice= {250} />
-                            </RouterLink>
-                            <Button colorScheme='red' ml={3}>
-                                1 week
-                            </Button><Button colorScheme='red' ml={3}>
-                                2 week
-                            </Button>
-                            <Button colorScheme='red' ml={3}>
-                                1 month
-                            </Button>
+                                <RouterLink to="#">
+                                    <W1Button totalPrice={200} extension={1} />
+                                </RouterLink>
+                                <RouterLink to="#">
+                                    <W2Button totalPrice={250} extension={2} />
+                                </RouterLink>
+                                <RouterLink to="#">
+                                    <W4Button totalPrice={300} extension={4} />
+                                </RouterLink>
+                            
+                           
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
@@ -128,7 +151,8 @@ function SelectedSubscriptionPackage() {
                     </GridItem>
                     <GridItem colSpan={3}>
                         <Text as={'b'} fontSize={'22'}>
-                            2023-08-25
+                            {isLoading && <Spinner />}
+                            {extendDate.slice(0,10)}
                         </Text>
                     </GridItem>
                 </Grid>
@@ -146,10 +170,42 @@ function SelectedSubscriptionPackage() {
 
 
 const W1Button = (props) => {
-    const { user } = useContext(userContext);
-    const cartItems = Array(props.items)
-    console.log(cartItems);
+
     const totalPrice = props.totalPrice
+    const extension = props.extension
+    const [isLoading, setIsLoading] = useState(false)
+
+    console.log(totalPrice);
+    console.log(extension)
+
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axiosInstance.post('/orders/extenddate', {
+               amount: totalPrice,
+               extension: extension
+            });
+            //console.log(response);
+            window.location.href = response.data.url;
+            setIsLoading(false)
+
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    };
+
+    return (
+        <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
+            {isLoading && <Spinner />}
+            1 week
+        </Button>
+    )
+};
+
+const W2Button = (props) => {
+    const totalPrice = props.totalPrice;
+    const extension = props.extension;
     const [isLoading, setIsLoading] = useState(false)
 
     console.log(totalPrice);
@@ -158,10 +214,8 @@ const W1Button = (props) => {
         setIsLoading(true)
         try {
             const response = await axiosInstance.post('/orders/extenddate', {
-               amount: 20000,
-               extension: 2 
-               
-        
+               amount: totalPrice,
+               extension: extension
             });
             console.log(response);
             window.location.href = response.data.url;
@@ -174,9 +228,42 @@ const W1Button = (props) => {
     };
 
     return (
-        <Button onClick={handleSubmit} colorScheme="purple">
+        <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
             {isLoading && <Spinner />}
-            1 week
+            2 week
+        </Button>
+    )
+};
+
+
+const W4Button = (props) => {
+    const totalPrice = props.totalPrice;
+    const extension = props.extension;
+    const [isLoading, setIsLoading] = useState(false)
+
+    console.log(totalPrice);
+
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axiosInstance.post('/orders/extenddate', {
+                amount: totalPrice,
+                extension: extension
+            });
+            console.log(response);
+            window.location.href = response.data.url;
+            setIsLoading(false)
+
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    };
+
+    return (
+        <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
+            {isLoading && <Spinner />}
+            4 week
         </Button>
     )
 };
