@@ -17,7 +17,8 @@ import {
     Card, CardHeader, CardBody, CardFooter,
     Flex,
     UnorderedList,
-    ListItem
+    ListItem,
+    Spinner
 } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react'
 import SelectLoverIcon from './SelectLoverIcon';
@@ -33,11 +34,13 @@ export default function ChangeSubscription() {
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
     const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] = useState(null);
     const [reloadPage, setReloadPage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const toast = useToast()
 
     useEffect(() => {
         const getSubscription = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions",
                     {
@@ -46,6 +49,7 @@ export default function ChangeSubscription() {
                 )
 
                 setSubscriptionType(response.data);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
@@ -56,6 +60,7 @@ export default function ChangeSubscription() {
     useEffect(() => {
         const getCurrentSubscription = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions/getMySubscription",
                     {
@@ -63,6 +68,7 @@ export default function ChangeSubscription() {
                     }
                 );
                 setSubscriptionDetails(response);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
@@ -93,11 +99,6 @@ export default function ChangeSubscription() {
                     withCredentials: true
                 }
             );
-            // console.log(subscriptionType)
-            // console.log("Subscription updated:", response.data);
-
-            // Perform any necessary actions after the subscription is updated
-
 
             setShowOtherSubscriptionPopup(false);
             // setReloadPage(true);
@@ -208,6 +209,7 @@ export default function ChangeSubscription() {
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
                     </Text>
+                    {isLoading && <Spinner />}
                     {currentSubscriptionIcon}
                 </Box>
                 <Button marginTop={24} mr={100} colorScheme='blue' onClick={onOpen}> Change Subscription </Button>
