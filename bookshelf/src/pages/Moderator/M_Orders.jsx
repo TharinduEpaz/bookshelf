@@ -66,6 +66,7 @@ export default function Orders() {
     setOrderList(filterData);
   }
 
+  //get orders count
   const [count, setCount] = useState(0);
   const getCount = async () => {
     try {
@@ -78,9 +79,24 @@ export default function Orders() {
     }
   };
 
+  // get pending orders count
+  const [pendingCount, setPendingCount] = useState(0);
+  const getPendingCount = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/orders/countPending");
+      const jsonData = await response.json();
+      setPendingCount(jsonData);
+      console.log(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+
   useEffect(() => {
     getOrders();
     getCount();
+    getPendingCount();
   }, []);
 
   if (isLoading) {
@@ -135,22 +151,15 @@ export default function Orders() {
                 <StatCard lable="All Orders" value={count} />
                 <StatCard
                   lable="Pending"
-                  value="20"
-                  type="increase"
-                  percentage="80"
+                  value={pendingCount}
+                  // type="increase"
+                  // percentage="80"
                 />
                 <StatCard
-                  lable="Completed"
-                  value="70"
-                  type="increase"
-                  percentage="80"
-                />
-                <StatCard
-                  color={"red"}
-                  lable="Canceled"
-                  value="0"
-                  type="increase"
-                  percentage="80"
+                  lable="Shipped"
+                  value={count - pendingCount}
+                  // type="increase"
+                  // percentage="80"
                 />
               </StatGroup>
             </CardBody>

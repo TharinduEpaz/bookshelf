@@ -7,6 +7,7 @@ const controller = require('../controllers/orderController')
 const checkoutController = require('../controllers/checkoutController')
 
 router.route('/').get(controller.getAllOrders); // get all orders
+router.route('/countPending').get(controller.countPendingOrders); // count pending orders
 router.route('/count').get(controller.countOrders); // count orders
 router.route('/').post(controller.addOrder); // add order
 router.route('/create-payment-intent').post(checkoutController.checkout); // create order
@@ -15,7 +16,6 @@ router.route('/checkout/create-payment-intent').post(checkoutController.createPa
 router.route('/:id').get(controller.getOrder); // get order by id
 router.route('/:id').put(controller.updateOrderStatus); // update order by id
 router.route('/:id').delete(controller.deleteOrder); // delete order by id
-router.route('/countPending').get(controller.countPendingOrders); // count pending orders
 
 
 module.exports = router;
