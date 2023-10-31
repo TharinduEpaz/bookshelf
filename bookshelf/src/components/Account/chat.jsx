@@ -6,8 +6,8 @@ import {
 } from "@chakra-ui/react";
 
 const chatContainerStyle = {
-  width: "600px",
-  height: "400px",
+  width: "100%",
+  height: "50%",
   border: "1px solid #ccc",
   overflow: "hidden",
   position: "relative",

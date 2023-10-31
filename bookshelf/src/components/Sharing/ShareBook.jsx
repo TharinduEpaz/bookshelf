@@ -17,6 +17,7 @@ import Search from "../../components/Sharing/Search";
 import Filter from "../../components/Sharing/Filter";
 import ShareBookDetails from "../../components/Sharing/ShareBookDetails";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ShareBook() {
   const [requestDetails, setRequestDetails] = useState({});
@@ -151,6 +152,9 @@ function ShareBook() {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
+              <Link to={'chat'}>
+              <Button colorScheme="blue" ml={5}>Chat</Button>
+              </Link>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
