@@ -1,4 +1,6 @@
 import React from 'react'
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
 
 import {
@@ -17,9 +19,7 @@ import {
   BiBookOpen,
 } from "react-icons/bi";
 
-//import { Link } from "react-router-dom";
-//import DateFilter from "../../components/Moderator/DateFilter";
-//import SearchPanel from "../../components/Moderator/SearchPanel";
+import { Link } from "react-router-dom";
 import AdminStatCard from '../../components/Admin/AdminStatCard';
 import AdminDtataTable from '../../components/Admin/AdminDtataTable';
 import { useEffect, useState } from "react";
@@ -29,84 +29,42 @@ export default function AdminBookSharing() {
 
   const columns = [
     "Sharing ID",
-    "Date",
+    "Customer Name",
     "Customer Id",
     "Book",
-    "Status",
+    //"Image",
+    "Details",
+    "Sharing List",
   ];
 
-  const list = [
-    {
-      id: "s0001",
-      date: "2023-05-10",
-      cid: "c0001",
-      book: "Anne",
-      status: "Shared"
-    },
-    {
-      id: "s0002",
-      date: "2023-03-14",
-      cid: "c0005",
-      book: "Sherlock Holmes",
-      status: "Shared"
-    },
-    {
-      id: "s0003",
-      date: "2022-11-10",
-      cid: "c0003",
-      book: "Marry",
-      status: "Shared"
-    },
-    {
-      id: "s0004",
-      date: "2023-01-10",
-      cid: "c0009",
-      book: "Jane ",
-      status: "Shared"
-    },
-    {
-      id: "s0005",
-      date: "2023-05-10",
-      cid: "c0010",
-      book: "Hali",
-      status: "Shared"
-    },
-    {
-      id: "s0006",
-      date: "2023-07-24",
-      cid: "c0081",
-      book: "Oliver Twist",
-      status: "Shared"
-    },
-  
-  ];
+  const [list, setSharingList] = useState([]);
 
+  const getSharing = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/bookSharing")
+      const jsonData = await response.json()
 
-  // const [list, setOrderList] = useState([]);
+      const filteredData = jsonData.map((share) => ({
+        id: share.id,
+        userName: share.userName,
+        userId: share.userId,
+        bookName: share.bookName,
+        //image: share.image,
+        details: share.details,
+        listOfBooks: share.listOfBooks
+        // listOfBooks: share.listOfBooks.map(book => book.slice(1, -1)).join(',')
+      }));
+      setSharingList(filteredData);
 
-  // const getOrders = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3000/api/v1/orders")
-  //     const jsonData = await response.json()
+    } catch (error) {
+      console.error(err.message);
+    }
+  }
 
-  //     const filteredData = jsonData.map((order) => ({
-  //       id: order.id,
-  //       orderDate: new Date(order.orderDate).toLocaleDateString(),
-  //       totalPrice: order.totalPrice.toLocaleString(),
-  //       orderStatus: order.orderStatus,
-  //       buyer_id: order.buyer_id
-  //     }));
-      
-  //     setOrderList(filteredData);
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getOrders();
-  // }, [])
-
+  useEffect(() => {
+    getSharing();
+  },
+  [])
 
 
 
