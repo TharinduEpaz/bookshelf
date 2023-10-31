@@ -142,12 +142,12 @@ function bookDetails() {
 
                 {count > 0 && count < 3 &&
                     (
-                        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50 }}>
+                        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 100 }}>
                             <CardHeader>
                                 <Heading size='md' fontSize={20} color={"blue.400"}> Add Books </Heading>
                             </CardHeader>
                             <CardBody>
-                            <BsFillArrowDownCircleFill  size={75}/>
+                            <BsFillArrowDownCircleFill color="#204974"  size={75} />
                             </CardBody>
                             <CardFooter>
                                 <RouterLink to="/selectPackage/selectBook">
@@ -168,7 +168,7 @@ function bookDetails() {
                 }
                 
                 {bookDetails.length === 0 && (
-                    <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50 }}>
+                    <Card  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50,}}>
                         <CardHeader>
                             <Heading size='md' fontSize={20} color={"red.400"}> No Books Selected</Heading>
                         </CardHeader>
@@ -200,9 +200,9 @@ function bookDetails() {
 
             
 
-            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(8,1fr)"} gap={"15px"} marginTop={10} marginLeft={18} >
+            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(8,1fr)"} gap={"5px"} marginTop={10} marginLeft={18} >
                 
-                <GridItem rowSpan={1} colSpan={2} textColor={"#204974"} fontSize={20} as={"b"}>
+                <GridItem rowSpan={1} colSpan={5} textColor={"#204974"} fontSize={20} as={"b"}>
                     <Icon viewBox='0 0 200 200' mt={-1}>
                         <path
                             fill='currentColor'
@@ -214,7 +214,7 @@ function bookDetails() {
                     </span>
                 </GridItem>
 
-                <GridItem justifyContent={"center"} rowSpan={1} colSpan={6} textColor={"#204974"} fontSize={20} as={"b"} ml={500}>
+                <GridItem justifyContent={"center"} rowSpan={1} colSpan={3} textColor={"#204974"} fontSize={20} as={"b"} ml={125} >
                     <span>
                         Rs { subscriptionAmount||'0'}.00
                     </span>

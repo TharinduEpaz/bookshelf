@@ -21,7 +21,7 @@ import {
 
 } from "@chakra-ui/react";
 
-import { BsFillCalendar2DateFill } from "react-icons/bs";
+import { BsCalendar2DayFill } from "react-icons/bs";
 import { Outlet } from 'react-router-dom';
 import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
@@ -110,7 +110,7 @@ function SelectedSubscriptionPackage() {
                 <Text fontSize={'21'} color={'#204974'} as={'b'}>
                     Next Delivery
                 </Text>
-                <Button onClick={onOpen} bg={'white'} variant={'outline'} borderRadius={15} marginLeft={10} w={'auto'}>
+                <Button onClick={onOpen} variant={'outline'}  colorScheme='blue' borderRadius={15} marginLeft={10} w={'auto'}>
                     <strong>Extended Date</strong>
                 </Button>
 
@@ -146,13 +146,13 @@ function SelectedSubscriptionPackage() {
                 </AlertDialog>
 
                 <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(10,1fr)'} marginTop={10} >
-                    <GridItem marginTop={'3px'}>
-                        <BsFillCalendar2DateFill size={'25px'} />
+                    <GridItem marginTop={'3px'} ml={10}>
+                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
                     </GridItem>
                     <GridItem colSpan={3}>
-                        <Text as={'b'} fontSize={'22'}>
+                        <Text as={'b'} fontSize={'22'} textColor={"#204974"}>
                             {isLoading && <Spinner />}
-                            {extendDate.slice(0,10)}
+                            {extendDate.slice(0,10) }
                         </Text>
                     </GridItem>
                 </Grid>

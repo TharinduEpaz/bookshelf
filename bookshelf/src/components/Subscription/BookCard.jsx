@@ -46,7 +46,7 @@ function Rating({ rating }) {
                     if (roundedRating - i >= 1) {
                         return (
                             <BsStarFill
-                                color={'gold'}
+                                color={'#D69E2E'}
                                 key={i}
                                 style={{ marginLeft: '1' }}
 
@@ -54,7 +54,7 @@ function Rating({ rating }) {
                         );
                     }
                     if (roundedRating - i === 0.5) {
-                        return <BsStarHalf key={i} color={'gold'} style={{ marginLeft: '1' }} />;
+                        return <BsStarHalf key={i} color={'#D69E2E'} style={{ marginLeft: '1' }} />;
                     }
                     return <BsStar key={i} style={{ marginLeft: '1' }} color={'gold'} />;
                 })}
@@ -157,12 +157,13 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
     };
 
     return (
-        <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
+        <Flex alignItems="center" justifyContent="center" >
             <Box
-                bg={useColorModeValue('white', 'gray.800')}
+                bg={useColorModeValue('rgba(2,2,2,0)', 'gray.800')}
                 maxW={'200px'}
-                h={'380px'}
+                h={'400px'}
                 borderWidth="1px"
+                shadow={'sm'}
                 rounded="lg"
 
                 position="relative">
@@ -181,7 +182,7 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                     alt={`Picture of ${name}`}
                     roundedTop="lg"
                     boxSize={'200px'}
-                    objectFit='cover'
+                    objectFit='scale-down'
 
                 />
 
@@ -219,12 +220,13 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
 
             {/* popup message */}
 
-            <Flex mt={5} gap={9}>
+            <Flex mt={450} gap={10} >
                 <RouterLink to={link}>
                     <Button
                         colorScheme="blue"
                         // variant={'outline'}
-                        borderRadius={15} onClick={onOpen}>
+                        borderRadius={15} onClick={onOpen}
+                        ml={-190}>
                         view
                     </Button>
                 </RouterLink>
@@ -235,7 +237,8 @@ function BookCard({ id,bookKey, name, author, price, imageURL, rating, onRemove,
                         colorScheme="black"
                         variant={'outline'}
                         borderRadius={15} 
-                        onClick={onOpen}>
+                        onClick={onOpen}
+                        ml={-140}>
                         Remove
                     </Button>
                 </RouterLink>
