@@ -99,24 +99,24 @@ export default function AdminComplaints() {
 
           <Box p={5}>
             <Flex>
-              <Text fontSize="lg" fontWeight={"bold"}>
+              <Text fontSize="lg" fontWeight={"bold"} ml={250} mb={5}>
                 Complaints
               </Text>
             </Flex>
 
             <Box>
 
-    <FormControl ml={10} mb={5}>
+    <FormControl ml={5} mb={2}>
     <InputGroup>
     <Input
       type="text"
-      placeholder="Search By Price"
+      placeholder="Search By Customer Name"
       colorScheme="blue"
       borderColor={'gray.200'}
       focusBorderColor={'white.100'}
       mt={5}
-      ml={100}    
-      w={900}
+      ml={5}    
+      w={"80%"}
       borderRadius={5}
       value={search}
       onChange={(e) => setSearch(e.target.value)}
