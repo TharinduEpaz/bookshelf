@@ -5,7 +5,9 @@ const router = Router();
 
 const controller = require('../controllers/shareRequestController')
 
-router.route('/requests').get(controller.getAllShareRequests);
+router.route('/').get(controller.getAllShareRequests);
+
+// router.route('/requests').get(controller.getAllShareRequests);
 router.route('/requests').post(controller.postShareRequest);
 
 module.exports = router;

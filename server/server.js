@@ -34,8 +34,8 @@ const orderRoutes = require("./routes/orderRoutes");
 const donationRoutes = require("./routes/donationRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const notificationsRoutes = require("./routes/notificationsRoutes");
-
-
+const subscriptionComplaintsRoutes = require("./routes/subscriptionRoutes");
+const userSubscriptionRoutes = require("./routes/subscriptionRoutes");
 
 //routes
 app.get("/", (req, res) => {
@@ -49,6 +49,7 @@ app.use('/api/v1/', authRoutes);
 app.use('/api/v1/users/', userRoutes);
 app.use('/api/v1/books/', bookRoutes);
 app.use('/api/v1/subscriptions/', subscriptionRoutes);
+
 app.use('/api/v1/bookSharing/', sharingRoutes);
 
 app.use('/api/v1/orders/', orderRoutes);
@@ -57,6 +58,10 @@ app.use('/api/v1/reviews/', reviewRoutes);
 
 
 app.use('/api/v1/notifications/', notificationsRoutes);
+
+
+app.use('/api/v1/subscriptionComplaints', subscriptionComplaintsRoutes);
+app.use('/api/v1/userSubscription', userSubscriptionRoutes);
 
 //middleware for error handling
 app.use(notFoundMIddleware);
