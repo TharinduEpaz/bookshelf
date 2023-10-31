@@ -1,6 +1,5 @@
 const {Router} = require("express");
-const {authenticateUser,authPermissions} = require('../middleware/authUser')
-const {imageUpload} = require('../middleware/imageUpload')
+const {authenticateUser,authPermissions} = require('../middleware/authUser');
 
 const router = Router();
 

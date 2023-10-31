@@ -8,47 +8,68 @@ const { log } = require("console");
 
 const addBook = async (req, res, next) => {
   try {
-    const {
+    if (!req.files) {
+      throw new CustomError.BadRequestError("No file uploaded");
+    }
+
+    let {
       title,
-      price,
       author,
+      price,
       ISBN,
       description,
       averageRating,
       stock,
+      typesAvailable,
       genre,
       language,
       featuredCategory,
     } = req.body;
-    console.log("function reached");
 
-    if (
-      !title ||
-      !price ||
-      !author ||
-      !ISBN ||
-      !description ||
-      !typesAvailable ||
-      !genre
-    ) {
-      throw new CustomError.BadRequestError(
-        "Please provide all required details"
+
+
+    const bookImage = req.files.image;
+      
+      if (!bookImage.mimetype.startsWith("image")) {
+        throw new CustomError.BadRequestError("Please upload an image file");
+      }
+
+      const maxSize = 1024 * 1024 * 5;
+
+      if (bookImage.size > maxSize) {
+        throw new CustomError.BadRequestError(
+          "Please upload an image less than 5MB"
+        );
+      }
+
+      //randomize file name
+      bookImage.name = `image_${Math.floor(Math.random() * 10000000)}${
+        path.parse(bookImage.name).ext
+      }`;
+
+      const imagePath = path.join(
+        __dirname,
+        `../public/uploads/${bookImage.name}`
       );
-    }
 
-    const book = await bookModel.create({
-      title,
-      price,
-      author,
-      ISBN,
-      description,
-      averageRating,
-      stock,
-      genre,
-      language,
-      featuredCategory,
-    });
-    res.status(statusCodes.StatusCodes.CREATED).json(book);
+      await bookImage.mv(imagePath);
+
+      const book = await bookModel.create({
+        title,
+        author,
+        price,
+        ISBN,
+        description,
+        averageRating,
+        stock,
+        typesAvailable,
+        genre,
+        language,
+        featuredCategory,
+        image: 'http://localhost:3000/uploads/'+ bookImage.name,
+      });
+      res.status(statusCodes.StatusCodes.CREATED).json(book);
+
   } catch (error) {
     next(error);
   }

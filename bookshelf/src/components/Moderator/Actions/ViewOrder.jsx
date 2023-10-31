@@ -81,7 +81,9 @@ export default function ViewOrder(id) {
           <ModalBody>
             <HStack gap={500} mb={5}>
               <HStack>
-                <Badge colorScheme="green">{orderData.isPaid ? "Paid" : "Not Paid"}</Badge>
+                <Badge colorScheme="green">
+                  {orderData.isPaid ? "Paid" : "Not Paid"}
+                </Badge>
                 <Badge colorScheme="green">{orderData.orderStatus}</Badge>
               </HStack>
               <Stack>
@@ -144,9 +146,13 @@ export default function ViewOrder(id) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={5}>
-              Ready to Ship
-            </Button>
+            {orderData.orderStatus === "Shipped" ? null : (
+              <>
+                <Button colorScheme="blue" mr={5}>
+                  Ready to Ship
+                </Button>
+              </>
+            )}
             <Button varient="ghost" colorScheme="red" mr={3} onClick={onClose}>
               Close
             </Button>
