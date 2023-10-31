@@ -1,7 +1,4 @@
 const NotificationModel = require("../models/adminNotifications");
-const orderModel = require("../models/order")
-const subscriptionModel = require('../models/userSubscription')
-const shareRequestModel = require("../models/shareRequests");
 const statusCodes = require("http-status-codes");
 
 const getNotifications = async (req, res, next) => {
@@ -31,51 +28,8 @@ const updateNotificationStatus = async (req, res, next) => {
         next(err);
     }
 }
-const getUserDashboard = async (req,res,next) => {
-    try{
-        const orderCount = await orderModel.count({
-            where:{
-                user_id: req.user.userId
-            }
-        });
-
-        const subscription = await subscriptionModel.findOne(
-            {
-                where:{
-                    userId:req.user.userId
-                },
-                attributes:['subscriptionType']
-                    
-                
-            }
-        )
-
-        const shareRequests = await shareRequestModel.count({
-            where:{
-                userId:req.user.userId
-            }
-        })
-
-
-        const dashboard = {
-            orderCount:orderCount,
-            subscription:subscription.subscriptionType || 'No Subscription',
-            shareRequests:shareRequests,
-            
-
-        }
-
-        res.json(dashboard);
-
-    }
-    catch(error){
-        next(error)
-    }
-  
-}
 
 module.exports = {
     getNotifications,
-    updateNotificationStatus,
-    getUserDashboard,
+    updateNotificationStatus
 }
