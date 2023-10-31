@@ -153,12 +153,12 @@ export default function Donations() {
             Donations
           </Text>
           <Spacer />
-          <Link to="/moderator/addDonationPack">
+          {/* <Link to="/moderator/addDonationPack">
             <Button colorScheme="blue" size={"sm"} >
               <Icon as={BiPlus} />
               <Text ml={2}>Add a New Donation Pack</Text>
             </Button>
-          </Link>
+          </Link> */}
         </Flex>
 
         <Flex gap={20}>

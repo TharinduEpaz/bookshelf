@@ -53,7 +53,7 @@ export default function SearchPanel({ name, filter, setChildValue, setOrderSearc
           {filter === "book_sharing" && <BookSharingSearch />} */}
 
           {filter === "inventory" && <InventoryFilter submitFilterData={submitFilterData}/>}
-          {filter === "orders" && (<><OrdersFilter /><DateFilter /></>)}
+          {filter === "orders" && (<><OrdersFilter submitFilterData={submitFilterData}/><DateFilter /></>)}
           {filter === "organizations" && (<><OrganizationsFilter /><DateFilter /></>)}
           {filter === "donations" && (<><DonationsFilter /><DateFilter /></>)}
           {filter === "book_sharing" && (<><BookSharingFilter /><DateFilter /></>)}

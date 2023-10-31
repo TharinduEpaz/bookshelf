@@ -76,6 +76,7 @@ export default function Inventry() {
     }
   };
 
+  const [searchData, setSerachData] = useState([]);
   const searchValue = (data) => {
     console.log(data);
     const filteredData = results.filter((book) => {
@@ -85,7 +86,18 @@ export default function Inventry() {
         book.author.toLowerCase().includes(data.toLowerCase())
       );
     });
-    setList(filteredData);
+    // setList(filteredData);
+    setSerachData(filteredData);
+  }
+
+  //from filter
+  const filterValue = (data) => {
+    console.log(data);
+    const filteredData = results.filter((order) => {
+      return (
+        order.orderStatus.toLowerCase().includes(data.toLowerCase())
+      );
+    });
   }
 
   //set Filtered list
@@ -100,6 +112,14 @@ export default function Inventry() {
     }));
     setBookList(filterData);
   }
+
+  useEffect(() => {
+    if (searchData.length > 0) {
+      setList(searchData);
+    } else {
+      setList(results);
+    }
+  }, [searchData, results]);
 
 
   useEffect(() => {
@@ -168,7 +188,7 @@ export default function Inventry() {
         <Spacer mt={10} />
 
         <Box>
-          <SearchPanel name="Inventory Items" filter="inventory" setOrderSearchValue={searchValue}/>
+          <SearchPanel name="Inventory Items" filter="inventory" setOrderSearchValue={searchValue} setChildValue={filterValue} />
 
           <Spacer mt={5} />
           <Box ref={componentRef}>
