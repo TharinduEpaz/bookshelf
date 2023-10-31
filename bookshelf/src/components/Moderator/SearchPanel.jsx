@@ -29,6 +29,11 @@ export default function SearchPanel({ name, filter, setChildValue, setOrderSearc
     setOrderSearchValue(data);
   }
 
+  //Filter
+  const submitFilterData = (data) => {
+    setChildValue(data);
+  }
+
   return (
     <>
       <Flex>
@@ -47,7 +52,7 @@ export default function SearchPanel({ name, filter, setChildValue, setOrderSearc
           {filter === "donations" && <DonationsSearch />}
           {filter === "book_sharing" && <BookSharingSearch />} */}
 
-          {filter === "inventory" && <InventoryFilter />}
+          {filter === "inventory" && <InventoryFilter submitFilterData={submitFilterData}/>}
           {filter === "orders" && (<><OrdersFilter /><DateFilter /></>)}
           {filter === "organizations" && (<><OrganizationsFilter /><DateFilter /></>)}
           {filter === "donations" && (<><DonationsFilter /><DateFilter /></>)}
