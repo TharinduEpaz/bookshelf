@@ -173,6 +173,7 @@ const ShareRequest = async (e) => {
           <Input
             type="file"
             size="m"
+            name="image"
             marginBottom={5}
             width={250}
             onChange={(e) => handleImageChange(e.target.files)}
