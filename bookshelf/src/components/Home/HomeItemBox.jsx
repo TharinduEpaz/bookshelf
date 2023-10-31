@@ -15,7 +15,6 @@ function HomeItemBox({ header, bgColor, icon }) {
       borderRadius={10}
       bgColor={bgColor}
       transition={"all 0.5s ease-out"}
-      
       _hover={{ boxShadow: "xl", width:200, transition: "all 0.5s ease-out" }}
     >
       <CardHeader>{icon}</CardHeader>

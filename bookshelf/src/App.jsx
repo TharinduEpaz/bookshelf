@@ -18,7 +18,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
-import ManageRequest from "./pages/sharing/ManageRequest"
+import ManageRequest from "./pages/Sharing/ManageRequest";
 
 import {
   Account,
@@ -29,9 +29,12 @@ import {
   Register,
   Shop,
   Checkout,
+  PaymentSuccess,
+  PaymentError,
 } from "./pages";
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
+
 
 import { PrivateRoutes } from "./utils/privateRoutes";
 
@@ -158,6 +161,8 @@ function App() {
             <Route exact path="/collections" element={<Collections />}></Route>
             <Route exact path="/selfHelp" element={<SelfHelp />}></Route>
             <Route exact path="/Fiction" element={<Fiction />}></Route>
+            <Route exact path="/paymentsuccess" element={<PaymentSuccess/>} />
+            <Route exact path="/paymenterror" element={<PaymentError/>} />
         
 
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
@@ -166,11 +171,13 @@ function App() {
             <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
+
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+            
           </Route>
           </Route>
 

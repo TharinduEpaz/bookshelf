@@ -74,7 +74,6 @@ export function Sidebar() {
       bg="white"
       display={"flex"}
       flexDirection={"column"}
-      
       alignItems={"center"}
       gap={3}
       pt={10}
