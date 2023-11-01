@@ -95,6 +95,7 @@ function SharingHome() {
                 </Heading>
             </Center>
             <Flex
+                ml={200}
                 gap={10}
                 alignItems={"center"}
                 justifyContent={"left"}

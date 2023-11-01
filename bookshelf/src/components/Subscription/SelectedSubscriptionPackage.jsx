@@ -150,10 +150,10 @@ function SelectedSubscriptionPackage() {
                                     <W1Button totalPrice={200} extension={1} />
                                 </RouterLink>
                                 <RouterLink to="#">
-                                    <W2Button totalPrice={250} extension={2} />
+                                    <W2Button totalPrice={300} extension={2} />
                                 </RouterLink>
                                 <RouterLink to="#">
-                                    <W4Button totalPrice={300} extension={4} />
+                                    <W4Button totalPrice={400} extension={4} />
                                 </RouterLink>
                             
                            
@@ -168,9 +168,6 @@ function SelectedSubscriptionPackage() {
                             Book Delivery Date
                         </Text>
                     </GridItem>
-                    {/* <GridItem marginTop={'3px'} ml={10} colSpan={1} >
-                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
-                    </GridItem> */}
                     <GridItem colSpan={3}>
                         <Text as={'b'} fontSize={'22'} textColor={"#204974"}>
                             {isLoading && <Spinner />}
@@ -182,23 +179,20 @@ function SelectedSubscriptionPackage() {
                 <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(9,1fr)'} marginTop={10} >
 
                     <GridItem marginTop={'3px'} ml={10} colSpan={3} display={'flex'} flexDirection={'column'}>
-                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                        <Text fontSize={'21'} color={'red'} as={'b'} >
                             Subscription Expires on 
                         </Text>
                         <Text fontSize={'15'} color={'#204974'} as={'b'}>
                             ( You should order next book on/before this date )
                         </Text>
                     </GridItem>
-                    {/* <GridItem marginTop={'3px'} ml={10} colSpan={1} >
-                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
-                    </GridItem> */}
-                    <GridItem colSpan={2}>
-                        <Text as={'b'} fontSize={'22'} textColor={"#204974"}>
+                    <GridItem colSpan={2} ml={2}>
+                        <Text as={'b'} fontSize={'22'} textColor={"red"}>
                             {isLoading && <Spinner /> }
                             {extendDate && extendDeliveryDate(extendDate)}
                         </Text>
                     </GridItem>
-                    <Button onClick={onOpen} variant={'outline'} colorScheme='blue' borderRadius={15} marginLeft={0}  w={150}>
+                    <Button onClick={onOpen} variant={'outline'} colorScheme='red' borderRadius={15} marginLeft={0}  w={150}>
                         <strong>Extended Date</strong>
                     </Button>
                 </Grid>

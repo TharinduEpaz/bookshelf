@@ -91,7 +91,7 @@ function SubscriptionDetails() {
                           Terms for the <strong>{currentSubscription}</strong> subscription package
                       </Text>
                       <UnorderedList paddingLeft={20} fontSize={'lg'}>
-                          <ListItem>{bookItem} book for {timePeriod} month</ListItem>
+                          <ListItem>{bookItem} book for {timePeriod} </ListItem>
                           <ListItem>{percentage} of the original price of the book</ListItem>
                           <ListItem>Doorstep delivery</ListItem>
                           <ListItem>Please make sure the book has the optimal quality when returned to avoid extra quality check charges</ListItem>
