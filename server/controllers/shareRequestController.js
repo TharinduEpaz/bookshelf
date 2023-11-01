@@ -143,6 +143,10 @@ function dummy2(){
   console.log('one');
 }
 
+function dummy3(){
+  console.log('one');
+}
+
 module.exports = {
   getAllShareRequests,
   postShareRequest,
