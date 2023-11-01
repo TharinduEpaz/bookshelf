@@ -287,7 +287,7 @@ export default function Donations() {
             <CardBody>
               <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
               <StatGroup gap={50}>
-                <StatCard lable="Registered Organization" value="4" />
+                <StatCard lable="Registered Organization" value={acceptedRequestsCount} />
               </StatGroup>
             </CardBody>
           </Card>
