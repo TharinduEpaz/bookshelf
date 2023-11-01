@@ -78,21 +78,23 @@ app.post(
         const customer =  stripe.customers.retrieve(checkoutSessionCompleted.customer);
         console.log(checkoutSessionCompleted);
 
-        if (checkoutSessionCompleted.client_reference_id === "extention 1") {
+        if(checkoutSessionCompleted.client_reference_id === "extention 1") {
+
           console.log("Subscription will extend by 1 week");
           subscriptionController.extends_date(1,'d384f58e-ee9a-48eb-8c96-141e66f6af60')
-        } else if (
-          checkoutSessionCompleted.client_reference_id === "extention 2"
-          
-        ) {
+
+        } else if (checkoutSessionCompleted.client_reference_id === "extention 2") {
+
           console.log("Subscription will extend by 2 week");
           subscriptionController.extends_date(2,'d384f58e-ee9a-48eb-8c96-141e66f6af60')
-        } else if (
-          checkoutSessionCompleted.client_reference_id === "extention 4"
-        ) {
+          
+        } else if (checkoutSessionCompleted.client_reference_id === "extention 4") {
+
           console.log("Subscription will extend by 4 week");
           subscriptionController.extends_date(4,'d384f58e-ee9a-48eb-8c96-141e66f6af60')
+
         } else {
+          console.log('order is creating');
           orderController.create_order_by_webhook_data(
             checkoutSessionCompleted
           );
