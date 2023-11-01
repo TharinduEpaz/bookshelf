@@ -49,7 +49,7 @@ import {
     );
   }
   
-  function DonationCard({name, author, price,imageURL, needsfor,}) {
+  function DonationCard({name, orgRegisteredNumber, price,imageURL, needsfor,}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
         <Box

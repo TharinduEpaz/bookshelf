@@ -174,7 +174,7 @@ function Navbar() {
               </MenuButton>
               <MenuList>
                 {user.user.role === "requester" ? (
-                  <RouterLink to="dashboard">
+                  <RouterLink to="DonationAcc">
                     <MenuItem>Manage Donations</MenuItem>
                   </RouterLink>
                 ) : null}

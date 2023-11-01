@@ -232,6 +232,8 @@ function App() {
           <Route exact path="/Donation_Reg" element={<Donation_Reg/>}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
           <Route exact path="/DonationAcc" element={<DonationAcc/>}></Route>
+          <Route epath="setting" element={<Setting />} />
+          
           {/* <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route> */}
 
           <Route element={<PrivateRoutes />}>
