@@ -198,33 +198,9 @@ export default function AdminOrderReport() {
   </FormControl>
 
 
-          <Flex gap={3} alignItems={'center'}>
-
-
-          <Text width={200} mt={5} ml={20}>Select By</Text>
-
-          <Select 
-            placeholder='All' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>Date</option>
-              <option value='moderator'>Price</option>
-              <option value='moderator'>Status</option>
-        
-          </Select>
-          
 
           <Button 
-        ml={600}
+        ml={1080}
         mt={5}
         colorScheme="blue" 
         onClick={generateSearchPDF}
@@ -232,14 +208,13 @@ export default function AdminOrderReport() {
           Generate Order Details
       </Button>
 
-          </Flex>
-
+       
               <Spacer mt={10} />
 
               <Box>
                 {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
 
-                <Spacer mt={5} />
+                <Spacer mt={1} />
 
                 <AdminOrderReportViewTable 
                   list={list} 

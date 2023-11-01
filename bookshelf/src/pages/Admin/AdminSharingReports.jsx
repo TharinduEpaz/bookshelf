@@ -208,7 +208,7 @@ export default function AdminSharingReports() {
     <InputGroup>
     <Input
       type="text"
-      placeholder="Search User"
+      placeholder="Search Customer Name"
       colorScheme="blue"
       borderColor={'gray.200'}
       focusBorderColor={'white.100'}
@@ -225,33 +225,9 @@ export default function AdminSharingReports() {
   </FormControl>
 
 
-          <Flex gap={3} alignItems={'center'}>
-
-
-          <Text width={200} mt={5} ml={20}>Select By</Text>
-
-          <Select 
-            placeholder='All' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>Date</option>
-              <option value='moderator'>Book</option>
-              <option value='moderator'>Status</option>
-        
-          </Select>
-          
-
+         
           <Button 
-        ml={500}
+        ml={1000}
         mt={5}
         colorScheme="blue" 
         onClick={generateSearchPDF}
@@ -259,7 +235,6 @@ export default function AdminSharingReports() {
           Generate Book Sharing Details
       </Button>
 
-          </Flex>
 
 
           
