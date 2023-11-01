@@ -135,33 +135,6 @@ const check_Eligibility = async (req, res, next) => {
   }
 };
 
-function dummy1(){
-  console.log('one');
-}
-
-function dummy2(){
-  console.log('one');
-}
-
-function dummy3(){
-  console.log('one');
-}
-
-function dummy4(){
-  console.log('one');
-}
-function dummy5(){
-  console.log('one');
-}
-function dummy6(){
-  console.log('one');
-}
-function dummy7(){
-  console.log('one');
-}
-function dummy7(){
-  console.log('one');
-}
 
 module.exports = {
   getAllShareRequests,
