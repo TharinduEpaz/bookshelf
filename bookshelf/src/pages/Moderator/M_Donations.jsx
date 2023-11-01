@@ -30,6 +30,15 @@ export default function Donations() {
     "Org. Name",
     "Org. Type",
     "Org. Email",
+    "Org. Telephone",
+    "Org. Address"
+  ];
+
+  const req_columns = [
+    "Org. Registered No.",
+    "Org. Name",
+    "Org. Type",
+    "Org. Email",
     "Contact Person Name",
     "Contact Person Email",
     "Status"
@@ -39,12 +48,13 @@ export default function Donations() {
     "ID",
     "Organization",
     "Organization Registered No.",
-    "Requested Items",
+    // "Requested Items",
     "Approval Status",
   ];
 
   const [req_list, setReqList] = useState([]);
   const [donreq_list, setDonReqList] = useState([]);
+  const [org_list, setOrgList] = useState([]);
 
   //URLs**************************
   //get donations Request URL
@@ -73,7 +83,32 @@ export default function Donations() {
       }));
       setReqList(mapData);
       console.log(mapData);
+      getRegisteredOrganizations(jsonData);
 
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get registered organizations
+  const getRegisteredOrganizations = (jsonData) => {
+    console.log(jsonData);
+    try {
+      const filteredData = jsonData.filter((org) => {
+        return (
+          org.approval.includes("Accepted")
+        );
+      });
+      console.log(filteredData);
+      const mapData = jsonData.map((request) => ({
+        id: request.orgRegisteredNumber,
+        name: request.orgName,
+        type: request.orgType,
+        orgEmail: request.orgEmail,
+        cPerson: request.orgTelephone,
+        cPersonEmail: request.orgAddress,
+      }));
+      setOrgList(mapData);
     } catch (error) {
       console.error(error.message);
     }
@@ -129,11 +164,19 @@ export default function Donations() {
       const response = await axios.get(getDonationRequestsURL);
       const jsonData = await response.data;
 
+      console.log(jsonData);
+
       const mapData = jsonData.map((request) => ({
         id: request.id,
-        org: request.organization.orgName,
-        orgRegisteredNo: request.organization.orgRegisteredNumber,
-        items: request.requestedItems,
+        org: request.orgName,
+        orgRegisteredNo: request.orgRegisteredNumber,
+        // items: request.requestedItems,
+        // items: request.requestedItems.map((item) => ({
+        //   id: item.id,
+        //   name: item.title,
+        //   price: item.price,
+        //   ISBN: item.ISBN,
+        // })),
         status: request.approval,
       }));
       setDonReqList(mapData);
@@ -208,8 +251,7 @@ export default function Donations() {
             <CardBody>
               <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
               <StatGroup gap={50}>
-                <StatCard lable="Donations" value="100" />
-                <StatCard lable="Amount" value="100" />
+                <StatCard lable="Registered Organization" value="4" />
               </StatGroup>
             </CardBody>
           </Card>
@@ -221,18 +263,24 @@ export default function Donations() {
           <Tabs>
             <TabList>
               <Tab>Organaization Registration Requests</Tab>
+              <Tab>Registered Organizations</Tab>
               <Tab>Donation Requests</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 <SearchPanel name="Organaization Registration Requests" filter="organizations" />
                 <Spacer mt={5} />
-                <DataTable list={req_list} columnNames={org_columns} actions={"donReq"}/>
+                <DataTable list={req_list} columnNames={req_columns} actions={"donReq"}/>
+              </TabPanel>
+              <TabPanel>
+                <SearchPanel name="Registered Organizations" filter="organizations" />
+                <Spacer mt={5} />
+                <DataTable list={org_list} columnNames={org_columns} actions={"org"}/>
               </TabPanel>
               <TabPanel>
                 <SearchPanel name="Donation Requests" filter="donations" />
                 <Spacer mt={5} />
-                <DataTable list={donreq_list} columnNames={donreq_columns} />
+                <DataTable list={donreq_list} columnNames={donreq_columns} actions={"donationReq"}/>
               </TabPanel>
             </TabPanels>
           </Tabs>
