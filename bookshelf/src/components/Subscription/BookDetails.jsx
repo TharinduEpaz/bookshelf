@@ -27,10 +27,10 @@ function bookDetails() {
     const [bookDetails, setBookDetails] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
-    const[isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
-    const handleCheckboxChange = (e) => {
-        setIsCheckboxChecked(e.target.checked);
+    const handleCheckboxChange = () => {
+        setIsCheckboxChecked(!isCheckboxChecked);
     };
 
     let count = 0;
@@ -226,10 +226,13 @@ function bookDetails() {
                         <Text fontSize={17}>I agree to the terms and conditions</Text>
                     </Checkbox>
                 </GridItem>
-
                 <GridItem rowSpan={1} colSpan={1}>
                     <RouterLink to="#">
-                        <Paybutton items={bookDetails[0]} totalPrice={subscriptionAmount} isDisabled={!isCheckboxChecked} />
+                        <Paybutton
+                            items={bookDetails[0]}
+                            totalPrice={subscriptionAmount}
+                            isCheckboxChecked={isCheckboxChecked}
+                        />
                     </RouterLink>
                 </GridItem>
             </Grid>
@@ -268,7 +271,7 @@ const Paybutton = (props) => {
     };
 
     return (
-      <Button onClick={handleSubmit} colorScheme="purple">
+        <Button onClick={handleSubmit} colorScheme="purple" isDisabled={!props.isCheckboxChecked}>
       {isLoading && <Spinner/>}
        pay now
       </Button>
