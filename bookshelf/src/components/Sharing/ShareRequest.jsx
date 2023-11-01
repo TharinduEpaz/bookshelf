@@ -244,7 +244,7 @@ const ShareRequest = async (e) => {
   ) : (
     <>
       <Text color="red" fontWeight="bold" mt={3}>
-        You cannot post a share request unless you bought a book or subscription within the last 3 months
+        Purchase required within last 3 months to post.
       </Text>
       <Button type="submit" colorScheme="purple" variant={'solid'} isDisabled>
         Post Request {isLoading && <Spinner ml={5}/>}

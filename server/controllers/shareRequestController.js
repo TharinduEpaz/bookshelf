@@ -112,12 +112,20 @@ const check_Eligibility = async (req, res, next) => {
 
     const orders = await orderModel.findAll({
       where: {
-        createdAt: {
-          [Op.gte]: threeMonthsAgo,
-        },
+        [Op.and]: [
+          {
+            createdAt: {
+              [Op.gte]: threeMonthsAgo,
+            },
+          },
+          {
+            user_id: "f1de8c33-cfc6-43b0-8d6b-39e0c47c6c0c",
+          },
+        ],
       },
     });
-    if (orders) {
+    console.log(orders);
+    if (orders.length !=0) {
       res.send("OK");
     } else {
       res.send("NO");
