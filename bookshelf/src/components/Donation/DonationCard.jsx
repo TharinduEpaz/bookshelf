@@ -49,7 +49,7 @@ import {
     );
   }
   
-  function BookCard({name, author, price,imageURL, needsfor,}) {
+  function DonationCard({name, author, price,imageURL, needsfor,}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
         <Box
@@ -97,4 +97,4 @@ import {
     );
   }
   
-  export default BookCard;
+  export default DonationCard;

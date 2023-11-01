@@ -104,6 +104,7 @@ import Donation from "./pages/Donation"
 import Donation_Reg from "./pages/Donation_Reg"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import DonationAcc from "./pages/DonationAcc";
 import BestSellers from "./pages/BestSellers";
 import Romance from "./pages/Romance";
 import Collections from "./pages/Collections";
@@ -213,6 +214,7 @@ function App() {
           <Route exact path="/Don_home" element={<Don_home />}></Route>
           <Route exact path="/Donation_Reg" element={<Donation_Reg/>}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
+          <Route exact path="/DonationAcc" element={<DonationAcc/>}></Route>
           {/* <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route> */}
 
           <Route element={<PrivateRoutes />}>

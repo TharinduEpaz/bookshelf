@@ -309,31 +309,32 @@ export default function DonationRequestForm() {
                 />
               </FormControl>
               <Stack spacing={10} pt={2}>
-              <Button
-                  type="submit"
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                >
-                  Submit
-                </Button>
-                <Button
-                  type="button"
-                  size="lg"
-                  bg={'gray.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'gray.500',
-                  }}
-                  onClick={handleReset}
-                >
-                  Reset
-                </Button>
-              </Stack>
+  <Button
+    type="button"
+    size="lg"
+    bg={'gray.400'}
+    color={'white'}
+    _hover={{
+      bg: 'gray.500',
+    }}
+    onClick={handleReset}
+  >
+    Reset
+  </Button>
+  <Button
+    type="submit"
+    loadingText="Submitting"
+    size="lg"
+    bg={'blue.400'}
+    color={'white'}
+    _hover={{
+      bg: 'blue.500',
+    }}
+  >
+    Submit
+  </Button>
+</Stack>
+
             </form>
           </Stack>
         </Box>
