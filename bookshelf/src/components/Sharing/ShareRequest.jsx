@@ -18,7 +18,9 @@ import { AiFillExclamationCircle } from "react-icons/ai";
 import axios from "axios";
 import { RxCross2 } from "react-icons/rx";
 
+
 function ShareRequest({ title, image }) {
+
   const [bookName, setBookName] = useState("");
   const [userName, setUserName] = useState("");
   const [details, setDetails] = useState("");
@@ -26,6 +28,7 @@ function ShareRequest({ title, image }) {
   const [newBook, setNewBook] = useState("");
   const [bookImage, setBookImage] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const [checkEligibility, setCheckEligibility] = useState("");
 
   const handleInputChange = (event) => {
     setNewBook(event.target.value);
@@ -53,8 +56,6 @@ function ShareRequest({ title, image }) {
 
   const userId = "1302e961-a3a8-4c5d-a635-f1d6495c63df";
   const requestUrl = "http://localhost:3000/api/v1/bookSharing/requests";
-
-
 
 const ShareRequest = async (e) => {
     e.preventDefault();
@@ -225,8 +226,6 @@ const ShareRequest = async (e) => {
               Post Request {isLoading && <Spinner ml={5}/>}
             </Button>
           </ButtonGroup>
-          
-          
         </form>
       </Box>
     </Box>
