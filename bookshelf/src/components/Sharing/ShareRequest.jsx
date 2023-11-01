@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -28,7 +28,22 @@ function ShareRequest({ title, image }) {
   const [newBook, setNewBook] = useState("");
   const [bookImage, setBookImage] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+
   const [checkEligibility, setCheckEligibility] = useState("");
+
+  useEffect(()=>{
+    const getCheckEligibility = async()=>{
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/bookSharing/checkEligibility");
+        console.log(response.data)
+        setCheckEligibility(response.data)
+      } 
+      catch (error) {
+        
+      }
+    };
+    getCheckEligibility();
+  },[]);
 
   const handleInputChange = (event) => {
     setNewBook(event.target.value);
@@ -222,9 +237,15 @@ const ShareRequest = async (e) => {
             <Button colorScheme="red"  variant={"outline"}>
               cancel
             </Button>
-            <Button type="submit" colorScheme="purple" variant={'solid'} >
-              Post Request {isLoading && <Spinner ml={5}/>}
-            </Button>
+            {checkEligibility === "OK" ? (
+    <Button type="submit" colorScheme="purple" variant={'solid'} >
+      Post Request {isLoading && <Spinner ml={5}/>}
+    </Button>
+  ) : (
+    <Button type="submit" colorScheme="purple" variant={'solid'} isDisabled>
+      Post Request {isLoading && <Spinner ml={5}/>}
+    </Button>
+  )}
           </ButtonGroup>
         </form>
       </Box>
