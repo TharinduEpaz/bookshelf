@@ -103,7 +103,7 @@ import CartBreadcrumb from '../components/Cart/CartBreadcrumb'
         </Stack>
   
         <Flex direction="column" align="center" flex="1">
-          <CartOrderSummary />
+          <CartOrderSummary cartData={cartData}/>
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
             <Link style={{color:'#4299E1'}} to={'/shop'}>Continue shopping</Link>

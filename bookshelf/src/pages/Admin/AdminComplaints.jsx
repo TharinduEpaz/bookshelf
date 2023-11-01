@@ -1,75 +1,58 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminDtataTable from '../../components/Admin/AdminDtataTable';
+import AdminComplaintsTable from "../../components/Admin/AdminComplaintsTable";
+import {FaSearch} from 'react-icons/fa'
 
 import {
-  Box,
-  Button,
-  Flex,
-  Spacer,
-  Text
+    Box, 
+    Flex,
+    Spacer,
+    Text,
+    Select,
+    Button,
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from '@chakra-ui/react'
 
 export default function AdminComplaints() {
 
+  const [search, setSearch] = useState('');
+
   const columns = [
     "Complain ID",
-    "Title",
-    "Description",
-    "Date",
-    "Action"
+    "Customer Name",
+    // "Email",
+    "Complain",
   ];
-  const list = [
-    {
-      id: "c0001",
-      title: "Late delivering",
-      description: "Poor communication",
-      date: "31.07.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0002",
-      title: "Order hold",
-      description: "Undefined error",
-      date: "21.05.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0003",
-      title: "Not received",
-      description: "Although payed order was not sent",
-      date: "12.06.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0004",
-      title: "Late delivering",
-      description: "Poor communication",
-      date: "31.07.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0005",
-      title: "Damaged books",
-      description: "My order was not packed correctly",
-      date: "31.07.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0006",
-      title: "Payment error",
-      description: "Payment cannot be done realtime",
-      date: "31.07.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-    {
-      id: "c0007",
-      title: "Late delivering",
-      description: "Poor communication",
-      date: "31.07.2023",
-      action: <Button colorScheme='blue' size='md'>Action</Button>,
-    },
-  ];
+
+   const [list, setComplaintList] = useState([]);
+
+   //Get all complaints
+   const getComplaints = async () => {
+    try {
+      const response = await fetch ("http://localhost:3000/api/v1/subscriptionComplaints")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((complaint) => ({
+        id: complaint.id,
+        name: complaint.name,
+        // email: complaint.email,
+        complaint: complaint.complaint,
+      })
+      );
+
+      setComplaintList(filteredData);
+
+    } catch (error) {
+      console.error(err.message);
+    }
+   }
+
+   useEffect(() => {
+    getComplaints();
+  }, [])
 
 
   return (
@@ -116,17 +99,40 @@ export default function AdminComplaints() {
 
           <Box p={5}>
             <Flex>
-              <Text fontSize="lg" fontWeight={"bold"}>
+              <Text fontSize="lg" fontWeight={"bold"} ml={250} mb={5}>
                 Complaints
               </Text>
             </Flex>
 
             <Box>
-              {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+
+    <FormControl ml={5} mb={2}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search By Customer Name"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={5}    
+      w={"80%"}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
               <Spacer mt={5} />
 
-              <AdminDtataTable list={list} columnNames={columns} />
+              <AdminComplaintsTable 
+                list={list} 
+                columnNames={columns} 
+                search={search}
+                />
             </Box>
           </Box>
 

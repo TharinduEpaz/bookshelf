@@ -7,43 +7,32 @@ import {
   StatGroup,
   Text,
   Spacer,
-  Link,
   Button,
   Tabs,
   TabList,
   Tab,
   TabPanel,
   TabPanels,
+  Heading,
+  HStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StatCard from "../../components/Moderator/StatCard";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
 import DataTable from "../../components/Moderator/DataTable";
 import SearchPanel from "../../components/Moderator/SearchPanel";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Donations() {
   const org_columns = [
-    "ID",
-    "Name",
-    "Registered Date",
-    "email",
-    "Contact Number",
-  ];
-  const org_list = [
-    {
-      id: "n00001",
-      name: "ke/kehelwaththa M.V",
-      Date: "01.08.2023",
-      email: "kehelwaththamv@gmail.com",
-      contact_number: "0355689562",
-    },
-    {
-      id: "n00002",
-      name: "St. Joseph's College",
-      Date: "01.08.2023",
-      email: "josephscollege@gmail.com",
-      contact_number: "0111111111",
-    },
+    "Org. Registered No.",
+    "Org. Name",
+    "Org. Type",
+    "Org. Email",
+    "Contact Person Name",
+    "Contact Person Email",
+    "Status"
   ];
 
   const don_columns = [
@@ -70,20 +59,106 @@ export default function Donations() {
     },
   ];
 
+  const [req_list, setReqList] = useState([]);
+
+  //URLs**************************
+  //get donations Request URL
+  const getDonationRequestsURL = "http://localhost:3000/api/v1/donations";
+  const allRequestsURL = "http://localhost:3000/api/v1/donations/request/countAll";
+  const pendingRequestsURL = "http://localhost:3000/api/v1/donations/request/countPending";
+  const rejectedRequestsURL = "http://localhost:3000/api/v1/donations/request/countRejected";
+  const acceptedRequestsURL = "http://localhost:3000/api/v1/donations/request/countAccepted";
+
+  //get donations Request
+  const getDonationRequests = async () => {
+    try {
+      const response = await axios.get(getDonationRequestsURL);
+      const jsonData = await response.data;
+
+      const mapData = jsonData.map((request) => ({
+        id: request.orgRegisteredNumber,
+        name: request.orgName,
+        type: request.orgType,
+        orgEmail: request.orgEmail,
+        cPerson: request.contactPersonName,
+        cPersonEmail: request.contactPersonEmail,
+        status: request.approval,
+      }));
+      setReqList(mapData);
+      console.log(mapData);
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get all requests count
+  const [allRequestsCount, setAllRequestsCount] = useState(0);
+  const getAllRequestsCount = async () => {
+    try {
+      const response = await axios.get(allRequestsURL);
+      setAllRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get pending requests count
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+  const getPendingRequestsCount = async () => {
+    try {
+      const response = await axios.get(pendingRequestsURL);
+      setPendingRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get rejected requests count
+  const [rejectedRequestsCount, setRejectedRequestsCount] = useState(0);
+  const getRejectedRequestsCount = async () => {
+    try {
+      const response = await axios.get(rejectedRequestsURL);
+      setRejectedRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  //get accepted requests count
+  const [acceptedRequestsCount, setAcceptedRequestsCount] = useState(0);
+  const getAcceptedRequestsCount = async () => {
+    try {
+      const response = await axios.get(acceptedRequestsURL);
+      setAcceptedRequestsCount(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+
+  useEffect(() => {
+    getDonationRequests();
+    getAllRequestsCount();
+    getPendingRequestsCount();
+    getRejectedRequestsCount();
+    getAcceptedRequestsCount();
+  }, []);
+
   return (
     <>
       <Box p={10}>
         <Flex>
           <Text fontSize="lg" fontWeight={"bold"}>
-            Inventry Summory
+            Donations
           </Text>
           <Spacer />
-          <Link to="/moderator/addNewBook">
-            <Button colorScheme="blue" size={"sm"}>
+          {/* <Link to="/moderator/addDonationPack">
+            <Button colorScheme="blue" size={"sm"} >
               <Icon as={BiPlus} />
               <Text ml={2}>Add a New Donation Pack</Text>
             </Button>
-          </Link>
+          </Link> */}
         </Flex>
 
         <Flex gap={20}>
@@ -98,11 +173,15 @@ export default function Donations() {
             w={"fit-content"}
           >
             <CardBody>
+              <HStack mb={3}>
               <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
+              <Heading size="md">Registration Requests</Heading>
+              </HStack>
               <StatGroup gap={50}>
-                <StatCard lable="Organizations" value="100" />
-                <StatCard lable="Pending Requests" value="10" />
-                <StatCard color={"red"} lable="Rejected Requests" value="0" />
+                <StatCard lable="All" value={allRequestsCount} />
+                <StatCard lable="Pending" value={pendingRequestsCount} />
+                <StatCard color='green' lable="Accepted" value={acceptedRequestsCount} />
+                <StatCard color={"red"} lable="Rejected" value={rejectedRequestsCount} />
               </StatGroup>
             </CardBody>
           </Card>
@@ -131,14 +210,14 @@ export default function Donations() {
         <Box>
           <Tabs>
             <TabList>
-              <Tab>Oraganizations</Tab>
+              <Tab>Organaization Registration Requests</Tab>
               <Tab>Donations</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <SearchPanel name="Organizations" filter="organizations" />
+                <SearchPanel name="Organaization Registration Requests" filter="organizations" />
                 <Spacer mt={5} />
-                <DataTable list={org_list} columnNames={org_columns} />
+                <DataTable list={req_list} columnNames={org_columns} actions={"donReq"}/>
               </TabPanel>
               <TabPanel>
                 <SearchPanel name="Donations" filter="donations" />

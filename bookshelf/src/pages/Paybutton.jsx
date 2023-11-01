@@ -3,9 +3,10 @@ import axiosInstance from "../utils/axiosInstance";
 import { useCartContext } from "../context/cartContext";
 import { useContext } from "react";
 import { userContext } from "../context/userContext";
-import { Button, Spinner } from "@chakra-ui/react";
+import { Button, Spacer, Spinner } from "@chakra-ui/react";
 
 const Paybutton = () => {
+  
   const { user } = useContext(userContext);
   const [isLoading,setIsLoading] = useState(false)
   console.log(user);
@@ -13,6 +14,7 @@ const Paybutton = () => {
   console.log(totalPrice);
 
   const handleSubmit = async () => {
+    localStorage.removeItem("cartItems");
     setIsLoading(true)
     try {
       const response = await axiosInstance.post('/orders/create-payment-intent',{
@@ -33,7 +35,7 @@ const Paybutton = () => {
 
   return (
     <Button onClick={handleSubmit} colorScheme="purple">
-    {isLoading && <Spinner></Spinner>}
+    {isLoading && <Spinner/>}
       Pay Now
     </Button>
   )

@@ -11,7 +11,7 @@ export default function Moderator() {
         h="auto"
         m={"auto"}
         mt={10}
-        w="80%"
+        w="95%"
         borderRadius="md"
         boxShadow="sm"
         bgColor={"white"}
@@ -21,7 +21,7 @@ export default function Moderator() {
         p={10}
       >
         <Grid
-          templateColumns="repeat(5, 1fr)"
+          templateColumns="repeat(7, 1fr)"
           gap={2}
           h={"100%"}
           minHeight={"80vh"}
@@ -35,7 +35,7 @@ export default function Moderator() {
             <SideMenu />
           </GridItem>
           <GridItem
-            colSpan={4}
+            colSpan={6}
             border={"1px"}
             borderColor={"blue.200"}
             rounded={"md"}

@@ -21,9 +21,13 @@ import {
   AlertDialogOverlay,
   useDisclosure,
   IconButton,
+  Avatar,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import axios from 'axios';
+import Sidebar from '../components/Donation/Sidebar';
+import Settings from '../components/Donation/Settings';
+import { Link, Outlet } from 'react-router-dom';
 
 function DonationReceiverDashboard() {
   const [addedItems, setAddedItems] = useState([]);
@@ -31,7 +35,7 @@ function DonationReceiverDashboard() {
   const { isOpen: isRemoveConfirmationOpen, onOpen: onRemoveConfirmationOpen, onClose: onRemoveConfirmationClose } = useDisclosure();
   const [requestedMessage, setRequestedMessage] = useState('');
   const [bookToRemove, setBookToRemove] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0); // Initialize total price
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const addBook = (bookData) => {
     const updatedItems = [...addedItems, bookData];
@@ -40,28 +44,22 @@ function DonationReceiverDashboard() {
   };
 
   const handleRequest = () => {
-    // Prepare the data to be sent to the server
     const selectedBooks = addedItems.map((currentBook) => ({
       title: currentBook.title,
       price: currentBook.price,
       quantity: currentBook.quantity,
       total: currentBook.quantity * currentBook.price,
     }));
-    
-  
-    // Send the request to the server
+
     sendRequestToServer(selectedBooks);
-  
-    // Reset the form
+
     handleReset();
-  
-    // Open the success dialog
     onOpen();
   };
 
   const handleReset = () => {
     setAddedItems([]);
-    updateTotal([]); // Reset total when clearing the list
+    updateTotal([]);
   };
 
   const handleRemoveBook = (book) => {
@@ -73,7 +71,7 @@ function DonationReceiverDashboard() {
   };
 
   const confirmRemoveBook = () => {
-    const updatedItems = addedItems.filter((book) => book !== bookToRemove);
+    const updatedItems = addedItems.filter((currentBook) => currentBook !== bookToRemove);
     setAddedItems(updatedItems);
     updateTotal(updatedItems);
     onRemoveConfirmationClose();
@@ -84,30 +82,38 @@ function DonationReceiverDashboard() {
     setTotalPrice(total);
   };
 
-  // Function to send the request to the server
   const sendRequestToServer = (selectedBooks) => {
-    const apiUrl = 'http://localhost:3000/api/v1/donationRequests'; // Replace with your actual server API URL
+    const apiUrl = 'http://localhost:3000/api/v1/donationRequests';
 
     axios
       .post(apiUrl, { selectedBooks })
       .then((response) => {
         console.log('Request sent successfully', response.data);
-        // You can handle the success response here.
       })
       .catch((error) => {
         console.error('Error sending request', error);
-        // Handle errors here.
       });
   };
 
   return (
-    <Flex align="center" justify="center" h="40vh" backgroundColor={'white'} m={200} mr={300} ml={300}>
-      <Grid templateColumns="1fr 1fr" gap={8}>
-        <GridItem colSpan={1}>
-          <Search onAddBook={addBook} />
+    <Box
+      height="100%"
+      m="auto"
+      mt={10}
+      w="80%"
+      borderRadius="md"
+      boxShadow="sm"
+      bgGradient="linear(to top left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5))"
+      backdropFilter="blur(8px)"
+      p={10}
+    >
+      <Grid templateColumns="repeat(4, 1fr)" templateRows="repeat(1,1fr)" marginLeft={4}>
+        <GridItem colSpan={1} rowSpan={1}>
+          <Sidebar />
         </GridItem>
-        <GridItem colSpan={1}>
-          <Box>
+        <GridItem colSpan={3} rowSpan={1}>
+          <Search onAddBook={addBook} />
+          <Box p={4} ml={4} bg="white" borderRadius="lg">
             <Heading size="lg">Selected Products for Request</Heading>
             <Table variant="simple">
               <Thead>
@@ -138,19 +144,18 @@ function DonationReceiverDashboard() {
               </Tbody>
             </Table>
             <Flex mt={4} justify="space-between" align="center">
-  
-  <Box>
-    <Button colorScheme="blue" onClick={handleReset}>
-      Reset
-    </Button>
-  </Box>
-  <Box>
-    <strong>Total Price: Rs.{totalPrice} </strong> 
-    <Button colorScheme="blue" onClick={handleRequest} >
-      Request
-    </Button>
-  </Box>
-</Flex>
+              <Box>
+                <Button colorScheme="blue" onClick={handleReset}>
+                  Reset
+                </Button>
+              </Box>
+              <Box>
+                <strong>Total Price: Rs.{totalPrice} </strong>
+                <Button colorScheme="blue" onClick={handleRequest}>
+                  Request
+                </Button>
+              </Box>
+            </Flex>
           </Box>
         </GridItem>
       </Grid>
@@ -158,7 +163,7 @@ function DonationReceiverDashboard() {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Alert
+              Successfully Requested. Our Store Will Contact You Soon.
             </AlertDialogHeader>
             <AlertDialogBody>{requestedMessage}</AlertDialogBody>
             <AlertDialogFooter>
@@ -189,7 +194,7 @@ function DonationReceiverDashboard() {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </Flex>
+    </Box>
   );
 }
 

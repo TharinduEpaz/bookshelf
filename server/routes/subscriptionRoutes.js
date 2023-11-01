@@ -6,8 +6,8 @@ const router = Router();
 const controller = require('../controllers/subscriptionController')
 
 router.route('/').get(controller.getAllSubscriptions);
+// router.route('/userSubscription').get(controller.getAllUserSubscriptions);
 
-router.route('/userSubscription').get(controller.getAllUserSubscriptions);
 
 router.route("/addSubscription").post(authenticateUser, controller.addSubscriptionType);
 // router.route ('/details').get(controller.getAllSubscriptionDetails);
@@ -20,7 +20,7 @@ router.route("/bookSubscription").post(authenticateUser,controller.add_book_to_a
 router.route("/checkSubscription").get(authenticateUser, controller.checkSubscription);
 router.route("/selectBooks").get(authenticateUser,controller.get_books_in_subscription_plan);
 router.route("/removeBook").post(authenticateUser,controller.delete_book_in_subscription_plan);
-
+router.route("/extendsDate").post(authenticateUser,controller.extends_date);
 router.route('/').post(controller.addSubscriptionPlan);
 
 router.route('/:id', ).delete(controller.deleteSubscriptionPlan);

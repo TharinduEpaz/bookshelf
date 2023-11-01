@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import {
+  Box,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 
 const chatContainerStyle = {
   width: "600px",
-  height: "100%",
+  height: "400px",
   border: "1px solid #ccc",
   overflow: "hidden",
   position: "relative",
-  backgroundColor:"white",
+  backgroundColor: "white",
   borderRadius: "20px",
   padding: "10px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "stretch",
+};
 
-
+const messageContainerStyle = {
+  flex: 1,
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column-reverse", // Keep the newest message at the bottom
 };
 
 const messageStyle = {
@@ -20,45 +33,71 @@ const messageStyle = {
   maxWidth: "80%",
 };
 
-const userMessageStyle = {
-  ...messageStyle,
-  backgroundColor: "#cceeff",
-  alignSelf: "flex-end",
-};
-
-const botMessageStyle = {
+const receivedMessageStyle = {
   ...messageStyle,
   backgroundColor: "#f0f0f0",
-  alignSelf: "flex-start",
+  alignSelf: "flex-start", // Align received messages to the left
+};
+
+const sentMessageStyle = {
+  ...messageStyle,
+  backgroundColor: "#cceeff",
+  alignSelf: "flex-end", // Align sender messages to the right
 };
 
 const ChatMessage = ({ message, isUser }) => (
-  <div style={isUser ? userMessageStyle : botMessageStyle}>
+  <Box
+    p={2}
+    borderRadius="8px"
+    maxW="80%"
+    bgColor={isUser ? "#cceeff" : "#f0f0f0"}
+    alignSelf={isUser ? "flex-end" : "flex-start"}
+  >
     {message.text}
-  </div>
+  </Box>
 );
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([
-    { text: "Hello! How can I help you?", isUser: false },
-    { text: "Hi there! I have a question.", isUser: true },
-    { text: "Sure, feel free to ask.", isUser: false },
+    { text: "Hello! How can I help you?", isUser: true }, // Sender's message
   ]);
 
+  const messageInputRef = useRef(null);
+
+  const handleSendMessage = () => {
+    const messageText = messageInputRef.current.value;
+    if (messageText.trim() === "") return;
+
+    const newMessage = { text: messageText, isUser: false }; // Response
+    setMessages([newMessage, ...messages]); // Place the new message at the top
+
+    messageInputRef.current.value = "";
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
   return (
-    <div style={{display:'flex',width:'100%',justifyContent:'center', paddingTop:100,height:"50%"} }>
-    <div style={chatContainerStyle}>
-      <div style={{ padding: "10px", overflowY: "auto", height: "calc(100% - 40px)" }}>
+    <Box style={chatContainerStyle} width="100%" height="100%">
+      <Box style={messageContainerStyle}>
         {messages.map((message, index) => (
-          <ChatMessage
-            key={index}
-            message={message}
-            isUser={message.isUser}
-          />
+          <ChatMessage key={index} message={message} isUser={message.isUser} />
         ))}
-      </div>
-    </div>
-    </div>
+      </Box>
+      <Box display="flex" mt={4}>
+        <Input
+          type="text"
+          ref={messageInputRef}
+          placeholder="Type your message..."
+          onKeyPress={handleKeyPress}
+          
+        />
+        <Button onClick={handleSendMessage}>Send</Button>
+      </Box>
+    </Box>
   );
 };
 

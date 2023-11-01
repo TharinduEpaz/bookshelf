@@ -46,9 +46,9 @@ export default function InventoryFilter() {
             <FormControl>
               <FormLabel>Status</FormLabel>
               <HStack pl={5}>
-                <Checkbox>Published</Checkbox>
+                <Checkbox>In Stock</Checkbox>
                 <Spacer />
-                <Checkbox>Unpublished</Checkbox>
+                <Checkbox>Out of Stock</Checkbox>
               </HStack>
             </FormControl>
             <FormControl>

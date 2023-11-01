@@ -1,6 +1,5 @@
 const {Router} = require("express");
-const {authenticateUser,authPermissions} = require('../middleware/authUser')
-const {imageUpload} = require('../middleware/imageUpload')
+const {authenticateUser,authPermissions} = require('../middleware/authUser');
 
 const router = Router();
 
@@ -11,6 +10,8 @@ router.route('/').get(controller.getAllBooks);
 router.route('/').post(controller.addBook);
 
 router.route('/count').get(controller.getBookCount);
+
+router.route('/inStockCount').get(controller.getInStockBookCount);
 
 router.route('/uploadImage').post(controller.uploadImage);
 

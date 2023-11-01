@@ -189,7 +189,7 @@ export default function DonationRequestForm() {
     <form onSubmit={register}>
            <Stack>
         <Heading fontSize="4xl" textAlign="center">
-          Apply for Donation
+          Register For Request Donation
         </Heading>
         <Text fontSize="lg" color="gray.600" textAlign="center">
           EMPOWER YOUR DREAM WITH US

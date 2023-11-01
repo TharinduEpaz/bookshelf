@@ -18,7 +18,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
-import ManageRequest from "./pages/sharing/ManageRequest"
+import ManageRequest from "./pages/Sharing/ManageRequest";
 
 import {
   Account,
@@ -34,6 +34,7 @@ import {
 } from "./pages";
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
+
 
 import { PrivateRoutes } from "./utils/privateRoutes";
 
@@ -85,7 +86,20 @@ import AdminBookSharing from "./pages/Admin/AdminBookSharing";
 import AdminComplaints from "./pages/Admin/AdminComplaints";
 import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
 import AdminReports from "./pages/Admin/AdminReports";
-
+import AdminInventoryReports from "./pages/Admin/AdminInventoryReports";
+import AdminUserReport from "./pages/Admin/AdminUserReport";
+import AdminSubscriptionReports from "./pages/Admin/AdminSubscriptionReports";
+import AdminDonationReport from "./pages/Admin/AdminDonationReport";
+import AdminSharingReports from "./pages/Admin/AdminSharingReports";
+import AdminOrderReport from "./pages/Admin/AdminOrderReport";
+import AdminUsersReportViewTable from "./components/Admin/AdminUsersReportViewTable";
+import AdminOrderReportViewTable from "./components/Admin/AdminOrderReportViewTable";
+import AdminInventoryReportViewTable from "./components/Admin/AdminInventoryReportViewTable";
+import AdminSharingReportViewTable from "./components/Admin/AdminSharingReportViewTable";
+import AdminSubscriptionMgtTabs from "./components/Admin/AdminSubscriptionMgtTabs";
+import AdminSubscriptionMgt from "./pages/Admin/AdminSubscriptionMgt";
+import AdminSubscriptionOrders from "./pages/Admin/AdminSubscriptionOrders";
+import AdminComplaintsTable from "./components/Admin/AdminComplaintsTable";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -99,6 +113,7 @@ import BookSharing from "./pages/Moderator/M_BookSharing";
 import Setting from "./pages/Moderator/M_Settings";
 import AdddNewBook from "./pages/Moderator/M_AddNewBook";
 import Moderator from "./pages/Moderator/Moderator";
+import AddDonationPack from "./pages/Moderator/M_AddDonationPack";
 
 import Donation from "./pages/Donation"
 import Donation_Reg from "./pages/Donation_Reg"
@@ -174,11 +189,13 @@ function App() {
             <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
+
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+            
           </Route>
           </Route>
 
@@ -215,6 +232,8 @@ function App() {
           <Route exact path="/Donation_Reg" element={<Donation_Reg/>}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
           <Route exact path="/DonationAcc" element={<DonationAcc/>}></Route>
+          <Route epath="setting" element={<Setting />} />
+          
           {/* <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route> */}
 
           <Route element={<PrivateRoutes />}>
@@ -232,7 +251,23 @@ function App() {
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
           <Route exact path="/adminreports" element={<AdminReports />}></Route>
+          <Route exact path="/admininventoryreports" element={<AdminInventoryReports />}></Route>
+          <Route exact path="/adminuserreport" element={<AdminUserReport />}></Route>
+          <Route exact path="/adminsubscriptionreports" element={<AdminSubscriptionReports />}></Route>
+          <Route exact path="/admindonationreport" element={<AdminDonationReport />}></Route>
+          <Route exact path="/adminsharingreport" element={<AdminSharingReports />}></Route>
+          <Route exact path="/adminorderreport" element={<AdminOrderReport />}></Route>
+          <Route exact path="/adminusersreportviewtable" element={<AdminUsersReportViewTable />}></Route>
+          <Route exact path="/adminorderreportviewtable" element={<AdminOrderReportViewTable />}></Route>
+          <Route exact path="/admininventoryreportviewtable" element={<AdminInventoryReportViewTable />}></Route>
+          <Route exact path="/adminsharingreportviewtable" element={<AdminSharingReportViewTable />}></Route>
+          <Route exact path="/adminsubscriptionmgt" element={<AdminSubscriptionMgt />}></Route>
+          <Route exact path="/adminsubscriptionmgttabs" element={<AdminSubscriptionMgtTabs />}></Route>
+          <Route exact path="/adminsubscriptionorders" element={<AdminSubscriptionOrders />}></Route>
+          <Route exact path="/admincomplaintstable" element={<AdminComplaintsTable />}></Route>
 
+
+      
           {/* Moderator Routes */}
           
           </Route>
@@ -249,6 +284,7 @@ function App() {
             <Route path="booksharing" element={<BookSharing />} />
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
+            <Route path="addDonationPack" element={<AddDonationPack />} />
           </Route>
         </Routes>
           <Footer />

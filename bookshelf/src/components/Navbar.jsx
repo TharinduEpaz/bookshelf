@@ -23,7 +23,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
 import { useContext } from "react";
 import axios from "axios";
@@ -39,28 +39,29 @@ import { BsFillCartFill } from "react-icons/bs";
 import Search from "./Search";
 
 const navLinks = [
-  { name: "New Books", path: "#" },
-  { name: "Best Sellers", path: "#" },
+  { name: "Shop", path: "/shop" },
+  { name: "Best Sellers", path: "/bestsellers" },
   { name: "Donations", path: "/donation" },
   { name: "Subscriptions", path: "/subscriptions" },
-  { name: "Share a Book", path: "/sharing" },
+  { name: "Book Exchange", path: "/sharing" },
 ];
 
 function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
   const logoutUrl = "http://localhost:3000/api/v1/logout";
   const toast = useToast();
 
   const logout = async () => {
     try {
-      const res = await axios.get(logoutUrl,{
-        withCredentials: true,}
-        );
+      const res = await axios.get(logoutUrl, {
+        withCredentials: true,
+      });
       setUser(null);
       console.log(res.data);
       localStorage.removeItem("cartItems");
-
+      navigate("/");
       return toast({
         title: "Successfully logged out",
         position: "top",
@@ -88,7 +89,12 @@ function Navbar() {
       backdropFilter="blur(8px)"
       top={0}
     >
-      <Flex h={16} alignItems="center" justifyContent={'space-between'} mx="auto">
+      <Flex
+        h={16}
+        alignItems="center"
+        justifyContent={"space-between"}
+        mx="auto"
+      >
         <RouterLink to="/">
           <Heading size={"md"}>BookShelf</Heading>
         </RouterLink>
@@ -108,20 +114,13 @@ function Navbar() {
             spacing={10}
             display={{ base: "none", md: "flex" }}
             alignItems="center"
-            fontWeight={'bold'}
+            fontWeight={"bold"}
           >
             {navLinks.map((link, index) => (
               <NavLink key={index} {...link} onClose={onClose} />
             ))}
-            
-
-            
           </HStack>
-         
         </HStack>
-        
-
-        
 
         {!user ? (
           <ButtonGroup>
@@ -174,33 +173,38 @@ function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                {user.user.role !== "admin" &&
-                user.user.role !== "moderator" ? (
+                {user.user.role === "requester" ? (
+                  <RouterLink to="DonationAcc">
+                    <MenuItem>Manage Donations</MenuItem>
+                  </RouterLink>
+                ) : null}
+
+                {user.user.role === "buyer" ? (
                   <>
-                    <RouterLink to="selectPackage">
-                      <MenuItem>User Subscription</MenuItem>
-                    </RouterLink>
+                   
                     <RouterLink to="/account">
                       <MenuItem>Account</MenuItem>
                     </RouterLink>
-
                     <RouterLink to="account/orders">
                       <MenuItem>Orders</MenuItem>
-                    </RouterLink>                        
+                    </RouterLink>
+                    <RouterLink to="selectPackage">
+                      <MenuItem>Subscriptions</MenuItem>
+                    </RouterLink>
                   </>
-                ) : (
-                  <>
-                    {user.user.role === "admin" ? (
-                      <RouterLink to="/admindashboard">
-                        <MenuItem>Admin Dashboard</MenuItem>
-                      </RouterLink>
-                    ) : (
-                      <RouterLink to="/moderator">
-                        <MenuItem>Moderator Dashboard</MenuItem>
-                      </RouterLink>
-                    )}
-                  </>
-                )}
+                ) : null}
+
+                {user.user.role === "admin" ? (
+                  <RouterLink to="/admindashboard">
+                    <MenuItem>Admin Dashboard</MenuItem>
+                  </RouterLink>
+                ) : null}
+
+                {user.user.role === "moderator" ? (
+                  <RouterLink to="/moderator">
+                    <MenuItem>Moderator Dashboard</MenuItem>
+                  </RouterLink>
+                ) : null}
 
                 <MenuDivider />
                 <MenuItem onClick={logout}>Log Out</MenuItem>

@@ -9,17 +9,32 @@ import {
     Grid,
     GridItem,
     Text,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton,
+    useDisclosure,
+    Spinner,
 
 } from "@chakra-ui/react";
 
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 import { Outlet } from 'react-router-dom';
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
+import { useContext } from "react";
+import { userContext } from "../../context/userContext";
+import { Link as RouterLink } from "react-router-dom";
+
 
 function SelectedSubscriptionPackage() {
     const [subscriptionType, setSubscriptionType] = useState([]);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
 
 
     useEffect(() => {
@@ -69,9 +84,43 @@ function SelectedSubscriptionPackage() {
                 <Text fontSize={'21'} color={'#204974'} as={'b'}>
                     Next Delivery
                 </Text>
-                <Button bg={'white'} variant={'outline'} borderRadius={15} marginLeft={10} w={'auto'}>
+                <Button onClick={onOpen} bg={'white'} variant={'outline'} borderRadius={15} marginLeft={10} w={'auto'}>
                     <strong>Extended Date</strong>
                 </Button>
+
+                <AlertDialog
+                    motionPreset='slideInBottom'
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    isCentered
+                >
+                    <AlertDialogOverlay />
+
+                    <AlertDialogContent>
+                        <AlertDialogHeader>Exchange Dates?</AlertDialogHeader>
+                        <AlertDialogCloseButton />
+                        <AlertDialogBody>
+                            Are you sure you want to exchange your delivery date?
+                        </AlertDialogBody>
+                        <AlertDialogFooter>
+                            {/* <Button ref={cancelRef} onClick={onClose}>
+                                No
+                            </Button> */}
+                            <RouterLink to="#">
+                                <W1Button  totalPrice= {250} />
+                            </RouterLink>
+                            <Button colorScheme='red' ml={3}>
+                                1 week
+                            </Button><Button colorScheme='red' ml={3}>
+                                2 week
+                            </Button>
+                            <Button colorScheme='red' ml={3}>
+                                1 month
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
 
                 <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(10,1fr)'} marginTop={10} >
                     <GridItem marginTop={'3px'}>
@@ -95,4 +144,40 @@ function SelectedSubscriptionPackage() {
     )
 }
 
+
+const W1Button = (props) => {
+    const { user } = useContext(userContext);
+    const cartItems = Array(props.items)
+    console.log(cartItems);
+    const totalPrice = props.totalPrice
+    const [isLoading, setIsLoading] = useState(false)
+
+    console.log(totalPrice);
+
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axiosInstance.post('/orders/extenddate', {
+               amount: 20000,
+               extension: 2 
+               
+        
+            });
+            console.log(response);
+            window.location.href = response.data.url;
+            setIsLoading(false)
+
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    };
+
+    return (
+        <Button onClick={handleSubmit} colorScheme="purple">
+            {isLoading && <Spinner />}
+            1 week
+        </Button>
+    )
+};
 export default SelectedSubscriptionPackage

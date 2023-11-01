@@ -43,7 +43,7 @@ export default function ImageUploader({ onImageUpload }) {
           onChange={handleImageUpload}
         />
         {selectedImage ? (
-          <img src={selectedImage} style={{maxHeight:280}} alt={fileName} />
+          <img src={selectedImage} style={{ maxHeight: 280 }} alt={fileName} />
         ) : (
           <>
             <MdCloudUpload color="#1475cf" size={60} />
@@ -53,7 +53,6 @@ export default function ImageUploader({ onImageUpload }) {
             </Text>
           </>
         )}
-        
       </FormControl>
       <HStack bgColor={"gray.300"} p={2} borderRadius={5}>
         <AiFillFileImage color="#1475cf" />

@@ -86,8 +86,6 @@ function BlurWhiteBox({ title, image, mainButton,route }) {
            <Button ml={5} colorScheme="purple" pl={10} pr={10} borderRadius={100}>{mainButton}</Button> 
             </Link> */}
            <Search/>
-          
-           
         </GridItem>
         
       </Grid>
