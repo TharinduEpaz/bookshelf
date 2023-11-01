@@ -116,14 +116,17 @@ import Moderator from "./pages/Moderator/Moderator";
 import AddDonationPack from "./pages/Moderator/M_AddDonationPack";
 
 import Donation from "./pages/Donation"
+import Donation_Reg from "./pages/Donation_Reg"
 import Don_home from "./pages/Don_home";
 import DonationRequest from "./pages/DonationRequest";
+import DonationAcc from "./pages/DonationAcc";
 import BestSellers from "./pages/BestSellers";
 import Romance from "./pages/Romance";
 import Collections from "./pages/Collections";
 import SelfHelp from "./pages/SelfHelp";
 import Fiction from "./pages/Fiction";
 // import StripeCheckout from "./pages/StripeCheckout";
+import DonationDetails from "./pages/DonationDetails";
 
 
 function App() {
@@ -167,6 +170,7 @@ function App() {
             <Route exact path="/register" element={<Register />}></Route>
             <Route exact path="/shop" element={<Shop />}></Route>
             <Route exact path="/shop/:id" element={<ProductPage />}></Route>
+            <Route exact path="/donate/:id" element={<DonationDetails />}></Route>
             <Route exact path="/cart/:userId" element={<Cart />}></Route>
             <Route exact path="/checkout" element={<Checkout />}></Route>
             <Route exact path="/bestSellers" element={<BestSellers />}></Route>
@@ -179,6 +183,7 @@ function App() {
         
 
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
+            <Route exact path="/checkout" element={<Checkout />}></Route>
 
 
             <Route element={<PrivateRoutes />}>
@@ -224,7 +229,10 @@ function App() {
 
           <Route exact path="/donation" element={<Donation />}></Route>
           <Route exact path="/Don_home" element={<Don_home />}></Route>
+          <Route exact path="/Donation_Reg" element={<Donation_Reg/>}></Route>
           <Route exact path="/DonationRequest" element={<DonationRequest/>}></Route>
+          <Route exact path="/DonationAcc" element={<DonationAcc/>}></Route>
+          {/* <Route exact path="/DonationDetails" element={<DonationDetails/>}></Route> */}
 
           <Route element={<PrivateRoutes />}>
 
