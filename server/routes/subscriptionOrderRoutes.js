@@ -8,7 +8,7 @@ const controller = require('../controllers/orderController')
 const checkoutController = require('../controllers/checkoutController')
 
 
-router.route('/').get(authenticateUser,controller.getAllSubscriptionOrders)
+router.route('/').get(controller.getAllSubscriptionOrders)
 
 
 module.exports = router;
