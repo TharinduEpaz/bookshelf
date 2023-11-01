@@ -42,6 +42,8 @@ const orderController = require("./controllers/orderController");
 const subscriptionController = require("./controllers/subscriptionController");
 const subscriptionComplaintsRoutes = require("./routes/subscriptionRoutes");
 const userSubscriptionRoutes = require("./routes/subscriptionRoutes");
+const subscriptionComplaintsRoutes = require("./routes/subscriptionComplaintsRoutes");
+// const userSubscriptionRoutes = require("./routes/subscriptionRoutes");
 
 //routes
 app.get("/", (req, res) => {
@@ -128,7 +130,8 @@ app.use("/api/v1/notifications/", notificationsRoutes);
 
 
 app.use('/api/v1/subscriptionComplaints', subscriptionComplaintsRoutes);
-app.use('/api/v1/userSubscription', userSubscriptionRoutes);
+// app.use('/api/v1/userSubscription', userSubscriptionRoutes);
+
 
 //middleware for error handling
 app.use(notFoundMIddleware);

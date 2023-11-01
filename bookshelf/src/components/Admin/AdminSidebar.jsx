@@ -65,7 +65,7 @@ const sidebarLinks = [
   },
   {
     id:7,
-    url:'/adminsubscriptions',
+    url:'/adminsubscriptionmgt',
     text:'Subscriptions',
     icon:<RiMoneyDollarCircleLine/>
   },
