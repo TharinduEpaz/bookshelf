@@ -26,20 +26,20 @@ export default function AdminDonationReport() {
   const [search, setSearch] = useState('');
 
   const columns = [
-    "ID",
+    // "ID",
     "Organization Name",
-    "Organization Type",
-    "Registration No",
+    // "Organization Type",
+    // "Registration No",
     "Contact Number",
-    "Address",
-    "Email",
-    "Account",
+    // "Address",
+    // "Email",
+    // "Account",
     "Contact Person",
     "Contact Person No",
     "Contact Person Email",
     "Contact Person NIC",
     "Description",
-    "Approval"
+    // "Approval"
   ];
 
   const [list, setDonations] = useState([]);
@@ -50,20 +50,20 @@ export default function AdminDonationReport() {
       const jsonData = await response.json()
 
       const filteredData = jsonData.map((donations) => ({
-        id: donations.id,
+        // id: donations.id,
         orgName: donations.orgName,
-        orgType: donations.orgType,
-        orgRegisteredNumber: donations.orgRegisteredNumber,
+        // orgType: donations.orgType,
+        // orgRegisteredNumber: donations.orgRegisteredNumber,
         orgTelephone: donations.orgTelephone,
-        orgAddress: donations.orgAddress,
-        orgEmail: donations.orgEmail,
-        orgConfirmationDocument: donations.orgConfirmationDocument,
+        // orgAddress: donations.orgAddress,
+        // orgEmail: donations.orgEmail,
+        // orgConfirmationDocument: donations.orgConfirmationDocument,
         contactPersonName: donations.contactPersonName,
         contactPersonPhone: donations.contactPersonPhone,
         contactPersonEmail: donations.contactPersonEmail,
         contactPersonNIC: donations.contactPersonNIC,
         description: donations.description,
-        approval: donations.approval
+        // approval: donations.approval
       }));
       
       setDonations(filteredData);
@@ -87,45 +87,44 @@ export default function AdminDonationReport() {
 
     const columnsData = [
     "", 
-    "ID",
     "Organization Name",
-    "Organization Type",
-    "Registration No",
+    // "Organization Type",
+    // "Registration No",
     "Contact Number",
-    "Address",
-    "Email",
-    "Account",
+    // "Address",
+    // "Email",
+    // "Account",
     "Contact Person",
     "Contact Person No",
     "Contact Person Email",
     "Contact Person NIC",
     "Description",
-    "Approval"
+    // "Approval"
   ];
   
-    let donationNumber = 1; // Initialize the book number to 1
+    let donationNumber = 1; // Initialize the donation number to 1
   
     //Filter by title
     const filteredList = list.filter((donations) => 
-      book.title.toLowerCase().includes(search.toLowerCase()));
+    donations.orgName.toLowerCase().includes(search.toLowerCase()));
 
     doc.autoTable({
       head: [columnsData], // The header row
       body: filteredList.map((donations) => [
         donationNumber++, 
         donations.orgName,
-        donations.orgType,
-        donations.orgRegisteredNumber,
+        // donations.orgType,
+        // donations.orgRegisteredNumber,
         donations.orgTelephone,
-        donations.orgAddress,
-        donations.orgEmail,
-        donations.orgConfirmationDocument,
+        // donations.orgAddress,
+        // donations.orgEmail,
+        // donations.orgConfirmationDocument,
         donations.contactPersonName,
         donations.contactPersonPhone,
         donations.contactPersonEmail,
         donations.contactPersonNIC,
         donations.description,
-        donations.approval
+        // donations.approval
       ]), 
       
       startY: 20, // Y-position to start the table
@@ -172,7 +171,7 @@ export default function AdminDonationReport() {
     }
   
     // Save the PDF with a name
-    doc.save("Inventory_Details.pdf");
+    doc.save("Donation_Details.pdf");
   };
 
 
@@ -225,7 +224,7 @@ export default function AdminDonationReport() {
           <Box p={10}>
 
           <Text fontSize="lg" fontWeight={"bold"} mb={5} mt={2} align={"center"}>
-              Inventory Reports
+              Donation Reports
             </Text>
 
 
@@ -255,7 +254,7 @@ export default function AdminDonationReport() {
         ml={1050}
         mt={5}
         colorScheme="blue" 
-        //onClick={generateSearchPDF}
+        onClick={generateSearchPDF}
         >
           Generate Donation Details
       </Button>
