@@ -145,7 +145,7 @@ const ShareRequest = async (e) => {
 
       <Box marginTop={10} border={10}>
         <Heading size={"md"} color={"rgb(32,73,116)"} marginBottom={5}>
-          Post a Book to 
+          Post a Book to Exchange
         </Heading>
         <form onSubmit={ShareRequest}>
           <Text mb="8px">Name of the book:</Text>

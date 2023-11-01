@@ -31,7 +31,7 @@ const SidenavDetailsLinks = [
     {
         id: 2,
         url: "shareRequest",
-        text: "Post Share Request",
+        text: "Post Request",
         icon: <FaShareSquare />,
     },
     {
