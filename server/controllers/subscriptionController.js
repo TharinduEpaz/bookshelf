@@ -469,14 +469,14 @@ const extends_date = async (week,id) => {
 		}
 
 		// Calculate the new orderDate by adding weeksToAdd to the existing orderDate
-		const existingOrderDate = new Date(subscription.orderDate);
+		const existingOrderDate = new Date(subscription.expireDate);
 		const newOrderDate = new Date(
 			existingOrderDate.getTime() + weeksToAdd * 7 * 24 * 60 * 60 * 1000
 		);
 
 		// Update the subscription with the new orderDate
 		const response = await subscriptionOrder.update(
-			{ orderDate: newOrderDate },
+			{ expireDate: newOrderDate },
 			{
 				where: {
 					user_id: userId,

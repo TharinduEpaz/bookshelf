@@ -38,18 +38,19 @@ const subscriptionOrder = sequelize.define(
 			type: DataTypes.JSON,
 			allowNull: true,
 		},
-		address : {
-			type:DataTypes.JSON,
-			allowNull:true,
-
+		address: {
+			type: DataTypes.JSON,
+			allowNull: true,
 		},
-		phone:{
-			type:DataTypes.STRING,
-			allowNull:true,
-			
-		}
-
-		
+		phone: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		expireDate: {
+			type: DataTypes.DATE,
+			defaultValue: sequelize.NOW,
+			allowNull: false,
+		},
 	},
 	{
 		// Other model options go here
