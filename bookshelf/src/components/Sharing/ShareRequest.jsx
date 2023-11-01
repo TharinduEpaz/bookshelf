@@ -234,19 +234,26 @@ const ShareRequest = async (e) => {
 
           
           <ButtonGroup variant='outline' spacing='5' mt={10}>
-            <Button colorScheme="red"  variant={"outline"}>
-              cancel
-            </Button>
-            {checkEligibility === "OK" ? (
+  <Button colorScheme="red" variant={"outline"}>
+    Cancel
+  </Button>
+  {checkEligibility === "OK" ? (
     <Button type="submit" colorScheme="purple" variant={'solid'} >
       Post Request {isLoading && <Spinner ml={5}/>}
     </Button>
   ) : (
-    <Button type="submit" colorScheme="purple" variant={'solid'} isDisabled>
-      Post Request {isLoading && <Spinner ml={5}/>}
-    </Button>
+    <>
+      <Text color="red" fontWeight="bold" mt={3}>
+        You cannot post a share request unless you bought a book or subscription within the last 3 months
+      </Text>
+      <Button type="submit" colorScheme="purple" variant={'solid'} isDisabled>
+        Post Request {isLoading && <Spinner ml={5}/>}
+      </Button>
+    </>
   )}
-          </ButtonGroup>
+</ButtonGroup>
+
+
         </form>
       </Box>
     </Box>
