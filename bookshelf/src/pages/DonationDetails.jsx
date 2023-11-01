@@ -26,15 +26,10 @@ import Search from "../components/Donation/Search";
 import LinkTree from "../components/LinkTree";
 import { BsCart } from "react-icons/bs";
 
-function DonationDetails({ name, price, needsfor, imageURL }) {
+function DonationDetails({ name, price, quantityneed, imageURL }) {
   const [donatingQuantity, setDonatingQuantity] = useState(0); // Set the initial value to 0
   const [total, setTotal] = useState(0);
 
-  const productDetails = {
-    name: "Hello",
-    price: 1990.0,
-    quantityNeed: 25,
-  };
 
   const handleQuantityChange = (newQuantity) => {
     setDonatingQuantity(newQuantity);
@@ -109,7 +104,7 @@ function DonationDetails({ name, price, needsfor, imageURL }) {
             </Box>
           </GridItem>
           <GridItem rowSpan={7} colSpan={3} ml={10}>
-            <Heading>WP/Jaya Vidyaraja Maha Vidyalaya, Hokandara</Heading>
+            <Heading>{product.name}</Heading>
 
             <Box display="flex" alignItems={"center"} mt={4}>
               <Heading
