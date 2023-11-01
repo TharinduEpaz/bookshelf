@@ -86,16 +86,7 @@ import AdminBookSharing from "./pages/Admin/AdminBookSharing";
 import AdminComplaints from "./pages/Admin/AdminComplaints";
 import AdminAddNewBook from "./pages/Admin/AdminAddNewBook";
 import AdminReports from "./pages/Admin/AdminReports";
-import AdminInventoryReports from "./pages/Admin/AdminInventoryReports";
-import AdminUserReport from "./pages/Admin/AdminUserReport";
-import AdminSubscriptionReports from "./pages/Admin/AdminSubscriptionReports";
-import AdminDonationReport from "./pages/Admin/AdminDonationReport";
-import AdminSharingReports from "./pages/Admin/AdminSharingReports";
-import AdminOrderReport from "./pages/Admin/AdminOrderReport";
-import AdminUsersReportViewTable from "./components/Admin/AdminUsersReportViewTable";
-import AdminOrderReportViewTable from "./components/Admin/AdminOrderReportViewTable";
-import AdminInventoryReportViewTable from "./components/Admin/AdminInventoryReportViewTable";
-import AdminSharingReportViewTable from "./components/Admin/AdminSharingReportViewTable";
+
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -237,19 +228,7 @@ function App() {
           <Route exact path="/adminsettings" element={<AdminSettings />}></Route>
           <Route exact path="/adminaddnewbook" element={<AdminAddNewBook />}></Route>
           <Route exact path="/adminreports" element={<AdminReports />}></Route>
-          <Route exact path="/admininventoryreports" element={<AdminInventoryReports />}></Route>
-          <Route exact path="/adminuserreport" element={<AdminUserReport />}></Route>
-          <Route exact path="/adminsubscriptionreports" element={<AdminSubscriptionReports />}></Route>
-          <Route exact path="/admindonationreport" element={<AdminDonationReport />}></Route>
-          <Route exact path="/adminsharingreport" element={<AdminSharingReports />}></Route>
-          <Route exact path="/adminorderreport" element={<AdminOrderReport />}></Route>
-          <Route exact path="/adminusersreportviewtable" element={<AdminUsersReportViewTable />}></Route>
-          <Route exact path="/adminorderreportviewtable" element={<AdminOrderReportViewTable />}></Route>
-          <Route exact path="/admininventoryreportviewtable" element={<AdminInventoryReportViewTable />}></Route>
-          <Route exact path="/adminsharingreportviewtable" element={<AdminSharingReportViewTable />}></Route>
 
-
-      
           {/* Moderator Routes */}
           
           </Route>

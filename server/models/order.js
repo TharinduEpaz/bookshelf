@@ -25,17 +25,15 @@ const order = sequelize.define(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		// user_id: {
-		// 	type: DataTypes.UUID,
-		// 	allowNull: false,
-		// },
-
-		// isPaid: {
-		// 	type: DataTypes.BOOLEAN,
-		// 	defaultValue: false,
-		// 	allowNull: false,
-		// },
-		
+		user_id: {
+			type: DataTypes.UUID,
+			allowNull: false,
+		},
+		isPaid: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+			allowNull: false,
+		},
 		orderItems: {
 			type: DataTypes.JSON,
 			allowNull: true,

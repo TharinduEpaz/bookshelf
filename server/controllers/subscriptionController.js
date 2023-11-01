@@ -138,26 +138,6 @@ const addSubscriptionCompliant = async (req, res, next) => {
   }
 };
 
-//(admin) get subscription complaints
-// const getSubscriptionComplaints = async (req, res, next) => {
-//   try {
-//     const subscriptionComplaints = await subscriptionComplaint.findAll();
-//     res.status(statusCodes.StatusCodes.OK).json(subscriptionComplaints);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-//(admin) get subscription complaints
-const getSubscriptionComplaints = async (req, res, next) => {
-  try {
-    const subscriptionComplaints = await subscriptionComplaint.findAll();
-    res.status(statusCodes.StatusCodes.OK).json(subscriptionComplaints);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const deleteMySubscription = async (req, res, next) => {
   const userId = req.user.userId; // Assuming you can extract userId from the request
 
@@ -461,7 +441,6 @@ module.exports = {
 	addSubscriptionType,
 	// getAllSubscriptionDetails,
 	addSubscriptionCompliant,
-  getSubscriptionComplaints,
 	getMySubscriptionDetails,
 	updateMySubscription,
 	deleteMySubscription,
