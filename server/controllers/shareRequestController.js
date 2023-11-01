@@ -147,6 +147,10 @@ function dummy3(){
   console.log('one');
 }
 
+function dummy4(){
+  console.log('one');
+}
+
 module.exports = {
   getAllShareRequests,
   postShareRequest,
