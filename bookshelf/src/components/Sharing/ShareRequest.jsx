@@ -54,27 +54,7 @@ function ShareRequest({ title, image }) {
   const userId = "1302e961-a3a8-4c5d-a635-f1d6495c63df";
   const requestUrl = "http://localhost:3000/api/v1/bookSharing/requests";
 
-//   const ShareRequest = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post(requestUrl, {
-//         bookName: bookName,
-//         userName: userName,
-//         details: details,
-//         listOfBooks: listOfBooks,
-//         userId: userId,
-//       });
-//       console.log(response.data);
 
-//       setBookName("");
-//       setUserName("");
-//       setDetails("");
-//       setListOfBooks([]);
-//       console.log(response);
-//     } catch (error) {
-//       console.log(error.response);
-//     }
-//   };
 
 const ShareRequest = async (e) => {
     e.preventDefault();

@@ -1,3 +1,4 @@
+const { Op, Sequelize } = require("sequelize");
 const shareRequestModel = require("../models/shareRequests");
 const orderModel = require("../models/order")
 const statusCodes = require("http-status-codes");
@@ -104,7 +105,7 @@ const delete_books = async (req, res, next) => {
 };
 
 const check_Eligibility = async (req, res, next) => {
-  const id = req.user.userId;
+  //const id = req.user.userId;
   try {
     const threeMonthsAgo = new Date();
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
