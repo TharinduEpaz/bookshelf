@@ -207,70 +207,10 @@ async function getAllUsers(role) {
   </InputGroup>
   </FormControl>
 
-    <Flex gap={3} alignItems={'center'}>
-
-    <Text width={200} mt={5} ml={20}>Select By</Text>
-
-          <Select 
-            placeholder='First Name' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>A-Z</option>
-              <option value='moderator'>Z-A</option>
-        
-          </Select>
-
-
-          <Select 
-            placeholder='Last Name' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>A-Z</option>
-              <option value='moderator'>Z-A</option>
-        
-          </Select>
-
-
-          <Select 
-            placeholder='User Type' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>All</option>
-              <option value='moderator'>Moderators</option>
-              <option value='moderator'>Buyers</option>
-        
-          </Select>
-
+    
 
           <Button
-            ml={100}
+            ml={1090}
             mt={5}
             colorScheme="blue"
             onClick={generateSearchPDF} 
@@ -278,17 +218,13 @@ async function getAllUsers(role) {
             Generate User Details
           </Button>
 
-  
-
-
-          </Flex>
 
 
     <Box>
 
                 {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
 
-                <Spacer mt={5} />
+                <Spacer mt={1} />
 
                 <AdminUsersReportViewTable
   list={list}
