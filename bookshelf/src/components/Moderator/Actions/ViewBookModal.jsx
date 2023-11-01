@@ -85,7 +85,7 @@ export default function ViewBookModal(id) {
                 />
                 <VStack alignItems={"flex-start"} w={"50vh"} gap={5}>
                   <p>
-                    <strong>ID</strong> : {currentBook.id}
+                    <strong>ID</strong> : {"Book_" + currentBook.id.slice(0, 5).toUpperCase()}
                   </p>
                   <Heading size="xl">{currentBook.title}</Heading>
                   <p>by</p>

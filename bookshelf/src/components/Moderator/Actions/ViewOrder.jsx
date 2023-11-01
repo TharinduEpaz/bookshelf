@@ -95,7 +95,16 @@ export default function ViewOrder(id) {
             </HStack>
             <Text fontWeight={"bold"}>Contact Details</Text>
             <Stack mt={5} mb={10}>
-              <Text>Customer ID : {orderData.userId}</Text>
+              {orderData.user_id ? (
+                <Text>
+                  Customer ID:{" "}
+                  {"User_" +
+                    (orderData.user_id.slice(0, 5).toUpperCase() || "INVALID")}
+                </Text>
+              ) : (
+                <Text>Customer ID is not provided</Text>
+              )}
+
               <Text>
                 Customer Name : {userData.firstName + " " + userData.lastName}
               </Text>
