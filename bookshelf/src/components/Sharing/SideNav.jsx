@@ -95,7 +95,7 @@ export function Sidenav() {
                 fontWeight="600"
                 lineHeight="10"
             >
-                Book Sharing
+                Book Exchange
             </Text>
             <Flex flexDirection={'column'} gap={2} w={'80%'} mb={10} mt={5} >
 
