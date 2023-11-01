@@ -12,18 +12,15 @@ import {
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   import { FiShoppingCart } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
   
   const data = {
     isNew: true,
     imageURL:
       'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
     name: 'Wayfarer Classic',
-    price: 4.5,
-    rating: 4.2,
-    numReviews: 34,
+    
   };
-  
-
   
   function Rating({ rating, numReviews }) {
     return (
@@ -35,7 +32,7 @@ import {
             if (roundedRating - i >= 1) {
               return (
                 <BsStarFill
-                color={'gold'}
+                color={'#D69E2E'}
                   key={i}
                   style={{ marginLeft: '1' }}
                   
@@ -43,25 +40,28 @@ import {
               );
             }
             if (roundedRating - i === 0.5) {
-              return <BsStarHalf key={i} color={'gold'} style={{ marginLeft: '1' }} />;
+              return <BsStarHalf key={i} color={'#D69E2E'} style={{ marginLeft: '1' }} />;
             }
-            return <BsStar key={i} style={{ marginLeft: '1' }} color={'gold'} />;
+            return <BsStar key={i} style={{ marginLeft: '1' }} color={'#D69E2E'} />;
           })}
         
       </Box>
     );
   }
   
-  function BookCard({name, author, price,imageURL, rating,}) {
+  function BookCard({name, author, price,imageURL, rating,id}) {
     return (
       <Flex  alignItems="center" justifyContent="center">
+      
         <Box
-          bg={useColorModeValue('white', 'gray.800')}
-         maxW={'180px'}
-         maxH={'380px'}
+          bg={useColorModeValue('rgba(2,2,2,0)', 'gray.800')}
+          
+         maxW={'200px'}
+         h={'400px'}
           borderWidth="1px"
           rounded="lg"
-         
+          shadow={'sm'}
+        
           position="relative">
           {data.isNew && (
             <Circle
@@ -78,7 +78,8 @@ import {
             alt={`Picture of ${name}`}
             roundedTop="lg"
             boxSize={'200px'}
-            objectFit='cover'
+            objectFit='scale-down'
+            
            
           />
   
@@ -108,6 +109,7 @@ import {
             </Flex>
           </Box>
         </Box>
+        
       </Flex>
     );
   }

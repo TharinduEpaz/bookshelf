@@ -1,4 +1,4 @@
-const sequelize = require('./index.js').sequelize
+const sequelize = require('./index.js').sequelize;
 const { DataTypes } = require("sequelize");
 
 const donationRequest = sequelize.define('donationRequest', {
@@ -15,7 +15,4 @@ const donationRequest = sequelize.define('donationRequest', {
 
 })
 
-
-// donationRequest.sync({  alter: true });
-
-module.exports = donationRequest;
+donationRequest.sync({  alter: true });

@@ -1,5 +1,4 @@
 
-
 const sequelize = require('./index.js').sequelize
 const { DataTypes } = require("sequelize");
 const validator = require('validator');
@@ -44,7 +43,12 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue:'buyer'
-    }, 
+    },
+    verificationToken : {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+  
  
 }, {
   // Other model options go here

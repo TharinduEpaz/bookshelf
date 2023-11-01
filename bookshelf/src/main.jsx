@@ -4,21 +4,27 @@ import App from "./App.jsx";
 import { extendTheme, CSSReset } from "@chakra-ui/react";
 import "@fontsource/montserrat/";
 import "@fontsource/dm-serif-display";
+// import "@fontsource/space-grotesk";
 
 const theme = extendTheme({
   fonts: {
-    heading: "Dm Serif Display, sans-serif",
+    heading: "Bricolage Grotesque, sans-serif",
     body: "Montserrat, sans-serif",
   },
   styles: {
     global: {
       body: {
-        bgGradient:"linear(to bottom, rgba(135, 206, 235, 0.5), rgba(30, 144, 255, 0.3))",
+        bgGradient:"linear(to-bl,blue.100 0%, blue.100 25%, blue.200 50%)",
         paddingTop: "70px",
+
       },
     },
   },
 });
+
+
+
+
 
 import { ChakraProvider } from "@chakra-ui/react";
 
