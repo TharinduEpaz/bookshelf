@@ -35,6 +35,7 @@ function SelectedSubscriptionPackage() {
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
     const [extendDate, setExtendDate] = useState("");
     const [orderDate, setOrderDate] = useState(null)
+    const [expireDate, setExpireDate] = useState("") 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isLoading, setIsLoading] = useState(false);
     const cancelRef = React.useRef()
@@ -71,8 +72,9 @@ function SelectedSubscriptionPackage() {
                 );
                 
                 setOrderDate(response);
-                console.log(response.data.orderDate);
+                // console.log(response.data.orderDate);
                 response && setExtendDate(response.data.orderDate);
+                response && setExpireDate(response.data.expireDate);
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
@@ -189,7 +191,7 @@ function SelectedSubscriptionPackage() {
                     <GridItem colSpan={2} ml={2}>
                         <Text as={'b'} fontSize={'22'} textColor={"red"}>
                             {isLoading && <Spinner /> }
-                            {extendDate && extendDeliveryDate(extendDate)}
+                            {expireDate && expireDate.slice(0,10)}
                         </Text>
                     </GridItem>
                     <Button onClick={onOpen} variant={'outline'} colorScheme='red' borderRadius={15} marginLeft={0}  w={150}>
