@@ -2,13 +2,9 @@ const bookModel = require("../models/book");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
-const {
-  Op
-} = require("sequelize");
+const { Op } = require("sequelize");
 const book = require("../models/book");
-const {
-  log
-} = require("console");
+const { log } = require("console");
 
 const addBook = async (req, res, next) => {
   try {
@@ -33,54 +29,46 @@ const addBook = async (req, res, next) => {
 
 
     const bookImage = req.files.image;
+      
+      if (!bookImage.mimetype.startsWith("image")) {
+        throw new CustomError.BadRequestError("Please upload an image file");
+      }
 
-    if (!bookImage.mimetype.startsWith("image")) {
-      throw new CustomError.BadRequestError("Please upload an image file");
-    }
+      const maxSize = 1024 * 1024 * 5;
 
-    const maxSize = 1024 * 1024 * 5;
+      if (bookImage.size > maxSize) {
+        throw new CustomError.BadRequestError(
+          "Please upload an image less than 5MB"
+        );
+      }
 
-    if (bookImage.size > maxSize) {
-      throw new CustomError.BadRequestError(
-        "Please upload an image less than 5MB"
-      );
-    }
-
-    //randomize file name
-    bookImage.name = `image_${Math.floor(Math.random() * 10000000)}${
+      //randomize file name
+      bookImage.name = `image_${Math.floor(Math.random() * 10000000)}${
         path.parse(bookImage.name).ext
       }`;
 
-    const imagePath = path.join(
-      __dirname,
-      `../public/uploads/${bookImage.name}`
-    );
+      const imagePath = path.join(
+        __dirname,
+        `../public/uploads/${bookImage.name}`
+      );
 
-    await bookImage.mv(imagePath);
+      await bookImage.mv(imagePath);
 
-    const book = await bookModel.create({
-      title,
-      author,
-      price,
-      ISBN,
-      description,
-      averageRating,
-      stock,
-      typesAvailable,
-      genre,
-      language,
-      featuredCategory,
-      image: 'http://localhost:3000/uploads/' + bookImage.name,
-    });
-
-    //send notification to admin
-    adminNotification.create({
-      userId: user.id,
-      type: "New Book Added",
-      message: `${user.firstName} ${user.lastName} has registered.`
-    })
-
-    res.status(statusCodes.StatusCodes.CREATED).json(book);
+      const book = await bookModel.create({
+        title,
+        author,
+        price,
+        ISBN,
+        description,
+        averageRating,
+        stock,
+        typesAvailable,
+        genre,
+        language,
+        featuredCategory,
+        image: 'http://localhost:3000/uploads/'+ bookImage.name,
+      });
+      res.status(statusCodes.StatusCodes.CREATED).json(book);
 
   } catch (error) {
     next(error);
@@ -243,26 +231,26 @@ const getBestSellingBooks = async (req, res, next) => {
         [sequelize.fn("COUNT", sequelize.col("book_id")), "count"],
       ],
       group: ["book_id"],
-      order: [
-        [sequelize.fn("COUNT", sequelize.col("book_id")), "DESC"]
-      ],
+      order: [[sequelize.fn("COUNT", sequelize.col("book_id")), "DESC"]],
       limit: 10,
-      include: [{
-        model: bookModel,
-        attributes: [
-          "title",
-          "author",
-          "price",
-          "ISBN",
-          "description",
-          "averageRating",
-          "stock",
-          "typesAvailable",
-          "genre",
-          "language",
-          "featuredCategory",
-        ],
-      }, ],
+      include: [
+        {
+          model: bookModel,
+          attributes: [
+            "title",
+            "author",
+            "price",
+            "ISBN",
+            "description",
+            "averageRating",
+            "stock",
+            "typesAvailable",
+            "genre",
+            "language",
+            "featuredCategory",
+          ],
+        },
+      ],
     });
     res.json(bestSellingBooks);
   } catch (error) {
@@ -274,15 +262,9 @@ const getBestSellingBooks = async (req, res, next) => {
 const decreaseStock = async (req, res, next) => {
   try {
     const id = req.body.bookId;
-    const {
-      quantity
-    } = req.body.amount || 1;
+    const { quantity } = req.body.amount || 1;
 
-    const book = await bookModel.findOne({
-      where: {
-        id
-      }
-    });
+    const book = await bookModel.findOne({ where: { id } });
 
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
@@ -298,15 +280,9 @@ const decreaseStock = async (req, res, next) => {
 const increaseStock = async (req, res, next) => {
   try {
     const id = req.body.bookId;
-    const {
-      quantity
-    } = req.body.amount || 1;
+    const { quantity } = req.body.amount || 1;
 
-    const book = await bookModel.findOne({
-      where: {
-        id
-      }
-    });
+    const book = await bookModel.findOne({ where: { id } });
     if (!book) {
       throw new CustomError.NotFoundError("No book found");
     }
@@ -331,9 +307,7 @@ const getBookNames = async (req, res, next) => {
 
 const searchBooks = async (req, res, next) => {
   try {
-    const {
-      title
-    } = req.body;
+    const { title } = req.body;
     const books = await bookModel.findAll({
       where: {
         title: {
@@ -349,15 +323,11 @@ const searchBooks = async (req, res, next) => {
 
 const filterBooks = async (req, res, next) => {
   try {
-    const {
-      category
-    } = req.params;
+    const { category } = req.params;
 
-    if (category == 'New') {
+    if(category == 'New'){
       const books = await bookModel.findAll({
-        order: [
-          ["createdAt", "DESC"]
-        ],
+        order: [["createdAt", "DESC"]],
         limit: 10,
       });
       console.log(books);
@@ -374,7 +344,7 @@ const filterBooks = async (req, res, next) => {
     });
     console.log(books);
     res.json(books);
-
+    
   } catch (error) {
     next(error);
   }
@@ -434,9 +404,7 @@ const getPaginatedBooks = async (req, res, next) => {
       where: filters,
       offset: startIndex,
       limit: limit,
-      order: [
-        ["price", price]
-      ], // Assuming 'price' is either 'ASC', 'DESC', or false
+      order: [["price", price]], // Assuming 'price' is either 'ASC', 'DESC', or false
     });
   } else {
     results.result = await bookModel.findAll({
@@ -468,3 +436,4 @@ module.exports = {
   getBookCount,
   getInStockBookCount
 };
+  

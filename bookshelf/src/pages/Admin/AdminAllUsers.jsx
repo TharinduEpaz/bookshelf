@@ -97,7 +97,7 @@ export default function AdminAllUsers() {
         if (userIndex !== -1) {
           // Create a new array with the updated user data
           const updatedList = [...list];
-          updatedList[userIndex] = { ...updatedUserData }; // Make sure to spread the object
+          updatedList[userIndex] = { ...updatedUserData }; 
           setUsersList(updatedList);
           setShowUpdateSuccessAlert(true);
           handleUpdateModalClose();
@@ -375,7 +375,7 @@ async function getAllUsers(role) {
   columnNames={columns}
   deleteUser={handleDeleteModalOpen}
   setSelectedUser={setSelectedUser}
-  updateUser={handleUpdateModalOpen} // Make sure this is passed correctly
+  updateUser={handleUpdateModalOpen} 
   pdfUserDetails={pdfUserDetails}
 />
 
