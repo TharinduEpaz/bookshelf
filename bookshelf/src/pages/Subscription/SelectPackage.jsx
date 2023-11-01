@@ -5,8 +5,8 @@ import {
 } from "@chakra-ui/react";
 
 import SideNavDetails from '../../components/Subscription/SideNavDetails';
-import SelectReaderIcon from '../../components/Subscription/SelectReaderIcon';
-import SelectReader from '../../components/Subscription/SelectReader';
+// import SelectReaderIcon from '../../components/Subscription/SelectReaderIcon';
+// import SelectReader from '../../components/Subscription/SelectReader';
 import { Outlet } from 'react-router-dom';
 function SelectPackage() {
     return (
