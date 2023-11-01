@@ -180,9 +180,9 @@ function Home() {
           boxShadow="sm"
           bgGradient="linear(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4))"
           // filter="blur(8px)"
-          backdropFilter="blur(8px)"
+          // backdropFilter="blur(8px)"
           p={10}
-          zIndex={"-999"}
+          
         >
           <Center>
             <Heading
@@ -190,6 +190,7 @@ function Home() {
               fontWeight={"light"}
               size={"sm"}
               fontFamily={"Montserrat"}
+              // backdropFilter={'blur(8px)'}
             >
               Featured Categories
             </Heading>
@@ -202,9 +203,10 @@ function Home() {
             w={"100%"}
             mt={10}
             flexWrap={{ base: "wrap", md: "wrap", lg: "nowrap" }}
+            
           >
             {Object.keys(itemBoxDetails).map((item) => (
-              <Link to={itemBoxDetails[item].link}>
+              <Link to={itemBoxDetails[item].link} key={item}>
                 <HomeItemBox
                   key={item}
                   header={itemBoxDetails[item].header}
@@ -233,7 +235,7 @@ function Home() {
             mt={10}
             flexWrap={{ base: "wrap", md: "wrap", lg: "wrap" }}
           >
-            {books.map((book) => (
+            {books.map((book,index) => (
               
               <BookCard
                 key={book.id}

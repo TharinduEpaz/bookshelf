@@ -13,13 +13,13 @@ function ManageItems() {
     return (
         <Box padding={10}>
 
-            <Text fontSize={24} as={'b'} >
+            <Text fontSize={24} as={'b'} fontWeight={'extrabold'}>
                 Change Subscription
             </Text>
 
             <Grid templateRows={'repeat(8,1fr)'} templateColumns={'repeat(1,1fr)'} gap={'15px'} paddingTop={5}>
                
-                <GridItem rowSpan={2} colSpan={1} >
+                <GridItem rowSpan={2} colSpan={1} ml={10}>
                     <ChangeSubscription/>
                 </GridItem>
 

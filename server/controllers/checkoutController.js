@@ -11,6 +11,9 @@ const checkout = async (req, res,next) => {
 
   const email = req.body.user.email;
   const userId = (req.body.user);
+  const totalPrice = req.body.total;
+  const subscription = req.body.subscription || 0;
+  console.log(totalPrice);
   console.log(userId);
 
   let shipping = req.body.cart.length * 200 * 100;
@@ -29,22 +32,44 @@ const checkout = async (req, res,next) => {
       userId: userId,
       email: email,
       cartItems: JSON.stringify(req.body.cart),
+      subscription: subscription,
     }
   })
+  
+  let line_items;
 
-  const line_items = req.body.cart.map((item)=>{
-    return{
-      price_data: {
-        currency: 'lkr',
-        product_data: {
-          name: item.title,
+  if (subscription){
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: totalPrice * 100,
         },
-        unit_amount: item.price * 100,
-      },
-      quantity: item.amount,
-    }
-  })
+        quantity: 1,
+      }
+    })
+  }
+  else{
+    line_items = req.body.cart.map((item)=>{
+      return{
+        price_data: {
+          currency: 'lkr',
+          product_data: {
+            name: item.title,
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.amount ,
+      }
+    })
+  
 
+  }
+
+  
   try{
   const session = await stripe.checkout.sessions.create({
     shipping_options: [
@@ -79,7 +104,6 @@ const checkout = async (req, res,next) => {
       enabled:true
     },
   });
-
 
   res.send({url:session.url})
 }
@@ -119,12 +143,69 @@ const createPayment = async (req, res, next) => {
   }
 }
 
+const extendDate = async (req, res, next) => {
+	const amount = req.body.amount;
+  console.log(amount)
+	const extension = req.body.extension;
+  console.log(extension);
+  const userId = req.user.userId;
+
+	try {
+		// const paymentIntent = await stripe.paymentIntents.create({
+		// 	amount: amount,
+		// 	currency: "lkr",
+		// 	payment_method_types: ["card"],
+		// 	metadata: {
+		// 		order_id: 123,
+		// 		order_type: "extension",
+		// 		extension_time: extension,
+		// 	},
+		// });
+    const customer = await stripe.customers.create({
+      metadata:{
+        userId: userId,
+        extension: '1',
+      }
+    })
+
+    const session = await stripe.checkout.sessions.create({
+		payment_method_types: ["card"],
+		mode: "payment",
+		client_reference_id: "extention 1", // You can use this to store metadata
+		line_items: [
+			{
+				price_data: {
+					currency: "lkr",
+					product_data: {
+						name: "Total Amount", // You can name this as you like
+					},
+					unit_amount: 20000, // The total amount in cents (e.g., $10.99)
+				},
+				quantity: 1, // Set quantity to 1 for the total amount
+			},
+      
+		],
+    customer:customer.id,
+
+		// Other parameters as needed
+		success_url: "http://localhost:5173/paymentsuccess",
+		cancel_url: "http://localhost:5173/cart",
+	});
+
+
+     res.send({ url: session.url });
+
+	} catch (error) {
+		next(error);
+	}
+};
 
 
 module.exports = {
     checkout,
     config,
     createPayment,
+    extendDate
 }
 
 

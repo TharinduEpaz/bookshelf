@@ -14,7 +14,9 @@ import {
   import { useCartContext } from "../../context/cartContext";
 import Paybutton from '../../pages/Paybutton';
   const OrderSummaryItem = (props) => {
+
     const { label, value, children } = props
+
     return (
       <Flex justify="space-between" fontSize="sm">
         <Text fontWeight="medium" color={mode('gray.600', 'gray.400')}>
@@ -49,10 +51,8 @@ import Paybutton from '../../pages/Paybutton';
           </Flex>
         </Stack>
         
-        
+        {cartItems.length >= 1 ? <Paybutton /> : <Button colorScheme='red'>Cart Empty</Button>}
       
-        <Paybutton />
-        
           <Alert >Free Shipping for orders above 5000 LKR</Alert>
       </Stack>
     )

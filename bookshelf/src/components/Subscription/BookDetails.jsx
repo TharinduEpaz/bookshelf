@@ -14,9 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import BookCard from "../Subscription/BookCard";
-import { BsFillPlusCircleFill } from "react-icons/bs";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
+import { useContext } from "react";
+import { userContext } from "../../context/userContext";
 
 function bookDetails() {
 
@@ -68,8 +71,10 @@ function bookDetails() {
                 "http://localhost:3000/api/v1/subscriptions/selectBooks",
                 { withCredentials: true }
             );
+            console.log(response);
             setBookDetails(response.data[0].books)
             setIsLoading(false);
+            
 
         } catch (error) {
             console.log(error);
@@ -94,16 +99,17 @@ function bookDetails() {
     }
 
     let currentSubscription = subscriptionDetails && subscriptionDetails.data[0].subscriptionType;
+
     let subscriptionAmount = ""
     
     if (currentSubscription === "Book Reader") {
-        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.3;
+        subscriptionAmount = bookDetails?.[0]?.price * 80/100;
     } 
     else if (currentSubscription === "Book Worm") {
-        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.6;
+        subscriptionAmount = bookDetails?.[0]?.price * 60/100;
     } 
     else if (currentSubscription === "Book Lover") {
-        subscriptionAmount = bookDetails?.[0]?.price - bookDetails?.[0]?.price * 0.4;
+        subscriptionAmount = bookDetails?.[0]?.price * 70/100;
     }
 
     return (
@@ -112,7 +118,7 @@ function bookDetails() {
                 {bookDetails.length > 0 && (
                     bookDetails.map((book, index) => (
                         <>
-                            <Text display={"none"} mt={-100}> {count++}</Text>
+                            <Text display={"none"} mt={-100} key={index}> {count++}</Text>
 
                             <div key={index} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <BookCard
@@ -138,6 +144,7 @@ function bookDetails() {
                                 <Heading size='md' fontSize={20} color={"blue.400"}> Add Books </Heading>
                             </CardHeader>
                             <CardBody>
+                            <BsFillArrowDownCircleFill  size={75}/>
                             </CardBody>
                             <CardFooter>
                                 <RouterLink to="/selectPackage/selectBook">
@@ -218,14 +225,50 @@ function bookDetails() {
                 </GridItem>
                 <GridItem rowSpan={1} colSpan={1}>
                     <RouterLink to="#">
-                        <Button colorScheme="purple" w={130} borderRadius={15}>
-                            Go to Checkout
-                        </Button>
+                        <Paybutton items={bookDetails[0]} totalPrice={subscriptionAmount}/>
                     </RouterLink>
                 </GridItem>
             </Grid>
         </div>
     );
 }
+
+
+
+const Paybutton = (props) => {
+    const { user } = useContext(userContext);
+    const cartItems = Array(props.items)
+    console.log(cartItems);
+    const totalPrice = props.totalPrice
+    const [isLoading,setIsLoading] = useState(false)
+
+    console.log(totalPrice);
+  
+    const handleSubmit = async () => {
+      setIsLoading(true)
+      try {
+        const response = await axiosInstance.post('/orders/create-payment-intent',{
+          cart : cartItems,
+          user : user.user.userId,
+          total: totalPrice,
+          subscription:1,
+        });
+        console.log(response);
+        window.location.href=response.data.url;
+        setIsLoading(false)
+  
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false)
+      }
+    };
+
+    return (
+      <Button onClick={handleSubmit} colorScheme="purple">
+      {isLoading && <Spinner/>}
+       pay now
+      </Button>
+    )
+  };
 
 export default bookDetails;

@@ -1,3 +1,4 @@
+import React, { useState,useEffect} from 'react';
 import {
     Flex,
     Circle,
@@ -10,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const data = {
     isNew: true,
@@ -50,6 +52,46 @@ function Rating({ rating, numReviews }) {
 }
 
 function BookCard({ name,  price, imageURL, id }) {
+
+    const [subscriptionType, setSubscriptionType] = useState([]);
+    const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+
+    useEffect(() => {
+        const getCurrentSubscription = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/subscriptions/getMySubscription",
+                    {
+                        withCredentials: true
+                    }
+                );
+                setSubscriptionDetails(response);
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+            }
+        };
+        getCurrentSubscription();
+    }, []);
+
+    let currentSubscription = subscriptionDetails?.data[0]?.subscriptionType;
+
+    function getBookPrice(price, currentSubscription) {
+        switch (currentSubscription) {
+            case 'Book Lover':
+                return price * 60 / 100
+                break;
+            case 'Book Reader':
+                return price * 70 / 100
+                break;
+            case 'Book Worm':
+                return price * 50 / 100
+                break;
+            default:
+                return price;
+                break;
+        }
+    }
+
     return (
         <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
             <Box
@@ -95,11 +137,11 @@ function BookCard({ name,  price, imageURL, id }) {
                     <Flex alignContent="center" direction={'column'} mt={2}>
                         <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                             <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'} >
-                                <Text  as={'del'} fontWeight={'bold'} color={'#0A3BBA'}>
-                                    Rs. {price}
+                                <Text  as={'del'} fontWeight={'bold'} fontSize={16} >
+                                    Rs {price}
                                 </Text>
-                                <Text as={'b'} color={'#0A3BBA'} marginLeft={3}>
-                                    Rs. {price-price*0.8}.00
+                                <Text as={'b'} color={'red'} marginLeft={3} fontSize={20}>
+                                    Rs.{getBookPrice(price,currentSubscription)}
                                 </Text>
 
                             </Box>
