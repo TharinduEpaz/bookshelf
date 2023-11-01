@@ -47,8 +47,51 @@ const addDonationRequest = async (req, res, next) => {
     }
 }
 
+//get a donation request by ID
+const getDonationRequestByID = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const donationRequest = await donationRequestsModel.findOne({
+            where: {
+                id,
+            },
+        });
+
+        if (!donationRequest) {
+            throw new CustomError.NotFoundError(`Donation request with id ${id} was not found`);
+        }
+
+        res.status(statusCodes.StatusCodes.OK).json(donationRequest);
+    } catch (error) {
+        next(error);
+    }
+}
+
+//update a donation request
+const updateDonationRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { approval } = req.body;
+
+        const donationRequest = await donationRequestsModel.findByPk(id);
+
+        if (!donationRequest) {
+            throw new CustomError.NotFoundError(`Donation request with id ${id} was not found`);
+        }
+
+        await donationRequest.update({
+            approval,
+        });
+
+        res.status(statusCodes.StatusCodes.OK).json(donationRequest);
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = {
     getAllDonationRequests,
     addDonationRequest,
+    getDonationRequestByID,
+    updateDonationRequest,
 };
