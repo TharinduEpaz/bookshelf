@@ -19,7 +19,7 @@ function ManageSubscription() {
              backdropFilter="blur(8px)"
             p={10}
         >
-            <Box border={'1px'} borderRadius={'10'} borderColor={'blue.200'}>
+            <Box border={'1px'} borderRadius={'10'} borderColor={'blue.200'} bg={'white'}>
                 <ManageItems />
             </Box>
             

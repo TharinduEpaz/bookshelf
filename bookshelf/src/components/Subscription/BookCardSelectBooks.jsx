@@ -93,13 +93,14 @@ function BookCard({ name,  price, imageURL, id }) {
     }
 
     return (
-        <Flex alignItems="center" justifyContent="center" flexDirection={'column'}>
+        <Flex alignItems="center" justifyContent="center" >
             <Box
-                bg={useColorModeValue('white', 'gray.800')}
-                maxW={'240px'}
-                maxH={'500px'}
+                bg={useColorModeValue('rgba(2,2,2,0)', 'gray.800')}
+                maxW={'200px'}
+                maxH={'580px'}
                 borderWidth="1px"
                 rounded="lg"
+                shadow={'sm'}
 
                 position="relative">
                 {data.isNew && (
@@ -117,7 +118,7 @@ function BookCard({ name,  price, imageURL, id }) {
                     alt={`Picture of ${name}`}
                     roundedTop="lg"
                     boxSize={'240px'}
-                    objectFit='cover'
+                    objectFit='scale-down'
 
                 />
 
@@ -136,11 +137,11 @@ function BookCard({ name,  price, imageURL, id }) {
 
                     <Flex alignContent="center" direction={'column'} mt={2}>
                         <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                            <Box as="span" color={'gray.600'} fontSize="lg" justifyContent={'center'} display={'flex'} mt={'2'} >
+                            <Box as="span" color={'gray.600'} fontSize="lg"  display={'flex'} mt={'2'} >
                                 <Text  as={'del'} fontWeight={'bold'} fontSize={16} >
                                     Rs {price}
                                 </Text>
-                                <Text as={'b'} color={'red'} marginLeft={3} fontSize={20}>
+                                <Text as={'b'} color={'red'} ml={2} marginTop={-1} fontSize={20}>
                                     Rs.{getBookPrice(price,currentSubscription)}
                                 </Text>
 

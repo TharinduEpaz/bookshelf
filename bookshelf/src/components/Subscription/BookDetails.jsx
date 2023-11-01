@@ -27,6 +27,11 @@ function bookDetails() {
     const [bookDetails, setBookDetails] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsCheckboxChecked(!isCheckboxChecked);
+    };
 
     let count = 0;
     useEffect(() => {
@@ -74,8 +79,6 @@ function bookDetails() {
             console.log(response);
             setBookDetails(response.data[0].books)
             setIsLoading(false);
-            
-
         } catch (error) {
             console.log(error);
             console.log("ss");
@@ -139,12 +142,12 @@ function bookDetails() {
 
                 {count > 0 && count < 3 &&
                     (
-                        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50 }}>
+                        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 100 }}>
                             <CardHeader>
                                 <Heading size='md' fontSize={20} color={"blue.400"}> Add Books </Heading>
                             </CardHeader>
                             <CardBody>
-                            <BsFillArrowDownCircleFill  size={75}/>
+                            <BsFillArrowDownCircleFill color="#204974"  size={75} />
                             </CardBody>
                             <CardFooter>
                                 <RouterLink to="/selectPackage/selectBook">
@@ -165,7 +168,7 @@ function bookDetails() {
                 }
                 
                 {bookDetails.length === 0 && (
-                    <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50 }}>
+                    <Card  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: 300, marginTop: 50,}}>
                         <CardHeader>
                             <Heading size='md' fontSize={20} color={"red.400"}> No Books Selected</Heading>
                         </CardHeader>
@@ -197,9 +200,9 @@ function bookDetails() {
 
             
 
-            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(8,1fr)"} gap={"15px"} marginTop={10} marginLeft={18} >
+            <Grid templateRows={"repeat(2,1fr)"} templateColumns={"repeat(8,1fr)"} gap={"5px"} marginTop={10} marginLeft={18} >
                 
-                <GridItem rowSpan={1} colSpan={2} textColor={"#204974"} fontSize={20} as={"b"}>
+                <GridItem rowSpan={1} colSpan={5} textColor={"#204974"} fontSize={20} as={"b"}>
                     <Icon viewBox='0 0 200 200' mt={-1}>
                         <path
                             fill='currentColor'
@@ -211,7 +214,7 @@ function bookDetails() {
                     </span>
                 </GridItem>
 
-                <GridItem justifyContent={"center"} rowSpan={1} colSpan={6} textColor={"#204974"} fontSize={20} as={"b"} ml={500}>
+                <GridItem justifyContent={"center"} rowSpan={1} colSpan={3} textColor={"#204974"} fontSize={20} as={"b"} ml={125} >
                     <span>
                         Rs { subscriptionAmount||'0'}.00
                     </span>
@@ -219,13 +222,17 @@ function bookDetails() {
                 </GridItem>
 
                 <GridItem rowSpan={1} colSpan={6} textColor={"#204974"}>
-                    <Checkbox>
-                        <Text  fontSize={17}>I agree to the terms and conditions</Text>
+                    <Checkbox colorScheme="blue" isChecked={isCheckboxChecked} onChange={handleCheckboxChange}>
+                        <Text fontSize={17}>I agree to the terms and conditions</Text>
                     </Checkbox>
                 </GridItem>
                 <GridItem rowSpan={1} colSpan={1}>
                     <RouterLink to="#">
-                        <Paybutton items={bookDetails[0]} totalPrice={subscriptionAmount}/>
+                        <Paybutton
+                            items={bookDetails[0]}
+                            totalPrice={subscriptionAmount}
+                            isCheckboxChecked={isCheckboxChecked}
+                        />
                     </RouterLink>
                 </GridItem>
             </Grid>
@@ -238,7 +245,7 @@ function bookDetails() {
 const Paybutton = (props) => {
     const { user } = useContext(userContext);
     const cartItems = Array(props.items)
-    console.log(cartItems);
+    // console.log(cartItems);
     const totalPrice = props.totalPrice
     const [isLoading,setIsLoading] = useState(false)
 
@@ -264,7 +271,7 @@ const Paybutton = (props) => {
     };
 
     return (
-      <Button onClick={handleSubmit} colorScheme="purple">
+        <Button onClick={handleSubmit} colorScheme="purple" isDisabled={!props.isCheckboxChecked}>
       {isLoading && <Spinner/>}
        pay now
       </Button>

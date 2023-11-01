@@ -63,14 +63,14 @@ function SubscriptionDetails() {
         percentage = subscriptionType[1].discount;
     }
     else if (currentSubscription === "Book Reader" && subscriptionType.length >= 2) {
-        bookItem = subscriptionType[2].book_count;
-        timePeriod = subscriptionType[2].time_period;
-        percentage = subscriptionType[2].discount;
-    }
-    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
         bookItem = subscriptionType[0].book_count;
         timePeriod = subscriptionType[0].time_period;
         percentage = subscriptionType[0].discount;
+    }
+    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
+        bookItem = subscriptionType[2].book_count;
+        timePeriod = subscriptionType[2].time_period;
+        percentage = subscriptionType[2].discount;
     }
 
 
@@ -91,7 +91,7 @@ function SubscriptionDetails() {
                           Terms for the <strong>{currentSubscription}</strong> subscription package
                       </Text>
                       <UnorderedList paddingLeft={20} fontSize={'lg'}>
-                          <ListItem>{bookItem} book for {timePeriod} month</ListItem>
+                          <ListItem>{bookItem} book for {timePeriod} </ListItem>
                           <ListItem>{percentage} of the original price of the book</ListItem>
                           <ListItem>Doorstep delivery</ListItem>
                           <ListItem>Please make sure the book has the optimal quality when returned to avoid extra quality check charges</ListItem>

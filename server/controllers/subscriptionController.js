@@ -500,6 +500,27 @@ const extends_date = async (week,id) => {
 	}
 };
 
+const get_order_date = async (req, res, next) => {
+	// const uId = "d384f58e-ee9a-48eb-8c96-141e66f6af60";
+	const uId = req.user.userId;
+	console.log(uId);
+	try {
+		const order = await subscriptionOrder.findOne({
+			where: {
+				user_id: uId,
+			},
+		});
+
+		if (!order) {
+			// res.send("No Subscription Found");
+		}
+
+		res.status(statusCodes.StatusCodes.OK).json(order);
+	} catch (error) {
+		next(error);
+	}
+};
+
 
 
 module.exports = {
@@ -521,4 +542,5 @@ module.exports = {
 	get_books_in_subscription_plan,
 	delete_book_in_subscription_plan,
 	extends_date,
+  get_order_date
 };

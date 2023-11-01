@@ -17,7 +17,8 @@ import {
     Card, CardHeader, CardBody, CardFooter,
     Flex,
     UnorderedList,
-    ListItem
+    ListItem,
+    Spinner
 } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react'
 import SelectLoverIcon from './SelectLoverIcon';
@@ -33,11 +34,13 @@ export default function ChangeSubscription() {
     const [subscriptionDetails, setSubscriptionDetails] = useState(null);
     const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] = useState(null);
     const [reloadPage, setReloadPage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const toast = useToast()
 
     useEffect(() => {
         const getSubscription = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions",
                     {
@@ -46,6 +49,7 @@ export default function ChangeSubscription() {
                 )
 
                 setSubscriptionType(response.data);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
@@ -56,6 +60,7 @@ export default function ChangeSubscription() {
     useEffect(() => {
         const getCurrentSubscription = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(
                     "http://localhost:3000/api/v1/subscriptions/getMySubscription",
                     {
@@ -63,6 +68,7 @@ export default function ChangeSubscription() {
                     }
                 );
                 setSubscriptionDetails(response);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching subscription:", error);
             }
@@ -93,11 +99,6 @@ export default function ChangeSubscription() {
                     withCredentials: true
                 }
             );
-            // console.log(subscriptionType)
-            // console.log("Subscription updated:", response.data);
-
-            // Perform any necessary actions after the subscription is updated
-
 
             setShowOtherSubscriptionPopup(false);
             // setReloadPage(true);
@@ -151,27 +152,27 @@ export default function ChangeSubscription() {
 
     if (currentSubscription === "Book Lover" && subscriptionType.length >= 2) {
         otherSubscriptionIcon1 = <SelectWormIcon />;
-        otherSubscription1 = subscriptionType[0].LastName;
-        otherSubscription1BookCount = subscriptionType[0].book_count;
-        otherSubscription1TimePeriod = subscriptionType[0].time_period;
-        otherSubscription1Discount = subscriptionType[0].discount;
-        otherSubscription1Id = subscriptionType[0].id;
-        
-
-        otherSubscriptionIcon2 = <SelectReaderIcon />;
-        otherSubscription2 = subscriptionType[2].LastName;
-        otherSubscription2BookCount = subscriptionType[2].book_count;
-        otherSubscription2TimePeriod = subscriptionType[2].time_period;
-        otherSubscription2Discount = subscriptionType[2].discount;
-        otherSubscription2Id = subscriptionType[2].id;
-    }
-    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
-        otherSubscriptionIcon1 = <SelectReaderIcon />;
         otherSubscription1 = subscriptionType[2].LastName;
         otherSubscription1BookCount = subscriptionType[2].book_count;
         otherSubscription1TimePeriod = subscriptionType[2].time_period;
         otherSubscription1Discount = subscriptionType[2].discount;
         otherSubscription1Id = subscriptionType[2].id;
+        
+
+        otherSubscriptionIcon2 = <SelectReaderIcon />;
+        otherSubscription2 = subscriptionType[0].LastName;
+        otherSubscription2BookCount = subscriptionType[0].book_count;
+        otherSubscription2TimePeriod = subscriptionType[0].time_period;
+        otherSubscription2Discount = subscriptionType[0].discount;
+        otherSubscription2Id = subscriptionType[0].id;
+    }
+    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
+        otherSubscriptionIcon1 = <SelectReaderIcon />;
+        otherSubscription1 = subscriptionType[0].LastName;
+        otherSubscription1BookCount = subscriptionType[0].book_count;
+        otherSubscription1TimePeriod = subscriptionType[0].time_period;
+        otherSubscription1Discount = subscriptionType[0].discount;
+        otherSubscription1Id = subscriptionType[0].id;
         
 
 
@@ -192,11 +193,11 @@ export default function ChangeSubscription() {
         
 
         otherSubscriptionIcon2 = <SelectWormIcon />;
-        otherSubscription2 = subscriptionType[0].LastName;
-        otherSubscription2BookCount = subscriptionType[0].book_count;
-        otherSubscription2TimePeriod = subscriptionType[0].time_period;
-        otherSubscription2Discount = subscriptionType[0].discount;
-        otherSubscription2Id = subscriptionType[0].id;
+        otherSubscription2 = subscriptionType[2].LastName;
+        otherSubscription2BookCount = subscriptionType[2].book_count;
+        otherSubscription2TimePeriod = subscriptionType[2].time_period;
+        otherSubscription2Discount = subscriptionType[2].discount;
+        otherSubscription2Id = subscriptionType[2].id;
     }
 
     return (
@@ -208,6 +209,7 @@ export default function ChangeSubscription() {
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>
                         Current Subscription
                     </Text>
+                    {isLoading && <Spinner />}
                     {currentSubscriptionIcon}
                 </Box>
                 <Button marginTop={24} mr={100} colorScheme='blue' onClick={onOpen}> Change Subscription </Button>

@@ -87,19 +87,18 @@ export function BlurWhiteBox({ title, image }) {
                         src={image}
                         position={"relative"}
                         top={-2}
-
                     />
                 </GridItem>
                 <GridItem rowSpan={2} colSpan={3} alignItems={'top'} display={'flex'}>
                     {/* <RouterLink onClick={onOpen} > */}
                     <>
-                        <Button ml={5} textAlign={'center'} colorScheme="purple" w={230} borderRadius={100} onClick={() => checkSubscription()}>Subscription Packages</Button>
+                        <Button mt={10} ml={5} mr={14} textAlign={'center'} colorScheme="purple" w={230} borderRadius={100} onClick={() => checkSubscription()}>Subscription Packages</Button>
                     
                     </>
                     {/* </RouterLink> */}
-
-                    <Search />
-
+                    <>
+                        <Search />
+                    </>
                 </GridItem>
                 {isOpen && (
                     <AlertDialog size={'xl'} isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>

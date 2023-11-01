@@ -34,6 +34,7 @@ function SelectBook() {
         templateColumns="repeat(5, 1fr)"
         gap={2}
         h={'100%'}
+        // bg={'white'}
       >
         <GridItem rowSpan={1} colSpan={5} >
           <Search />
@@ -43,11 +44,11 @@ function SelectBook() {
           <Filter />
         </GridItem>
 
-        <GridItem rowSpan={8} colSpan={1} border={'1px'} borderColor={'blue.200'} rounded={'md'}>
+        <GridItem rowSpan={8} colSpan={1} border={'1px'} borderColor={'blue.200'} rounded={'md'} bg={'white'} >
           <CategoryFilter />
         </GridItem>
         
-        <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'} >
+        <GridItem rowSpan={8} colSpan={4} border={'1px'} borderColor={'blue.200'} rounded={'md'} bg={'white'}>
           <Flex flexWrap={'wrap'} gap={10} p={10}>
 
             {isLoading && <Skeleton> <BookCardSelecBooks /></Skeleton>}
