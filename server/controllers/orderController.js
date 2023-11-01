@@ -348,6 +348,16 @@ const countPendingOrders = async (req, res, next) => {
 	}
 };
 
+const getAllSubscriptionOrders = async (req, res, next) => {
+  try {
+    const subscriptionOrders = await subscriptionOrderModel.findAll();
+    res.json(subscriptionOrders);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 module.exports = {
 	addOrder,
 	getAllOrders,
@@ -360,4 +370,5 @@ module.exports = {
   create_order_by_webhook_data,
   get_orders_by_user,
   get_subscription_orders_by_user,
+  getAllSubscriptionOrders
 };

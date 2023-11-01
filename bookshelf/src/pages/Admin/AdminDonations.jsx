@@ -23,98 +23,61 @@ import AdminSidebar from "../../components/Admin/AdminSidebar";
 import { BiBookOpen, BiPlus } from "react-icons/bi";
 import AdminStatCard from "../../components/Admin/AdminStatCard";
 import AdminDtataTable from "../../components/Admin/AdminDtataTable";
-
+import { useEffect, useState } from "react";
 
 export default function AdminDonations() {
 
-  const org_columns = [
+  const columns = [
     "ID",
-    "Name",
-    "Registered Date",
-    "email",
+    "Organization Name",
+    "Organization Type",
+    "Registration No",
     "Contact Number",
-    "Status",
-    "Action",
-  ];
-  const org_list = [
-    {
-      id: "n0001",
-      name: "Apeksha Hosital",
-      Date: "01.02.2023",
-      email: "apeksha@gmail.com",
-      contact_number: "0112245321",
-      status: "Registered",
-      action: "Registered",
-    },
-    {
-      id: "n0002",
-      name: "Nanasa",
-      Date: "11.03.2023",
-      email: "nanasa@gmail.com",
-      contact_number: "0112775321",
-      status: "Registered",
-      action: "Registered",
-    },
+    "Address",
+    "Email",
+    "Account",
+    "Contact Person",
+    "Contact Person No",
+    "Contact Person Email",
+    "Contact Person NIC",
+    "Description",
+    "Approval"
   ];
 
-  const don_columns = [
-    "ID",
-    "Donor",
-    "Donated Date",
-    "No. of Units",
-    "Organization",
-    "Action"
-  ];
-  const don_list = [
-    {
-      id: "d0001",
-      name: "Mahir Singh",
-      Date: "01.02.2023",
-      units: "10",
-      org: "Diwasa Center",
-      action: "Action",
-    },
-    {
-      id: "d0002",
-      name: "Gagani Hirusha",
-      Date: "21.02.2023",
-      units: "23",
-      org: "Dikhena Central College",
-      action: "Action",
-    },
-    {
-      id: "d0003",
-      name: "Miyu Sithara",
-      Date: "01.06.2023",
-      units: "34",
-      org: "Arana ",
-      action: "Action",
-    },
-    {
-      id: "d0004",
-      name: "Kimuth",
-      Date: "01.04.2023",
-      units: "67",
-      org: "Apeksha Hospital",
-      action: "Action",
-    },
-    {
-      id: "d0005",
-      name: "Sahan Ranwala",
-      Date: "01.02.2023",
-      units: "56",
-      org: "Diyatha ",
-      action: "Action",
-    },
-    {
-      id: "d0006",
-      name: "Shanu Silva",
-      Date: "01.05.2023",
-      units: "70",
-      org: "Museum",
-      action: "Action",
-    },
-  ];
+  const [list, setDonations] = useState([]);
+
+  const getDonations = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/donations")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((donations) => ({
+        id: donations.id,
+        orgName: donations.orgName,
+        orgType: donations.orgType,
+        orgRegisteredNumber: donations.orgRegisteredNumber,
+        orgTelephone: donations.orgTelephone,
+        orgAddress: donations.orgAddress,
+        orgEmail: donations.orgEmail,
+        orgConfirmationDocument: donations.orgConfirmationDocument,
+        contactPersonName: donations.contactPersonName,
+        contactPersonPhone: donations.contactPersonPhone,
+        contactPersonEmail: donations.contactPersonEmail,
+        contactPersonNIC: donations.contactPersonNIC,
+        description: donations.description,
+        approval: donations.approval
+      }));
+      
+      setDonations(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getDonations();
+  }, [])
+
 
   return (
     
@@ -164,12 +127,6 @@ export default function AdminDonations() {
                   Donations Summory
                 </Text>
                 <Spacer />
-                <Link to="/moderator/addNewBook">
-                  <Button colorScheme="blue" size={"sm"}>
-                    <Icon as={BiPlus} />
-                    <Text ml={2}>Add a New Donation Pack</Text>
-                  </Button>
-                </Link>
               </Flex>
 
               <Flex gap={20}>
@@ -219,30 +176,15 @@ export default function AdminDonations() {
               <Spacer mt={10} />
 
               <Box>
-                <Tabs>
-                  <TabList>
-                    <Tab>Oraganizations</Tab>
-                    <Tab>Donations</Tab>
-                  </TabList>
-                  <TabPanels>
-                    <TabPanel>
-
-                      {/* <SearchPanel name="Organizations" filter="organizations"/> */}
-
+                
                       <Spacer mt={5} />
 
-                      <AdminDtataTable list={org_list} columnNames={org_columns} />
-                    </TabPanel>
-                    <TabPanel>
-
-                    {/* <SearchPanel name="Donations" filter="donations"/> */}
-
-                      <Spacer mt={5} />
-                      <AdminDtataTable list={don_list} columnNames={don_columns} />
-
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs>
+                      <AdminDtataTable 
+                        list={list} 
+                        columnNames={columns} 
+                        
+                        />
+                   
               </Box>
             </Box>
 

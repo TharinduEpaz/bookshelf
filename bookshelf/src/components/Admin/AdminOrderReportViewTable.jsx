@@ -15,7 +15,9 @@ export default function AdminOrderReportViewTable({
   list,
   columnNames,
   search
-}) {
+}) 
+
+{
 
   const filteredList = list.filter((item) => {
     return search && item.totalPrice && search.toLocaleString() === '' || item.totalPrice.toLocaleString().includes(search);
