@@ -32,7 +32,7 @@ const sidebarLinks = [
   },
   {
     id: 2,
-    url: "../settings",
+    url: "../components/Donation/Settings",
     text: "Account Settings",
     icon: <IoMdSettings />,
   },
