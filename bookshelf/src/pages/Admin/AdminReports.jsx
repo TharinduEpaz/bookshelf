@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import AdminSidebar from "../../components/Admin/AdminSidebar";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
@@ -13,12 +14,6 @@ import {
 } from '@chakra-ui/react'
 
 export default function AdminReports() {
-
-
-
-
-
-
 
     
   return (
@@ -71,14 +66,31 @@ export default function AdminReports() {
                   Select Report Type
                 </Text>
 
-                <Stack spacing={4}>
+                <Stack spacing={4} width={400}>
 
-                <Button ml={300} mr={300} colorScheme='blue'>User Details</Button>
-                <Button ml={300} mr={300} colorScheme='blue'>Order Details</Button>
-                <Button ml={300} mr={300} colorScheme='blue'>Inventory Details</Button>
-                <Button ml={300} mr={300} colorScheme='blue'>Donations</Button>
-                <Button ml={300} mr={300} colorScheme='blue'>Subscriptions</Button>
-                <Button ml={300} mr={300} colorScheme='blue'>Book Sharing</Button>
+                <Link to="/adminuserreport">
+                <Button ml={270} w={300} colorScheme='blue'>User Details</Button>
+                </Link>
+                
+                <Link to="/adminorderreport">
+                <Button ml={270} w={300} colorScheme='blue'>Order Details</Button>
+                </Link>
+
+                <Link to="/admininventoryreports">
+                <Button ml={270} w={300}  colorScheme='blue'>Inventory Details</Button>
+                </Link>
+
+                <Link to="/admindonationreport">
+                <Button ml={270} w={300} colorScheme='blue'>Donations</Button>
+                </Link>
+
+                <Link to="/adminsubscriptionreports">
+                <Button ml={270} w={300}  colorScheme='blue'>Subscriptions</Button>
+                </Link>
+
+                <Link to="/adminsharingreport">
+                <Button ml={270} w={300} colorScheme='blue'>Book Sharing</Button>
+                </Link>
 
                 </Stack>
     </Box>
