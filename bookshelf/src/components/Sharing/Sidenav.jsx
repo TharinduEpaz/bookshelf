@@ -25,13 +25,13 @@ const SidenavDetailsLinks = [
     {
         id: 1,
         url: "shareBook",
-        text: "Books",
+        text: "Requests",
         icon: <FaBookOpen/>,
     },
     {
         id: 2,
         url: "shareRequest",
-        text: "Post Share Request",
+        text: "Post a Request",
         icon: <FaShareSquare />,
     },
     {
@@ -95,7 +95,7 @@ export function Sidenav() {
                 fontWeight="600"
                 lineHeight="10"
             >
-                Book Sharing
+                Book Exchanging
             </Text>
             <Flex flexDirection={'column'} gap={2} w={'80%'} mb={10} mt={5} >
 
