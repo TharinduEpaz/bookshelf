@@ -156,6 +156,9 @@ function dummy5(){
 function dummy6(){
   console.log('one');
 }
+function dummy7(){
+  console.log('one');
+}
 
 module.exports = {
   getAllShareRequests,
