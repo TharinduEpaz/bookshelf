@@ -40,9 +40,9 @@ const reviewRoutes = require("./routes/reviewRoutes");
 const notificationsRoutes = require("./routes/notificationsRoutes");
 const orderController = require("./controllers/orderController");
 const subscriptionController = require("./controllers/subscriptionController");
-const subscriptionComplaintsRoutes = require("./routes/subscriptionRoutes");
+// const subscriptionComplaintsRoutes = require("./routes/subscriptionRoutes");
 const userSubscriptionRoutes = require("./routes/subscriptionRoutes");
-// const subscriptionComplaintsRoutes = require("./routes/subscriptionComplaintsRoutes");
+const subscriptionComplaintsRoutes = require("./routes/subscriptionComplaintsRoutes");
 // const userSubscriptionRoutes = require("./routes/subscriptionRoutes");
 const donationRequestsRoutes = require("./routes/donationRequestsRoutes");
 

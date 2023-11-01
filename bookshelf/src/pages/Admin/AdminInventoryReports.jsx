@@ -223,7 +223,7 @@ export default function AdminInventoryReports() {
     <InputGroup>
     <Input
       type="text"
-      placeholder="Search User"
+      placeholder="Search By Book Title"
       colorScheme="blue"
       borderColor={'gray.200'}
       focusBorderColor={'white.100'}
@@ -241,92 +241,8 @@ export default function AdminInventoryReports() {
 
              
 
-          <Flex gap={3} alignItems={'center'}>
-
-
-          <Text width={200} mt={5} ml={10}>Select By</Text>
-
-          <Select 
-            placeholder='All' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>Author</option>
-              <option value='moderator'>Genre</option>
-              <option value='moderator'>Category</option>
-        
-          </Select>
-
-          
-          <Select 
-            placeholder='Rating' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>Max</option>
-              <option value='moderator'>Min</option>
-        
-          </Select>
-
-          <Select 
-            placeholder='Price' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>Max</option>
-              <option value='moderator'>Min</option>
-        
-          </Select>
-
-
-          <Select 
-            placeholder='Language' 
-            w={'200px'} 
-            size={'sm'} 
-            borderRadius={5} 
-            borderColor={'gray.200'} 
-            focusBorderColor={'white.100'}
-            pl={2}
-            ml={2}
-            mt={5}
-            //onChange={(e) => setSelectedRole(e.target.value)} 
-            //value={selectedRole}
-           >
-              <option value='buyer'>English</option>
-              <option value='moderator'>Sinhala</option>
-              <option value='moderator'>Tamil</option>
-              <option value='moderator'>French</option>
-              <option value='moderator'>Chinese</option>
-              <option value='moderator'>Japanese</option>
-
-          </Select>
-
           <Button 
-        ml={10}
+        ml={1050}
         mt={5}
         colorScheme="blue" 
         onClick={generateSearchPDF}
@@ -336,10 +252,7 @@ export default function AdminInventoryReports() {
 
 
 
-      </Flex>
-
-
-              <Spacer mt={10} />
+              <Spacer mt={1} />
 
               <Box>
                 {/* <SearchPanel name="Inventory Items" filter="inventory" /> */}
