@@ -135,9 +135,9 @@ const ShareRequest = async (e) => {
           <AiFillExclamationCircle size={30} color="rgb(49,130,206)" />
         </Box>
         <Box>
-          <Text as="b">Important </Text>
-          <Text>
-            You cannot post a share request unless you bought a book or
+          <Text fontSize={20} as="b">Important </Text>
+          <Text fontSize={18}>
+            You cannot post a request unless you bought a book or
             subscription within the last 3 months
           </Text>
         </Box>
@@ -145,7 +145,7 @@ const ShareRequest = async (e) => {
 
       <Box marginTop={10} border={10}>
         <Heading size={"md"} color={"rgb(32,73,116)"} marginBottom={5}>
-          Post a Book to Share
+          Post a Book to 
         </Heading>
         <form onSubmit={ShareRequest}>
           <Text mb="8px">Name of the book:</Text>
