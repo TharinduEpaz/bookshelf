@@ -62,8 +62,34 @@ const getAllRequests = async (req, res, next) => {
     // res.send("Get all requests");
   };
 
+  const getRequestByRegNumber = async (req, res, next) => {
+    try {
+        const {
+            regNumber
+        } = req.params;
+        const donation = await donationModel.findOne({
+            where: {
+                orgRegisteredNumber: regNumber,
+            },
+        });
+        if (!donation) {
+            return next(
+                new CustomError(
+                    statusCodes.StatusCodes.NOT_FOUND,
+                    "Donation request not found"
+                )
+            );
+        }
+        res.json(donation);
+    } catch (error) {
+        next(error);
+    }
+    // res.send("Get request by reg number");
+};
+
 
 module.exports = {
     addRequest,
-    getAllRequests
+    getAllRequests,
+    getRequestByRegNumber
 }
