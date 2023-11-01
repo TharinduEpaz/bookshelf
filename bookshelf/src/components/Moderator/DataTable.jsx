@@ -88,7 +88,7 @@ export default function DataTable({ list, columnNames, actions }) {
                 ))}
                 {actions === "inventory" && <Inventory_Main id={Obj.id} />}
                 {actions === "order" && <Order_Main id={Obj.id} />}
-                {actions === "donReq" && <Request_Main id={Obj.id} />}
+                {actions === "donReq" && <Request_Main id={Obj.regNum} />}
               </Tr>
             ))
           )}

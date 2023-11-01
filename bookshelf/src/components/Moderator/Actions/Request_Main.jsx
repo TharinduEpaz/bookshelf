@@ -33,6 +33,7 @@ export default function Request_Main(id) {
     try {
       const response = await axios.get(URL);
       setReq(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error.message);
     }
