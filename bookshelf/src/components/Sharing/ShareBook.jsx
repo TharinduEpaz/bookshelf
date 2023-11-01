@@ -11,6 +11,7 @@ import {
   useDisclosure,
   Button,
   Text,
+  Stack,
 } from "@chakra-ui/react";
 import Search from "../../components/Sharing/Search";
 import Filter from "../../components/Sharing/Filter";
@@ -20,6 +21,10 @@ import axios from "axios";
 function ShareBook() {
   const [requestDetails, setRequestDetails] = useState({});
   const [selectedRequest, setSelectedRequest] = useState(null); // State to track the selected request
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredRequestDetails, setFilteredRequestDetails] =
+    React.useState(requestDetails);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
@@ -31,6 +36,7 @@ function ShareBook() {
         );
         console.log(response.data);
         setRequestDetails(response.data);
+        setFilteredRequestDetails(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -58,14 +64,18 @@ function ShareBook() {
         h={"100%"}
       >
         <GridItem rowSpan={1} colSpan={5}>
-          <Search />
+          <Search
+            requestDetails={requestDetails}
+            isLoading={isLoading}
+            setFilteredRequestDetails={setFilteredRequestDetails}
+          />
         </GridItem>
         <GridItem rowSpan={1} colSpan={5} p={2}>
           <Filter />
         </GridItem>
 
         <GridItem rowSpan={8} colSpan={5}>
-          {Object.keys(requestDetails).map((item) => {
+          {Object.keys(filteredRequestDetails).map((item) => {
             const createdAt = new Date(requestDetails[item].createdAt);
             const formattedDate = createdAt.toISOString().split("T")[0]; // Extract and format the date
             return (
@@ -89,34 +99,53 @@ function ShareBook() {
           onClose={onClose}
           isOpen={isOpen}
           isCentered
-          css={{ maxWidth: "800px" }}
         >
           <AlertDialogOverlay />
 
-          <AlertDialogContent >
+          <AlertDialogContent>
             <AlertDialogHeader></AlertDialogHeader>
             <AlertDialogCloseButton onClick={onClose} />
-            <AlertDialogBody>
-  {/* Display the details of the selected request in a Grid */}
-  {selectedRequest && (
-    <Grid templateColumns="1fr 1fr" gridGap={4}>
-    <GridItem display="flex" alignItems="left">
-      <strong>BookName: {selectedRequest.bookName}</strong>
-    </GridItem>
-    <GridItem display="flex" alignItems="left">
-      <strong>UserName: {selectedRequest.userName}</strong>
-    </GridItem>
-    <GridItem display="flex" alignItems="left">
-      <strong>Image: <img src={selectedRequest.image} alt="" /></strong>
-    </GridItem>
-    <GridItem display="flex" alignItems="left">
-      <strong>Details: {selectedRequest.details}</strong>
-    </GridItem>
-  </Grid>
-  
-  )}
-</AlertDialogBody>
 
+            <AlertDialogBody>
+              {/* Display the details of the selected request in a Stack */}
+              {selectedRequest && (
+                <Stack spacing={4}>
+                  <div>
+                    <img
+                      src={
+                        selectedRequest.image
+                          ? selectedRequest.image
+                          : "http://localhost:3000/uploads/default.jpeg"
+                      }
+                      alt=""
+                    />
+                  </div>
+                  <div>
+                    <strong>BookName:</strong> {selectedRequest.bookName}
+                  </div>
+                  <div>
+                    <strong>UserName:</strong> {selectedRequest.userName}
+                  </div>
+                  <div>
+                    <strong>Details:</strong> {selectedRequest.details}
+                  </div>
+                  <div>
+                    <strong>List of Books:</strong>
+                    <ul>
+                      
+                    {console.log(selectedRequest.listOfBooks)}
+                      {/* {selectedRequest.listOfBooks &&  (
+                        selectedRequest.listOfBooks.map((book, index) => (
+                          <li key={index}>{book} </li>
+                          
+                        ))
+                        
+                      )} */}
+                    </ul>
+                  </div>
+                </Stack>
+              )}
+            </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
@@ -129,6 +158,7 @@ function ShareBook() {
     </Box>
   );
 }
+
 
 export default ShareBook;
 

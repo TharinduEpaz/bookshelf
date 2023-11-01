@@ -11,7 +11,10 @@ import {
     Divider,
     Stack,
     Alert,
-    AlertIcon
+    AlertIcon,
+    Skeleton,
+    Spinner,
+    Flex
 
 
 } from "@chakra-ui/react";
@@ -20,6 +23,7 @@ import { useContext,useEffect,useState } from "react";
 import { userContext } from "../../context/UserContext";
 
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 
 function Dashboard() {
@@ -27,15 +31,23 @@ function Dashboard() {
   const { user } = useContext(userContext);
   
   const [notifications, setNotifications] = useState([]);
+  const [isLoading,setIsLoading] = useState(false);
+  const [dashboardItems,setDashboardItems] = useState(null)
+
 
   const getNotifications = async () => {
-  console.log(user);
+  
     try {
+      setIsLoading(true)
       const response = await axios.get(`http://localhost:3000/api/v1/users/getNotifications/${user.user.userId}`);
-      console.log(response.data);
+      const dashboard = await axiosInstance.get('notifications/dashboard');
+      dashboard && setDashboardItems(dashboard.data)
+      console.log(dashboardItems);
+      setIsLoading(false)
       return response.data;
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -49,6 +61,15 @@ function Dashboard() {
   };
   fetchNotifications();
 }, []);
+
+if(isLoading){
+  return(
+    <Flex w={'100%'} alignItems={'center'} justifyContent={'center'} h={'100%'}>
+      <Spinner></Spinner>
+    </Flex>
+    
+  )
+}
 
  
   
@@ -111,7 +132,8 @@ function Dashboard() {
       >
         <Card>
           <CardHeader>
-            <Heading size="md"> Orders </Heading>
+          
+            <Heading size="md"> {dashboardItems && dashboardItems.orderCount + " Orders"}  </Heading>
           </CardHeader>
           <CardBody>
             <Text>
@@ -119,33 +141,34 @@ function Dashboard() {
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+           
           </CardFooter>
         </Card>
         <Card>
           <CardHeader>
-            <Heading size="md"> Customer dashboard</Heading>
+            <Heading size="md"> Subscription Status</Heading>
           </CardHeader>
           <CardBody>
             <Text>
-              View a summary of all your customers over the last month.
+              {dashboardItems && dashboardItems.subscription}
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+            <Button variant={'link'} colorScheme="purple">Go to subscriptions</Button>
           </CardFooter>
         </Card>
         <Card>
           <CardHeader>
-            <Heading size="md"> Customer dashboard</Heading>
+            <Heading size="md"> Exchange Requests</Heading>
           </CardHeader>
           <CardBody>
             <Text>
-              View a summary of all your customers over the last month.
+              Total of 5 Requests Posted
             </Text>
           </CardBody>
           <CardFooter>
-            <Button>View here</Button>
+            <Button variant={'link'} colorScheme="purple" mr={50}>Post Request</Button>
+            <Button variant={'link'} colorScheme="purple">Manage</Button>
           </CardFooter>
         </Card>
       </SimpleGrid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { 
   Tabs, TabList, TabPanels, Tab, TabPanel, Box,
   Table,
@@ -10,11 +10,51 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  
+  Skeleton,
+  Heading,
 
 } from "@chakra-ui/react";
 
+import  AxiosInstance  from "../../utils/axiosInstance";
+
 function Orders() {
+
+  const [orders,setOrders] = useState(null)
+  const [subscriptions,setSubscriptions] = useState(null)
+  const [isLoading,setIsLoading]= useState(false)
+
+  useEffect(()=>{
+    async function getOrders(){
+      try {
+        setIsLoading(true)
+        const response = await AxiosInstance.get('orders/getmyorders')
+        setOrders(response.data)
+        console.log(orders);
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false)
+      }
+    }
+    getOrders();
+  },[])
+
+  useEffect(()=>{
+    async function getOrders(){
+      try {
+        setIsLoading(true)
+        const response = await AxiosInstance.get('orders/getmysubscriptionorders')
+        setSubscriptions(response.data)
+        console.log(orders);
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false)
+      }
+    }
+    getOrders();
+  },[])
+
   return (
     <>
       <Box
@@ -24,145 +64,141 @@ function Orders() {
         ml={2}
         pt={5}
         border={"1px solid #E2E8F0"}
+        pl={5}
+        pr={5}
       >
-        <Tabs variant="soft-rounded" colorScheme="purple">
-          <TabList ml={5}>
-            <Tab>All Orders</Tab>
-            <Tab>Awaiting Delivery</Tab>
-            <Tab>Awaiting Payment</Tab>
-            <Tab>Completed</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
+        <Heading size={'md'} ml={5}>Shop Orders</Heading>
               <TableContainer bg={'white'} borderRadius={10} mt={5} shadow={'md'}>
                 <Table variant='simple'>
           
                   <Thead>
                     <Tr>
                       <Th>Order</Th>
-                      <Th>Due Date</Th>
+                      <Th>Order Items</Th>
+                      <Th>Order Date</Th>
                       <Th>Status</Th>
+                      <Th>Payment</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
+                  {isLoading && (
+                    <>
                     <Tr>
-                      <Td>Order 456847</Td>
-                      <Td>23 Apr 2023</Td>
-                      <Td>Delivered</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
                     <Tr>
-                      <Td>0rder 345929</Td>
-                      <Td>31 Sep 2023</Td>
-                      <Td>Processing</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
                     <Tr>
-                      <Td>Order 3993024</Td>
-                      <Td>22 Aug 2022</Td>
-                      <Td>Cancelled</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
+                    <Tr>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
+                    </Tr>
+                    </>
+                    
+                  )}
+                  {orders && orders.map((item)=>{
+                    return(
+                    <Tr key={item.id}>
+                      <Td>{'Order' + " " + item.id.slice(0,5).toUpperCase()}</Td>
+                      <Td style={{ whiteSpace: 'normal' }}>{item.orderItems.map((item=>{return item.title + ' , '}))}</Td>
+                      <Td>{item.orderDate.slice(0,10)}</Td>
+                      <Td>{item.orderStatus}</Td>
+                      <Td>{item.isPaid ? 'Done' : 'Unsuccessful'}</Td>
+
+                    </Tr>
+                    )
+                  })}
+               
                   </Tbody>
                  
                 </Table>
               </TableContainer>
-            </TabPanel>
-            <TabPanel>
-            <TableContainer bg={'white'} borderRadius={10} mt={5} shadow={'md'}>
+
+
+
+              <Heading size={'md'} mt={10} ml={5}>Subscription Orders</Heading>
+              <TableContainer bg={'white'} borderRadius={10} mt={5} shadow={'md'}>
                 <Table variant='simple'>
           
                   <Thead>
                     <Tr>
                       <Th>Order</Th>
-                      <Th>Due Date</Th>
+                      <Th>Order Items</Th>
+                      <Th>Order Date</Th>
                       <Th>Status</Th>
+                      <Th>Payment</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
+                  {isLoading && (
+                    <>
                     <Tr>
-                      <Td>Order 456847</Td>
-                      <Td>23 Apr 2023</Td>
-                      <Td>Delivered</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
                     <Tr>
-                      <Td>0rder 345929</Td>
-                      <Td>31 Sep 2023</Td>
-                      <Td>Processing</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
                     <Tr>
-                      <Td>Order 3993024</Td>
-                      <Td>22 Aug 2022</Td>
-                      <Td>Cancelled</Td>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
                     </Tr>
+                    <Tr>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                      <Th><Skeleton >grgrg</Skeleton></Th>
+                   
+                    </Tr>
+                    </>
+                    
+                  )}
+                  {subscriptions && subscriptions.map((item)=>{
+                    return(
+                    <Tr key={item.id}>
+                      <Td>{'Order' + " " + item.id.slice(0,5).toUpperCase()}</Td>
+                      <Td style={{ whiteSpace: 'normal' }}>{item.orderItems.map((item=>{return item.title + ' , '}))}</Td>
+                      <Td>{item.orderDate.slice(0,10)}</Td>
+                      <Td>{item.orderStatus}</Td>
+                      <Td>{item.isPaid ? 'Done' : 'Unsuccessful'}</Td>
+
+                    </Tr>
+                    )
+                  })}
+               
                   </Tbody>
                  
                 </Table>
               </TableContainer>
-            </TabPanel>
-            <TabPanel>
-            <TableContainer bg={'white'} borderRadius={10} mt={5} shadow={'md'}>
-                <Table variant='simple'>
-          
-                  <Thead>
-                    <Tr>
-                      <Th>Order</Th>
-                      <Th>Due Date</Th>
-                      <Th>Status</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr>
-                      <Td>Order 456847</Td>
-                      <Td>23 Apr 2023</Td>
-                      <Td>Delivered</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>0rder 345929</Td>
-                      <Td>31 Sep 2023</Td>
-                      <Td>Processing</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Order 3993024</Td>
-                      <Td>22 Aug 2022</Td>
-                      <Td>Cancelled</Td>
-                    </Tr>
-                  </Tbody>
-                 
-                </Table>
-              </TableContainer>
-            </TabPanel>
-            <TabPanel>
-            <TableContainer bg={'white'} borderRadius={10} mt={5} shadow={'md'}>
-                <Table variant='simple'>
-          
-                  <Thead>
-                    <Tr>
-                      <Th>Order</Th>
-                      <Th>Due Date</Th>
-                      <Th>Status</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr>
-                      <Td>Order 456847</Td>
-                      <Td>23 Apr 2023</Td>
-                      <Td>Delivered</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>0rder 345929</Td>
-                      <Td>31 Sep 2023</Td>
-                      <Td>Processing</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Order 3993024</Td>
-                      <Td>22 Aug 2022</Td>
-                      <Td>Cancelled</Td>
-                    </Tr>
-                  </Tbody>
-                 
-                </Table>
-              </TableContainer>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+           
       </Box>
     </>
   );

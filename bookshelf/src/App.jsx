@@ -18,7 +18,7 @@ import SharingHome from "./pages/sharing/SharingHome";
 import PostRequest from "./pages/sharing/postrequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
-import ManageRequest from "./pages/sharing/ManageRequest"
+import ManageRequest from "./pages/Sharing/ManageRequest";
 
 import {
   Account,
@@ -29,9 +29,12 @@ import {
   Register,
   Shop,
   Checkout,
+  PaymentSuccess,
+  PaymentError,
 } from "./pages";
 
 import { Dashboard, Settings, Orders, Chat } from "./components/Account";
+
 
 import { PrivateRoutes } from "./utils/privateRoutes";
 
@@ -110,6 +113,7 @@ import BookSharing from "./pages/Moderator/M_BookSharing";
 import Setting from "./pages/Moderator/M_Settings";
 import AdddNewBook from "./pages/Moderator/M_AddNewBook";
 import Moderator from "./pages/Moderator/Moderator";
+import AddDonationPack from "./pages/Moderator/M_AddDonationPack";
 
 import Donation from "./pages/Donation"
 import Don_home from "./pages/Don_home";
@@ -170,6 +174,8 @@ function App() {
             <Route exact path="/collections" element={<Collections />}></Route>
             <Route exact path="/selfHelp" element={<SelfHelp />}></Route>
             <Route exact path="/Fiction" element={<Fiction />}></Route>
+            <Route exact path="/paymentsuccess" element={<PaymentSuccess/>} />
+            <Route exact path="/paymenterror" element={<PaymentError/>} />
         
 
             {/* <Route exact path="/stripe" element={<StripeCheckout />}></Route> */}
@@ -178,11 +184,13 @@ function App() {
             <Route element={<PrivateRoutes />}>
 
           <Route exact path="/account" element={<Account />}>
+
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path = "settings" element={<Settings />} />
             <Route path = "orders" element={<Orders />} />
             <Route path = "chat" element={<Chat />} />
+            
           </Route>
           </Route>
 
@@ -266,6 +274,7 @@ function App() {
             <Route path="booksharing" element={<BookSharing />} />
             <Route path="setting" element={<Setting />} />
             <Route path="addNewBook" element={<AdddNewBook />} />
+            <Route path="addDonationPack" element={<AddDonationPack />} />
           </Route>
         </Routes>
           <Footer />

@@ -18,14 +18,16 @@ import {
   Checkbox,
   Alert,
   AlertIcon,
+  Center,
+  Icon
 } from "@chakra-ui/react";
 import axios from "axios";
+import { BiSolidImageAdd } from "react-icons/bi";
 import ImageUploader from "../../components/Moderator/ImageUploader";
 
 export default function AddNewBook() {
   const [value, setValue] = React.useState("1");
   const [error, setError] = useState(null);
-
   const [bookName, setBookName] = React.useState("");
   const [author, setAuthor] = React.useState("");
   const [isbn, setIsbn] = React.useState("");
@@ -36,12 +38,8 @@ export default function AddNewBook() {
   const [sellingPrice, setSellingPrice] = React.useState("");
   const [quantityInStock, setQuantityInStock] = React.useState("1");
   const [description, setDescription] = React.useState("");
-  // const [fileName, setFileName] = React.useState("");
-  // const [coverImgURL, setCoverImgURL] = React.useState("");
   const [showSuccessAlert, setSuccessAlert] = useState(null);
-
   const [image, setImage] = useState(null);
-  const [file, setFile] = useState(null);
 
   const addBookURL = "http://localhost:3000/api/v1/books";
 
@@ -57,40 +55,42 @@ export default function AddNewBook() {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      // const body = {
-      //   title: bookName,
-      //   author: author,
-      //   ISBN: isbn,
-      //   language: language,
-      //   genre: genre,
-      //   featuredCategory: featuredCategory,
-      //   typesAvailable: availableTypes,
-      //   price: sellingPrice,
-      //   stock: quantityInStock,
-      //   description: description,
-      //   averageRating: 0,
-      //   image: file,
-      // };
-      const formdata = new FormData();
-      formdata.append("file", file);
-      console.log(formdata.get("file"));
-      const response = await axios.post(addBookURL, formdata);
-      // console.log(response);
+      const formData = new FormData();
+      formData.append("title", bookName);
+      formData.append("author", author);
+      formData.append("ISBN", isbn);
+      formData.append("language", language);
+      formData.append("genre", genre);
+      formData.append("featuredCategory", featuredCategory);
+      formData.append("typesAvailable", availableTypes);
+      formData.append("price", sellingPrice);
+      formData.append("stock", quantityInStock);
+      formData.append("description", description);
+      formData.append("averageRating", 0);
+      formData.append("image", image);
+
+      const response = await axios.post(addBookURL, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(response.data);
 
       // console.log(body);
       setSuccessAlert(true);
       setError(null);
-      // set variables null
-      // setBookName("");
-      // setAuthor("");
-      // setIsbn("");
-      // setLanguage("");
-      // setGenre("");
-      // setFeaturedCategory("");
-      // setSelectedTypes([]);
-      // setSellingPrice("");
-      // setQuantityInStock("");
-      // setDescription("");
+      setBookName("");
+      setAuthor("");
+      setIsbn("");
+      setLanguage("");
+      setGenre("");
+      setFeaturedCategory("");
+      setSelectedTypes([]);
+      setSellingPrice("");
+      setQuantityInStock("");
+      setDescription("");
+      setImage(null);
     } catch (error) {
       console.error(error.message);
       error.response
@@ -99,15 +99,6 @@ export default function AddNewBook() {
     }
   };
 
-
-  // const onSubmitForm = () => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   console.log(formData);
-  //   axios.post(addBookURL, formData)
-  //   .then( res => {})
-  //   .catch(er => console.log(er));
-  // }
 
   return (
     <>
@@ -289,21 +280,21 @@ export default function AddNewBook() {
                   />
                 </FormControl>
 
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel fontWeight={"semibold"}>Description</FormLabel>
                   <Input
                     type="file"
                     placeholder="Image"
                     // value={image}
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => handleImageChange(e.target.files)}
                   />
-                </FormControl>
+                </FormControl> */}
               </Stack>
             </GridItem>
 
             <GridItem colSpan={1}>
               <Stack spacing={5} mt={10}>
-                {/* <ImageUploader onImageUpload={setImage} /> */}
+                <ImageUploader onImageUpload={setImage} />
 
                 {/* <FormControl bgColor={"#F4F5FA"} p={7} borderRadius={20}>
                       <Center flexDir={"column"}>

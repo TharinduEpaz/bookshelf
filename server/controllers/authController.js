@@ -1,6 +1,7 @@
 const userModel = require("../models/user");
 const notification = require("../models/userNotifications");
 const adminNotification = require("../models/adminNotifications");
+const buyerModel = require("../models/buyer")
 const bcrypt = require("bcrypt");
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
@@ -145,11 +146,11 @@ const register = async (req, res, next) => {
     res.status(statusCodes.StatusCodes.CREATED).json({ user: tokenUser });
   } catch (error) {
     //delete created user if exists
-    await userModel.destroy({
-      where: {
-        email: req.body.email,
-      },
-    });
+    // await userModel.destroy({
+    //   where: {
+    //     email: req.body.email,
+    //   },
+    // });
     next(error);
   }
 };

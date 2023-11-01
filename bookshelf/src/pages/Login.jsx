@@ -35,7 +35,7 @@ export default function SimpleCard() {
     e.preventDefault();
     
     try {
-      const response = await axiosInstance.post('/login', {
+      const response = await axiosInstance.post(loginUrl, {
         email: email,
         password: password
       },{
