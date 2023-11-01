@@ -152,27 +152,27 @@ export default function ChangeSubscription() {
 
     if (currentSubscription === "Book Lover" && subscriptionType.length >= 2) {
         otherSubscriptionIcon1 = <SelectWormIcon />;
-        otherSubscription1 = subscriptionType[0].LastName;
-        otherSubscription1BookCount = subscriptionType[0].book_count;
-        otherSubscription1TimePeriod = subscriptionType[0].time_period;
-        otherSubscription1Discount = subscriptionType[0].discount;
-        otherSubscription1Id = subscriptionType[0].id;
-        
-
-        otherSubscriptionIcon2 = <SelectReaderIcon />;
-        otherSubscription2 = subscriptionType[2].LastName;
-        otherSubscription2BookCount = subscriptionType[2].book_count;
-        otherSubscription2TimePeriod = subscriptionType[2].time_period;
-        otherSubscription2Discount = subscriptionType[2].discount;
-        otherSubscription2Id = subscriptionType[2].id;
-    }
-    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
-        otherSubscriptionIcon1 = <SelectReaderIcon />;
         otherSubscription1 = subscriptionType[2].LastName;
         otherSubscription1BookCount = subscriptionType[2].book_count;
         otherSubscription1TimePeriod = subscriptionType[2].time_period;
         otherSubscription1Discount = subscriptionType[2].discount;
         otherSubscription1Id = subscriptionType[2].id;
+        
+
+        otherSubscriptionIcon2 = <SelectReaderIcon />;
+        otherSubscription2 = subscriptionType[0].LastName;
+        otherSubscription2BookCount = subscriptionType[0].book_count;
+        otherSubscription2TimePeriod = subscriptionType[0].time_period;
+        otherSubscription2Discount = subscriptionType[0].discount;
+        otherSubscription2Id = subscriptionType[0].id;
+    }
+    else if (currentSubscription === "Book Worm" && subscriptionType.length >= 2) {
+        otherSubscriptionIcon1 = <SelectReaderIcon />;
+        otherSubscription1 = subscriptionType[0].LastName;
+        otherSubscription1BookCount = subscriptionType[0].book_count;
+        otherSubscription1TimePeriod = subscriptionType[0].time_period;
+        otherSubscription1Discount = subscriptionType[0].discount;
+        otherSubscription1Id = subscriptionType[0].id;
         
 
 
@@ -193,11 +193,11 @@ export default function ChangeSubscription() {
         
 
         otherSubscriptionIcon2 = <SelectWormIcon />;
-        otherSubscription2 = subscriptionType[0].LastName;
-        otherSubscription2BookCount = subscriptionType[0].book_count;
-        otherSubscription2TimePeriod = subscriptionType[0].time_period;
-        otherSubscription2Discount = subscriptionType[0].discount;
-        otherSubscription2Id = subscriptionType[0].id;
+        otherSubscription2 = subscriptionType[2].LastName;
+        otherSubscription2BookCount = subscriptionType[2].book_count;
+        otherSubscription2TimePeriod = subscriptionType[2].time_period;
+        otherSubscription2Discount = subscriptionType[2].discount;
+        otherSubscription2Id = subscriptionType[2].id;
     }
 
     return (

@@ -184,7 +184,7 @@ function Home() {
           p={10}
           
         >
-          <Center>
+          <Center >
             <Heading
               alignSelf={"center"}
               fontWeight={"light"}
@@ -203,7 +203,7 @@ function Home() {
             w={"100%"}
             mt={10}
             flexWrap={{ base: "wrap", md: "wrap", lg: "nowrap" }}
-            
+            zIndex={-1000}
           >
             {Object.keys(itemBoxDetails).map((item) => (
               <Link to={itemBoxDetails[item].link} key={item}>
@@ -236,7 +236,6 @@ function Home() {
             flexWrap={{ base: "wrap", md: "wrap", lg: "wrap" }}
           >
             {books.map((book,index) => (
-              
               <BookCard
                 key={book.id}
                 id={book.id}

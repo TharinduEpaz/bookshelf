@@ -6,12 +6,15 @@ import books from "../../assets/g.png";
 import { FaBookOpen, FaFire, FaHeart } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { ImBooks } from "react-icons/im";
-
-
+import BookCard from "../../components/Shop/BookCard"
+import { useBooksContext } from "../../context/booksContext"
 
 
 
 function SharingHome() {
+
+    const { books } = useBooksContext();
+
     const itemBoxDetails = {
         bestSellers: {
             header: "Best Sellers",
@@ -82,7 +85,6 @@ function SharingHome() {
             <Center>
                 <Heading
                     alignSelf={"center"}
-
                     fontWeight={'light'}
                     size={"sm"}
                     mt={20}
@@ -92,6 +94,35 @@ function SharingHome() {
                     NEW ARRIVALS
                 </Heading>
             </Center>
+            <Flex
+                gap={10}
+                alignItems={"center"}
+                justifyContent={"left"}
+                w={"100%"}
+                mt={10}
+                flexWrap={{ base: "wrap", md: "wrap", lg: "wrap" }}
+                
+            >
+                {books.map((book, index) => (
+
+                    <BookCard
+                        key={book.id}
+                        id={book.id}
+                        name={book.title}
+                        author={book.author}
+                        price={book.price}
+                        stock={book.stock}
+                        description={book.description}
+                        ISBN={book.ISBN}
+                        typesAvailable={book.typesAvailable}
+                        genre={book.genre}
+                        language={book.language}
+                        featuredCategory={book.featuredCategory}
+                        imageURL={book.image}
+                        rating={book.averageRating}
+                    />
+                ))}
+            </Flex>
         </>
     );
 }

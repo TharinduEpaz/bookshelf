@@ -93,6 +93,24 @@ function SelectedSubscriptionPackage() {
         currentSubscriptionIcon = <SelectLoverIcon />;
     }
 
+    function extendDeliveryDate(data) {
+        const originalDate = new Date(data);
+
+        if (currentSubscription === "Book Reader") {
+            const oneWeekLater = new Date(originalDate.getTime() + 44 * 24 * 60 * 60 * 1000); // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+            return (oneWeekLater.toISOString().slice(0, 10));
+        } else if (currentSubscription === "Book Worm") {
+            const oneWeekLater = new Date(originalDate.getTime() + 14 * 24 * 60 * 60 * 1000); // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+            return (oneWeekLater.toISOString().slice(0, 10));
+        } else if (currentSubscription === "Book Lover") {
+            const oneWeekLater = new Date(originalDate.getTime() + 30 * 24 * 60 * 60 * 1000); // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+            return (oneWeekLater.toISOString().slice(0, 10));
+        }
+        // Extend the date by one week (7 days)
+        
+
+    } 
+    extendDate &&extendDeliveryDate(extendDate)
     return (
         <Grid>
             <GridItem rowSpan={1} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} bg={'white'} py={7} px={12}>
@@ -108,11 +126,9 @@ function SelectedSubscriptionPackage() {
 
             <GridItem rowSpan={4} colSpan={4} border={'1px'} borderRadius={'10'} borderColor={'blue.200'} bg={'white'} py={7} px={12} marginTop={5}>
                 <Text fontSize={'21'} color={'#204974'} as={'b'}>
-                    Next Delivery
+                    Delivery Information
                 </Text>
-                <Button onClick={onOpen} variant={'outline'}  colorScheme='blue' borderRadius={15} marginLeft={10} w={'auto'}>
-                    <strong>Extended Date</strong>
-                </Button>
+                
 
                 <AlertDialog
                     motionPreset='slideInBottom'
@@ -145,16 +161,46 @@ function SelectedSubscriptionPackage() {
                     </AlertDialogContent>
                 </AlertDialog>
 
-                <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(10,1fr)'} marginTop={10} >
-                    <GridItem marginTop={'3px'} ml={10}>
-                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
+                <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(9,1fr)'} marginTop={10} >
+                    
+                    <GridItem marginTop={'3px'} ml={10} colSpan={3} >
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Book Delivery Date
+                        </Text>
                     </GridItem>
+                    {/* <GridItem marginTop={'3px'} ml={10} colSpan={1} >
+                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
+                    </GridItem> */}
                     <GridItem colSpan={3}>
                         <Text as={'b'} fontSize={'22'} textColor={"#204974"}>
                             {isLoading && <Spinner />}
                             {extendDate.slice(0,10) }
                         </Text>
                     </GridItem>
+                </Grid>
+
+                <Grid templateRows={'repeat(1,1fr)'} templateColumns={'repeat(9,1fr)'} marginTop={10} >
+
+                    <GridItem marginTop={'3px'} ml={10} colSpan={3} display={'flex'} flexDirection={'column'}>
+                        <Text fontSize={'21'} color={'#204974'} as={'b'}>
+                            Subscription Expires on 
+                        </Text>
+                        <Text fontSize={'15'} color={'#204974'} as={'b'}>
+                            ( You should order next book on/before this date )
+                        </Text>
+                    </GridItem>
+                    {/* <GridItem marginTop={'3px'} ml={10} colSpan={1} >
+                        <BsCalendar2DayFill size={'25px'} color='#204974'/>
+                    </GridItem> */}
+                    <GridItem colSpan={2}>
+                        <Text as={'b'} fontSize={'22'} textColor={"#204974"}>
+                            {isLoading && <Spinner /> }
+                            {extendDate && extendDeliveryDate(extendDate)}
+                        </Text>
+                    </GridItem>
+                    <Button onClick={onOpen} variant={'outline'} colorScheme='blue' borderRadius={15} marginLeft={0}  w={150}>
+                        <strong>Extended Date</strong>
+                    </Button>
                 </Grid>
                 <Box marginTop={10}>
                     <Text fontSize={'21'} color={'#204974'} as={'b'}>

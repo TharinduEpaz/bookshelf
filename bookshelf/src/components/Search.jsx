@@ -48,7 +48,6 @@ function Search() {
         mb={5}
         w={'80%'}
         borderRadius="2xl"
-      
         background={"rgba(255, 255, 255,0)"}
         bgGradient="linear(to left, rgba(255, 255, 235, 0.2), rgba(255, 255, 255, 0.2))"
         // filter="blur(8px)"
@@ -58,9 +57,6 @@ function Search() {
         pb={5}
         display={"flex"}
         alignItems={"center"}
-        
-      
-        
         gap={5}
       >
         <Input
@@ -85,7 +81,7 @@ function Search() {
       </Box>
       <Box
         // m={"auto"}
-        mt={0}
+        
         w='70%'
         boxShadow="sm"
         background={"rgba(255, 255, 255, 0.7)"}
