@@ -84,6 +84,7 @@ export default function DataTable({ list, columnNames, actions }) {
                 {actions === "donReq" && <Request_Main id={Obj.id} />}
                 {actions === "donationReq" && <DonRequest_Main id={Obj.id} />}
                 {actions === "org" && <Button colorScheme="red">Suspend</Button>}
+                {actions === "donations" && <Button colorScheme="red">Delete</Button>}
               </Tr>
             ))
           )}
