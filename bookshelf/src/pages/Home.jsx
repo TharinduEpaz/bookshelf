@@ -57,6 +57,7 @@ function Home() {
       icon: <ImBooks size={25} color="#FF9798" />,
       link: "/collections",
     },
+
   };
 
   const homeImage = "home.png";

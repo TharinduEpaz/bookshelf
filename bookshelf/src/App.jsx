@@ -225,6 +225,7 @@ function App() {
             <Route path="shareRequest" element={<ShareRequest />} />
             <Route path="ManageRequest" element={<ManageRequest />} />
             <Route path="chat" element={<Chat />} />
+            <Route path="shareBook/chat" element={<Chat />} />
           </Route> 
 
           <Route exact path="/donation" element={<Donation />}></Route>

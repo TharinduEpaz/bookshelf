@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -11,18 +11,39 @@ import {
   Flex,
   ListItem,
   IconButton,
+  ButtonGroup,
+  Spinner
 } from "@chakra-ui/react";
 import { AiFillExclamationCircle } from "react-icons/ai";
 import axios from "axios";
 import { RxCross2 } from "react-icons/rx";
 
+
 function ShareRequest({ title, image }) {
+
   const [bookName, setBookName] = useState("");
   const [userName, setUserName] = useState("");
   const [details, setDetails] = useState("");
   const [listOfBooks, setListOfBooks] = useState([]);
   const [newBook, setNewBook] = useState("");
   const [bookImage, setBookImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+
+  const [checkEligibility, setCheckEligibility] = useState("");
+
+  useEffect(()=>{
+    const getCheckEligibility = async()=>{
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/bookSharing/checkEligibility");
+        console.log(response.data)
+        setCheckEligibility(response.data)
+      } 
+      catch (error) {
+        
+      }
+    };
+    getCheckEligibility();
+  },[]);
 
   const handleInputChange = (event) => {
     setNewBook(event.target.value);
@@ -51,32 +72,11 @@ function ShareRequest({ title, image }) {
   const userId = "1302e961-a3a8-4c5d-a635-f1d6495c63df";
   const requestUrl = "http://localhost:3000/api/v1/bookSharing/requests";
 
-//   const ShareRequest = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post(requestUrl, {
-//         bookName: bookName,
-//         userName: userName,
-//         details: details,
-//         listOfBooks: listOfBooks,
-//         userId: userId,
-//       });
-//       console.log(response.data);
-
-//       setBookName("");
-//       setUserName("");
-//       setDetails("");
-//       setListOfBooks([]);
-//       console.log(response);
-//     } catch (error) {
-//       console.log(error.response);
-//     }
-//   };
-
 const ShareRequest = async (e) => {
     e.preventDefault();
     console.log(listOfBooks);
     try {
+        setIsLoading(true)
         const formData = new FormData();
         formData.append('bookName', bookName);
         formData.append('userName', userName);
@@ -105,6 +105,7 @@ const ShareRequest = async (e) => {
         setBookImage(null);
 
         console.log(response);
+        setIsLoading(false);
     } catch (error) {
         console.log(error.response);
     }
@@ -156,6 +157,7 @@ const ShareRequest = async (e) => {
               setBookName(e.target.value);
             }}
             value={bookName}
+            required
           />
 
           <Text mb="8px">Full Name:</Text>
@@ -167,6 +169,7 @@ const ShareRequest = async (e) => {
               setUserName(e.target.value);
             }}
             value={userName}
+            required
           />
 
           <Text mb="8px">Picture of the book:</Text>
@@ -177,6 +180,7 @@ const ShareRequest = async (e) => {
             marginBottom={5}
             width={250}
             onChange={(e) => handleImageChange(e.target.files)}
+            required
           />
 
           <Text mb="8px">Details:</Text>
@@ -188,6 +192,7 @@ const ShareRequest = async (e) => {
               setDetails(e.target.value);
             }}
             value={details}
+            required
           />
 
           <Text mb="8px">List of books you would like to have:</Text>
@@ -227,14 +232,28 @@ const ShareRequest = async (e) => {
             </Button>
           </Flex>
 
-          <Box marginTop={10}>
-            <Button colorScheme="red" marginLeft={12} variant={"outline"}>
-              cancel
-            </Button>
-            <Button type="submit" colorScheme="purple" marginLeft={620}>
-              Post Request
-            </Button>
-          </Box>
+          
+          <ButtonGroup variant='outline' spacing='5' mt={10}>
+  <Button colorScheme="red" variant={"outline"}>
+    Cancel
+  </Button>
+  {checkEligibility === "OK" ? (
+    <Button type="submit" colorScheme="purple" variant={'solid'} >
+      Post Request {isLoading && <Spinner ml={5}/>}
+    </Button>
+  ) : (
+    <>
+      <Text color="red" fontWeight="bold" mt={3}>
+        Purchase required within last 3 months to post.
+      </Text>
+      <Button type="submit" colorScheme="purple" variant={'solid'} isDisabled>
+        Post Request {isLoading && <Spinner ml={5}/>}
+      </Button>
+    </>
+  )}
+</ButtonGroup>
+
+
         </form>
       </Box>
     </Box>

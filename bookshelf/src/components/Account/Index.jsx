@@ -1,5 +1,5 @@
 
-import Chat from "./Chat";
+import Chat from "./chat";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import Settings from "./Settings";

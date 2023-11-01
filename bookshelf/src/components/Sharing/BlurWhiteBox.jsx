@@ -63,7 +63,7 @@ import {
           <GridItem rowSpan={2} colSpan={3}  alignItems={'top'} display={'flex'}>
           
                 <RouterLink  to="/postRequest">
-                    <Button ml={5} pl={10} pr={10} colorScheme="purple" w={130} borderRadius={100}>Post Request</Button>
+                    <Button ml={5} pl={10} pr={10} colorScheme="purple" w={140} borderRadius={110}>Book Exchange</Button>
                 </RouterLink>
           
              <Search />

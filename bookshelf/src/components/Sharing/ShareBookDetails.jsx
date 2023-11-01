@@ -17,6 +17,7 @@ const data = {
     rating: 4.2,
     numReviews: 34,
 };
+
 function ShareBookDetails(props) {
     // name={requestDetails[item].bookName}
     // userName={requestDetails[item].userName}
