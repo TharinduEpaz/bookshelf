@@ -36,6 +36,6 @@ const donRequests = sequelize.define(
     }
 );
 
-donRequests.sync({  alter: true });
+// donRequests.sync({  alter: true });
 
 module.exports = donRequests;

@@ -35,44 +35,31 @@ export default function Donations() {
     "Status"
   ];
 
-  const don_columns = [
+  const donreq_columns = [
     "ID",
-    "Donor",
-    "Donated Date",
-    "No. of Units",
     "Organization",
-  ];
-  const don_list = [
-    {
-      id: "d0001",
-      name: "Heshan Amarasinghe",
-      Date: "01.02.2023",
-      units: "10",
-      org: "kehelwaththamv@gmail.com",
-    },
-    {
-      id: "d0002",
-      name: "Pasindu Handagama",
-      Date: "01.02.2023",
-      units: "10",
-      org: "josephscollege@gmail.com",
-    },
+    "Organization Registered No.",
+    "Requested Items",
+    "Approval Status",
   ];
 
   const [req_list, setReqList] = useState([]);
+  const [donreq_list, setDonReqList] = useState([]);
 
   //URLs**************************
   //get donations Request URL
-  const getDonationRequestsURL = "http://localhost:3000/api/v1/donations";
+  const getOrgRegRequestsURL = "http://localhost:3000/api/v1/donations";
   const allRequestsURL = "http://localhost:3000/api/v1/donations/request/countAll";
   const pendingRequestsURL = "http://localhost:3000/api/v1/donations/request/countPending";
   const rejectedRequestsURL = "http://localhost:3000/api/v1/donations/request/countRejected";
   const acceptedRequestsURL = "http://localhost:3000/api/v1/donations/request/countAccepted";
 
+  const getDonationRequestsURL = "http://localhost:3000/api/v1/donationRequests";
+
   //get donations Request
-  const getDonationRequests = async () => {
+  const getOrgRegRequests = async () => {
     try {
-      const response = await axios.get(getDonationRequestsURL);
+      const response = await axios.get(getOrgRegRequestsURL);
       const jsonData = await response.data;
 
       const mapData = jsonData.map((request) => ({
@@ -136,13 +123,36 @@ export default function Donations() {
     }
   }
 
+  //get donations Requests
+  const getDonationRequests = async () => {
+    try {
+      const response = await axios.get(getDonationRequestsURL);
+      const jsonData = await response.data;
+
+      const mapData = jsonData.map((request) => ({
+        id: request.id,
+        org: request.organization.orgName,
+        orgRegisteredNo: request.organization.orgRegisteredNumber,
+        items: request.requestedItems,
+        status: request.approval,
+      }));
+      setDonReqList(mapData);
+      console.log(mapData);
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
 
   useEffect(() => {
-    getDonationRequests();
+    getOrgRegRequests();
     getAllRequestsCount();
     getPendingRequestsCount();
     getRejectedRequestsCount();
     getAcceptedRequestsCount();
+
+    getDonationRequests();
   }, []);
 
   return (
@@ -211,7 +221,7 @@ export default function Donations() {
           <Tabs>
             <TabList>
               <Tab>Organaization Registration Requests</Tab>
-              <Tab>Donations</Tab>
+              <Tab>Donation Requests</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -220,9 +230,9 @@ export default function Donations() {
                 <DataTable list={req_list} columnNames={org_columns} actions={"donReq"}/>
               </TabPanel>
               <TabPanel>
-                <SearchPanel name="Donations" filter="donations" />
+                <SearchPanel name="Donation Requests" filter="donations" />
                 <Spacer mt={5} />
-                <DataTable list={don_list} columnNames={don_columns} />
+                <DataTable list={donreq_list} columnNames={donreq_columns} />
               </TabPanel>
             </TabPanels>
           </Tabs>
