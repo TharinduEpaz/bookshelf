@@ -1,32 +1,31 @@
 import React from 'react'
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
-import AdminSidebar from "../../components/Admin/AdminSidebar";
+import {FaSearch} from 'react-icons/fa'
 
 import {
     Box, 
     Flex,
-    Card,
-    CardBody,
-    Icon,
     Spacer,
     Text,
-    StatGroup,
     Select,
-    Button
+    Button,
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from '@chakra-ui/react'
 
 import {
   BiBookOpen,
 } from "react-icons/bi";
 
-import { Link } from "react-router-dom";
-import AdminStatCard from '../../components/Admin/AdminStatCard';
-import AdminDtataTable from '../../components/Admin/AdminDtataTable';
+import AdminSharingReportViewTable from '../../components/Admin/AdminSharingReportViewTable';
 import { useEffect, useState } from "react";
 
-export default function AdminBookSharing() {
+export default function AdminSharingReports() {
 
+  const [search, setSearch] = useState('');
 
   const columns = [
     "Sharing ID",
@@ -40,6 +39,7 @@ export default function AdminBookSharing() {
 
   const [list, setSharingList] = useState([]);
 
+  //Get all sharing
   const getSharing = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/v1/bookSharing")
@@ -71,7 +71,7 @@ export default function AdminBookSharing() {
     //Report Generation
 
     // All Sharing Details Report
-  const generateTablePDF = () => {
+  const generateSearchPDF = () => {
     const doc = new jsPDF();
     const totalPagesExp = "{total_pages_count_string}";
   
@@ -87,9 +87,13 @@ export default function AdminBookSharing() {
   
     let sharingNumber = 1; // Initialize the sharing number to 1
   
+    //Filter by Customer Name
+    const filteredList = list.filter((sharing) => 
+      sharing.userName.toLowerCase().includes(search.toLowerCase()));
+
     doc.autoTable({
       head: [columnsData], // The header row
-      body: list.map((sharing) => [
+      body: filteredList.map((sharing) => [
         sharingNumber++, 
         sharing.userName,
         sharing.userId,
@@ -147,36 +151,39 @@ export default function AdminBookSharing() {
 
 
 
+ 
   return (
    
     <Box
     m={"auto"}
     mt={10}
-    w="80%"
+    w="100%"
     h="100%"
     minH={800}
+    borderColor={'rgba(0, 0, 0, 0.20)'}
+    borderWidth={'0.5px'}
     borderRadius="6px"
     bg='rgba(255, 255, 255, 0.90)'
     boxShadow="sm"
     bgGradient="linear(to left, rgba(255, 255, 235, 0.1), rgba(255, 255, 255, 0.5))"
     // filter="blur(8px)"
     backdropFilter="blur(14.5px)"
-    p={4}
+    p={8}
+    alignItems={"Center"}
+    justifyContent={"Center"}
+>
 
-  >
 
-  <AdminSidebar />
 
   <div>
-    <Box
+  <Box
       borderColor={'rgba(0, 0, 0, 0.20)'}
       borderWidth={'0.5px'}
       borderRadius={'10px'}
       h="100%"
-      w="76%"
-      ml={270}
+      w="95%"
+      ml={35}
       mt={1}
-      p={5}
       mb={40}
     >
 
@@ -189,87 +196,89 @@ export default function AdminBookSharing() {
     >  
 
  </Flex>
-
     
- <Box p={10}>
-              <Flex>
-                <Text fontSize="lg" fontWeight={"bold"}>
-                  Book Sharing
-                </Text>
-              </Flex>
+            <Box p={10}>
 
-              <Flex gap={20}>
-                <Card
-                  mt={5}
-                  p={5}
-                  pl={10}
-                  pr={10}
-                  boxShadow="sm"
-                  borderRadius="md"
-                  bgColor={"#EDF2F7"}
-                  w={"fit-content"}
-                >
-                  <CardBody>
-                    <Flex
-                      justifyContent={"space-between"}
-                    >
-                    <Icon as={BiBookOpen} boxSize={8} color={"#3182CE"} />
-                      <Select width={"100px"}>
-                        <option value="option1">All</option>
-                        <option value="option2">This week</option>
-                        <option value="option2">This Month</option>
-                      </Select>
-                    </Flex>
-                    <StatGroup gap={100}>
-                      <AdminStatCard lable="All Sharing Requests" value="100" />
-                      <AdminStatCard
-                        lable="Pending"
-                        value="20"
-                        type="increase"
-                        percentage="80"
-                      />
-                      <AdminStatCard
-                        lable="Accepted"
-                        value="70"
-                        type="increase"
-                        percentage="80"
-                      />
-                      <AdminStatCard
-                        color={"red"}
-                        lable="Canceled"
-                        value="0"
-                        type="increase"
-                        percentage="80"
-                      />
-                    </StatGroup>
-                  </CardBody>
-                </Card>
-              </Flex>
+            <Text fontSize="lg" fontWeight={"bold"} mb={10} mt={2} align={"center"}>
+              Book Sharing Reports
+            </Text>
 
-              <Spacer mt={10} />
 
-              <Box>
-                {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
+  <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search User"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
-                <Spacer mt={5} />
 
-                <Text fontSize="lg" fontWeight={"bold"} mb={2}>
-                  Book Sharing Details
-                </Text>
-                <AdminDtataTable list={list} columnNames={columns} />
+          <Flex gap={3} alignItems={'center'}>
 
-              </Box>
-            </Box>
 
-      <Button 
-        mt={18}
-        ml={520}
-        mb={20}
+          <Text width={200} mt={5} ml={20}>Select By</Text>
+
+          <Select 
+            placeholder='All' 
+            w={'200px'} 
+            size={'sm'} 
+            borderRadius={5} 
+            borderColor={'gray.200'} 
+            focusBorderColor={'white.100'}
+            pl={2}
+            ml={2}
+            mt={5}
+            //onChange={(e) => setSelectedRole(e.target.value)} 
+            //value={selectedRole}
+           >
+              <option value='buyer'>Date</option>
+              <option value='moderator'>Book</option>
+              <option value='moderator'>Status</option>
+        
+          </Select>
+          
+
+          <Button 
+        ml={500}
+        mt={5}
         colorScheme="blue" 
-        onClick={generateTablePDF}
+        onClick={generateSearchPDF}
         >
           Generate Book Sharing Details
       </Button>
+
+          </Flex>
+
+
+          
+              <Spacer mt={10} />
+
+              <Box>
+
+                <Spacer mt={5} />
+
+                <AdminSharingReportViewTable 
+                  list={list} 
+                  columnNames={columns} 
+                  search={search}
+                  />
+
+
+
+              </Box>
+            </Box>
 
 
  </Box>

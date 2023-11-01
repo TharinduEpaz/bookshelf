@@ -1,5 +1,7 @@
 import React from 'react'
 import AdminSidebar from "../../components/Admin/AdminSidebar";
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
 
 import {
     Box, 
@@ -11,6 +13,7 @@ import {
     Text,
     StatGroup,
     Select,
+    Button
 } from '@chakra-ui/react'
 
 import {
@@ -59,6 +62,12 @@ export default function AdminOrders() {
   useEffect(() => {
     getOrders();
   }, [])
+
+
+
+
+
+  
 
 
   return (
@@ -173,6 +182,17 @@ export default function AdminOrders() {
 
               </Box>
             </Box>
+
+
+      <Button 
+        mt={18}
+        ml={620}
+        mb={20}
+        colorScheme="blue" 
+        //onClick={generateTablePDF}
+        >
+          Generate Order Details
+      </Button>
 
 
  </Box>
