@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -17,6 +17,7 @@ import Search from "../../components/Sharing/Search";
 import Filter from "../../components/Sharing/Filter";
 import ShareBookDetails from "../../components/Sharing/ShareBookDetails";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ShareBook() {
   const [requestDetails, setRequestDetails] = useState({});
@@ -31,12 +32,14 @@ function ShareBook() {
   useEffect(() => {
     const getRequestDetails = async () => {
       try {
+        setIsLoading(true)
         const response = await axios.get(
           `http://localhost:3000/api/v1/bookSharing/requests`
         );
         console.log(response.data);
         setRequestDetails(response.data);
         setFilteredRequestDetails(response.data);
+        setIsLoading(false)
       } catch (error) {
         console.log(error);
       }
@@ -75,12 +78,15 @@ function ShareBook() {
         </GridItem>
 
         <GridItem rowSpan={8} colSpan={5}>
+        
+        {isLoading && <Flex w={'100%'} h={'100%'} alignItems={'center'} justifyContent={'center'} pt={'10%'}> <Spinner/></Flex>}
           {Object.keys(filteredRequestDetails).map((item) => {
             const createdAt = new Date(requestDetails[item].createdAt);
             const formattedDate = createdAt.toISOString().split("T")[0]; // Extract and format the date
             return (
               <div key={item} onClick={() => openAlertDialog(item)}>
                 {/* Attach a click handler to open the AlertDialog */}
+                
                 <ShareBookDetails
                   bookName={requestDetails[item].bookName}
                   userName={requestDetails[item].userName}
@@ -129,20 +135,13 @@ function ShareBook() {
                   <div>
                     <strong>Details:</strong> {selectedRequest.details}
                   </div>
-                  <div>
+                  {/* <div>
                     <strong>List of Books:</strong>
                     <ul>
                       
-                    {console.log(selectedRequest.listOfBooks)}
-                      {/* {selectedRequest.listOfBooks &&  (
-                        selectedRequest.listOfBooks.map((book, index) => (
-                          <li key={index}>{book} </li>
-                          
-                        ))
-                        
-                      )} */}
+                
                     </ul>
-                  </div>
+                  </div> */}
                 </Stack>
               )}
             </AlertDialogBody>
@@ -151,6 +150,9 @@ function ShareBook() {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
+              <Link to={'chat'}>
+              <Button colorScheme="blue" ml={5}>Chat</Button>
+              </Link>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

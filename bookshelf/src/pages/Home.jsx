@@ -41,6 +41,7 @@ function Home() {
       bgColor: "#FFF5F6",
       icon: <ImBooks size={25} color="#FF9798" />,
     },
+
   };
 
   const newArrivals = {

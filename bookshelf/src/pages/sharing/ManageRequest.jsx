@@ -17,6 +17,8 @@ import {
   useDisclosure,
   Toast,
   useToast,
+  Spinner,
+  Flex
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
@@ -34,10 +36,12 @@ function ManageRequest() {
   const navigate = useNavigate();
   const toast = useToast();
   const [reloadPage, setReloadPage] = useState(false);
+  const [isLoading,setIsLoading] = useState(false)
 
   useEffect(() => {
     const getRequestDetails = async () => {
       try {
+        setIsLoading(true)
         const response = await axios.get(
           `http://localhost:3000/api/v1/bookSharing/requests`
         );
@@ -48,9 +52,11 @@ function ManageRequest() {
 
         // Set the user email to the state
         setUserEmail(user.email);
-        console.log(setUserEmail);    
+        console.log(setUserEmail); 
+        setIsLoading(false)   
       } catch (error) {
         console.log(error);
+        setIsLoading(false)
       }
     };
     getRequestDetails();
@@ -59,6 +65,7 @@ function ManageRequest() {
   const handleDelete = async (id) => {
     
     try {
+      
       console.log(id)
       const response = await axios.delete(`http://localhost:3000/api/v1/bookSharing/deleteBooks/${id}`,{
         withCredentials:true
@@ -86,6 +93,7 @@ function ManageRequest() {
 }, [reloadPage]);
 
   return (
+    
     <TableContainer
       bg={"white"}
       border={"1px"}
@@ -93,6 +101,7 @@ function ManageRequest() {
       borderRadius={10}
       padding={10}
     >
+      
       <Table size="lg">
         <Thead>
           <Tr>
@@ -103,6 +112,7 @@ function ManageRequest() {
             <Th align="center">Email</Th>
           </Tr>
         </Thead>
+        
         <Tbody>
           {Object.keys(requestDetails).map((item) => (
             <Tr key={item}>
@@ -139,6 +149,8 @@ function ManageRequest() {
           ))}
         </Tbody>
       </Table>
+      {isLoading && <Flex w={'100%'} h={'100%'} alignItems={'center'} justifyContent={'center'} pt={'10%'}> <Spinner/></Flex>}
+
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}

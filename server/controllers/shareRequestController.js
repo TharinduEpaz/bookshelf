@@ -1,4 +1,6 @@
+const { Op, Sequelize } = require("sequelize");
 const shareRequestModel = require("../models/shareRequests");
+const orderModel = require("../models/order")
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -15,6 +17,7 @@ const getAllShareRequests = async (req, res, next) => {
 
 const postShareRequest = async (req, res, next) => {
   try {
+    
     const { id } = req.params;
     let { bookName, userName, details, listOfBooks, userId } = req.body;
     console.log(bookName, userName, details, listOfBooks, userId);
@@ -101,9 +104,41 @@ const delete_books = async (req, res, next) => {
   }
 };
 
+const check_Eligibility = async (req, res, next) => {
+  //const id = req.user.userId;
+  try {
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+    const orders = await orderModel.findAll({
+      where: {
+        [Op.and]: [
+          {
+            createdAt: {
+              [Op.gte]: threeMonthsAgo,
+            },
+          },
+          {
+            user_id: "f1de8c33-cfc6-43b0-8d6b-39e0c47c6c0c",
+          },
+        ],
+      },
+    });
+    console.log(orders);
+    if (orders.length !=0) {
+      res.send("OK");
+    } else {
+      res.send("NO");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllShareRequests,
   postShareRequest,
   getShareRequestNames,
   delete_books,
+  check_Eligibility
 };
