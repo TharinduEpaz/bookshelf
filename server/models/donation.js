@@ -15,4 +15,4 @@ const donationRequest = sequelize.define('donationRequest', {
 
 })
 
-donationRequest.sync({  alter: true });
+//donationRequest.sync({  alter: true });
