@@ -20,7 +20,7 @@ app.use(fileUpload());
 
 app.use(cors({
   credentials: true,
-  origin: 'http://127.0.0.1:5174'
+  origin: 'http://127.0.0.1:5173'
 }));
 
 
