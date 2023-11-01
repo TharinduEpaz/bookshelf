@@ -4,25 +4,16 @@ import "jspdf-autotable";
 
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Flex,
+  Grid,
+  GridItem,
   Icon,
-  StatGroup,
-  Text,
   Spacer,
-  Button,
-  Select,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
+  Text,
+  StatGroup,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
@@ -31,10 +22,6 @@ import axios from "axios";
 import SearchBar from '../../components/Admin/SearchBar';
 
 
-import { BiBookOpen } from "react-icons/bi";
-
-import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminStatCard from "../../components/Admin/AdminStatCard";
 import AdminDtataTable from "../../components/Admin/AdminDtataTable";
 
 export default function AdminSubscriptionOrders() {
@@ -42,50 +29,49 @@ export default function AdminSubscriptionOrders() {
 
   // Subscriptions
   const columns = [
+    "Subscription Id",
+    "Date",
+    "Status",
+    "Price",
     "Customer Id",
-    "Subscription plan",
-    "Book",
-    "Tracking ID",
-    "Actions",
+    "isPaid",
+    // "Order Items",
+    // "Adress",
+    "Contact No"
   ];
 
-  const list = [
-    {
-      id: "c0001",
-      plan: "Book Reader",
-      book: "Anne",
-      tracking_id: "10",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0002",
-      plan: "Book Lover",
-      book: "Village By The Sea",
-      tracking_id: "15",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0003",
-      plan: "Book Worm",
-      book: "Mary",
-      tracking_id: "30",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0004",
-      plan: "Book Lover",
-      book: "Anne",
-      tracking_id: "20",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0005",
-      plan: "Book Lover",
-      book: "Sheli",
-      tracking_id: "17",
-      actions: "In-Progress",
-    },
-  ];
+  const [list, setSubList] = useState([]);
+
+  const getSub= async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/subscriptionOrders")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((sub) => ({
+        id: sub.id,
+        orderDate: sub.orderDate,
+        orderStatus: sub.orderStatus,
+        totalPrice: sub.totalPrice,
+        user_id: sub.user_id,
+        isPaid: sub.isPaid,
+        // orderItems: sub.orderItems,
+        // address: sub.address,
+        phone: sub.phone
+      }));
+      
+      setSubList(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getSub();
+  }, [])
+
+
+
+
 
   return (
 
@@ -119,7 +105,10 @@ export default function AdminSubscriptionOrders() {
             {/* Table2: Subscription Details Table */}
             <Box>
               <Spacer mt={5} />
-              <AdminDtataTable list={list} columnNames={columns} />
+              <AdminDtataTable 
+                list={list} 
+                columnNames={columns} 
+                />
             </Box>
           </Box>
       

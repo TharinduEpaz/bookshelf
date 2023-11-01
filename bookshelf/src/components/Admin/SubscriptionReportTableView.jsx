@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import {
   TableContainer,
   Table,
@@ -7,24 +7,24 @@ import {
   Td,
   Tbody,
   Checkbox,
-  } from '@chakra-ui/react'
+} from "@chakra-ui/react";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-export default function AdminNotificationsTable({
 
+export default function SubscriptionReportTableView({
   list,
   columnNames,
   search
-}) 
-
-{
+}) {
 
   const filteredList = list.filter((item) => {
-    return search && item.type && search.toLowerCase() === '' || item.type.toLowerCase().includes(search);
+    return search && item.orderStatus && search.toLowerCase() === '' || item.orderStatus.toLowerCase().includes(search);
   });
   
 
-  return (
 
+  return (
+    
     <TableContainer>
     <Table variant='simple' p={10} mt={50} borderWidth={1} borderColor="gray.200" fontSize="sm">
 
@@ -61,7 +61,18 @@ export default function AdminNotificationsTable({
   </TableContainer>
 
 
-
-
-    )
+  )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

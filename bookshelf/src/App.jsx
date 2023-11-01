@@ -100,6 +100,8 @@ import AdminSubscriptionMgtTabs from "./components/Admin/AdminSubscriptionMgtTab
 import AdminSubscriptionMgt from "./pages/Admin/AdminSubscriptionMgt";
 import AdminSubscriptionOrders from "./pages/Admin/AdminSubscriptionOrders";
 import AdminComplaintsTable from "./components/Admin/AdminComplaintsTable";
+import AdminDonationReportViewTable from "./components/Admin/AdminDonationReportViewTable";
+import SubscriptionReportTableView from "./components/Admin/SubscriptionReportTableView";
 
 // Import Moderator Pages
 import M_Dashboard from "./pages/Moderator/M_Dashboard";
@@ -264,6 +266,8 @@ function App() {
           <Route exact path="/adminsubscriptionmgttabs" element={<AdminSubscriptionMgtTabs />}></Route>
           <Route exact path="/adminsubscriptionorders" element={<AdminSubscriptionOrders />}></Route>
           <Route exact path="/admincomplaintstable" element={<AdminComplaintsTable />}></Route>
+          <Route exact path="/admindonationreportviewtable" element={<AdminDonationReportViewTable />}></Route>
+          <Route exact path="/subscriptionreporttableview" element={<SubscriptionReportTableView />}></Route>
 
 
       
