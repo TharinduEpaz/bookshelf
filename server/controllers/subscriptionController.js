@@ -142,14 +142,14 @@ const addSubscriptionCompliant = async (req, res, next) => {
 };
 
 //(admin) get subscription complaints
-const getSubscriptionComplaints = async (req, res, next) => {
-  try {
-    const subscriptionComplaints = await subscriptionComplaint.findAll();
-    res.status(statusCodes.StatusCodes.OK).json(subscriptionComplaints);
-  } catch (error) {
-    next(error);
-  }
-};
+// const getSubscriptionComplaints = async (req, res, next) => {
+//   try {
+//     const subscriptionComplaints = await subscriptionComplaint.findAll();
+//     res.status(statusCodes.StatusCodes.OK).json(subscriptionComplaints);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 //(admin) get subscription complaints
 const getSubscriptionComplaints = async (req, res, next) => {
