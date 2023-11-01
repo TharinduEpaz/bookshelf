@@ -226,7 +226,6 @@ const ShareRequest = async (e) => {
               variant={"filled"}
               borderRadius={10}
               h={10}
-              required
             />
             <Button
               onClick={handleAddButtonClick}
