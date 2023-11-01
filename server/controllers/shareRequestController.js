@@ -1,4 +1,5 @@
 const shareRequestModel = require("../models/shareRequests");
+const orderModel = require("../models/order")
 const statusCodes = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -102,9 +103,33 @@ const delete_books = async (req, res, next) => {
   }
 };
 
+const check_Eligibility = async (req, res, next) => {
+  const id = req.user.userId;
+  try {
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+    const orders = await orderModel.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: threeMonthsAgo,
+        },
+      },
+    });
+    if (orders) {
+      res.send("OK");
+    } else {
+      res.send("NO");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllShareRequests,
   postShareRequest,
   getShareRequestNames,
   delete_books,
+  check_Eligibility
 };

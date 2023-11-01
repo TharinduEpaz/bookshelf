@@ -135,20 +135,13 @@ function ShareBook() {
                   <div>
                     <strong>Details:</strong> {selectedRequest.details}
                   </div>
-                  <div>
+                  {/* <div>
                     <strong>List of Books:</strong>
                     <ul>
                       
-                    {console.log(selectedRequest.listOfBooks)}
-                      {/* {selectedRequest.listOfBooks &&  (
-                        selectedRequest.listOfBooks.map((book, index) => (
-                          <li key={index}>{book} </li>
-                          
-                        ))
-                        
-                      )} */}
+                
                     </ul>
-                  </div>
+                  </div> */}
                 </Stack>
               )}
             </AlertDialogBody>
