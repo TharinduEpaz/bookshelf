@@ -18,6 +18,7 @@ import {
   Image,
   Card,
   CardBody,
+  useToast,
 } from "@chakra-ui/react";
 import { BiSolidDetail } from "react-icons/bi";
 import axios from "axios";
@@ -27,6 +28,7 @@ export default function ViewOrder(id) {
   const [orderData, setOrderData] = React.useState([]);
   const [userData, setUserData] = React.useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const orderURL = "http://localhost:3000/api/v1/orders/" + orderId;
 
   const getOrder = async () => {
@@ -54,6 +56,29 @@ export default function ViewOrder(id) {
         console.log("Retrieved user:", userData);
         // You can further process the user data here
       });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  //Chnage Order Request to Shipped
+  const changeOrderReqest = (orderId) => async () => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/v1/orders/" + orderId,
+        {
+          orderStatus: "Shipped",
+        }
+      );
+      toast({
+        title: "Order Updated",
+        position: "top",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+      console.log(response.data);
+      getOrder();
     } catch (error) {
       console.error(error.message);
     }
@@ -157,7 +182,7 @@ export default function ViewOrder(id) {
           <ModalFooter>
             {orderData.orderStatus === "Shipped" ? null : (
               <>
-                <Button colorScheme="blue" mr={5}>
+                <Button colorScheme="blue" mr={5} onClick={changeOrderReqest(orderData.id)}>
                   Ready to Ship
                 </Button>
               </>
