@@ -10,7 +10,7 @@ router.route('/requests').get(controller.getAllShareRequests);
 router.route('/requests').post(controller.postShareRequest);
 router.route('/search').get(controller.getShareRequestNames);
 router.route('/checkEligibility').get(controller.check_Eligibility);
-
+router.route('/').get(controller.getAllShareRequests);
 router.route('/deleteBooks/:id').delete( controller.delete_books);
 
 

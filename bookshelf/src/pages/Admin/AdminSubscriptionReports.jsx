@@ -1,25 +1,19 @@
-import React, { useRef } from "react";
+import React from 'react'
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
+import {FaSearch} from 'react-icons/fa'
+
 import {
-  Box,
-  Card,
-  CardBody,
-  Flex,
-  Icon,
-  StatGroup,
-  Text,
-  Spacer,
-  Button,
-  Select,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
+  Box, 
+    Flex,
+    Spacer,
+    Text,
+    Select,
+    Button,
+    IconButton,
+    Input,
+    InputGroup,
+    FormControl
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
@@ -29,145 +23,144 @@ import axios from "axios";
 
 import { BiBookOpen } from "react-icons/bi";
 
-import AdminSidebar from "../../components/Admin/AdminSidebar";
-import AdminStatCard from "../../components/Admin/AdminStatCard";
-import AdminDtataTable from "../../components/Admin/AdminDtataTable";
-import AdminSubscriptionPlans from "../../components/Admin/AdminSubscriptionPlans";
+import SubscriptionReportTableView from '../../components/Admin/SubscriptionReportTableView';
 
 export default function AdminSubscriptionReports() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  const [search, setSearch] = useState('');
 
-  // Subscription plans
-  const planColumnNames = [
-    "Subscription",
-    " Plans ",
-    "Book Count",
-    "Time Period",
-    "Discount",
-  ];
+ // Subscriptions
+ const columns = [
+  "Subscription Id",
+  "Date",
+  "Status",
+  "Price",
+  "Customer Id",
+  "isPaid",
+  // "Order Items",
+  // "Adress",
+  "Contact No"
+];
 
-  const [planList, setPlanList] = useState([]);
-  const [error, setError] = useState("");
-  //const initialRef = useRef();
+const [list, setSubList] = useState([]);
 
+const getSub= async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/v1/subscriptionOrders")
+    const jsonData = await response.json()
 
-  //Get subscription plans
-  const getPlans = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/v1/subscriptions");
-      const jsonData = await response.json();
+    const filteredData = jsonData.map((sub) => ({
+      id: sub.id,
+      orderDate: sub.orderDate,
+      orderStatus: sub.orderStatus,
+      totalPrice: sub.totalPrice,
+      user_id: sub.user_id,
+      isPaid: sub.isPaid,
+      // orderItems: sub.orderItems,
+      // address: sub.address,
+      phone: sub.phone
+    }));
+    
+    setSubList(filteredData);
+  } catch (err) {
+    console.error(err.message);
+  }
+}
 
-      const filteredData = jsonData.map((plan) => ({
-        firstName: plan.firstName,
-        LastName: plan.LastName,
-        book_count: plan.book_count,
-        time_period: plan.time_period,
-        discount: plan.discount,
-      }));
-
-      setPlanList(filteredData);
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
-  useEffect(() => {
-    getPlans();
-  }, []);
-
-
-
-  //Add subscription plan
-  const [firstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [book_count, setBook_count] = useState("");
-  const [time_period, setTime_period] = useState("");
-  const [discount, setDiscount] = useState("");
-
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+useEffect(() => {
+  getSub();
+}, [])
 
 
-  const addSubscriptionPlanUrl = "http://localhost:3000/api/v1/subscriptions/";
+        //Report Generation
 
-  const addSubscriptionPlan = async (e) => {
-    e.preventDefault();
-    try {
-
-      const response = await axios.post(addSubscriptionPlanUrl, {
-        firstName: firstName,
-        LastName: LastName,
-        book_count: book_count,
-        time_period: time_period,
-        discount: discount,
-      });
-      console.log(response.data);
-      setFirstName("");
-      setLastName("");
-      setBook_count("");
-      setTime_period("");
-      setDiscount("");
-
-      setShowSuccessAlert(true);
-      window.location.href = "/adminsubscriptions";
-      
-    } catch (error) {
-      setError(error.response.data.msg);
-      console.log(error.response);
-    }
-  };
-
-
-
-
-
-
-  // Subscriptions
-  const columns = [
+    // All Subscription Details Report
+  const generateSearchPDF = () => {
+    const doc = new jsPDF();
+    const totalPagesExp = "{total_pages_count_string}";
+  
+    const columnsData = [
+    "", 
+    "Subscription Id",
+    "Date",
+    "Status",
+    "Price",
     "Customer Id",
-    "Subscription plan",
-    "Book",
-    "Tracking ID",
-    "Actions",
+    "isPaid",
+    // "Order Items",
+    // "Adress",
+    "Contact No"
   ];
+  
+    let subNumber = 1; // Initialize the number to 1
+  
+    //Filter by Customer Name
+    const filteredList = list.filter((sub) => 
+    sub.orderStatus.toLowerCase().includes(search.toLowerCase()));
 
-  const list = [
-    {
-      id: "c0001",
-      plan: "Book Reader",
-      book: "Anne",
-      tracking_id: "10",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0002",
-      plan: "Book Lover",
-      book: "Village By The Sea",
-      tracking_id: "15",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0003",
-      plan: "Book Worm",
-      book: "Mary",
-      tracking_id: "30",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0004",
-      plan: "Book Lover",
-      book: "Anne",
-      tracking_id: "20",
-      actions: "In-Progress",
-    },
-    {
-      id: "c0005",
-      plan: "Book Lover",
-      book: "Sheli",
-      tracking_id: "17",
-      actions: "In-Progress",
-    },
-  ];
+    doc.autoTable({
+      head: [columnsData], // The header row
+      body: filteredList.map((sub) => [
+        subNumber++,
+        sub.orderDate,
+        sub.orderStatus,
+        sub.totalPrice,
+        sub.user_id,
+        sub.isPaid,
+      ]), // The data rows with sequential sharing numbers
+      
+      startY: 20, // Y-position to start the table
+      styles: {
+        // Style the table
+        font: "helvetica",
+        fontStyle: "bold",
+        fontSize: 8,
+        cellPadding: 3,
+        fillColor: [124, 195, 206], // Light blue background color
+      },
+      columnStyles: {
+        0: { cellWidth: 8 }, 
+      },
+  
+      didDrawPage: function (data) {
+        // Add page number at the bottom
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        doc.setFontSize(10);
+      },
+  
+      addPageContent: function (data) {
+        // Add total pages count to the header
+        doc.text(
+          "Page " + data.pageCount,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+        // doc.text("Total Pages: " + totalPagesExp, 100, 10);
+      },
+    });
+  
+    // Calculate total pages
+    const totalPages = doc.internal.getNumberOfPages();
+    // Set the total pages count on each page
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text(180, 10, `Page ${i} of ${totalPages}`);
+    }
+  
+    // Save the PDF with a name
+    doc.save("Subscription_Details.pdf");
+  };
 
+
+
+
+
+ 
   return (
     <Box
         m={"auto"}
@@ -220,41 +213,42 @@ export default function AdminSubscriptionReports() {
             </Text>
 
 
-          <Flex gap={3} alignItems={'center'}>
+
+         
+
+            <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search Customer Name"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={100}    
+      w={900}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
 
-          <Text width={200} mt={5} ml={20}>Select By</Text>
-
-<Select 
-  placeholder='All' 
-  w={'200px'} 
-  size={'sm'} 
-  borderRadius={5} 
-  borderColor={'gray.200'} 
-  focusBorderColor={'white.100'}
-  pl={2}
-  ml={2}
-  mt={5}
-  //onChange={(e) => setSelectedRole(e.target.value)} 
-  //value={selectedRole}
- >
-    <option value='buyer'>Subscription Plan</option>
-    <option value='moderator'>Book</option>
-    <option value='moderator'>Status</option>
-
-</Select>
-
-<Button 
-        ml={550}
+         
+          <Button 
+        ml={1000}
         mt={5}
         colorScheme="blue" 
-        //onClick={generateTablePDF}
+        onClick={generateSearchPDF}
         >
           Generate Subscription Details
       </Button>
 
 
-        </Flex>
+    
 
 
             <Spacer mt={10} />
@@ -262,7 +256,12 @@ export default function AdminSubscriptionReports() {
             <Box>
               {/* <SearchPanel name={"Customer Orders"} filter={"orders"} /> */}
               <Spacer mt={5} />
-              <AdminDtataTable list={list} columnNames={columns} />
+              <SubscriptionReportTableView 
+                list={list} 
+                columnNames={columns} 
+                search={search}
+
+                />
             </Box>
           </Box>
         </Box>

@@ -106,7 +106,7 @@ export default function Donations() {
       const jsonData = await response.data;
 
       const mapData = jsonData.map((request) => ({
-        id: request.orgRegisteredNumber,
+        regNum: request.orgRegisteredNumber,
         name: request.orgName,
         type: request.orgType,
         orgEmail: request.orgEmail,

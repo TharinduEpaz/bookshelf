@@ -21,6 +21,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Inventory_Main from "./Actions/Inventory_Main";
 import Order_Main from "./Actions/order_Main";
 import Request_Main from "./Actions/Request_Main";
+import DonRequest_Main from "./Actions/DonRequest_Main";
 
 export default function DataTable({ list, columnNames, actions }) {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Set initial items per page to 2
@@ -69,17 +70,29 @@ export default function DataTable({ list, columnNames, actions }) {
                 <Td>
                   <Checkbox />
                 </Td>
-                {Object.values(Obj).map((value, index2) => (
-                  <Td key={index2}>{value}</Td>
+                {Object.entries(Obj).map(([key, value], index2) => (
+                  <Td key={index2}>
+                    {key === "id"
+                      ? actions === "inventory"
+                        ? "Book_" + value.slice(0, 5).toUpperCase()
+                        : actions === "order"
+                        ? "Order_" + value.slice(0, 5).toUpperCase()
+                        : actions === "donReq"
+                        ? "OrgReq_" + value.slice(0, 5).toUpperCase()
+                        : actions === "donationReq"
+                        ? "Req_" + value.slice(0, 5).toUpperCase()
+                        : value
+                      : key === "buyerId"
+                      ? "User_" + value.slice(0, 5).toUpperCase()
+                      : value}
+                  </Td>
                 ))}
-                {/* <Td>
-                  <Badge colorScheme="green">
-                    Active
-                  </Badge>
-                </Td> */}
-                {actions === "inventory" && <Inventory_Main id={Obj.id}/>}
-                {actions === "order" && <Order_Main id={Obj.id}/>}
-                {actions === "donReq" && <Request_Main id={Obj.id} />}
+                {actions === "inventory" && <Inventory_Main id={Obj.id} />}
+                {actions === "order" && <Order_Main id={Obj.id} />}
+                {actions === "donationReq" && <DonRequest_Main id={Obj.id} />}
+                {actions === "donReq" && <Request_Main id={Obj.regNum} />}
+                {actions === "org" && <Button colorScheme="red">Suspend</Button>}
+                {actions === "donations" && <Button colorScheme="red">Delete</Button>}
               </Tr>
             ))
           )}

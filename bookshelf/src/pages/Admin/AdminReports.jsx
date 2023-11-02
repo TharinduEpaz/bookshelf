@@ -15,12 +15,6 @@ import {
 
 export default function AdminReports() {
 
-
-
-
-
-
-
     
   return (
     
@@ -75,27 +69,27 @@ export default function AdminReports() {
                 <Stack spacing={4} width={400}>
 
                 <Link to="/adminuserreport">
-                <Button ml={300}  colorScheme='blue'>User Details</Button>
+                <Button ml={270} w={300} colorScheme='blue'>User Details</Button>
                 </Link>
                 
                 <Link to="/adminorderreport">
-                <Button ml={300} colorScheme='blue'>Order Details</Button>
+                <Button ml={270} w={300} colorScheme='blue'>Order Details</Button>
                 </Link>
 
                 <Link to="/admininventoryreports">
-                <Button ml={300}  colorScheme='blue'>Inventory Details</Button>
+                <Button ml={270} w={300}  colorScheme='blue'>Inventory Details</Button>
                 </Link>
 
                 <Link to="/admindonationreport">
-                <Button ml={300} colorScheme='blue'>Donations</Button>
+                <Button ml={270} w={300} colorScheme='blue'>Donations</Button>
                 </Link>
 
                 <Link to="/adminsubscriptionreports">
-                <Button ml={300}  colorScheme='blue'>Subscriptions</Button>
+                <Button ml={270} w={300}  colorScheme='blue'>Subscriptions</Button>
                 </Link>
 
                 <Link to="/adminsharingreport">
-                <Button ml={300} colorScheme='blue'>Book Sharing</Button>
+                <Button ml={270} w={300} colorScheme='blue'>Book Sharing</Button>
                 </Link>
 
                 </Stack>

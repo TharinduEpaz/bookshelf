@@ -1,57 +1,63 @@
 import React from 'react'
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
+  Checkbox,
   } from '@chakra-ui/react'
 
-export default function AdminNotificationsTable() {
+export default function AdminNotificationsTable({
+
+  list,
+  columnNames,
+  search
+}) 
+
+{
+
+  const filteredList = list.filter((item) => {
+    return search && item.type && search.toLowerCase() === '' || item.type.toLowerCase().includes(search);
+  });
+  
+
   return (
 
     <TableContainer>
-    <Table variant='simple'>
-      {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-      <Thead >
-        <Tr>
-          <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>Name</Th>
-          <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>Price (Rs)</Th>
-          <Th fontFamily={'Montserrat'} fontWeight={1000} fontSize={14}>New Orders</Th>
+    <Table variant='simple' p={10} mt={50} borderWidth={1} borderColor="gray.200" fontSize="sm">
+
+      <Thead fontWeight="semibold">
+        <Tr bgColor="gray.100">
+          <Td>
+            <Checkbox></Checkbox>
+          </Td>
+            {columnNames.map((headerItem,index)=>(
+              <Td key={index}>{headerItem}</Td>
+            ))
+            }
         </Tr>
       </Thead>
-      <Tbody>
-        <Tr>
-          <Td>K.P.Gamage</Td>
-          <Td> 3500 </Td>
-          <Td> 23</Td>
-        </Tr>
-        <Tr>
-          <Td>D.S.Ashi Perera</Td>
-          <Td>4650</Td>
-          <Td>34</Td>
-        </Tr>
-        <Tr>
-          <Td>N.G.Fernando</Td>
-          <Td>6800</Td>
-          <Td>56</Td>
-        </Tr>
-      </Tbody>
 
-{/*
-      <Tfoot>
-        <Tr>
-          <Th>To convert</Th>
-          <Th>into</Th>
-          <Th isNumeric>multiply by</Th>
-        </Tr>
-      </Tfoot>
-  */}
+      <Tbody>
+      {filteredList.map((item) => {
+            return (
+              <Tr key={item.id}>
+                <Td>
+                  <Checkbox />
+                </Td>
+                {Object.values(item).map((value, index2) => (
+                  <Td key={index2}>{value}</Td>
+                ))}
+              </Tr>
+            );
+          })}
+      </Tbody>
+     
     </Table>
+
+   
   </TableContainer>
 
 

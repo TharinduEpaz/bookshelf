@@ -287,7 +287,9 @@ export default function AdminInventory() {
 
                 <Spacer mt={5} />
 
-                <AdminDtataTable list={list} columnNames={columns} />
+                <AdminDtataTable 
+                  list={list} 
+                  columnNames={columns} />
               </Box>
             </Box>
 

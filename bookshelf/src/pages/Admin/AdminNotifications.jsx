@@ -1,17 +1,61 @@
 import React from 'react'
 import AdminSidebar from "../../components/Admin/AdminSidebar";
 import AdminNotificationsTable from '../../components/Admin/AdminNotificationsTable';
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { useEffect, useState } from "react";
+import {FaSearch} from 'react-icons/fa'
+
 
 import {
     Box, 
     Flex,
     Heading,
-    Text,
-    Stack
+    FormControl,
+    IconButton,
+    Input,
+    InputGroup
 } from '@chakra-ui/react'
 
 export default function AdminNotifications() {
+
+  const [search, setSearch] = useState('');
+
+  const columns = [
+    "ID",
+    "User ID",
+    "Type",
+    "Notification",
+    "Status"
+  ];
+
+
+  const [list, setNotification] = useState([]);
+
+  const getNotification = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/notifications")
+      const jsonData = await response.json()
+
+      const filteredData = jsonData.map((notification) => ({
+        id: notification.id,
+        userId: notification.userId,
+        type: notification.type,
+        message: notification.message,
+        status: notification.status
+
+      }));
+      
+      setNotification(filteredData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    getNotification();
+  }, [])
+
+
+
   return (
     
     <Box
@@ -54,12 +98,33 @@ export default function AdminNotifications() {
         //textAlign={'center'}
         mt={'10px'}
         mb={'20px'}
+        ml={250}
       >
         Notifications
       </Heading>
 
+      <FormControl ml={10} mb={5}>
+    <InputGroup>
+    <Input
+      type="text"
+      placeholder="Search By Type"
+      colorScheme="blue"
+      borderColor={'gray.200'}
+      focusBorderColor={'white.100'}
+      mt={5}
+      ml={20}    
+      w={500}
+      borderRadius={5}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      
+    />
+    <IconButton icon={<FaSearch />} color="blue.300" mt={5} ml={2} borderRadius={100} variant={'ghost'} />
+  </InputGroup>
+  </FormControl>
 
-      <Stack spacing={4}>
+
+      {/* <Stack spacing={4}>
 
   < Card variant="filled" size={'sm'} h={10}>
     <CardBody>
@@ -93,7 +158,7 @@ export default function AdminNotifications() {
       </Text>
     </CardBody>
   </Card>
-</Stack>
+</Stack> */}
 
 
 
@@ -118,7 +183,11 @@ export default function AdminNotifications() {
          p={10}
       >
    
-       <AdminNotificationsTable/> 
+       <AdminNotificationsTable
+        list={list} 
+        columnNames={columns} 
+        search={search}
+       /> 
 
 
 
