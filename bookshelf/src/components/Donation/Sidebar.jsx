@@ -35,19 +35,7 @@ const sidebarLinks = [
     url: "../components/Donation/Settings",
     text: "Account Settings",
     icon: <IoMdSettings />,
-  },
-  {
-    id: 3,
-    url: "../donprevious",
-    text: "Previous Requests",
-    icon: <ImBooks />,
-  },
-  {
-    id: 5,
-    url: "chat",
-    text: "Chat",
-    icon: <AiTwotoneMessage />,
-  },
+  }
 ];
 
 export function Sidebar() {
