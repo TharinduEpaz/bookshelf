@@ -21,6 +21,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Inventory_Main from "./Actions/Inventory_Main";
 import Order_Main from "./Actions/order_Main";
 import Request_Main from "./Actions/Request_Main";
+import DonRequest_Main from "./Actions/DonRequest_Main";
 
 export default function DataTable({ list, columnNames, actions }) {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Set initial items per page to 2
@@ -88,7 +89,10 @@ export default function DataTable({ list, columnNames, actions }) {
                 ))}
                 {actions === "inventory" && <Inventory_Main id={Obj.id} />}
                 {actions === "order" && <Order_Main id={Obj.id} />}
+                {actions === "donationReq" && <DonRequest_Main id={Obj.id} />}
                 {actions === "donReq" && <Request_Main id={Obj.regNum} />}
+                {actions === "org" && <Button colorScheme="red">Suspend</Button>}
+                {actions === "donations" && <Button colorScheme="red">Delete</Button>}
               </Tr>
             ))
           )}
