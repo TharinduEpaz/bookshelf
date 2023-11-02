@@ -142,10 +142,10 @@ function SelectedSubscriptionPackage() {
                     <AlertDialogOverlay />
 
                     <AlertDialogContent>
-                        <AlertDialogHeader>Exchange Dates?</AlertDialogHeader>
+                        <AlertDialogHeader>Exchange Date?</AlertDialogHeader>
                         <AlertDialogCloseButton />
                         <AlertDialogBody>
-                            Are you sure you want to exchange your delivery date?
+                            Are you sure you want to exchange your Expire Date?
                         </AlertDialogBody>
                         <AlertDialogFooter>
                                 <RouterLink to="#">

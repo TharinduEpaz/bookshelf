@@ -8,22 +8,23 @@ function Faq() {
     // An array of FAQ items with questions and answers
     const faqs = [
         {
-            question: 'What is Lorem Ipsum?',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            question: 'How can I make a payment?',
+            answer: 'You have the option to make payments by securely adding your card details through our payment gateway.',
         },
         {
-            question: 'How can I contact customer support?',
-            answer: 'You can contact our customer support team by emailing support@example.com or calling 123-456-7890.',
-        }, 
-        {
-            question: 'What is Lorem Ipsum?',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            question: 'What is the process for returning a book?',
+            answer: 'To return a book, you must initiate a new subscription. When prompted, provide the delivery date of your previous book to facilitate the return process.',
         },
         {
-            question: 'How can I contact customer support?',
-            answer: 'You can contact our customer support team by emailing support@example.com or calling 123-456-7890.',
+            question: 'How can I change my subscription date?',
+            answer: 'You can adjust your subscription date by paying a nominal fee. This will enable you to select a new date for your package delivery.',
+        },
+        {
+            question: 'What is the estimated delivery time for my books?',
+            answer: 'Typically, you can expect to receive your books within approximately 5 days from the date of your book order.',
         },
     ];
+
 
     const handleClick = (index) => {
         setShowFullMessage((prevState) => ({ ...prevState, [index]: !prevState[index] }));
