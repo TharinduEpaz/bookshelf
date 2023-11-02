@@ -60,7 +60,7 @@ function Package() {
               {donationRequests.map((request, index) => (
                 <Link
                   key={index}
-                  to={`/donate/${request?.id}`}
+                  to={`/donate/${request.id}`}
                 >
                   <DonationCard
                     name={request.orgName}

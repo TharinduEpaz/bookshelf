@@ -26,10 +26,11 @@ import Search from "../components/Donation/Search";
 import LinkTree from "../components/LinkTree";
 import { BsCart } from "react-icons/bs";
 
-function DonationDetails({ name, price, quantityneed, imageURL }) {
+function DonationDetails({ name, price, quantityneed}) {
   const [donatingQuantity, setDonatingQuantity] = useState(0); // Set the initial value to 0
   const [total, setTotal] = useState(0);
 
+  const imageURL = "https://image.shutterstock.com/image-photo/image-260nw-1847355181.jpg";
 
   const handleQuantityChange = (newQuantity) => {
     setDonatingQuantity(newQuantity);
@@ -104,7 +105,7 @@ function DonationDetails({ name, price, quantityneed, imageURL }) {
             </Box>
           </GridItem>
           <GridItem rowSpan={7} colSpan={3} ml={10}>
-            <Heading>{product.name}</Heading>
+            {/* <Heading>{product.name}</Heading> */}
 
             <Box display="flex" alignItems={"center"} mt={4}>
               <Heading
