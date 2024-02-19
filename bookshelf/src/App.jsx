@@ -15,7 +15,7 @@ import { UserProvider } from "./context/userContext";
 import { BooksProvider } from "./context/booksContext";
 import { CartProvider } from "./context/cartContext";
 import SharingHome from "./pages/sharing/SharingHome";
-import PostRequest from "./pages/sharing/postrequest";
+import PostRequest from "./pages/sharing/PostRequest";
 import ShareRequest from "./components/Sharing/ShareRequest";
 import ShareBook from "./components/Sharing/ShareBook";
 import ManageRequest from "./pages/Sharing/ManageRequest";
