@@ -57,7 +57,7 @@ const ChatMessage = ({ message, isUser }) => (
   </Box>
 );
 
-const ChatInterface = () => {
+const chat = () => {
   const [messages, setMessages] = useState([
     { text: "Hello! How can I help you?", isUser: true }, // Sender's message
   ]);
@@ -101,4 +101,4 @@ const ChatInterface = () => {
   );
 };
 
-export default ChatInterface;
+export default chat;
